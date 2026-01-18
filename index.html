@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Harbor Coffee | Specialty Coffee Roaster</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #333; }
+        .font-eng { font-family: 'Jost', sans-serif; }
+        
+        /* ページ切り替え時のフェードアニメーション */
+        .page-enter {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 画像ローダー用 */
+        .img-overlay {
+            background-color: #f3f4f6;
+        }
+
+        /* アクティブなナビゲーションリンクの下線 */
+        .nav-link.active {
+            border-bottom: 2px solid #3b82f6; /* blue-500 */
+            color: #1d4ed8; /* blue-700 */
+        }
+    </style>
+</head>
+<body class="bg-white flex flex-col min-h-screen">
+
+    <!-- ナビゲーションバー (全ページ共通) -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 h-16 sm:h-20">
+        <div class="max-w-6xl mx-auto px-6 h-full flex justify-between items-center">
+            <!-- ロゴ -->
+            <a href="#home" class="flex items-center gap-2 group z-50">
+                <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
+            </a>
+
+            <!-- デスクトップメニュー -->
+            <nav class="hidden md:flex space-x-8 font-eng text-sm font-medium tracking-wide">
+                <a href="#home" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">HOME</a>
+                <a href="#about" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">ABOUT</a>
+                <a href="#menu" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">MENU</a>
+                <a href="#location" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">LOCATION</a>
+            </nav>
+
+            <!-- オンラインショップボタン -->
+            <div class="hidden md:block">
+                <a href="#" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">ONLINE STORE</a>
+            </div>
+
+            <!-- ハンバーガーボタン -->
+            <button id="menu-btn" class="md:hidden p-2 z-50">
+                <div class="w-6 h-0.5 bg-gray-800 mb-1.5 transition-all" id="bar1"></div>
+                <div class="w-6 h-0.5 bg-gray-800 transition-all" id="bar2"></div>
+            </button>
+        </div>
+    </header>
+
+    <!-- モバイルメニュー -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center space-y-8 font-eng text-2xl hidden opacity-0 transition-opacity duration-300">
+        <a href="#home" class="mobile-link hover:text-blue-600">HOME</a>
+        <a href="#about" class="mobile-link hover:text-blue-600">ABOUT</a>
+        <a href="#menu" class="mobile-link hover:text-blue-600">MENU</a>
+        <a href="#location" class="mobile-link hover:text-blue-600">LOCATION</a>
+        <a href="#" class="text-sm bg-gray-900 text-white px-8 py-3 mt-4">ONLINE STORE</a>
+    </div>
+
+    <!-- コンテンツ表示エリア (ページ切り替えコンテナ) -->
+    <main id="app-content" class="flex-grow pt-16 sm:pt-20">
+        <!-- ここにJSでコンテンツが描画されます -->
+    </main>
+
+    <!-- フッター (全ページ共通) -->
+    <footer class="bg-gray-50 border-t border-gray-200 py-12">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <h4 class="font-eng font-bold text-lg mb-4">BLUE HARBOR COFFEE</h4>
+                <p class="text-sm text-gray-500 leading-loose">
+                    一杯のコーヒーには、物語がある。<br>
+                    港町から届ける、新しいコーヒー体験。
+                </p>
+            </div>
+            <div>
+                <h5 class="font-eng font-bold text-sm mb-4 text-gray-400">FOLLOW US</h5>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-blue-700 transition">Instagram</a>
+                    <a href="#" class="text-gray-400 hover:text-blue-700 transition">Twitter</a>
+                    <a href="#" class="text-gray-400 hover:text-blue-700 transition">Facebook</a>
+                </div>
+            </div>
+            <div>
+                <h5 class="font-eng font-bold text-sm mb-4 text-gray-400">LINKS</h5>
+                <ul class="text-sm space-y-2 text-gray-500">
+                    <li><a href="#" class="hover:underline">Contact Us</a></li>
+                    <li><a href="#" class="hover:underline">Wholesale</a></li>
+                    <li><a href="#" class="hover:underline">Careers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center mt-12 text-xs text-gray-400 font-eng">
+            &copy; 2024 Blue Harbor Coffee Roasters.
+        </div>
+    </footer>
+
+    <!-- JavaScript: ルーティングとコンテンツ生成 -->
+    <script>
+        // ▼ 各ページの内容（HTMLテンプレート）を定義 ▼
+        const pages = {
+            // 1. ホーム
+            home: `
+                <section class="relative h-[80vh] md:h-[600px] w-full bg-gray-900 overflow-hidden page-enter">
+                    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70">
+                    <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
+                        <p class="font-eng tracking-[0.3em] text-sm md:text-base mb-4 text-blue-200">ROASTERY & CAFE</p>
+                        <h2 class="text-4xl md:text-6xl font-eng font-bold mb-8">BREW THE BLUE</h2>
+                        <a href="#menu" class="bg-white text-gray-900 font-bold px-8 py-3 text-sm hover:bg-blue-600 hover:text-white transition duration-300">VIEW MENU</a>
+                    </div>
+                </section>
+                <section class="py-20 px-6 max-w-6xl mx-auto page-enter" style="animation-delay: 0.1s;">
+                    <div class="flex flex-col md:flex-row gap-12 items-center">
+                        <div class="md:w-1/2">
+                            <span class="text-blue-600 font-bold text-xs tracking-widest mb-2 block font-eng">OUR BEANS</span>
+                            <h3 class="text-3xl font-bold mb-6">個性豊かなシングルオリジン</h3>
+                            <p class="text-gray-600 leading-loose mb-6">
+                                私たちは世界中の農園を巡り、生産者の情熱が詰まった豆を厳選しています。
+                                店内の大型焙煎機で、それぞれの豆が持つフルーティーな酸味や香ばしい苦味を最大限に引き出します。
+                            </p>
+                            <a href="#about" class="text-sm font-bold border-b border-gray-300 pb-1 hover:border-blue-600 transition">MORE ABOUT US &rarr;</a>
+                        </div>
+                        <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover bg-gray-200">
+                            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover bg-gray-200 mt-8">
+                        </div>
+                    </div>
+                </section>
+                <section class="bg-blue-50 py-20 px-6 text-center page-enter">
+                    <h3 class="font-eng text-2xl font-bold mb-8">SEASONAL PICK</h3>
+                    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        <div class="bg-white p-6 shadow-sm hover:shadow-md transition">
+                            <div class="bg-gray-200 h-48 w-full mb-4 overflow-hidden"><img src="https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"></div>
+                            <h4 class="font-bold mb-2">エチオピア イルガチェフェ</h4>
+                            <p class="text-xs text-gray-500">ジャスミンのような香りと、レモンティーを思わせる爽やかな酸味。</p>
+                        </div>
+                        <div class="bg-white p-6 shadow-sm hover:shadow-md transition">
+                            <div class="bg-gray-200 h-48 w-full mb-4 overflow-hidden"><img src="https://images.unsplash.com/photo-1610632380989-680fe40816c6?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"></div>
+                            <h4 class="font-bold mb-2">Blue Harbor Blend</h4>
+                            <p class="text-xs text-gray-500">毎日飲みたくなる、バランスの取れた当店自慢のシグネチャーブレンド。</p>
+                        </div>
+                        <div class="bg-white p-6 shadow-sm hover:shadow-md transition">
+                            <div class="bg-gray-200 h-48 w-full mb-4 overflow-hidden"><img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"></div>
+                            <h4 class="font-bold mb-2">カフェラテ</h4>
+                            <p class="text-xs text-gray-500">濃厚なエスプレッソと、きめ細やかなスチームミルクのハーモニー。</p>
+                        </div>
+                    </div>
+                </section>
+            `,
+
+            // 2. メニューページ
+            menu: `
+                <div class="bg-white max-w-4xl mx-auto py-20 px-6 page-enter">
+                    <h2 class="text-4xl font-eng font-bold text-center mb-4">MENU</h2>
+                    <p class="text-center text-gray-500 mb-16 text-sm">ハンドドリップコーヒーと、自家製の焼き菓子。</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-16">
+                        <!-- COFFEE -->
+                        <div>
+                            <h3 class="font-eng text-xl font-bold border-b-2 border-gray-900 pb-2 mb-6">COFFEE / ESPRESSO</h3>
+                            <ul class="space-y-6">
+                                <li class="flex justify-between items-baseline">
+                                    <div>
+                                        <h4 class="font-bold">ハンドドリップ</h4>
+                                        <p class="text-xs text-gray-500">お好きな豆をお選びいただけます</p>
+                                    </div>
+                                    <span class="font-eng font-bold">¥600~</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <div><h4 class="font-bold">アメリカーノ</h4></div>
+                                    <span class="font-eng font-bold">¥500</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <div><h4 class="font-bold">カフェラテ</h4></div>
+                                    <span class="font-eng font-bold">¥600</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <div><h4 class="font-bold">フラットホワイト</h4></div>
+                                    <span class="font-eng font-bold">¥650</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <div><h4 class="font-bold">コールドブリュー (夏季限定)</h4></div>
+                                    <span class="font-eng font-bold">¥600</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- OTHERS -->
+                        <div>
+                            <h3 class="font-eng text-xl font-bold border-b-2 border-gray-900 pb-2 mb-6">FOOD / OTHERS</h3>
+                            <ul class="space-y-6">
+                                <li class="flex justify-between items-baseline">
+                                    <div><h4 class="font-bold">自家製レモネード</h4></div>
+                                    <span class="font-eng font-bold">¥550</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <div><h4 class="font-bold">クラフトコーラ</h4></div>
+                                    <span class="font-eng font-bold">¥600</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <div>
+                                        <h4 class="font-bold">厚切りバタートースト</h4>
+                                        <p class="text-xs text-gray-500">全粒粉入りの自家製パンを使用</p>
+                                    </div>
+                                    <span class="font-eng font-bold">¥450</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <div><h4 class="font-bold">クラシックプリン</h4></div>
+                                    <span class="font-eng font-bold">¥500</span>
+                                </li>
+                                <li class="flex justify-between items-baseline">
+                                    <div><h4 class="font-bold">季節のスコーン</h4></div>
+                                    <span class="font-eng font-bold">¥400</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Images -->
+                    <div class="grid grid-cols-2 gap-4 mt-16">
+                         <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="w-full h-64 object-cover bg-gray-200 rounded">
+                         <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="w-full h-64 object-cover bg-gray-200 rounded">
+                    </div>
+                </div>
+            `,
+
+            // 3. 当店について
+            about: `
+                <div class="relative w-full h-[400px] bg-gray-800 page-enter">
+                    <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover opacity-50">
+                    <div class="absolute inset-0 flex items-center justify-center text-white">
+                        <h2 class="text-4xl font-eng font-bold tracking-widest">ABOUT US</h2>
+                    </div>
+                </div>
+                <div class="max-w-4xl mx-auto py-20 px-6 leading-loose text-gray-600 page-enter" style="animation-delay: 0.1s;">
+                    <p class="text-lg mb-8 font-bold text-gray-900">
+                        「コーヒーのある風景」を、より豊かに。
+                    </p>
+                    <p class="mb-6">
+                        Blue Harbor Coffeeは、港の近くの小さな倉庫から始まりました。<br>
+                        潮風を感じる開放的な空間で、最高の一杯を提供したい。そんな想いから、私たちは毎日豆を焼き続けています。
+                    </p>
+                    <p class="mb-12">
+                        コーヒーは単なる飲み物ではなく、人と人をつなぐコミュニケーションツールであり、忙しい日常の中でホッと一息つくためのスイッチでもあります。<br>
+                        生産者が手塩にかけて育てた豆のバトンを受け取り、私たちの焙煎技術でその魅力を最大限に引き出し、お客様のカップにお届けする。<br>
+                        その一連のストーリーを大切にしています。
+                    </p>
+                    
+                    <div class="bg-gray-100 p-8 rounded-lg flex items-center gap-6">
+                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 rounded-full object-cover">
+                        <div>
+                            <p class="font-bold text-gray-900">Head Roaster: Y. Tanaka</p>
+                            <p class="text-sm">2015年ラテアート世界大会出場。バリスタとしての経験を経て、焙煎士へ転向。</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+
+            // 4. 店舗情報・アクセス
+            location: `
+                <div class="max-w-6xl mx-auto py-20 px-6 page-enter">
+                    <h2 class="text-3xl font-eng font-bold text-center mb-16">LOCATION & ACCESS</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-12 bg-white shadow-xl rounded-xl overflow-hidden">
+                        <div class="h-[400px] bg-gray-300 relative">
+                             <!-- Google Maps Embed Placehoder (Using actual coordinates for Tokyo Tower area as dummy) -->
+                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.747975468358!2d139.7428580152576!3d35.65858048020067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bbd9009ec09%3A0x481a93f0d2a409dd!2z5p2x5Lqs44K_44Ov44O8!5e0!3m2!1sja!2sjp!4v1651817551000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                        <div class="p-12 flex flex-col justify-center">
+                            <h3 class="text-xl font-bold mb-6">Blue Harbor Coffee</h3>
+                            <div class="space-y-4 text-gray-600">
+                                <p>
+                                    <span class="font-bold block text-gray-900 text-sm mb-1">ADDRESS</span>
+                                    〒105-0011 東京都港区芝公園 4-2-8<br>
+                                    ハーバーサイドビル 1F
+                                </p>
+                                <p>
+                                    <span class="font-bold block text-gray-900 text-sm mb-1">HOURS</span>
+                                    Mon - Fri: 8:00 - 19:00<br>
+                                    Sat - Sun: 9:00 - 20:00
+                                </p>
+                                <p>
+                                    <span class="font-bold block text-gray-900 text-sm mb-1">TEL</span>
+                                    03-1234-5678
+                                </p>
+                                <p>
+                                    <span class="font-bold block text-gray-900 text-sm mb-1">WIFI / POWER</span>
+                                    あり / 電源席 6席
+                                </p>
+                            </div>
+                            <div class="mt-8">
+                                <a href="https://maps.google.com" target="_blank" class="inline-block bg-blue-600 text-white font-bold px-6 py-3 rounded text-sm hover:bg-blue-700 transition">GOOGLE MAPS</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // ▼ ルーティングロジック (URLの#に応じて中身を書き換え) ▼
+        const appContent = document.getElementById('app-content');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const bars = [document.getElementById('bar1'), document.getElementById('bar2')];
+        let isMenuOpen = false;
+
+        // モバイルメニュー開閉
+        menuBtn.addEventListener('click', () => toggleMenu());
+        
+        function toggleMenu(forceClose = false) {
+            if (forceClose) isMenuOpen = true; // 次の反転でfalseになる
+            
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+                bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                bars[1].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+            } else {
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                bars[0].style.transform = 'none';
+                bars[1].style.transform = 'none';
+            }
+        }
+
+        // ページ切り替え関数
+        function navigate() {
+            // 現在のハッシュを取得 (#menu とか)
+            const hash = location.hash.replace('#', '') || 'home';
+            
+            // 存在しないページならホームへ
+            const page = pages[hash] ? hash : 'home';
+            
+            // 中身を書き換え (innerHTMLを使うことで遷移を模倣)
+            // フェードアニメーションをリセットするために一度空にする
+            appContent.innerHTML = ''; 
+            setTimeout(() => {
+                appContent.innerHTML = pages[page];
+                // ページトップへスクロール
+                window.scrollTo(0, 0);
+            }, 10);
+
+            // ナビゲーションの見た目を更新
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${page}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // モバイルメニューが開いていたら閉じる
+            if (isMenuOpen) toggleMenu(true);
+        }
+
+        // 初期表示とハッシュ変更時のイベントリスナー
+        window.addEventListener('load', navigate);
+        window.addEventListener('hashchange', navigate);
+
+        // スマホリンククリック用
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => toggleMenu(true));
+        });
+
+    </script>
+</body>
+</html>
