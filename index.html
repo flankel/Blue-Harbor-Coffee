@@ -22,7 +22,6 @@
             border-bottom: 2px solid #3b82f6;
             color: #1d4ed8;
         }
-        /* アクティブ時のアイコン色変更 */
         .nav-link.active svg {
             color: #1d4ed8;
         }
@@ -37,11 +36,23 @@
                 <span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
             </a>
 
-            <nav class="hidden md:flex space-x-8 font-eng text-sm font-medium tracking-wide">
-                <a href="#home" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">HOME</a>
-                <a href="#about" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">ABOUT</a>
-                <a href="#menu" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">MENU</a>
-                <a href="#location" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">LOCATION</a>
+            <nav class="hidden md:flex space-x-8 font-eng text-[10px] font-bold tracking-wide">
+                <a href="#home" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    <span>HOME</span>
+                </a>
+                <a href="#about" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>ABOUT</span>
+                </a>
+                <a href="#menu" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    <span>MENU</span>
+                </a>
+                <a href="#location" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>LOCATION</span>
+                </a>
             </nav>
 
             <div class="hidden md:block">
@@ -51,29 +62,33 @@
             <button id="menu-btn" class="hidden"><div id="bar1"></div><div id="bar2"></div></button>
         </div>
 
-        <nav class="md:hidden border-t border-gray-50 bg-gray-50/50 flex justify-around items-center py-2 px-2">
+        <nav class="md:hidden border-t border-gray-50 bg-gray-50/50 flex justify-around items-center py-2 px-1">
             <a href="#home" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                <span class="font-eng text-[10px] font-bold">HOME</span>
+                <span class="font-eng text-[9px] font-bold">HOME</span>
             </a>
             <a href="#about" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span class="font-eng text-[10px] font-bold">ABOUT</span>
+                <span class="font-eng text-[9px] font-bold">ABOUT</span>
             </a>
             <a href="#menu" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                <span class="font-eng text-[10px] font-bold">MENU</span>
+                <span class="font-eng text-[9px] font-bold">MENU</span>
             </a>
             <a href="#location" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                <span class="font-eng text-[10px] font-bold">ACCESS</span>
+                <span class="font-eng text-[9px] font-bold">ACCESS</span>
+            </a>
+            <a href="#" class="flex flex-col items-center gap-1 text-blue-600 transition group">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                <span class="font-eng text-[9px] font-bold uppercase">Store</span>
             </a>
         </nav>
     </header>
 
     <div id="mobile-menu" class="hidden"></div>
 
-    <main id="app-content" class="flex-grow pt-[112px] md:pt-20">
+    <main id="app-content" class="flex-grow pt-[112px] md:pt-28">
     </main>
 
     <footer class="bg-gray-50 border-t border-gray-200 py-12">
@@ -243,14 +258,20 @@
             location: `
                 <div class="max-w-6xl mx-auto py-20 px-6 page-enter">
                     <h2 class="text-3xl font-eng font-bold text-center mb-16">LOCATION & ACCESS</h2>
-                    <div class="grid md:grid-cols-2 gap-12 bg-white shadow-xl rounded-xl overflow-hidden">
+                    
+                    <div class="mb-16">
+                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=2000&q=80" class="w-full h-[300px] md:h-[500px] object-cover rounded-xl shadow-lg mb-4" alt="Shop Exterior">
+                        <p class="text-center text-gray-500 font-medium italic">Blue Harbor Coffee - Harborside Store</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-12 bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100">
                         <div class="h-[400px] bg-gray-300 relative">
-                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.74779889311!2d139.7432442757859!3d35.65858473121703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bbd9009ec09%3A0x481fb2049e6122d7!2z5p2x5Lqs44K_44Ov44O8!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.7479754683745!2d139.7428579763567!3d35.65858047259469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bbd9009b3f7%3A0x27a858e6a2557ff7!2z5p2x5Lqs44K_44Ov44O8!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                         <div class="p-12 flex flex-col justify-center text-gray-600">
                             <h3 class="text-xl font-bold mb-6 text-gray-900">Blue Harbor Coffee</h3>
                             <p class="mb-4">〒105-0011 東京都港区芝公園 4-2-8<br>ハーバーサイドビル 1F</p>
-                            <p class="mb-4">Mon - Fri: 8:00 - 19:00<br>Sat - Sun: 9:00 - 20:00</p>
+                            <p class="mb-4 font-eng">Mon - Fri: 8:00 - 19:00<br>Sat - Sun: 9:00 - 20:00</p>
                             <p class="mb-8">TEL: 03-1234-5678</p>
                             <a href="#" class="inline-block bg-blue-600 text-white font-bold px-6 py-3 rounded text-sm hover:bg-blue-700 transition w-fit">GOOGLE MAPS</a>
                         </div>
@@ -261,7 +282,6 @@
 
         const appContent = document.getElementById('app-content');
         const navLinks = document.querySelectorAll('.nav-link');
-        const mobileMenu = document.getElementById('mobile-menu');
 
         function navigate() {
             const hash = location.hash.replace('#', '') || 'home';
