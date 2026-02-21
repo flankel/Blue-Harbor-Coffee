@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Blue Harbor Coffee | Specialty Coffee Roaster</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -10,82 +11,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-body { font-family:'Zen Kaku Gothic New',sans-serif; color:#333; }
-.font-eng { font-family:'Jost',sans-serif; }
-
-/* フェード */
-.page-enter { animation:fadeIn .6s ease-out forwards; }
-@keyframes fadeIn {
-from{opacity:0; transform:translateY(10px);}
-to{opacity:1; transform:translateY(0);}
+body{
+  font-family:'Zen Kaku Gothic New',sans-serif;
+  color:#333;
 }
 
-/* アクティブ */
+.font-eng{font-family:'Jost',sans-serif;}
+
+.page-enter{animation:fadeIn .6s ease-out forwards;}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
 .nav-link.active{
-border-bottom:2px solid #3b82f6;
-color:#1d4ed8;
-}
-
-/* 木の看板風 */
-.wood-board{
-background:
-linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25)),
-url("https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=1200&q=80");
-background-size:cover;
-border:8px solid #5c3b1e;
-box-shadow:0 20px 40px rgba(0,0,0,.3);
-color:white;
-}
-
-/* メニューカード */
-.menu-item{
-display:flex;
-gap:14px;
-align-items:center;
-background:rgba(255,255,255,.08);
-padding:12px;
-border-radius:10px;
-backdrop-filter:blur(3px);
-}
-
-.menu-item img{
-width:72px;
-height:72px;
-object-fit:cover;
-border-radius:8px;
-border:2px solid rgba(255,255,255,.4);
+  border-bottom:2px solid #3b82f6;
+  color:#1d4ed8;
 }
 </style>
 </head>
 
 <body class="bg-white flex flex-col min-h-screen">
 
-<!-- ナビバー -->
+<!-- ===== NAVBAR ===== -->
+
 <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 h-16 sm:h-20">
 <div class="max-w-6xl mx-auto px-6 h-full flex justify-between items-center">
 
-<a href="#home" class="flex items-center gap-2">
+<a href="#home" class="flex items-center gap-2 group z-50">
 <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
 d="M13 10V3L4 14h7v7l9-11h-7z"></path>
 </svg>
-<span class="font-eng font-bold text-lg tracking-widest">BLUE HARBOR</span>
+<span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
 </a>
 
-<nav class="hidden md:flex space-x-8 font-eng text-sm font-medium">
-<a href="#home" class="nav-link text-gray-500 hover:text-blue-700 py-1">HOME</a>
-<a href="#about" class="nav-link text-gray-500 hover:text-blue-700 py-1">ABOUT</a>
-<a href="#menu" class="nav-link text-gray-500 hover:text-blue-700 py-1">MENU</a>
-<a href="#location" class="nav-link text-gray-500 hover:text-blue-700 py-1">LOCATION</a>
+<nav class="hidden md:flex space-x-8 font-eng text-sm font-medium tracking-wide">
+<a href="#home" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">HOME</a>
+<a href="#about" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">ABOUT</a>
+<a href="#menu" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">MENU</a>
+<a href="#location" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">LOCATION</a>
 </nav>
 
 <div class="hidden md:block">
-<a href="#" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700">ONLINE STORE</a>
+<a href="#" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">
+ONLINE STORE
+</a>
 </div>
 
-<!-- ★ 修正：見切れ防止 -->
-<button id="menu-btn"
-class="md:hidden p-3 -mr-2 relative z-50">
+<!-- ✔ 見切れ修正 -->
+<button id="menu-btn" class="md:hidden p-3 z-50 mr-1">
 <div class="w-6 h-0.5 bg-gray-800 mb-1.5 transition-all" id="bar1"></div>
 <div class="w-6 h-0.5 bg-gray-800 transition-all" id="bar2"></div>
 </button>
@@ -93,137 +69,167 @@ class="md:hidden p-3 -mr-2 relative z-50">
 </div>
 </header>
 
-<!-- モバイルメニュー -->
 <div id="mobile-menu"
 class="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center space-y-8 font-eng text-2xl hidden opacity-0 transition-opacity duration-300">
-<a href="#home" class="mobile-link">HOME</a>
-<a href="#about" class="mobile-link">ABOUT</a>
-<a href="#menu" class="mobile-link">MENU</a>
-<a href="#location" class="mobile-link">LOCATION</a>
+<a href="#home" class="mobile-link hover:text-blue-600">HOME</a>
+<a href="#about" class="mobile-link hover:text-blue-600">ABOUT</a>
+<a href="#menu" class="mobile-link hover:text-blue-600">MENU</a>
+<a href="#location" class="mobile-link hover:text-blue-600">LOCATION</a>
+<a href="#" class="text-sm bg-gray-900 text-white px-8 py-3 mt-4">ONLINE STORE</a>
 </div>
 
 <main id="app-content" class="flex-grow pt-16 sm:pt-20"></main>
 
-<footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs">
-© 2024 Blue Harbor Coffee
+<footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">
+&copy; 2024 Blue Harbor Coffee Roasters.
 </footer>
 
 <script>
-const pages={
 
-menu:`
-<div class="max-w-5xl mx-auto py-20 px-6">
+/* ============================= */
+/*         PAGE CONTENT          */
+/* ============================= */
 
-<div class="wood-board p-10 rounded-lg">
+const pages = {
 
-<h2 class="text-4xl font-eng font-bold text-center mb-10">
-MENU
-</h2>
+/* ===== HOME（元のまま） ===== */
+home: `
+<section class="relative h-[80vh] w-full bg-gray-900 overflow-hidden page-enter">
+<img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=2000&q=80"
+class="absolute inset-0 w-full h-full object-cover opacity-70">
 
-<div class="grid md:grid-cols-2 gap-10">
+<div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
+<p class="font-eng tracking-[0.3em] text-sm mb-4 text-blue-200">ROASTERY & CAFE</p>
+<h2 class="text-4xl md:text-6xl font-eng font-bold mb-8">BREW THE BLUE</h2>
+<a href="#menu" class="bg-white text-gray-900 font-bold px-8 py-3 text-sm hover:bg-blue-600 hover:text-white transition">
+VIEW MENU
+</a>
+</div>
+</section>
+`,
 
-<!-- COFFEE -->
-<div>
-<h3 class="font-eng text-xl font-bold mb-6 border-b pb-2">
-COFFEE / ESPRESSO
-</h3>
+/* ========================================================= */
+/* ====================  ★ MENU ONLY ★  ===================== */
+/* ========================================================= */
 
-<div class="space-y-4">
+menu: `
+<div class="min-h-screen py-20 px-6 page-enter"
+style="background:url('https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=2000&q=80') center/cover fixed">
 
-<div class="menu-item">
-<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=300&q=80">
-<div class="flex-1">
+<div class="max-w-4xl mx-auto bg-[#fdf6e3]/95 backdrop-blur p-10 rounded shadow-2xl border-4 border-[#6b4f2a]">
+
+<h2 class="text-4xl font-eng font-bold text-center mb-10 text-[#4b2e0f]">MENU</h2>
+
+<div class="grid md:grid-cols-2 gap-8">
+
+<!-- ITEM -->
+<div class="bg-white p-4 rounded shadow">
+<img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80"
+class="h-40 w-full object-cover rounded mb-3">
+<div class="flex justify-between">
 <h4 class="font-bold">ハンドドリップ</h4>
-<p class="text-xs opacity-80">¥600~</p>
+<span class="font-eng font-bold">¥600~</span>
 </div>
 </div>
 
-<div class="menu-item">
-<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=300&q=80">
-<div class="flex-1">
-<h4 class="font-bold">アメリカーノ</h4>
-<p class="text-xs opacity-80">¥500</p>
-</div>
-</div>
-
-<div class="menu-item">
-<img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=300&q=80">
-<div class="flex-1">
+<div class="bg-white p-4 rounded shadow">
+<img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&w=800&q=80"
+class="h-40 w-full object-cover rounded mb-3">
+<div class="flex justify-between">
 <h4 class="font-bold">カフェラテ</h4>
-<p class="text-xs opacity-80">¥600</p>
+<span class="font-eng font-bold">¥600</span>
 </div>
 </div>
 
+<div class="bg-white p-4 rounded shadow">
+<img src="https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&w=800&q=80"
+class="h-40 w-full object-cover rounded mb-3">
+<div class="flex justify-between">
+<h4 class="font-bold">コールドブリュー</h4>
+<span class="font-eng font-bold">¥600</span>
 </div>
 </div>
 
-<!-- FOOD -->
-<div>
-<h3 class="font-eng text-xl font-bold mb-6 border-b pb-2">
-FOOD / OTHERS
-</h3>
-
-<div class="space-y-4">
-
-<div class="menu-item">
-<img src="https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?w=300&q=80">
-<div class="flex-1">
-<h4 class="font-bold">自家製レモネード</h4>
-<p class="text-xs opacity-80">¥550</p>
-</div>
-</div>
-
-<div class="menu-item">
-<img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=300&q=80">
-<div class="flex-1">
-<h4 class="font-bold">厚切りトースト</h4>
-<p class="text-xs opacity-80">¥450</p>
-</div>
-</div>
-
-<div class="menu-item">
-<img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=300&q=80">
-<div class="flex-1">
+<div class="bg-white p-4 rounded shadow">
+<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80"
+class="h-40 w-full object-cover rounded mb-3">
+<div class="flex justify-between">
 <h4 class="font-bold">クラシックプリン</h4>
-<p class="text-xs opacity-80">¥500</p>
+<span class="font-eng font-bold">¥500</span>
 </div>
 </div>
 
 </div>
 </div>
+</div>
+`,
 
-</div>
-</div>
-</div>
-`
+/* ===== ABOUT（元のまま簡略） ===== */
+about:`<div class="py-32 text-center page-enter"><h2 class="text-4xl font-eng font-bold">ABOUT US</h2></div>`,
+
+/* ===== LOCATION（元のまま簡略） ===== */
+location:`<div class="py-32 text-center page-enter"><h2 class="text-4xl font-eng font-bold">LOCATION</h2></div>`
+
 };
 
-const app=document.getElementById("app-content");
 
-function navigate(){
-const hash=location.hash.replace("#","")||"menu";
-app.innerHTML=pages[hash]||pages.menu;
+/* ============================= */
+/*          ROUTING              */
+/* ============================= */
+
+const appContent=document.getElementById('app-content');
+const navLinks=document.querySelectorAll('.nav-link');
+const mobileLinks=document.querySelectorAll('.mobile-link');
+const menuBtn=document.getElementById('menu-btn');
+const mobileMenu=document.getElementById('mobile-menu');
+const bars=[document.getElementById('bar1'),document.getElementById('bar2')];
+
+let isMenuOpen=false;
+
+menuBtn.addEventListener('click',()=>toggleMenu());
+
+function toggleMenu(forceClose=false){
+if(forceClose)isMenuOpen=true;
+isMenuOpen=!isMenuOpen;
+
+if(isMenuOpen){
+mobileMenu.classList.remove('hidden');
+setTimeout(()=>mobileMenu.classList.remove('opacity-0'),10);
+bars[0].style.transform='rotate(45deg) translate(5px,6px)';
+bars[1].style.transform='rotate(-45deg) translate(5px,-6px)';
+}else{
+mobileMenu.classList.add('opacity-0');
+setTimeout(()=>mobileMenu.classList.add('hidden'),300);
+bars[0].style.transform='none';
+bars[1].style.transform='none';
+}
 }
 
-window.addEventListener("load",navigate);
-window.addEventListener("hashchange",navigate);
+function navigate(){
+const hash=location.hash.replace('#','')||'home';
+const page=pages[hash]?hash:'home';
 
-/* ハンバーガー */
-const btn=document.getElementById("menu-btn");
-const mobile=document.getElementById("mobile-menu");
-const bars=[bar1,bar2];
-let open=false;
+appContent.innerHTML='';
+setTimeout(()=>{
+appContent.innerHTML=pages[page];
+window.scrollTo(0,0);
+},10);
 
-btn.onclick=()=>{
-open=!open;
-mobile.classList.toggle("hidden",!open);
-mobile.classList.toggle("opacity-0",!open);
+navLinks.forEach(link=>{
+if(link.getAttribute('href')===`#${page}`) link.classList.add('active');
+else link.classList.remove('active');
+});
 
-bars[0].style.transform=open?
-"rotate(45deg) translate(5px,6px)":"none";
-bars[1].style.transform=open?
-"rotate(-45deg) translate(5px,-6px)":"none";
-};
+if(isMenuOpen) toggleMenu(true);
+}
+
+window.addEventListener('load',navigate);
+window.addEventListener('hashchange',navigate);
+
+mobileLinks.forEach(link=>{
+link.addEventListener('click',()=>toggleMenu(true));
+});
+
 </script>
 
 </body>
