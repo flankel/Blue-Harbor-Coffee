@@ -26,11 +26,11 @@
 </head>
 <body class="bg-white flex flex-col min-h-screen">
 
-    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 h-16 sm:h-20">
-        <div class="max-w-6xl mx-auto px-6 h-full flex justify-between items-center">
+    <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 h-16 sm:h-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
             <a href="#home" class="flex items-center gap-2 group z-50">
-                <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                <span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
+                <svg class="w-7 h-7 sm:w-8 sm:h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span class="font-eng font-bold text-base sm:text-lg tracking-widest text-gray-800 uppercase">Blue Harbor</span>
             </a>
 
             <nav class="hidden md:flex space-x-8 font-eng text-sm font-medium tracking-wide">
@@ -44,9 +44,9 @@
                 <a href="#" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">ONLINE STORE</a>
             </div>
 
-            <button id="menu-btn" class="md:hidden p-3 -mr-2 z-50 flex flex-col items-center justify-center w-12 h-12 outline-none">
-                <div class="w-6 h-0.5 bg-gray-800 mb-1.5 transition-all duration-300" id="bar1"></div>
-                <div class="w-6 h-0.5 bg-gray-800 transition-all duration-300" id="bar2"></div>
+            <button id="menu-btn" class="md:hidden flex flex-col items-center justify-center w-10 h-10 z-50 focus:outline-none bg-gray-50 rounded-md">
+                <div class="w-5 h-0.5 bg-gray-800 mb-1.5 transition-all duration-300" id="bar1"></div>
+                <div class="w-5 h-0.5 bg-gray-800 transition-all duration-300" id="bar2"></div>
             </button>
         </div>
     </header>
@@ -72,19 +72,17 @@
                 </p>
             </div>
             <div>
-                <h5 class="font-eng font-bold text-sm mb-4 text-gray-400">FOLLOW US</h5>
+                <h5 class="font-eng font-bold text-sm mb-4 text-gray-400 uppercase">Follow Us</h5>
                 <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-blue-700 transition">Instagram</a>
-                    <a href="#" class="text-gray-400 hover:text-blue-700 transition">Twitter</a>
-                    <a href="#" class="text-gray-400 hover:text-blue-700 transition">Facebook</a>
+                    <a href="#" class="text-gray-400 hover:text-blue-700 transition text-sm">Instagram</a>
+                    <a href="#" class="text-gray-400 hover:text-blue-700 transition text-sm">Twitter</a>
                 </div>
             </div>
             <div>
-                <h5 class="font-eng font-bold text-sm mb-4 text-gray-400">LINKS</h5>
+                <h5 class="font-eng font-bold text-sm mb-4 text-gray-400 uppercase">Links</h5>
                 <ul class="text-sm space-y-2 text-gray-500">
                     <li><a href="#" class="hover:underline">Contact Us</a></li>
                     <li><a href="#" class="hover:underline">Wholesale</a></li>
-                    <li><a href="#" class="hover:underline">Careers</a></li>
                 </ul>
             </div>
         </div>
@@ -97,7 +95,7 @@
         const pages = {
             home: `
                 <section class="relative h-[80vh] md:h-[600px] w-full bg-gray-900 overflow-hidden page-enter">
-                    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70">
                     <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
                         <p class="font-eng tracking-[0.3em] text-sm md:text-base mb-4 text-blue-200">ROASTERY & CAFE</p>
                         <h2 class="text-4xl md:text-6xl font-eng font-bold mb-8">BREW THE BLUE</h2>
@@ -109,98 +107,91 @@
                         <div class="md:w-1/2">
                             <span class="text-blue-600 font-bold text-xs tracking-widest mb-2 block font-eng">OUR BEANS</span>
                             <h3 class="text-3xl font-bold mb-6">個性豊かなシングルオリジン</h3>
-                            <p class="text-gray-600 leading-loose mb-6">
-                                私たちは世界中の農園を巡り、生産者の情熱が詰まった豆を厳選しています。
-                                店内の大型焙煎機で、それぞれの豆が持つフルーティーな酸味や香ばしい苦味を最大限に引き出します。
-                            </p>
+                            <p class="text-gray-600 leading-loose mb-6">世界中の農園から厳選した豆を、店内の焙煎機で最高の一杯に仕上げます。</p>
                             <a href="#about" class="text-sm font-bold border-b border-gray-300 pb-1 hover:border-blue-600 transition">MORE ABOUT US →</a>
                         </div>
                         <div class="md:w-1/2 grid grid-cols-2 gap-4">
-                            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover bg-gray-200">
-                            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover bg-gray-200 mt-8">
+                            <img src="https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover">
+                            <img src="https://images.unsplash.com/photo-1442551320318-798d76127821?auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover mt-8">
                         </div>
                     </div>
                 </section>
             `,
             menu: `
-                <div class="min-h-screen bg-[url('https://images.unsplash.com/photo-1589939705384-5185138a047a?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed py-20 px-4">
-                    <div class="max-w-5xl mx-auto bg-[#1a1a1a] text-white p-8 md:p-16 shadow-2xl rounded-sm border-[12px] border-[#3d2b1f] relative page-enter">
-                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-12 hidden md:flex">
-                            <div class="w-4 h-16 bg-gray-800 rounded-full"></div>
-                            <div class="w-4 h-16 bg-gray-800 rounded-full"></div>
-                        </div>
-
-                        <h2 class="text-5xl font-eng font-bold text-center mb-4 tracking-tighter">TODAY'S MENU</h2>
-                        <p class="text-center text-gray-400 mb-16 font-eng tracking-widest text-sm italic">Handcrafted with Passion</p>
+                <div class="min-h-screen bg-[url('https://images.unsplash.com/photo-1589939705384-5185138a047a?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed py-12 md:py-20 px-4">
+                    <div class="max-w-5xl mx-auto bg-[#1a1a1a] text-white p-6 md:p-16 shadow-2xl rounded-sm border-[8px] md:border-[12px] border-[#3d2b1f] relative page-enter">
                         
-                        <div class="grid lg:grid-cols-2 gap-x-16 gap-y-12">
+                        <h2 class="text-3xl md:text-5xl font-eng font-bold text-center mb-4 tracking-tighter">TODAY'S MENU</h2>
+                        <p class="text-center text-gray-400 mb-12 font-eng tracking-widest text-xs md:text-sm italic">Freshly Roasted Every Day</p>
+                        
+                        <div class="grid lg:grid-cols-2 gap-x-12 gap-y-10">
                             <div>
-                                <h3 class="font-eng text-2xl font-bold border-b border-white/30 pb-2 mb-8 flex items-center gap-2">
+                                <h3 class="font-eng text-xl md:text-2xl font-bold border-b border-white/20 pb-2 mb-6 flex items-center gap-2">
                                     <span class="w-2 h-2 bg-blue-500 rounded-full"></span> COFFEE / ESPRESSO
                                 </h3>
-                                <div class="space-y-8">
-                                    <div class="flex gap-4">
-                                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
+                                <div class="space-y-6">
+                                    <div class="flex gap-4 items-center">
+                                        <img src="https://images.unsplash.com/photo-1458819714733-e5ab3d536722?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded shadow-md grayscale-[20%]">
                                         <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">ハンドドリップ</h4><span class="font-eng">¥600~</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">その日おすすめの豆を丁寧に抽出します</p>
+                                            <div class="flex justify-between items-baseline"><h4 class="font-bold text-sm md:text-base">ハンドドリップ</h4><span class="font-eng text-sm">¥600~</span></div>
+                                            <p class="text-[10px] md:text-xs text-gray-400 mt-1">選りすぐりの豆を丁寧に抽出</p>
                                         </div>
                                     </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
+                                    <div class="flex gap-4 items-center">
+                                        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded shadow-md">
                                         <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">アメリカーノ</h4><span class="font-eng">¥500</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">深いコクとスッキリした喉越し</p>
+                                            <div class="flex justify-between items-baseline"><h4 class="font-bold text-sm md:text-base">アメリカーノ</h4><span class="font-eng text-sm">¥500</span></div>
+                                            <p class="text-[10px] md:text-xs text-gray-400 mt-1">スッキリとしたブラックコーヒー</p>
                                         </div>
                                     </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
+                                    <div class="flex gap-4 items-center">
+                                        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded shadow-md">
                                         <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">カフェラテ</h4><span class="font-eng">¥600</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">きめ細やかなスチームミルクとの調和</p>
+                                            <div class="flex justify-between items-baseline"><h4 class="font-bold text-sm md:text-base">カフェラテ</h4><span class="font-eng text-sm">¥600</span></div>
+                                            <p class="text-[10px] md:text-xs text-gray-400 mt-1">まろやかなミルクとのハーモニー</p>
                                         </div>
                                     </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://images.unsplash.com/photo-1594631252845-29fc458695d3?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
+                                    <div class="flex gap-4 items-center">
+                                        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded shadow-md">
                                         <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">フラットホワイト</h4><span class="font-eng">¥650</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">エスプレッソの強さを感じる濃厚な味わい</p>
+                                            <div class="flex justify-between items-baseline"><h4 class="font-bold text-sm md:text-base">フラットホワイト</h4><span class="font-eng text-sm">¥650</span></div>
+                                            <p class="text-[10px] md:text-xs text-gray-400 mt-1">濃厚なエスプレッソ感を楽しむ一杯</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
                             <div>
-                                <h3 class="font-eng text-2xl font-bold border-b border-white/30 pb-2 mb-8 flex items-center gap-2">
+                                <h3 class="font-eng text-xl md:text-2xl font-bold border-b border-white/20 pb-2 mb-6 flex items-center gap-2">
                                     <span class="w-2 h-2 bg-blue-500 rounded-full"></span> FOOD / OTHERS
                                 </h3>
-                                <div class="space-y-8">
-                                    <div class="flex gap-4">
-                                        <img src="https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
+                                <div class="space-y-6">
+                                    <div class="flex gap-4 items-center">
+                                        <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded shadow-md">
                                         <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">厚切りバタートースト</h4><span class="font-eng">¥450</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">外はカリッと、中はもちもちの自家製パン</p>
+                                            <div class="flex justify-between items-baseline"><h4 class="font-bold text-sm md:text-base">厚切りバタートースト</h4><span class="font-eng text-sm">¥450</span></div>
+                                            <p class="text-[10px] md:text-xs text-gray-400 mt-1">自家製パンの香ばしい味わい</p>
                                         </div>
                                     </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
+                                    <div class="flex gap-4 items-center">
+                                        <img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded shadow-md">
                                         <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">クラシックプリン</h4><span class="font-eng">¥500</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">少し硬めの、卵の濃さを感じる伝統の味</p>
+                                            <div class="flex justify-between items-baseline"><h4 class="font-bold text-sm md:text-base">クラシックプリン</h4><span class="font-eng text-sm">¥500</span></div>
+                                            <p class="text-[10px] md:text-xs text-gray-400 mt-1">しっかり固めの卵プリン</p>
                                         </div>
                                     </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://images.unsplash.com/photo-1559598467-f8b76c8155d0?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
+                                    <div class="flex gap-4 items-center">
+                                        <img src="https://images.unsplash.com/photo-1523371054106-bbf80582c28f?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded shadow-md">
                                         <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">自家製レモネード</h4><span class="font-eng">¥550</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">瀬戸内レモンをたっぷり使った爽やかな一杯</p>
+                                            <div class="flex justify-between items-baseline"><h4 class="font-bold text-sm md:text-base">自家製レモネード</h4><span class="font-eng text-sm">¥550</span></div>
+                                            <p class="text-[10px] md:text-xs text-gray-400 mt-1">瀬戸内レモンのシロップ漬けを使用</p>
                                         </div>
                                     </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://images.unsplash.com/photo-1582211594533-268f4f1edeb9?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
+                                    <div class="flex gap-4 items-center">
+                                        <img src="https://images.unsplash.com/photo-1589119908995-c6837fa14848?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded shadow-md">
                                         <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">季節のスコーン</h4><span class="font-eng">¥400</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">季節ごとに変わる具材をお楽しみください</p>
+                                            <div class="flex justify-between items-baseline"><h4 class="font-bold text-sm md:text-base">季節のスコーン</h4><span class="font-eng text-sm">¥400</span></div>
+                                            <p class="text-[10px] md:text-xs text-gray-400 mt-1">毎日店内で焼き上げる人気メニュー</p>
                                         </div>
                                     </div>
                                 </div>
@@ -211,34 +202,35 @@
             `,
             about: `
                 <div class="relative w-full h-[400px] bg-gray-800 page-enter">
-                    <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover opacity-50">
+                    <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover opacity-50">
                     <div class="absolute inset-0 flex items-center justify-center text-white">
-                        <h2 class="text-4xl font-eng font-bold tracking-widest">ABOUT US</h2>
+                        <h2 class="text-4xl font-eng font-bold tracking-widest uppercase">About Us</h2>
                     </div>
                 </div>
-                <div class="max-w-4xl mx-auto py-20 px-6 leading-loose text-gray-600 page-enter" style="animation-delay: 0.1s;">
+                <div class="max-w-4xl mx-auto py-20 px-6 leading-loose text-gray-600 page-enter">
                     <p class="text-lg mb-8 font-bold text-gray-900">「コーヒーのある風景」を、より豊かに。</p>
-                    <p class="mb-6">Blue Harbor Coffeeは、港の近くの小さな倉庫から始まりました。</p>
-                    <p class="mb-12">コーヒーは単なる飲み物ではなく、人と人をつなぐコミュニケーションツールであり、忙しい日常の中でホッと一息つくためのスイッチでもあります。</p>
-                    <div class="bg-gray-100 p-8 rounded-lg flex items-center gap-6">
-                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 rounded-full object-cover">
-                        <div><p class="font-bold text-gray-900">Head Roaster: Y. Tanaka</p><p class="text-sm">バリスタとしての経験を経て、焙煎士へ転向。</p></div>
+                    <p class="mb-6">潮風を感じる開放的な空間で、最高の一杯を提供したい。そんな想いから、私たちは毎日豆を焼き続けています。</p>
+                    <div class="bg-gray-100 p-8 rounded-lg flex items-center gap-6 mt-12">
+                        <img src="https://images.unsplash.com/photo-1581650111554-2c8b93bc39bd?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 rounded-full object-cover shadow-sm">
+                        <div><p class="font-bold text-gray-900">Head Roaster: Y. Tanaka</p><p class="text-sm">焙煎から抽出まで、全ての工程に情熱を注いでいます。</p></div>
                     </div>
                 </div>
             `,
             location: `
                 <div class="max-w-6xl mx-auto py-20 px-6 page-enter">
-                    <h2 class="text-3xl font-eng font-bold text-center mb-16">LOCATION & ACCESS</h2>
-                    <div class="grid md:grid-cols-2 gap-12 bg-white shadow-xl rounded-xl overflow-hidden">
-                        <div class="h-[400px] bg-gray-300 relative">
-                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.74779889311!2d139.7432442757859!3d35.65858473121703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bbd9009ec09%3A0x481fb2049e6122d7!2z5p2x5Lqs44K_44Ov44O8!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <h2 class="text-3xl font-eng font-bold text-center mb-16 uppercase">Location</h2>
+                    <div class="grid md:grid-cols-2 gap-12 bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100">
+                        <div class="h-[300px] md:h-auto bg-gray-100 flex items-center justify-center text-gray-400">
+                             <div class="text-center"><p class="font-eng text-xs mb-2 uppercase">Map Interface Placeholder</p><p class="text-xs">〒105-0011 東京都港区芝公園 4-2-8</p></div>
                         </div>
-                        <div class="p-12 flex flex-col justify-center text-gray-600">
-                            <h3 class="text-xl font-bold mb-6 text-gray-900">Blue Harbor Coffee</h3>
-                            <p class="mb-4">〒105-0011 東京都港区芝公園 4-2-8<br>ハーバーサイドビル 1F</p>
-                            <p class="mb-4">Mon - Fri: 8:00 - 19:00<br>Sat - Sun: 9:00 - 20:00</p>
-                            <p class="mb-8">TEL: 03-1234-5678</p>
-                            <a href="#" class="inline-block bg-blue-600 text-white font-bold px-6 py-3 rounded text-sm hover:bg-blue-700 transition w-fit">GOOGLE MAPS</a>
+                        <div class="p-8 md:p-12 flex flex-col justify-center text-gray-600">
+                            <h3 class="text-xl font-bold mb-6 text-gray-900 uppercase">Blue Harbor Coffee</h3>
+                            <div class="space-y-4 text-sm leading-relaxed">
+                                <p>〒105-0011 東京都港区芝公園 4-2-8<br>ハーバーサイドビル 1F</p>
+                                <p>Mon - Fri: 8:00 - 19:00<br>Sat - Sun: 9:00 - 20:00</p>
+                                <p>TEL: 03-1234-5678</p>
+                            </div>
+                            <a href="#" class="mt-8 inline-block bg-blue-600 text-white font-bold px-8 py-3 rounded-full text-xs hover:bg-blue-700 transition w-fit shadow-lg shadow-blue-200 uppercase tracking-widest">Open Google Maps</a>
                         </div>
                     </div>
                 </div>
