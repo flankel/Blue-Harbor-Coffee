@@ -27,40 +27,44 @@
 <body class="bg-white flex flex-col min-h-screen">
 
     <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 h-16 sm:h-20">
-        <div class="max-w-6xl mx-auto px-6 h-full flex justify-between items-center">
-            <a href="#home" class="flex items-center gap-2 group z-50">
-                <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                <span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-between items-center gap-2">
+            <a href="#home" class="flex items-center gap-1 sm:gap-2 group z-50 shrink-0">
+                <svg class="w-6 h-6 sm:w-8 sm:h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span class="font-eng font-bold text-sm sm:text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
             </a>
 
-            <nav class="hidden md:flex space-x-8 font-eng text-sm font-medium tracking-wide">
-                <a href="#home" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">HOME</a>
-                <a href="#about" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">ABOUT</a>
-                <a href="#menu" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">MENU</a>
-                <a href="#location" class="nav-link text-gray-500 hover:text-blue-700 transition py-1">LOCATION</a>
+            <nav class="flex items-center space-x-3 sm:space-x-8 font-eng text-[10px] sm:text-sm font-medium tracking-wide">
+                <a href="#home" class="nav-link text-gray-500 hover:text-blue-700 transition py-1 flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    <span>HOME</span>
+                </a>
+                <a href="#about" class="nav-link text-gray-500 hover:text-blue-700 transition py-1 flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>ABOUT</span>
+                </a>
+                <a href="#menu" class="nav-link text-gray-500 hover:text-blue-700 transition py-1 flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    <span>MENU</span>
+                </a>
+                <a href="#location" class="nav-link text-gray-500 hover:text-blue-700 transition py-1 flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1.5">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>ACCESS</span>
+                </a>
             </nav>
 
-            <div class="hidden md:block">
+            <div class="hidden lg:block">
                 <a href="#" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">ONLINE STORE</a>
             </div>
 
-            <button id="menu-btn" class="md:hidden p-3 -mr-2 z-50 flex flex-col items-center justify-center w-12 h-12 outline-none">
-                <div class="w-6 h-0.5 bg-gray-800 mb-1.5 transition-all duration-300" id="bar1"></div>
-                <div class="w-6 h-0.5 bg-gray-800 transition-all duration-300" id="bar2"></div>
-            </button>
+            <button id="menu-btn" class="hidden"></button>
+            <div id="bar1"></div><div id="bar2"></div>
         </div>
     </header>
 
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center space-y-8 font-eng text-2xl hidden opacity-0 transition-opacity duration-300">
-        <a href="#home" class="mobile-link hover:text-blue-600">HOME</a>
-        <a href="#about" class="mobile-link hover:text-blue-600">ABOUT</a>
-        <a href="#menu" class="mobile-link hover:text-blue-600">MENU</a>
-        <a href="#location" class="mobile-link hover:text-blue-600">LOCATION</a>
-        <a href="#" class="text-sm bg-gray-900 text-white px-8 py-3 mt-4">ONLINE STORE</a>
-    </div>
+    <div id="mobile-menu" class="hidden"></div>
 
     <main id="app-content" class="flex-grow pt-16 sm:pt-20">
-        </main>
+    </main>
 
     <footer class="bg-gray-50 border-t border-gray-200 py-12">
         <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
@@ -258,16 +262,16 @@
         function toggleMenu(forceClose = false) {
             if (forceClose) isMenuOpen = true;
             isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
+            if (isMenuOpen && mobileMenu) {
                 mobileMenu.classList.remove('hidden');
                 setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
-                bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
-                bars[1].style.transform = 'rotate(-45deg) translate(5px, -6px)';
-            } else {
+                if(bars[0]) bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+                if(bars[1]) bars[1].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+            } else if (mobileMenu) {
                 mobileMenu.classList.add('opacity-0');
                 setTimeout(() => mobileMenu.classList.add('hidden'), 300);
-                bars[0].style.transform = 'none';
-                bars[1].style.transform = 'none';
+                if(bars[0]) bars[0].style.transform = 'none';
+                if(bars[1]) bars[1].style.transform = 'none';
             }
         }
 
