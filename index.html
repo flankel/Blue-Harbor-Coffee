@@ -9,86 +9,94 @@
     <style>
         body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #333; }
         .font-eng { font-family: 'Jost', sans-serif; }
-        
-        .page-enter {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
+        .page-enter { animation: fadeIn 0.6s ease-out forwards; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .nav-link.active {
-            border-bottom: 2px solid #3b82f6;
-            color: #1d4ed8;
-        }
-        .nav-link.active svg {
-            color: #1d4ed8;
-        }
+        .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
+        .nav-link.active svg { color: #1d4ed8; }
     </style>
 </head>
 <body class="bg-white flex flex-col min-h-screen">
-
     <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
         <div class="max-w-6xl mx-auto px-6 h-16 sm:h-20 flex justify-between items-center">
-            <a href="#home" class="flex items-center gap-2 group z-50">
+            <a href="index.html" class="flex items-center gap-2 group z-50">
                 <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 <span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
             </a>
-
             <nav class="hidden md:flex space-x-8 font-eng text-[10px] font-bold tracking-wide">
-                <a href="#home" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+                <a href="index.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     <span>HOME</span>
                 </a>
-                <a href="#about" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+                <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span>ABOUT</span>
                 </a>
-                <a href="#menu" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+                <a href="menu.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                     <span>MENU</span>
                 </a>
-                <a href="#location" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+                <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     <span>LOCATION</span>
                 </a>
             </nav>
-
             <div class="hidden md:block">
-                <a href="#" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">ONLINE STORE</a>
+                <a href="onlineStore.html" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">ONLINE STORE</a>
             </div>
-
-            <button id="menu-btn" class="hidden"><div id="bar1"></div><div id="bar2"></div></button>
         </div>
-
         <nav class="md:hidden border-t border-gray-50 bg-gray-50/50 flex justify-around items-center py-2 px-1">
-            <a href="#home" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+            <a href="index.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 transition group">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 <span class="font-eng text-[9px] font-bold">HOME</span>
             </a>
-            <a href="#about" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+            <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <span class="font-eng text-[9px] font-bold">ABOUT</span>
             </a>
-            <a href="#menu" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+            <a href="menu.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                 <span class="font-eng text-[9px] font-bold">MENU</span>
             </a>
-            <a href="#location" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+            <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 <span class="font-eng text-[9px] font-bold">ACCESS</span>
             </a>
-            <a href="#" class="flex flex-col items-center gap-1 text-blue-600 transition group">
+            <a href="onlineStore.html" class="flex flex-col items-center gap-1 text-blue-600 transition group">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                 <span class="font-eng text-[9px] font-bold uppercase">Store</span>
             </a>
         </nav>
     </header>
 
-    <div id="mobile-menu" class="hidden"></div>
-
-    <main id="app-content" class="flex-grow pt-[112px] md:pt-28">
+    <main class="flex-grow pt-[112px] md:pt-28">
+        <section class="relative h-[80vh] md:h-[600px] w-full bg-gray-900 overflow-hidden page-enter">
+            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70">
+            <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
+                <p class="font-eng tracking-[0.3em] text-sm md:text-base mb-4 text-blue-200">ROASTERY & CAFE</p>
+                <h2 class="text-4xl md:text-6xl font-eng font-bold mb-8">BREW THE BLUE</h2>
+                <a href="menu.html" class="bg-white text-gray-900 font-bold px-8 py-3 text-sm hover:bg-blue-600 hover:text-white transition duration-300">VIEW MENU</a>
+            </div>
+        </section>
+        <section class="py-20 px-6 max-w-6xl mx-auto page-enter" style="animation-delay: 0.1s;">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2">
+                    <span class="text-blue-600 font-bold text-xs tracking-widest mb-2 block font-eng">OUR BEANS</span>
+                    <h3 class="text-3xl font-bold mb-6">個性豊かなシングルオリジン</h3>
+                    <p class="text-gray-600 leading-loose mb-6">
+                        私たちは世界中の農園を巡り、生産者の情熱が詰まった豆を厳選しています。
+                        店内の大型焙煎機で、それぞれの豆が持つフルーティーな酸味や香ばしい苦味を最大限に引き出します。
+                    </p>
+                    <a href="aboutUs.html" class="text-sm font-bold border-b border-gray-300 pb-1 hover:border-blue-600 transition">MORE ABOUT US →</a>
+                </div>
+                <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover bg-gray-200 mt-8">
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="bg-gray-50 border-t border-gray-200 py-12">
@@ -121,189 +129,5 @@
             © 2024 Blue Harbor Coffee Roasters.
         </div>
     </footer>
-
-    <script>
-        const pages = {
-            home: `
-                <section class="relative h-[80vh] md:h-[600px] w-full bg-gray-900 overflow-hidden page-enter">
-                    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover opacity-70">
-                    <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
-                        <p class="font-eng tracking-[0.3em] text-sm md:text-base mb-4 text-blue-200">ROASTERY & CAFE</p>
-                        <h2 class="text-4xl md:text-6xl font-eng font-bold mb-8">BREW THE BLUE</h2>
-                        <a href="#menu" class="bg-white text-gray-900 font-bold px-8 py-3 text-sm hover:bg-blue-600 hover:text-white transition duration-300">VIEW MENU</a>
-                    </div>
-                </section>
-                <section class="py-20 px-6 max-w-6xl mx-auto page-enter" style="animation-delay: 0.1s;">
-                    <div class="flex flex-col md:flex-row gap-12 items-center">
-                        <div class="md:w-1/2">
-                            <span class="text-blue-600 font-bold text-xs tracking-widest mb-2 block font-eng">OUR BEANS</span>
-                            <h3 class="text-3xl font-bold mb-6">個性豊かなシングルオリジン</h3>
-                            <p class="text-gray-600 leading-loose mb-6">
-                                私たちは世界中の農園を巡り、生産者の情熱が詰まった豆を厳選しています。
-                                店内の大型焙煎機で、それぞれの豆が持つフルーティーな酸味や香ばしい苦味を最大限に引き出します。
-                            </p>
-                            <a href="#about" class="text-sm font-bold border-b border-gray-300 pb-1 hover:border-blue-600 transition">MORE ABOUT US →</a>
-                        </div>
-                        <div class="md:w-1/2 grid grid-cols-2 gap-4">
-                            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover bg-gray-200">
-                            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="rounded aspect-square object-cover bg-gray-200 mt-8">
-                        </div>
-                    </div>
-                </section>
-            `,
-            menu: `
-                <div class="min-h-screen bg-[url('https://images.unsplash.com/photo-1589939705384-5185138a047a?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed py-20 px-4">
-                    <div class="max-w-5xl mx-auto bg-[#1a1a1a] text-white p-8 md:p-16 shadow-2xl rounded-sm border-[12px] border-[#3d2b1f] relative page-enter">
-                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-12 hidden md:flex">
-                            <div class="w-4 h-16 bg-gray-800 rounded-full"></div>
-                            <div class="w-4 h-16 bg-gray-800 rounded-full"></div>
-                        </div>
-
-                        <h2 class="text-5xl font-eng font-bold text-center mb-4 tracking-tighter">TODAY'S MENU</h2>
-                        <p class="text-center text-gray-400 mb-16 font-eng tracking-widest text-sm italic">Handcrafted with Passion</p>
-                        
-                        <div class="grid lg:grid-cols-2 gap-x-16 gap-y-12">
-                            <div>
-                                <h3 class="font-eng text-2xl font-bold border-b border-white/30 pb-2 mb-8 flex items-center gap-2">
-                                    <span class="w-2 h-2 bg-blue-500 rounded-full"></span> COFFEE / ESPRESSO
-                                </h3>
-                                <div class="space-y-8">
-                                    <div class="flex gap-4">
-                                        <img src="https://i.etsystatic.com/34614169/r/il/af3200/4923349471/il_fullxfull.4923349471_oyow.jpg" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
-                                        <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">ハンドドリップ</h4><span class="font-eng">¥600~</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">その日おすすめの豆を丁寧に抽出します</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://www.foodandwine.com/thmb/9JyfZPcxlV9ubEeuSznhO-M4q0w%3D/1500x0/filters%3Ano_upscale%28%29%3Amax_bytes%28150000%29%3Astrip_icc%28%29/Partners-Americano-FT-BLOG0523-b8e18cc340574cc9bed536cceeec7082.jpg" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
-                                        <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">アメリカーノ</h4><span class="font-eng">¥500</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">深いコクとスッキリした喉越し</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://p2.piqsels.com/preview/1019/445/295/coffee-cup-gingerbread-latte-thumbnail.jpg" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
-                                        <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">カフェラテ</h4><span class="font-eng">¥600</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">きめ細やかなスチームミルクとの調和</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://cdn.shopify.com/s/files/1/0975/0547/6789/files/Flat_White_Coffee.png?v=1770967776" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
-                                        <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">フラットホワイト</h4><span class="font-eng">¥650</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">エスプレッソの強さを感じる濃厚な味わい</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <h3 class="font-eng text-2xl font-bold border-b border-white/30 pb-2 mb-8 flex items-center gap-2">
-                                    <span class="w-2 h-2 bg-blue-500 rounded-full"></span> FOOD / OTHERS
-                                </h3>
-                                <div class="space-y-8">
-                                    <div class="flex gap-4">
-                                        <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2022/06/02/0/FNK_Hong-Kong-Style-Condensed-Milk-Toast_H1_s4x3.jpg.rend.hgtvcom.1280.1280.suffix/1654187504395.webp" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
-                                        <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">厚切りバタートースト</h4><span class="font-eng">¥450</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">外はカリッと、中はもちもちの自家製パン</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://www.allrecipes.com/thmb/nUV29pRMr7E4eKv01_ien0Q63Lw%3D/1500x0/filters%3Ano_upscale%28%29%3Amax_bytes%28150000%29%3Astrip_icc%28%29/1126323-chef-johns-creme-caramel-july2003me-1x1-1-476e3228a43148acb4c00231a81dc021.jpg" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
-                                        <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">クラシックプリン</h4><span class="font-eng">¥500</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">少し硬めの、卵の濃さを感じる伝統の味</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://www.wisdomlib.org/uploads/recipes/mason-jar-lemonade-19201.jpg" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
-                                        <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">自家製レモネード</h4><span class="font-eng">¥550</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">瀬戸内レモンをたっぷり使った爽やかな一杯</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-4">
-                                        <img src="https://magnolia.com/cdn/shop/articles/article_wild-blueberry-scones_bc8d15eb-c544-4428-9c88-5d261ecf8a95.jpg?v=1750266502&width=1100" class="w-20 h-20 object-cover rounded shadow-lg border border-white/10">
-                                        <div class="flex-grow">
-                                            <div class="flex justify-between items-baseline"><h4 class="font-bold">季節のスコーン</h4><span class="font-eng">¥400</span></div>
-                                            <p class="text-xs text-gray-400 mt-1">季節ごとに変わる具材をお楽しみください</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `,
-            about: `
-                <div class="relative w-full h-[400px] bg-gray-800 page-enter">
-                    <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover opacity-50">
-                    <div class="absolute inset-0 flex items-center justify-center text-white">
-                        <h2 class="text-4xl font-eng font-bold tracking-widest">ABOUT US</h2>
-                    </div>
-                </div>
-                <div class="max-w-4xl mx-auto py-20 px-6 leading-loose text-gray-600 page-enter" style="animation-delay: 0.1s;">
-                    <p class="text-lg mb-8 font-bold text-gray-900">「コーヒーのある風景」を、より豊かに。</p>
-                    <p class="mb-6">Blue Harbor Coffeeは、港の近くの小さな倉庫から始まりました。</p>
-                    <p class="mb-12">コーヒーは単なる飲み物ではなく、人と人をつなぐコミュニケーションツールであり、忙しい日常の中でホッと一息つくためのスイッチでもあります。</p>
-                    <div class="bg-gray-100 p-8 rounded-lg flex items-center gap-6">
-                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 rounded-full object-cover">
-                        <div><p class="font-bold text-gray-900">Head Roaster: Y. Tanaka</p><p class="text-sm">バリスタとしての経験を経て、焙煎士へ転向。</p></div>
-                    </div>
-                </div>
-            `,
-            location: `
-                <div class="max-w-6xl mx-auto py-20 px-6 page-enter">
-                    <h2 class="text-3xl font-eng font-bold text-center mb-16">LOCATION & ACCESS</h2>
-                    
-                    <div class="mb-16">
-                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=2000&q=80" class="w-full h-[300px] md:h-[500px] object-cover rounded-xl shadow-lg mb-4" alt="Shop Exterior">
-                        <p class="text-center text-gray-500 font-medium italic">Blue Harbor Coffee - Harborside Store</p>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-12 bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100">
-                        <div class="h-[400px] bg-gray-300 relative">
-                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.7479754683745!2d139.7428579763567!3d35.65858047259469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bbd9009b3f7%3A0x27a858e6a2557ff7!2z5p2x5Lqs44K_44Ov44O8!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                        </div>
-                        <div class="p-12 flex flex-col justify-center text-gray-600">
-                            <h3 class="text-xl font-bold mb-6 text-gray-900">Blue Harbor Coffee</h3>
-                            <p class="mb-4">〒105-0011 東京都港区芝公園 4-2-8<br>ハーバーサイドビル 1F</p>
-                            <p class="mb-4 font-eng">Mon - Fri: 8:00 - 19:00<br>Sat - Sun: 9:00 - 20:00</p>
-                            <p class="mb-8">TEL: 03-1234-5678</p>
-                            <a href="#" class="inline-block bg-blue-600 text-white font-bold px-6 py-3 rounded text-sm hover:bg-blue-700 transition w-fit">GOOGLE MAPS</a>
-                        </div>
-                    </div>
-                </div>
-            `
-        };
-
-        const appContent = document.getElementById('app-content');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        function navigate() {
-            const hash = location.hash.replace('#', '') || 'home';
-            const page = pages[hash] ? hash : 'home';
-            
-            appContent.innerHTML = ''; 
-            setTimeout(() => {
-                appContent.innerHTML = pages[page];
-                window.scrollTo(0, 0);
-            }, 10);
-
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === `#${page}`) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        }
-
-        window.addEventListener('load', navigate);
-        window.addEventListener('hashchange', navigate);
-    </script>
 </body>
 </html>
