@@ -11,11 +11,19 @@
         .font-eng { font-family: 'Jost', sans-serif; }
         .page-enter { animation: fadeIn 0.6s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* ナビゲーションのアクティブスタイル */
         .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
         .nav-link.active svg { color: #1d4ed8; }
+        /* メニューボードの質感 */
+        .menu-board {
+            background-color: #1a1a1a;
+            color: #f8f8f8;
+            border: 12px solid #3d2b1f;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
-<body class="bg-white flex flex-col min-h-screen">
+<body class="bg-gray-100 flex flex-col min-h-screen">
     <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
         <div class="max-w-6xl mx-auto px-6 h-16 sm:h-20 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2 group z-50">
@@ -68,23 +76,111 @@
         </nav>
     </header>
 
-    <main class="flex-grow pt-[112px] md:pt-28">
-        <div class="min-h-screen bg-[url('https://images.unsplash.com/photo-1589939705384-5185138a047a?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed py-20 px-4">
-            <div class="max-w-5xl mx-auto bg-[#1a1a1a] text-white p-8 md:p-16 shadow-2xl rounded-sm border-[12px] border-[#3d2b1f] relative page-enter">
-                <h2 class="text-5xl font-eng font-bold text-center mb-16 tracking-tighter">TODAY'S MENU</h2>
-                <div class="grid lg:grid-cols-2 gap-x-16 gap-y-12">
-                    <div>
-                        <h3 class="font-eng text-2xl font-bold border-b border-white/30 pb-2 mb-8">COFFEE</h3>
-                        <div class="space-y-8">
-                            <div class="flex gap-4">
-                                <img src="https://i.etsystatic.com/34614169/r/il/af3200/4923349471/il_fullxfull.4923349471_oyow.jpg" class="w-20 h-20 object-cover rounded shadow-lg">
+    <main class="flex-grow pt-[112px] md:pt-28 bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed">
+        <div class="py-12 md:py-20 px-4">
+            <div class="max-w-5xl mx-auto menu-board p-8 md:p-16 rounded-sm relative page-enter">
+                
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-6xl font-eng font-bold tracking-tighter mb-2">TODAY'S MENU</h2>
+                    <p class="text-blue-400 font-eng text-sm tracking-widest uppercase">Freshly Roasted in our Harbor</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-x-16 gap-y-16">
+                    <section>
+                        <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
+                            <span>COFFEE</span>
+                            <span class="text-[10px] text-gray-500 tracking-widest">DRIP & ESPRESSO</span>
+                        </h3>
+                        
+                        <div class="space-y-10">
+                            <div class="flex gap-5 group">
+                                <div class="overflow-hidden w-20 h-20 shrink-0 rounded shadow-md">
+                                    <img src="https://images.unsplash.com/photo-1544787210-2211d74fc596?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                </div>
                                 <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline"><h4 class="font-bold">ハンドドリップ</h4><span class="font-eng">¥600~</span></div>
-                                    <p class="text-xs text-gray-400 mt-1">おすすめの豆を丁寧に抽出します</p>
+                                    <div class="flex justify-between items-baseline mb-1">
+                                        <h4 class="font-bold text-lg">ハンドドリップ</h4>
+                                        <span class="font-eng text-blue-400">¥600~</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 leading-relaxed">季節ごとのシングルオリジンからお好みの豆を選べます。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-5 group">
+                                <div class="overflow-hidden w-20 h-20 shrink-0 rounded shadow-md">
+                                    <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1">
+                                        <h4 class="font-bold text-lg">カフェラテ</h4>
+                                        <span class="font-eng text-blue-400">¥650</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 leading-relaxed">濃厚なエスプレッソと、きめ細やかなスチームミルクの調和。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-5 group">
+                                <div class="overflow-hidden w-20 h-20 shrink-0 rounded shadow-md">
+                                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1">
+                                        <h4 class="font-bold text-lg">水出しアイスコーヒー</h4>
+                                        <span class="font-eng text-blue-400">¥600</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 leading-relaxed">12時間かけてゆっくりと抽出。雑味のないクリアな味わい。</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
+
+                    <section>
+                        <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
+                            <span>SWEETS & FOOD</span>
+                            <span class="text-[10px] text-gray-500 tracking-widest">HOMEMADE</span>
+                        </h3>
+                        
+                        <div class="space-y-10">
+                            <div class="flex gap-5 group">
+                                <div class="overflow-hidden w-20 h-20 shrink-0 rounded shadow-md">
+                                    <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1">
+                                        <h4 class="font-bold text-lg">自家製カヌレ</h4>
+                                        <span class="font-eng text-blue-400">¥450</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 leading-relaxed">外はカリッと、中はしっとり。ラム酒が香る大人の味。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-5 group">
+                                <div class="overflow-hidden w-20 h-20 shrink-0 rounded shadow-md">
+                                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1">
+                                        <h4 class="font-bold text-lg">アボカドトースト</h4>
+                                        <span class="font-eng text-blue-400">¥950</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 leading-relaxed">厚切りブレッドにたっぷりのアボカドとスパイスを。朝食に最適。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-5 group">
+                                <div class="overflow-hidden w-20 h-20 shrink-0 rounded shadow-md">
+                                    <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1">
+                                        <h4 class="font-bold text-lg">チョコチップクッキー</h4>
+                                        <span class="font-eng text-blue-400">¥380</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 leading-relaxed">ザクザクとした食感の大きなクッキー。浅煎りコーヒーに合います。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="mt-20 pt-10 border-t border-white/10 text-center">
+                    <p class="text-gray-500 text-xs font-eng tracking-widest">ALL PRICES INCLUDE TAX. TAKE OUT AVAILABLE.</p>
                 </div>
             </div>
         </div>
