@@ -246,24 +246,33 @@
 
         <span class="block w-12 h-px bg-gray-300 mx-auto mt-4"></span>
       </h2>
-      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200" class="w-full h-auto rounded-xl shadow-lg object-cover">
+<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 
-        <div>
-          <h3 class="text-2xl font-medium mb-6">
-            Taro Yamada — Founder & Head Barista
-          </h3>
+  <!-- 写真：モバイルでは2番目 -->
+  <img
+    src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200"
+    class="w-full h-auto rounded-xl shadow-lg object-cover order-2 md:order-1"
+  >
 
-          <p class="mb-4 leading-loose">
-            国内外の名店で研鑽を積んだ後、<br> “日常の中にある贅沢” を形にするために Blue Harbor Coffee を創設。
-          </p>
+  <!-- 説明文：モバイルでは3番目 -->
+  <div class="order-3 md:order-2">
+    <h3 class="text-2xl font-medium mb-6">
+      Taro Yamada — Founder & Head Barista
+    </h3>
 
-          <p class="leading-loose">
-            豆の選定、焙煎、抽出温度、提供タイミング。<br> すべては「最高の一杯」を届けるための要素です。
-          </p>
-        </div>
-      </div>
-    </section>
+    <p class="mb-4 leading-loose">
+      国内外の名店で研鑽を積んだ後、<br>
+      “日常の中にある贅沢” を形にするために Blue Harbor Coffee を創設。
+    </p>
+
+    <p class="leading-loose">
+      豆の選定、焙煎、抽出温度、提供タイミング。<br>
+      すべては「最高の一杯」を届けるための要素です。
+    </p>
+  </div>
+
+</div>    
+</section>
 
     <!-- BEANS -->
     <section class="bg-white py-24 px-6">
@@ -310,25 +319,32 @@
 
         <span class="block w-12 h-px bg-gray-300 mx-auto mt-4"></span>
       </h2>
-      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h3 class="text-2xl font-medium mb-6">
-            Santa Lucia Estate, Guatemala
-          </h3>
+      
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <!-- 写真（モバイルでは見出しの次） -->
+    <img
+      src="images/farmer.png"
+      class="w-full h-auto rounded-xl shadow-lg object-cover order-2 md:order-2"
+    >
 
-          <p class="mb-4 leading-loose">
-            品質・倫理・持続可能性を満たした農園のみと直接取引しています。
-          </p>
+    <!-- 説明文（モバイルでは写真の次） -->
+    <div class="order-3 md:order-1">
+      <h3 class="text-2xl font-medium mb-6">
+        Santa Lucia Estate, Guatemala
+      </h3>
 
-          <ul class="list-disc pl-6 space-y-2 leading-loose">
-            <li>華やかなフルーツの香り</li>
-            <li>ダークチョコレートのような深い甘み</li>
-            <li>透明感のある後味</li>
-          </ul>
-        </div>
+      <p class="mb-4 leading-loose">
+        品質・倫理・持続可能性を満たした農園のみと直接取引しています。
+      </p>
 
-        <img src="images/farmer.png" class="w-full h-auto rounded-xl shadow-lg object-cover">
-      </div>
+      <ul class="list-disc pl-6 space-y-2 leading-loose">
+        <li>華やかなフルーツの香り</li>
+        <li>ダークチョコレートのような深い甘み</li>
+        <li>透明感のある後味</li>
+      </ul>
+    </div>
+
+  </div>
     </section>
 
     <!-- FRUITS -->
@@ -377,22 +393,31 @@
         <span class="block w-12 h-px bg-amber-300 mx-auto mt-4"></span>
       </h2>
 
-      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        <img src="images/blueberry_lemon.png" class="w-full h-auto rounded-xl shadow-lg object-cover">
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-        <div>
-          <p class="mb-4 leading-loose">
-            デザートを彩るフルーツは、単なる装飾ではありません。コーヒー体験に季節の輝きとみずみずしい余韻を添える、もう一つの主役です。
-          </p>
+  <!-- 写真（モバイルでは最初） -->
+  <img
+    src="images/blueberry_lemon.png"
+    class="w-full h-auto rounded-xl shadow-lg object-cover order-2 md:order-1"
+  >
 
-          <ul class="list-disc pl-6 space-y-2 leading-loose">
-            <li>自然豊かな農園で丁寧に育てられたブルーベリーの凝縮した甘みと上品な酸味</li>
-            <li>自然豊かな農園で丁寧に育てられたブルーベリーの凝縮した甘みと上品な酸味</li>
-            <li>大地の恵みをそのまま感じられる、旬の果実のみずみずしさ</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+  <!-- 説明文（モバイルでは写真の次） -->
+  <div class="order-3 md:order-2">
+    <p class="mb-4 leading-loose">
+      デザートを彩るフルーツは、単なる装飾ではありません。
+      コーヒー体験に季節の輝きとみずみずしい余韻を添える、
+      もう一つの主役です。
+    </p>
+
+    <ul class="list-disc pl-6 space-y-2 leading-loose">
+      <li>自然豊かな農園で丁寧に育てられたブルーベリーの凝縮した甘みと上品な酸味</li>
+      <li>瀬戸内の穏やかな気候が育んだレモンの爽やかな香りと透明感のある酸味</li>
+      <li>大地の恵みをそのまま感じられる、旬の果実のみずみずしさ</li>
+    </ul>
+  </div>
+
+</div>
+</section>
 
   </main>
   <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">© 2024 Blue Harbor Coffee Roasters.</footer>
