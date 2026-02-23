@@ -1,185 +1,254 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Harbor Coffee | Specialty Coffee Roaster</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-  body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #333; }
-    .font-eng { font-family: 'Jost', sans-serif; }
-    .page-enter { animation: fadeIn 0.6s ease-out forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
-    .nav-link.active svg { color: #1d4ed8; }
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blue Harbor Coffee | Specialty Coffee Roaster</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      color: #333;
+    }
+
+    .font-eng {
+      font-family: 'Jost', sans-serif;
+    }
+
+    .page-enter {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nav-link.active {
+      border-bottom: 2px solid #3b82f6;
+      color: #1d4ed8;
+    }
+
+    .nav-link.active svg {
+      color: #1d4ed8;
+    }
   </style>
-  </head>
-  <body class="bg-white flex flex-col min-h-screen">
-    <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
-      <div class="max-w-6xl mx-auto px-6 h-16 sm:h-20 flex justify-between items-center">
-        <a href="index.html" class="flex items-center gap-2 group z-50">
-          <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+</head>
+
+<body class="bg-white flex flex-col min-h-screen">
+  <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-6 h-16 sm:h-20 flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-2 group z-50">
+        <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
           </svg>
-          <span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
-        </a>
-        <!-- Desktop Nav -->
-        <nav class="hidden md:flex space-x-8 font-eng text-[10px] font-bold tracking-wide">
-          <a href="index.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
+      </a>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-8 font-eng text-[10px] font-bold tracking-wide">
+        <a href="index.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
             </svg>
-            <span>HOME</span>
-          </a>
-          <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <span>HOME</span>
+        </a>
+        <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            <span>ABOUT</span>
-          </a>
-          <a href="menu.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <span>ABOUT</span>
+        </a>
+        <a href="menu.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
             </svg>
-            <span>MENU</span>
-          </a>
-          <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <span>MENU</span>
+        </a>
+        <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
-            <span>LOCATION</span>
-          </a>
-        </nav>
-        <div class="hidden md:block">
-          <a href="onlineStore.html" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">ONLINE STORE</a>
-        </div>
+          <span>LOCATION</span>
+        </a>
+      </nav>
+      <div class="hidden md:block">
+        <a href="onlineStore.html" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">ONLINE STORE</a>
       </div>
-      <!-- ⭐ モバイルナビ（元のSVG付き完全版） -->
-      <nav class="md:hidden border-t border-gray-50 bg-gray-50/50 flex justify-around items-center py-2 px-1">
-        <a href="index.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 transition group">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+    </div>
+    <!-- ⭐ モバイルナビ（元のSVG付き完全版） -->
+    <nav class="md:hidden border-t border-gray-50 bg-gray-50/50 flex justify-around items-center py-2 px-1">
+      <a href="index.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
           </svg>
-          <span class="font-eng text-[9px] font-bold">HOME</span>
-        </a>
-        <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <span class="font-eng text-[9px] font-bold">HOME</span>
+      </a>
+      <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
-          <span class="font-eng text-[9px] font-bold">ABOUT</span>
-        </a>
-        <a href="menu.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <span class="font-eng text-[9px] font-bold">ABOUT</span>
+      </a>
+      <a href="menu.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
           </svg>
-          <span class="font-eng text-[9px] font-bold">MENU</span>
-        </a>
-        <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <span class="font-eng text-[9px] font-bold">MENU</span>
+      </a>
+      <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
           </svg>
-          <span class="font-eng text-[9px] font-bold">ACCESS</span>
-        </a>
-        <a href="onlineStore.html" class="flex flex-col items-center gap-1 text-blue-600 transition group">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+        <span class="font-eng text-[9px] font-bold">ACCESS</span>
+      </a>
+      <a href="onlineStore.html" class="flex flex-col items-center gap-1 text-blue-600 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
           </svg>
-          <span class="font-eng text-[9px] font-bold uppercase">Store</span>
-        </a>
-      </nav>
-    </header>
-    <main class="flex-grow pt-[112px] md:pt-28">
-      <!-- HERO（文字は ABOUT US のみ） -->
-      <section class="relative h-[80vh] md:h-[620px] w-full overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover">
-        <div class="absolute inset-0 bg-black/40"></div>
-        <div class="relative h-full flex items-center justify-center text-white text-center">
-          <h1 class="text-5xl md:text-7xl font-eng font-bold tracking-widest">ABOUT&nbsp;US </h1>
-        </div>
-      </section>
-      <!-- ABOUT INTRO（説明文専用セクション） -->
-      <section class="bg-white py-24 px-6">
-        <div class="max-w-3xl mx-auto text-center">
-          <p class="text-xl md:text-2xl text-gray-700 leading-relaxed mb-8">静かな港に差し込む朝の光のように、
-            <br>日常に上質な余白と安らぎをもたらす場所。 
+        <span class="font-eng text-[9px] font-bold uppercase">Store</span>
+      </a>
+    </nav>
+  </header>
+  <main class="flex-grow pt-[112px] md:pt-28">
+
+    <!-- HERO（文字は ABOUT US のみ） -->
+    <section class="relative h-[80vh] md:h-[620px] w-full overflow-hidden">
+      <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover">
+      <div class="absolute inset-0 bg-black/40"></div>
+
+      <div class="relative h-full flex items-center justify-center text-white text-center">
+        <h1 class="text-5xl md:text-7xl font-eng font-bold tracking-widest">
+          ABOUT&nbsp;US
+        </h1>
+      </div>
+    </section>
+
+    <!-- ABOUT INTRO（説明文専用セクション） -->
+    <section class="bg-white py-24 px-6">
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="text-xl md:text-2xl text-gray-700 leading-relaxed mb-8">
+          静かな港に差し込む朝の光のように、<br> 日常に上質な余白と安らぎをもたらす場所。
+        </p>
+
+        <p class="text-gray-600 leading-loose mb-6">
+          <strong>Blue Harbor Coffee</strong> は、<br> 「本当に価値のある一杯」と「記憶に残る時間」を提供するために生まれました。
+        </p>
+
+        <p class="text-gray-600 leading-loose">
+          慌ただしい都市の中でも、ここでは時間がゆっくりと流れます。<br> 香り、味わい、空間、サービス――
+          <br> そのすべてが、あなたの五感を満たすために設計されています。
+        </p>
+      </div>
+    </section>
+
+    <!-- OWNER -->
+    <section class="bg-slate-50 py-24 px-6">
+      <h2 class="text-center text-4xl font-light mb-16 tracking-wide">
+        OWNER
+      </h2>
+
+      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200" class="w-full h-auto rounded-xl shadow-lg object-cover">
+
+        <div>
+          <h3 class="text-2xl font-medium mb-6">
+            Taro Yamada — Founder & Head Barista
+          </h3>
+
+          <p class="mb-4 leading-loose">
+            国内外の名店で研鑽を積んだ後、<br> “日常の中にある贅沢” を形にするために Blue Harbor Coffee を創設。
           </p>
-          <p class="text-gray-600 leading-loose mb-6">
-            <strong>Blue Harbor Coffee</strong>は、
-            <br>「本当に価値のある一杯」と「記憶に残る時間」を提供するために生まれました。 
-          </p>
-          <p class="text-gray-600 leading-loose">慌ただしい都市の中でも、ここでは時間がゆっくりと流れます。
-            <br>香り、味わい、空間、サービス――
-            <br>そのすべてが、あなたの五感を満たすために設計されています。 
+
+          <p class="leading-loose">
+            豆の選定、焙煎、抽出温度、提供タイミング。<br> すべては「最高の一杯」を届けるための要素です。
           </p>
         </div>
-      </section>
-      <!-- OWNER -->
-      <section class="bg-slate-50 py-24 px-6">
-        <h2 class="text-center text-4xl font-light mb-16 tracking-wide">OWNER </h2>
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200" class="w-full h-auto rounded-xl shadow-lg object-cover">
-          <div>
-            <h3 class="text-2xl font-medium mb-6">Taro Yamada — Founder & Head Barista </h3>
-            <p class="mb-4 leading-loose">国内外の名店で研鑽を積んだ後、
-              <br>“日常の中にある贅沢” を形にするために Blue Harbor Coffee を創設。 
-            </p>
-            <p class="leading-loose">豆の選定、焙煎、抽出温度、提供タイミング。
-              <br>すべては「最高の一杯」を届けるための要素です。 
-            </p>
-          </div>
+      </div>
+    </section>
+
+    <!-- BEANS -->
+    <section class="bg-white py-24 px-6">
+      <h2 class="text-center text-4xl font-light mb-16 tracking-wide">
+        SIGNATURE BEANS
+      </h2>
+
+      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h3 class="text-2xl font-medium mb-6">
+            Santa Lucia Estate, Guatemala
+          </h3>
+
+          <p class="mb-4 leading-loose">
+            品質・倫理・持続可能性を満たした農園のみと直接取引しています。
+          </p>
+
+          <ul class="list-disc pl-6 space-y-2 leading-loose">
+            <li>華やかなフルーツの香り</li>
+            <li>ダークチョコレートのような深い甘み</li>
+            <li>透明感のある後味</li>
+          </ul>
         </div>
-      </section>
-      <!-- BEANS -->
-      <section class="bg-white py-24 px-6">
-        <h2 class="text-center text-4xl font-light mb-16 tracking-wide">SIGNATURE BEANS </h2>
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h3 class="text-2xl font-medium mb-6">Santa Lucia Estate, Guatemala </h3>
-            <p class="mb-4 leading-loose">品質・倫理・持続可能性を満たした農園のみと直接取引しています。 </p>
-            <ul class="list-disc pl-6 space-y-2 leading-loose">
-              <li>華やかなフルーツの香り</li>
-              <li>ダークチョコレートのような深い甘み</li>
-              <li>透明感のある後味</li>
-            </ul>
-          </div>
-          <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1200" class="w-full h-auto rounded-xl shadow-lg object-cover">
+
+        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1200" class="w-full h-auto rounded-xl shadow-lg object-cover">
+      </div>
+    </section>
+
+    <!-- DESSERTS -->
+    <section class="bg-amber-50 py-24 px-6">
+      <h2 class="text-center text-4xl font-light mb-16 tracking-wide">
+        DESSERTS
+      </h2>
+
+      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200" class="w-full h-auto rounded-xl shadow-lg object-cover">
+
+        <div>
+          <p class="mb-4 leading-loose">
+            デザートは単なる添え物ではありません。<br> コーヒー体験を完成させる、もう一つの主役です。
+          </p>
+
+          <ul class="list-disc pl-6 space-y-2 leading-loose">
+            <li>濃厚な卵のコク</li>
+            <li>なめらかな口当たり</li>
+            <li>ほろ苦いカラメル</li>
+          </ul>
         </div>
-      </section>
-      <!-- DESSERTS -->
-      <section class="bg-amber-50 py-24 px-6">
-        <h2 class="text-center text-4xl font-light mb-16 tracking-wide">DESSERTS </h2>
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200" class="w-full h-auto rounded-xl shadow-lg object-cover">
-          <div>
-            <p class="mb-4 leading-loose">デザートは単なる添え物ではありません。
-              <br>コーヒー体験を完成させる、もう一つの主役です。 
-            </p>
-            <ul class="list-disc pl-6 space-y-2 leading-loose">
-              <li>濃厚な卵のコク</li>
-              <li>なめらかな口当たり</li>
-              <li>ほろ苦いカラメル</li>
-            </ul>
-          </div>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHY（画像付き） -->
+    <section class="bg-slate-900 text-gray-200 py-24 px-6">
+      <h2 class="text-center text-4xl font-light mb-16 tracking-wide text-white">
+        PHILOSOPHY
+      </h2>
+
+      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div class="leading-loose text-lg">
+          <p class="mb-4">
+            私たちが提供したいのは、単なる飲食ではなく「体験」です。
+          </p>
+
+          <p>
+            静かな会話の時間。<br> 読書に没頭する午後。
+            <br> 思考を整理するためのひととき。
+          </p>
         </div>
-      </section>
-      <!-- PHILOSOPHY（画像付き） -->
-      <section class="bg-slate-900 text-gray-200 py-24 px-6">
-        <h2 class="text-center text-4xl font-light mb-16 tracking-wide text-white">PHILOSOPHY </h2>
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div class="leading-loose text-lg">
-            <p class="mb-4">私たちが提供したいのは、単なる飲食ではなく「体験」です。 </p>
-            <p>静かな会話の時間。
-              <br>読書に没頭する午後。
-              <br>思考を整理するためのひととき。 
-            </p>
-          </div>
-          <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200" class="w-full h-auto rounded-xl shadow-lg object-cover">
-        </div>
-      </section>
-    </main>
-    <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">© 2024 Blue Harbor Coffee Roasters.</footer>
-  </body>
+
+        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200" class="w-full h-auto rounded-xl shadow-lg object-cover">
+      </div>
+    </section>
+  </main>
+  <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">© 2024 Blue Harbor Coffee Roasters.</footer>
+</body>
+
 </html>
