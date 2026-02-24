@@ -40,6 +40,59 @@
     .nav-link.active svg {
       color: #1d4ed8;
     }
+    /* ===== デフォルト黒丸を削除 ===== */
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    /* ===== li を横並びに ===== */
+    li {
+      position: relative;
+      padding-left: 28px;
+    }
+    
+    /* ===== コーヒー豆を疑似要素で生成 ===== */
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 16px;
+      height: 26px;
+    
+      background-color: #78350f; /* amber-900相当 */
+      border-radius: 50% / 60%;
+    
+      /* 中央のライン（割れ目） */
+      box-shadow: inset 0 0 0 0 transparent;
+    }
+    
+    /* 割れ目の白ライン */
+    li::after {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 6px;
+      width: 2px;
+      height: 26px;
+      background: white;
+      border-radius: 50%;
+      transform: rotate(10deg);
+    }
+    /* ===== アニメーション設定 ===== */
+    li::before,
+    li::after {
+      transition: transform 0.6s ease;
+    }
+    
+    /* ===== ホバー時に回転 ===== */
+    li:hover::before {
+      transform: rotate(360deg);
+    }
+    
+    li:hover::after {
+      transform: rotate(370deg);
   </style>
 </head>
 
