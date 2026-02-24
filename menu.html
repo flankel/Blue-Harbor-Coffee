@@ -43,10 +43,24 @@
           row-gap:40px;
         }
         
-        .menu-item{
-          display:flex;
-          gap:20px;
-          align-items:flex-start;
+        .menu-item {
+          display: flex;
+          gap: 20px;
+          align-items: flex-start;
+          height: 120px;
+        }
+        
+        .menu-item img {
+          width: 112px;
+          height: 112px;
+          object-fit: cover;
+        }
+        
+        .menu-item p {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
     </style>
 </head>
