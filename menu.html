@@ -37,30 +37,29 @@
           }
         }
         
-        .menu-list {
-          display: grid;
-          row-gap: 40px;
+        .menu-list{
+          display:grid;
+          grid-auto-rows:1fr;
+          row-gap:40px;
         }
         
         .menu-item {
-          display: flex;
-          gap: 20px;
-          height: 120px;
-          align-items: stretch;   /* ← ここ重要 */
+          display:flex;
+          gap:20px;
+          align-items:flex-start;
+          min-height:120px; /* ← 固定ではなく最低高さ */
         }
         
         .menu-item img {
-          width: 112px;
-          height: 112px;
-          object-fit: cover;
+          width:112px;
+          height:112px;
+          object-fit:cover;
         }
         
         .menu-item p {
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
+          overflow:visible; /* ← 切らない */
         }
+        
         .menu-item > div {
           display: flex;
           flex-direction: column;
