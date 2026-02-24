@@ -38,35 +38,50 @@
         }
         
         .menu-list{
-          display:grid;
-          grid-auto-rows:1fr;
-          row-gap:40px;
+          display:flex;
+          flex-direction:column;
+          gap:40px;
         }
         
-        .menu-item {
+        .menu-item{
           display:flex;
           gap:20px;
           align-items:flex-start;
-          min-height:120px; /* ← 固定ではなく最低高さ */
         }
         
-        .menu-item img {
+        .menu-item img{
           width:112px;
           height:112px;
           object-fit:cover;
         }
-        
-        .menu-item p {
-          overflow:visible; /* ← 切らない */
-        }
-        
-        .menu-item > div {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
     </style>
 </head>
+<script>
+    function syncMenuHeights(){
+    
+      const coffeeItems = document.querySelectorAll("#coffee .menu-item");
+      const foodItems   = document.querySelectorAll("#food .menu-item");
+    
+      const count = Math.min(coffeeItems.length, foodItems.length);
+    
+      for(let i = 0; i < count; i++){
+    
+        coffeeItems[i].style.height = "auto";
+        foodItems[i].style.height   = "auto";
+    
+        const h = Math.max(
+          coffeeItems[i].offsetHeight,
+          foodItems[i].offsetHeight
+        );
+    
+        coffeeItems[i].style.height = h + "px";
+        foodItems[i].style.height   = h + "px";
+      }
+    }
+    
+    window.addEventListener("load", syncMenuHeights);
+    window.addEventListener("resize", syncMenuHeights);
+</script>
 
 <body class="bg-gray-100 flex flex-col min-h-screen">
     <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
@@ -151,7 +166,7 @@
                 </div>
                 <div class="grid md:grid-cols-2 gap-16 items-stretch">
                     <!-- COFFEE -->
-                    <section>
+                    <section id="coffee">
   <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
     <span>COFFEE</span>
     <span class="text-[10px] text-gray-500 tracking-widest">DRIP & ESPRESSO</span>
@@ -323,7 +338,7 @@
 </section>
                     <!-- FOOD（ここを修正） -->
                     <!-- FOOD -->
-                    <section>
+                    <section id="food">
                         <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
                             <span>SWEETS & FOOD</span>
                             <span class="text-[10px] text-gray-500 tracking-widest">HOMEMADE</span>
