@@ -37,17 +37,16 @@
           }
         }
         
-        .menu-list{
-          display:grid;
-          grid-auto-rows:1fr;
-          row-gap:40px;
+        .menu-list {
+          display: grid;
+          row-gap: 40px;
         }
         
         .menu-item {
           display: flex;
           gap: 20px;
-          align-items: flex-start;
           height: 120px;
+          align-items: stretch;   /* ← ここ重要 */
         }
         
         .menu-item img {
