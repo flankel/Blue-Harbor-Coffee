@@ -51,6 +51,20 @@
       position: relative;
       padding-left: 28px;
     }
+
+    /* Tailwindのlist-discを完全無効化 */
+    ul,
+    ul.list-disc {
+      list-style: none !important;
+      padding-left: 0 !important;
+    }
+    
+    /* liベース調整 */
+    li {
+      position: relative;
+      padding-left: 30px;
+    }
+
     
     /* ===== コーヒー豆を疑似要素で生成 ===== */
     li::before {
