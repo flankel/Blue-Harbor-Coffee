@@ -99,15 +99,25 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100 p-8">
                 <!-- 左側：地図エリア -->
                 <div class="flex flex-col gap-8">
-                    <!-- 手書き風地図（常に一番上） -->
-                    <div class="h-[500px] w-full rounded-xl overflow-hidden shadow-md">
-                        <img src="images/Location/map-drawing.png" alt="Blue Harbor Coffee 手書き風地図" class="w-full h-full object-cover">
-                    </div>
-                    <!-- Google Map -->
-                    <div class="h-[500px] w-full rounded-xl overflow-hidden shadow-md">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.023247071477!2d139.7508678!3d35.6583925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bc83f05d54b%3A0xb36a6f1d22223403!2z5p2x5Lqs44K_44Ov44O8!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                        </iframe>
-                    </div>
+                    <!-- 手書き風地図 -->
+                        <div class="aspect-[16/7] w-full rounded-xl overflow-hidden shadow-md">
+                            <img 
+                                src="images/Location/map-drawing.png" 
+                                alt="Blue Harbor Coffee 手書き風地図" 
+                                class="w-full h-full object-cover">
+                        </div>
+                        
+                        <!-- Google Map -->
+                        <div class="aspect-[16/7] w-full rounded-xl overflow-hidden shadow-md">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.023247071477!2d139.7508678!3d35.6583925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bc83f05d54b%3A0xb36a6f1d22223403!2z5p2x5Lqs44K_44Ov44O8!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp"
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy">
+                            </iframe>
+                        </div>
                 </div>
                 <!-- 右側：店舗紹介 -->
                 <div class="p-12 flex flex-col justify-center">
