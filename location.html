@@ -96,26 +96,26 @@
                 <img src="images/Location/store-exterior-3.png" alt="Blue Harbor Coffee 外観3" class="rounded-xl shadow-md w-full h-64 object-cover">
             </div>
             <!-- 地図と情報 -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100 p-6 md:p-10">
-                <!-- 左側：地図エリア -->
-                <div class="flex flex-col gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100 p-6 md:p-10 items-stretch">
+                <!-- 左側：地図エリア（PC） / 下：地図（スマホ） -->
+                <div class="flex flex-col gap-8 h-full order-2 md:order-1">
                     <!-- 手書き風地図 -->
-                    <div class="w-full h-[300px] md:h-auto md:aspect-[16/7] rounded-xl overflow-hidden shadow-md">
+                    <div class="flex-1 min-h-[220px] rounded-xl overflow-hidden shadow-md">
                         <img src="images/Location/map-drawing.png" alt="Blue Harbor Coffee 手書き風地図" class="w-full h-full object-cover">
                     </div>
                     <!-- Google Map -->
-                    <div class="w-full h-[300px] md:h-auto md:aspect-[16/7] rounded-xl overflow-hidden shadow-md">
+                    <div class="flex-1 min-h-[220px] rounded-xl overflow-hidden shadow-md">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.023247071477!2d139.7508678!3d35.6583925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bc83f05d54b%3A0xb36a6f1d22223403!2z5p2x5Lqs44K_44Ov44O8!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
                         </iframe>
                     </div>
                 </div>
-                <!-- 右側：店舗紹介 -->
-                <div class="bg-gray-50 rounded-xl p-8 md:p-10 flex flex-col justify-center shadow-inner">
-                    <h3 class="text-2xl font-bold mb-6 tracking-wide"> Blue Harbor Coffee </h3>
+                <!-- 右側：店舗紹介（PC） / 最上部（スマホ） -->
+                <div class="bg-gray-50 rounded-xl p-8 md:p-10 flex flex-col justify-center shadow-inner h-full order-1 md:order-2">
+                    <h3 class="text-2xl font-bold mb-6 tracking-wide">Blue Harbor Coffee</h3>
                     <p class="mb-6 pb-4 border-b border-gray-300 text-base"> 〒105-0011 東京都港区芝公園 4-2-8 </p>
-                    <!-- 営業時間（表形式） -->
+                    <!-- 営業時間 -->
                     <div class="mb-6">
-                        <p class="font-eng font-bold mb-3 tracking-wide"> OPENING HOURS </p>
+                        <p class="font-eng font-bold mb-3 tracking-wide">OPENING HOURS</p>
                         <table class="w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
                             <tbody class="divide-y divide-gray-200">
                                 <tr>
@@ -151,12 +151,12 @@
                     </div>
                     <!-- 施設情報 -->
                     <div class="grid grid-cols-2 gap-y-3 text-sm">
-                        <div class="font-eng font-medium text-gray-600"> Parking </div>
-                        <div> 15台 </div>
-                        <div class="font-eng font-medium text-gray-600"> Wi-Fi </div>
-                        <div> 完備 </div>
-                        <div class="font-eng font-medium text-gray-600"> Power Outlets </div>
-                        <div> 10口 </div>
+                        <div class="font-eng font-medium text-gray-600">Parking</div>
+                        <div>15台</div>
+                        <div class="font-eng font-medium text-gray-600">Wi-Fi</div>
+                        <div>完備</div>
+                        <div class="font-eng font-medium text-gray-600">Power Outlets</div>
+                        <div>10口</div>
                     </div>
                 </div>
             </div>
