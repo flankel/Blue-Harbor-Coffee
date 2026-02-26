@@ -2,469 +2,571 @@
 <html lang="ja">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu | Blue Harbor Coffee</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #333; }
-        .font-eng { font-family: 'Jost', sans-serif; }
-        .page-enter { animation: fadeIn 0.6s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        /* ナビゲーションのアクティブスタイル */
-        .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
-        .nav-link.active svg { color: #1d4ed8; }
-        /* メニューボードの質感 */
-        .menu-board {
-            background-color: #1a1a1a;
-            color: #f8f8f8;
-            border: 12px solid #3d2b1f;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-        /* メニュー説明文の可読性向上 */
-        .menu-board p {
-          font-size: 15px;
-          color: #d1d5db;   /* gray-300 */
-          line-height: 1.7;
-          margin-top: 4px;
-          letter-spacing: 0.02em;
-        }
-        
-        @media (min-width: 768px) {
-          .menu-board p {
-            font-size: 16px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu | Blue Harbor Coffee</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+  body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #333; }
+          .font-eng { font-family: 'Jost', sans-serif; }
+          .page-enter { animation: fadeIn 0.6s ease-out forwards; }
+          @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+          /* ナビゲーションのアクティブスタイル */
+          .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
+          .nav-link.active svg { color: #1d4ed8; }
+          /* メニューボードの質感 */
+          .menu-board {
+              background-color: #1a1a1a;
+              color: #f8f8f8;
+              border: 12px solid #3d2b1f;
+              box-shadow: 0 20px 50px rgba(0,0,0,0.5);
           }
-        }
-        
-        .menu-list{
-          display:flex;
-          flex-direction:column;
-          gap:40px;
-        }
-        
-        .menu-item{
-          display:flex;
-          gap:20px;
-          align-items:flex-start;
-        }
-        
-        .menu-item img{
-          width:112px;
-          height:112px;
-          object-fit:cover;
-        }
-    </style>
+          /* メニュー説明文の可読性向上 */
+          .menu-board p {
+            font-size: 15px;
+            color: #d1d5db;   /* gray-300 */
+            line-height: 1.7;
+            margin-top: 4px;
+            letter-spacing: 0.02em;
+          }
+          
+          @media (min-width: 768px) {
+            .menu-board p {
+              font-size: 16px;
+            }
+          }
+          
+          .menu-list{
+            display:flex;
+            flex-direction:column;
+            gap:40px;
+          }
+          
+          .menu-item{
+            display:flex;
+            gap:20px;
+            align-items:flex-start;
+          }
+          
+          .menu-item img{
+            width:112px;
+            height:112px;
+            object-fit:cover;
+          }
+  </style>
 </head>
 <script>
-    function syncMenuHeights(){
-    
-      const coffeeItems = document.querySelectorAll("#coffee .menu-item");
-      const foodItems   = document.querySelectorAll("#food .menu-item");
-    
-      const count = Math.min(coffeeItems.length, foodItems.length);
-    
-      for(let i = 0; i < count; i++){
-    
-        coffeeItems[i].style.height = "auto";
-        foodItems[i].style.height   = "auto";
-    
-        const h = Math.max(
-          coffeeItems[i].offsetHeight,
-          foodItems[i].offsetHeight
-        );
-    
-        coffeeItems[i].style.height = h + "px";
-        foodItems[i].style.height   = h + "px";
+  function syncMenuHeights(){
+      
+        const coffeeItems = document.querySelectorAll("#coffee .menu-item");
+        const foodItems   = document.querySelectorAll("#food .menu-item");
+      
+        const count = Math.min(coffeeItems.length, foodItems.length);
+      
+        for(let i = 0; i < count; i++){
+      
+          coffeeItems[i].style.height = "auto";
+          foodItems[i].style.height   = "auto";
+      
+          const h = Math.max(
+            coffeeItems[i].offsetHeight,
+            foodItems[i].offsetHeight
+          );
+      
+          coffeeItems[i].style.height = h + "px";
+          foodItems[i].style.height   = h + "px";
+        }
       }
-    }
-    
-    window.addEventListener("load", syncMenuHeights);
-    window.addEventListener("resize", syncMenuHeights);
+      
+      window.addEventListener("load", syncMenuHeights);
+      window.addEventListener("resize", syncMenuHeights);
 </script>
 
 <body class="bg-gray-100 flex flex-col min-h-screen">
-    <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-6 h-16 sm:h-20 flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-2 group z-50">
-                <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z">
-                    </path>
-                </svg>
-                <span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
-            </a>
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex space-x-8 font-eng text-[10px] font-bold tracking-wide">
-                <a href="index.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                        </path>
-                    </svg>
-                    <span>HOME</span>
-                </a>
-                <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                        </path>
-                    </svg>
-                    <span>ABOUT</span>
-                </a>
-                <a href="menu.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
-                        </path>
-                    </svg>
-                    <span>MENU</span>
-                </a>
-                <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                        </path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
-                        </path>
-                    </svg>
-                    <span>STORE INFO</span>
-                </a>
-            </nav>
-            <div class="hidden md:block">
-                <a href="onlineStore.html" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">TAKE OUT</a>
-            </div>
+  <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-6 h-16 sm:h-20 flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-2 group z-50">
+        <svg class="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z">
+          </path>
+        </svg>
+        <span class="font-eng font-bold text-lg tracking-widest text-gray-800">BLUE HARBOR</span>
+      </a>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-8 font-eng text-[10px] font-bold tracking-wide">
+        <a href="index.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+            </path>
+          </svg>
+          <span>HOME</span>
+        </a>
+        <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+            </path>
+          </svg>
+          <span>ABOUT</span>
+        </a>
+        <a href="menu.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+            </path>
+          </svg>
+          <span>MENU</span>
+        </a>
+        <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 hover:text-blue-700 transition py-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+            </path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
+            </path>
+          </svg>
+          <span>STORE INFO</span>
+        </a>
+      </nav>
+      <div class="hidden md:block">
+        <a href="onlineStore.html" class="bg-gray-900 text-white text-xs font-bold px-5 py-3 hover:bg-blue-700 transition">TAKE OUT</a>
+      </div>
+    </div>
+    <!-- ⭐ モバイルナビ（元のSVG付き完全版） -->
+    <nav class="md:hidden border-t border-gray-50 bg-gray-50/50 flex justify-around items-center py-2 px-1">
+      <a href="index.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+          </path>
+        </svg>
+        <span class="font-eng text-[9px] font-bold">HOME</span>
+      </a>
+      <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+          </path>
+        </svg>
+        <span class="font-eng text-[9px] font-bold">ABOUT</span>
+      </a>
+      <a href="menu.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+          </path>
+        </svg>
+        <span class="font-eng text-[9px] font-bold">MENU</span>
+      </a>
+      <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+          </path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
+          </path>
+        </svg>
+        <span class="font-eng text-[9px] font-bold text-center leading-tight">STORE
+          <br>INFO</span>
+      </a>
+      <a href="onlineStore.html" class="flex flex-col items-center gap-1 text-gray-500 transition group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z">
+          </path>
+        </svg>
+        <span class="font-eng text-[9px] font-bold text-center leading-tight">TAKE
+          <br>OUT</span>
+      </a>
+    </nav>
+  </header>
+  <main class="flex-grow pt-[112px] md:pt-28 bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed">
+    <div class="py-12 md:py-20 px-4">
+      <div class="max-w-5xl mx-auto menu-board p-8 md:p-16 rounded-sm relative page-enter">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-6xl font-eng font-bold tracking-tighter mb-2">TODAY'S MENU</h2>
+          <p class="text-blue-400 font-eng text-sm tracking-widest uppercase">Freshly Roasted in our Harbor</p>
         </div>
-        <!-- ⭐ モバイルナビ（元のSVG付き完全版） -->
-        <nav class="md:hidden border-t border-gray-50 bg-gray-50/50 flex justify-around items-center py-2 px-1">
-            <a href="index.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                    </path>
-                </svg>
-                <span class="font-eng text-[9px] font-bold">HOME</span>
-            </a>
-            <a href="aboutUs.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                    </path>
-                </svg>
-                <span class="font-eng text-[9px] font-bold">ABOUT</span>
-            </a>
-            <a href="menu.html" class="nav-link active flex flex-col items-center gap-1 text-gray-500 transition group">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
-                    </path>
-                </svg>
-                <span class="font-eng text-[9px] font-bold">MENU</span>
-            </a>
-            <a href="location.html" class="nav-link flex flex-col items-center gap-1 text-gray-500 transition group">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                    </path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
-                    </path>
-                </svg>
-                <span class="font-eng text-[9px] font-bold text-center leading-tight"> STORE<br>INFO </span>
-            </a>
-            <a href="onlineStore.html" class="flex flex-col items-center gap-1 text-gray-500 transition group">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z">
-                    </path>
-                </svg>
-                <span class="font-eng text-[9px] font-bold text-center leading-tight"> TAKE<br>OUT </span>
-            </a>
-        </nav>
-    </header>
-    <main class="flex-grow pt-[112px] md:pt-28 bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed">
-        <div class="py-12 md:py-20 px-4">
-            <div class="max-w-5xl mx-auto menu-board p-8 md:p-16 rounded-sm relative page-enter">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-6xl font-eng font-bold tracking-tighter mb-2">TODAY'S MENU</h2>
-                    <p class="text-blue-400 font-eng text-sm tracking-widest uppercase">Freshly Roasted in our Harbor</p>
+        <div class="grid md:grid-cols-2 gap-16 items-stretch">
+          <!-- SET MENU（1段組・最上部） -->
+          <section id="setmenu" class="mb-20">
+            <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
+              <span>SET MENU</span>
+              <span class="text-[10px] text-gray-500 tracking-widest">TIME-BASED</span>
+            </h3>
+            <div class="menu-list">
+              <!-- Morning Set -->
+              <div class="menu-item group">
+                <div class="overflow-hidden w-28 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Set/morning-set.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                 </div>
-                <div class="grid md:grid-cols-2 gap-16 items-stretch">
-                    <!-- COFFEE -->
-                    <section id="coffee">
-                        <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
-                            <span>COFFEE</span>
-                            <span class="text-[10px] text-gray-500 tracking-widest">DRIP & ESPRESSO</span>
-                        </h3>
-                        <div class="menu-list">
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/blue-harbor-signature-brend.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> ブルーハーバー・シグネチャーブレンド<br>
-                                            <span class="text-xs text-gray-400 font-eng">Blue Harbor Signature Blend</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥650</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">深いコクと透明感を両立した当店の象徴。</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/hand-drip.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> ハンドドリップ<br>
-                                            <span class="text-xs text-gray-400 font-eng">Hand Drip</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥600〜</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">シングルオリジンを丁寧に抽出。</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/espresso.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> エスプレッソ<br>
-                                            <span class="text-xs text-gray-400 font-eng">Espresso</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥500</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">凝縮された香りとコク。</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/caffe-latte.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> カフェラテ<br>
-                                            <span class="text-xs text-gray-400 font-eng">Caffè Latte</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥650</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">ミルクの甘みとエスプレッソの調和。</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/cappuccino.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> カプチーノ<br>
-                                            <span class="text-xs text-gray-400 font-eng">Cappuccino</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥650</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">フォームミルクが生む軽やかな口当たり。</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/cold-brew.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> 水出しアイスコーヒー<br>
-                                            <span class="text-xs text-gray-400 font-eng">Cold Brew</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥600</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">12時間抽出のクリアな味わい。</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/americano.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> アメリカーノ<br>
-                                            <span class="text-xs text-gray-400 font-eng">Americano</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥550</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">軽やかで飲みやすいブラック。</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/flat-white.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> フラットホワイト<br>
-                                            <span class="text-xs text-gray-400 font-eng">Flat White</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥680</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">濃厚でシルキーなミルク感。</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/caffe-mocha.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> モカ<br>
-                                            <span class="text-xs text-gray-400 font-eng">Caffè Mocha</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥720</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">チョコレートの甘みが広がる一杯。</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Coffee/decaf.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg"> デカフェ<br>
-                                            <span class="text-xs text-gray-400 font-eng">Decaf Coffee</span>
-                                        </h4>
-                                        <span class="font-eng text-blue-400">¥650</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">カフェインレスでも豊かな風味。</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- FOOD（ここを修正） -->
-                    <section id="food">
-                        <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
-                            <span>SWEETS & FOOD</span>
-                            <span class="text-[10px] text-gray-500 tracking-widest">HOMEMADE</span>
-                        </h3>
-                        <div class="menu-list">
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/thick-cut-butter-toast.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">厚切りバタートースト<br><span class="text-xs text-gray-400 font-eng">Thick-Cut Butter Toast</span></h4>
-                                        <span class="font-eng text-blue-400">¥520</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">外は香ばしく中はふんわり、上質なバターのコク</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/croque-monsieur.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">クロックムッシュ<br><span class="text-xs text-gray-400 font-eng">Croque Monsieur</span></h4>
-                                        <span class="font-eng text-blue-400">¥880</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">とろけるチーズとハムを重ねたフランス定番の一品</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/homemade-quiche-lorraine.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">自家製キッシュ・ロレーヌ<br><span class="text-xs text-gray-400 font-eng">Homemade Quiche Lorraine</span></h4>
-                                        <span class="font-eng text-blue-400">¥780</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">サクサクの生地と濃厚な卵の旨み</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/avocado&smoked-salmon-open-sandwich.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">アボカドとスモークサーモンのオープンサンド<br><span class="text-xs text-gray-400 font-eng">Avocado & Smoked Salmon Open Sandwich</span></h4>
-                                        <span class="font-eng text-blue-400">¥980</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">クリーミーさと塩味の絶妙なバランス</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/seasonal-grilled-vegetable-plate.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">季節野菜のグリルプレート<br><span class="text-xs text-gray-400 font-eng">Seasonal Grilled Vegetable Plate</span></h4>
-                                        <span class="font-eng text-blue-400">¥950</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">素材の甘みを引き出したヘルシーな一皿</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/classic-custard-pudding.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">クラシックプリン<br><span class="text-xs text-gray-400 font-eng">Classic Custard Pudding</span></h4>
-                                        <span class="font-eng text-blue-400">¥520</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">濃厚な卵のコクとほろ苦いカラメル</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/setouchi-lemon-tart.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">瀬戸内レモンタルト 🍋<br><span class="text-xs text-gray-400 font-eng">Setouchi Lemon Tart</span></h4>
-                                        <span class="font-eng text-blue-400">¥720</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">爽やかな酸味と上品な甘さの洗練されたデザート</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/setouchi-lemon-pound-cake.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">瀬戸内レモンのパウンドケーキ 🍋<br><span class="text-xs text-gray-400 font-eng">Setouchi Lemon Pound Cake</span></h4>
-                                        <span class="font-eng text-blue-400">¥520</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">香り高くしっとりとした贅沢な焼き菓子</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/blueberry-cheesecake.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">ブルーベリーチーズケーキ 🫐<br><span class="text-xs text-gray-400 font-eng">Blueberry Cheesecake</span></h4>
-                                        <span class="font-eng text-blue-400">¥780</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">濃厚なチーズと果実の酸味が織りなす深い味わい</p>
-                                </div>
-                            </div>
-                            <div class="menu-item group">
-                                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
-                                    <img src="images/Menu/Food/blueberry-scone.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                                </div>
-                                <div class="flex-grow">
-                                    <div class="flex justify-between items-baseline mb-1">
-                                        <h4 class="font-bold text-lg">ブルーベリー・スコーン 🫐<br><span class="text-xs text-gray-400 font-eng">Blueberry Scone</span></h4>
-                                        <span class="font-eng text-blue-400">¥480</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400 leading-relaxed">外はさくっと、中はしっとりとした英国風焼き菓子</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">モーニングセット
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Morning Set</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥900</span>
+                  </div>
+                  <p class="text-xs text-gray-400">8:00 — 11:00</p>
+                  <p class="text-xs text-gray-400 mt-1">厚切りトースト・ゆで卵・ミニサラダ・本日のコーヒー</p>
                 </div>
-                <div class="mt-20 pt-10 border-t border-white/10 text-center">
-                    <p class="text-gray-500 text-xs font-eng tracking-widest">ALL PRICES INCLUDE TAX. TAKE OUT AVAILABLE.</p>
+              </div>
+              <!-- Lunch Set -->
+              <div class="menu-item group">
+                <div class="overflow-hidden w-28 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Set/lunch-set.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                 </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">ランチセット
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Lunch Set</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥1,350</span>
+                  </div>
+                  <p class="text-xs text-gray-400">11:00 — 15:00</p>
+                  <p class="text-xs text-gray-400 mt-1">キッシュ・サラダ・スープ・セットドリンク</p>
+                </div>
+              </div>
+              <!-- Supper Set -->
+              <div class="menu-item group">
+                <div class="overflow-hidden w-28 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Set/supper-set.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">サパーセット
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Supper Set</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥1,680</span>
+                  </div>
+                  <p class="text-xs text-gray-400">17:00 — CLOSE</p>
+                  <p class="text-xs text-gray-400 mt-1">クロックムッシュ・グリル野菜・ミニデザート・ドリンク</p>
+                </div>
+              </div>
             </div>
+          </section>
+          <!-- COFFEE -->
+          <section id="coffee">
+            <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
+              <span>COFFEE</span>
+              <span class="text-[10px] text-gray-500 tracking-widest">DRIP & ESPRESSO</span>
+            </h3>
+            <div class="menu-list">
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/blue-harbor-signature-brend.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">ブルーハーバー・シグネチャーブレンド
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Blue Harbor Signature Blend</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥650</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">深いコクと透明感を両立した当店の象徴。</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/hand-drip.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">ハンドドリップ
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Hand Drip</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥600〜</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">シングルオリジンを丁寧に抽出。</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/espresso.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">エスプレッソ
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Espresso</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥500</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">凝縮された香りとコク。</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/caffe-latte.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">カフェラテ
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Caffè Latte</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥650</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">ミルクの甘みとエスプレッソの調和。</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/cappuccino.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">カプチーノ
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Cappuccino</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥650</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">フォームミルクが生む軽やかな口当たり。</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/cold-brew.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">水出しアイスコーヒー
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Cold Brew</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥600</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">12時間抽出のクリアな味わい。</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/americano.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">アメリカーノ
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Americano</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥550</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">軽やかで飲みやすいブラック。</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/flat-white.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">フラットホワイト
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Flat White</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥680</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">濃厚でシルキーなミルク感。</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/caffe-mocha.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">モカ
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Caffè Mocha</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥720</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">チョコレートの甘みが広がる一杯。</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Coffee/decaf.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">デカフェ
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Decaf Coffee</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥650</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">カフェインレスでも豊かな風味。</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- FOOD-->
+          <section id="food">
+            <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
+              <span>SWEETS & FOOD</span>
+              <span class="text-[10px] text-gray-500 tracking-widest">HOMEMADE</span>
+            </h3>
+            <div class="menu-list">
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/thick-cut-butter-toast.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">厚切りバタートースト
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Thick-Cut Butter Toast</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥520</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">外は香ばしく中はふんわり、上質なバターのコク</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/croque-monsieur.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">クロックムッシュ
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Croque Monsieur</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥880</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">とろけるチーズとハムを重ねたフランス定番の一品</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/homemade-quiche-lorraine.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">自家製キッシュ・ロレーヌ
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Homemade Quiche Lorraine</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥780</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">サクサクの生地と濃厚な卵の旨み</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/avocado&smoked-salmon-open-sandwich.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">アボカドとスモークサーモンのオープンサンド
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Avocado & Smoked Salmon Open Sandwich</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥980</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">クリーミーさと塩味の絶妙なバランス</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/seasonal-grilled-vegetable-plate.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">季節野菜のグリルプレート
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Seasonal Grilled Vegetable Plate</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥950</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">素材の甘みを引き出したヘルシーな一皿</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/classic-custard-pudding.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">クラシックプリン
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Classic Custard Pudding</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥520</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">濃厚な卵のコクとほろ苦いカラメル</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/setouchi-lemon-tart.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">瀬戸内レモンタルト 🍋
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Setouchi Lemon Tart</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥720</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">爽やかな酸味と上品な甘さの洗練されたデザート</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/setouchi-lemon-pound-cake.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">瀬戸内レモンのパウンドケーキ 🍋
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Setouchi Lemon Pound Cake</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥520</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">香り高くしっとりとした贅沢な焼き菓子</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/blueberry-cheesecake.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">ブルーベリーチーズケーキ 🫐
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Blueberry Cheesecake</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥780</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">濃厚なチーズと果実の酸味が織りなす深い味わい</p>
+                </div>
+              </div>
+              <div class="menu-item group">
+                <div class="overflow-hidden w-20 shrink-0 rounded shadow-md">
+                  <img src="images/Menu/Food/blueberry-scone.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <div class="flex-grow">
+                  <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-bold text-lg">ブルーベリー・スコーン 🫐
+                      <br>
+                      <span class="text-xs text-gray-400 font-eng">Blueberry Scone</span>
+                    </h4>
+                    <span class="font-eng text-blue-400">¥480</span>
+                  </div>
+                  <p class="text-xs text-gray-400 leading-relaxed">外はさくっと、中はしっとりとした英国風焼き菓子</p>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-    </main>
-    <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng"> © 2024 Blue Harbor Coffee Roasters. </footer>
+        <div class="mt-20 pt-10 border-t border-white/10 text-center">
+          <p class="text-gray-500 text-xs font-eng tracking-widest">ALL PRICES INCLUDE TAX. TAKE OUT AVAILABLE.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">© 2024 Blue Harbor Coffee Roasters.</footer>
 </body>
 
 </html>
