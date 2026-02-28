@@ -1,28 +1,43 @@
 {
   "setmenu": [
-    {
-      "img": "images/Menu/Set/morning-set.png",
-      "ja": "モーニングセット",
-      "en": "Morning Set",
-      "price": "¥850",
-      "desc": "トースト・卵・サラダ・ドリンク付きの定番セット。"
-    },
-    {
-      "img": "images/Menu/Set/afternoon-set.png",
-      "ja": "アフタヌーンセット",
-      "en": "Afternoon Set",
-      "price": "¥1200",
-      "desc": "本日のケーキとドリンクのお得なセット。"
-    },
-    {
-      "img": "images/Menu/Set/sandwich-set.png",
-      "ja": "サンドイッチセット",
-      "en": "Sandwich Set",
-      "price": "¥980",
-      "desc": "自家製サンドイッチにサラダとドリンク付き。"
-    }
+  {
+    "img": "images/Menu/Set/morning-set.png",
+    "ja": "モーニングセット",
+    "en": "Morning Set",
+    "price": "¥850",
+    "time": "",
+    "items": [
+      "トースト",
+      "卵",
+      "サラダ",
+      "ドリンク"
+    ]
+  },
+  {
+    "img": "images/Menu/Set/afternoon-set.png",
+    "ja": "アフタヌーンセット",
+    "en": "Afternoon Set",
+    "price": "¥1200",
+    "time": "",
+    "items": [
+      "本日のケーキ",
+      "ドリンク"
+    ]
+  },
+  {
+    "img": "images/Menu/Set/sandwich-set.png",
+    "ja": "サンドイッチセット",
+    "en": "Sandwich Set",
+    "price": "¥980",
+    "time": "",
+    "items": [
+      "自家製サンドイッチ",
+      "サラダ",
+      "ドリンク"
+    ]
+  }
   ],
-
+  
   "coffee": [
     {
       "img": "images/Menu/Coffee/blue-harbor-signature-brend.png",
