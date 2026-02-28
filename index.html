@@ -79,25 +79,7 @@
     </section>
   </main>
   <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">© 2024 Blue Harbor Coffee Roasters.</footer>
-  <script>
-    fetch("header.html")
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("header").innerHTML = data;
-    
-        // ★ 現在のページを取得
-        const current = location.pathname.split("/").pop();
-    
-        // ★ nav-link を全部チェック
-        document.querySelectorAll(".nav-link").forEach(link => {
-          const href = link.getAttribute("href");
-    
-          if (href === current || (current === "" && href === "index.html")) {
-            link.classList.add("active");
-          }
-        });
-      });
-  </script>
+  <script src="js/loadHeader.js"></script>
 </body>
 
 </html>
