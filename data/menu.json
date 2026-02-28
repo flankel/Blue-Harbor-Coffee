@@ -14,25 +14,28 @@
     ]
   },
   {
-    "img": "images/Menu/Set/afternoon-set.png",
-    "ja": "アフタヌーンセット",
-    "en": "Afternoon Set",
+    "img": "images/Menu/Set/lunch-set.png",
+    "ja": "ランチセット",
+    "en": "Lunch Set",
     "price": "¥1200",
     "time": "",
     "items": [
-      "本日のケーキ",
-      "ドリンク"
+      "キッシュ",
+      "サラダ",
+      "スープ",
+      "セットドリンク"
     ]
   },
   {
-    "img": "images/Menu/Set/sandwich-set.png",
-    "ja": "サンドイッチセット",
-    "en": "Sandwich Set",
+    "img": "images/Menu/Set/supper-set.png",
+    "ja": "サパーセット",
+    "en": "Supper Set",
     "price": "¥980",
     "time": "",
     "items": [
-      "自家製サンドイッチ",
-      "サラダ",
+      "クロックムッシュ",
+      "グリル野菜",
+      "ミニデザート",
       "ドリンク"
     ]
   }
