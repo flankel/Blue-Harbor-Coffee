@@ -1,1 +1,171 @@
+{
+  "setmenu": [
+    {
+      "img": "images/Menu/Set/morning-set.png",
+      "ja": "モーニングセット",
+      "en": "Morning Set",
+      "price": "¥850",
+      "desc": "トースト・卵・サラダ・ドリンク付きの定番セット。"
+    },
+    {
+      "img": "images/Menu/Set/afternoon-set.png",
+      "ja": "アフタヌーンセット",
+      "en": "Afternoon Set",
+      "price": "¥1200",
+      "desc": "本日のケーキとドリンクのお得なセット。"
+    },
+    {
+      "img": "images/Menu/Set/sandwich-set.png",
+      "ja": "サンドイッチセット",
+      "en": "Sandwich Set",
+      "price": "¥980",
+      "desc": "自家製サンドイッチにサラダとドリンク付き。"
+    }
+  ],
 
+  "coffee": [
+    {
+      "img": "images/Menu/Coffee/blue-harbor-signature-brend.png",
+      "ja": "ブルーハーバー・シグネチャーブレンド",
+      "en": "Blue Harbor Signature Blend",
+      "price": "¥650",
+      "desc": "深いコクと透明感を両立した当店の象徴。"
+    },
+    {
+      "img": "images/Menu/Coffee/hand-drip.png",
+      "ja": "ハンドドリップ",
+      "en": "Hand Drip",
+      "price": "¥600〜",
+      "desc": "シングルオリジンを丁寧に抽出。"
+    },
+    {
+      "img": "images/Menu/Coffee/espresso.png",
+      "ja": "エスプレッソ",
+      "en": "Espresso",
+      "price": "¥500",
+      "desc": "凝縮された香りとコク。"
+    },
+    {
+      "img": "images/Menu/Coffee/caffe-latte.png",
+      "ja": "カフェラテ",
+      "en": "Caffè Latte",
+      "price": "¥650",
+      "desc": "ミルクの甘みとエスプレッソの調和。"
+    },
+    {
+      "img": "images/Menu/Coffee/cappuccino.png",
+      "ja": "カプチーノ",
+      "en": "Cappuccino",
+      "price": "¥650",
+      "desc": "フォームミルクが生む軽やかな口当たり。"
+    },
+    {
+      "img": "images/Menu/Coffee/cold-brew.png",
+      "ja": "水出しアイスコーヒー",
+      "en": "Cold Brew",
+      "price": "¥600",
+      "desc": "12時間抽出のクリアな味わい。"
+    },
+    {
+      "img": "images/Menu/Coffee/americano.png",
+      "ja": "アメリカーノ",
+      "en": "Americano",
+      "price": "¥550",
+      "desc": "軽やかで飲みやすいブラック。"
+    },
+    {
+      "img": "images/Menu/Coffee/flat-white.png",
+      "ja": "フラットホワイト",
+      "en": "Flat White",
+      "price": "¥680",
+      "desc": "濃厚でシルキーなミルク感。"
+    },
+    {
+      "img": "images/Menu/Coffee/caffe-mocha.png",
+      "ja": "モカ",
+      "en": "Caffè Mocha",
+      "price": "¥720",
+      "desc": "チョコレートの甘みが広がる一杯。"
+    },
+    {
+      "img": "images/Menu/Coffee/decaf.png",
+      "ja": "デカフェ",
+      "en": "Decaf Coffee",
+      "price": "¥650",
+      "desc": "カフェインレスでも豊かな風味。"
+    }
+  ],
+  
+  "food": [
+    {
+      "img": "images/Menu/Food/thick-cut-butter-toast.png",
+      "ja": "厚切りバタートースト",
+      "en": "Thick-Cut Butter Toast",
+      "price": "¥520",
+      "desc": "外は香ばしく中はふんわり、上質なバターのコク"
+    },
+    {
+      "img": "images/Menu/Food/croque-monsieur.png",
+      "ja": "クロックムッシュ",
+      "en": "Croque Monsieur",
+      "price": "¥880",
+      "desc": "とろけるチーズとハムを重ねたフランス定番の一品"
+    },
+    {
+      "img": "images/Menu/Food/homemade-quiche-lorraine.png",
+      "ja": "自家製キッシュ・ロレーヌ",
+      "en": "Homemade Quiche Lorraine",
+      "price": "¥780",
+      "desc": "サクサクの生地と濃厚な卵の旨み"
+    },
+    {
+      "img": "images/Menu/Food/avocado&smoked-salmon-open-sandwich.png",
+      "ja": "アボカドとスモークサーモンのオープンサンド",
+      "en": "Avocado & Smoked Salmon Open Sandwich",
+      "price": "¥980",
+      "desc": "クリーミーさと塩味の絶妙なバランス"
+    },
+    {
+      "img": "images/Menu/Food/seasonal-grilled-vegetable-plate.png",
+      "ja": "季節野菜のグリルプレート",
+      "en": "Seasonal Grilled Vegetable Plate",
+      "price": "¥950",
+      "desc": "素材の甘みを引き出したヘルシーな一皿"
+    },
+    {
+      "img": "images/Menu/Food/classic-custard-pudding.png",
+      "ja": "クラシックプリン",
+      "en": "Classic Custard Pudding",
+      "price": "¥520",
+      "desc": "濃厚な卵のコクとほろ苦いカラメル"
+    },
+    {
+      "img": "images/Menu/Food/setouchi-lemon-tart.png",
+      "ja": "瀬戸内レモンタルト 🍋",
+      "en": "Setouchi Lemon Tart",
+      "price": "¥720",
+      "desc": "爽やかな酸味と上品な甘さの洗練されたデザート"
+    },
+    {
+      "img": "images/Menu/Food/setouchi-lemon-pound-cake.png",
+      "ja": "瀬戸内レモンのパウンドケーキ 🍋",
+      "en": "Setouchi Lemon Pound Cake",
+      "price": "¥520",
+      "desc": "香り高くしっとりとした贅沢な焼き菓子"
+    },
+    {
+      "img": "images/Menu/Food/blueberry-cheesecake.png",
+      "ja": "ブルーベリーチーズケーキ 🫐",
+      "en": "Blueberry Cheesecake",
+      "price": "¥780",
+      "desc": "濃厚なチーズと果実の酸味が織りなす深い味わい"
+    },
+    {
+      "img": "images/Menu/Food/blueberry-scone.png",
+      "ja": "ブルーベリー・スコーン 🫐",
+      "en": "Blueberry Scone",
+      "price": "¥480",
+      "desc": "外はさくっと、中はしっとりとした英国風焼き菓子"
+    }
+  ]
+}  
