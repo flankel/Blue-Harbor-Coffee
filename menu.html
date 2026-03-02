@@ -78,31 +78,35 @@
 
       const container = el.querySelector(".space-y-20");
 
+      let html = "";
+      
       list.forEach(item => {
         const items = item.items.map(i => `<li>${i}</li>`).join("");
-
-        container.innerHTML += `
+      
+        html += `
           <div class="max-w-2xl mx-auto px-4 text-center">
             <div class="overflow-hidden w-full rounded shadow-md mb-8">
               <img src="${item.img}" class="w-full h-[40vw] object-contain hover:scale-125 transition duration-500">
             </div>
-
+      
             <h4 class="font-bold text-xl leading-snug">
               <span class="whitespace-nowrap">
                 ${item.ja}　
                 <span class="font-eng text-blue-400">${item.price}</span>
               </span>
             </h4>
-
+      
             <p class="text-sm text-gray-400 font-eng mt-1">${item.en}</p>
             <p class="text-sm text-gray-300 mt-3 tracking-wide">${item.time}</p>
-
+      
             <ul class="text-base text-gray-200 space-y-2 mt-6 inline-block text-left leading-relaxed list-disc list-inside">
               ${items}
             </ul>
           </div>
         `;
       });
+
+      container.innerHTML = html;    
     }
 
     function renderList(list, id, titleMain, titleSub) {
@@ -118,13 +122,15 @@
 
       const container = el.querySelector(".menu-list");
 
+      let html = "";
+
       list.forEach(item => {
-        container.innerHTML += `
+        html += `
           <div class="menu-item group flex items-center gap-4 mb-8">
             <div class="w-20 h-20 shrink-0 rounded shadow-md flex items-center justify-center overflow-hidden">
               <img src="${item.img}" class="max-w-full max-h-full object-contain hover:scale-125 transition duration-500">
             </div>
-
+      
             <div class="flex-grow">
               <div class="flex justify-between items-baseline mb-1 gap-4">
                 <h4 class="font-bold text-lg">
@@ -139,9 +145,11 @@
           </div>
         `;
       });
-    }
 
-    window.addEventListener("DOMContentLoaded", loadMenu);
+    container.innerHTML = html;
+  }
+    
+  window.addEventListener("DOMContentLoaded", loadMenu);
   </script>
 </head>
 
