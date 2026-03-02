@@ -44,10 +44,26 @@
       const foodItems = document.querySelectorAll("#food .menu-item");
       const count = Math.min(coffeeItems.length, foodItems.length);
 
+      // 🔹 スマホ時は高さ揃えを解除して終了
+      if (window.innerWidth < 640) {
+        for (let i = 0; i < count; i++) {
+          coffeeItems[i].style.height = "auto";
+          foodItems[i].style.height = "auto";
+        }
+        
+      return;
+      }
+
+      // 🔹 PC時のみ高さ同期
       for (let i = 0; i < count; i++) {
         coffeeItems[i].style.height = "auto";
         foodItems[i].style.height = "auto";
-        const h = Math.max(coffeeItems[i].offsetHeight, foodItems[i].offsetHeight);
+
+        const h = Math.max(
+        coffeeItems[i].offsetHeight,
+        foodItems[i].offsetHeight
+        );
+
         coffeeItems[i].style.height = h + "px";
         foodItems[i].style.height = h + "px";
       }
@@ -60,9 +76,6 @@
       renderSetMenu(data.setmenu);
       renderList(data.coffee, "coffee", "COFFEE", "DRIP & ESPRESSO");
       renderList(data.food, "food", "SWEETS & FOOD", "HOMEMADE");
-
-      syncMenuHeights();
-      window.addEventListener("resize", syncMenuHeights);
     }
 
     function renderSetMenu(list) {
@@ -150,7 +163,15 @@
   }
     
   window.addEventListener("DOMContentLoaded", loadMenu);
-  </script>
+  window.addEventListener("load", syncMenuHeights);
+  let resizeTimeout;
+
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(syncMenuHeights, 150);
+  });
+    
+</script>
 </head>
 
 <body class="bg-gray-100 flex flex-col min-h-screen">
