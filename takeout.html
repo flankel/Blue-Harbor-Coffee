@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAKEOUT ORDER</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+<div class="max-w-6xl mx-auto px-6 py-16">
+
+  <!-- HEADER -->
+  <div class="text-center mb-16">
+    <h1 class="text-4xl font-light tracking-widest mb-4">TAKEOUT</h1>
+    <p class="text-slate-500">Online Reservation</p>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div id="productArea" class="space-y-20"></div>
+
+  <!-- CUSTOMER INFO -->
+  <div class="mt-24 bg-white p-10 rounded-2xl shadow-sm">
+    <h2 class="text-2xl mb-8 font-semibold">お客様情報</h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <input id="name" placeholder="お名前" class="border p-3 rounded-lg w-full">
+      <input id="phone" placeholder="電話番号" class="border p-3 rounded-lg w-full">
+      <input id="datePicker" type="date" class="border p-3 rounded-lg w-full">
+      <select id="timePicker" class="border p-3 rounded-lg w-full"></select>
+    </div>
+
+    <button onclick="openConfirm()" 
+      class="mt-10 w-full bg-blue-600 text-white py-4 rounded-xl text-lg hover:bg-blue-700 transition">
+      注文確認へ
+    </button>
+  </div>
+
+</div>
+
+<!-- CONFIRM MODAL -->
+<div id="modal" class="fixed inset-0 bg-black/40 hidden items-center justify-center">
+  <div class="bg-white w-[90%] max-w-lg p-8 rounded-2xl">
+    <h3 class="text-xl font-semibold mb-6">注文確認</h3>
+    <div id="confirmContent" class="space-y-2 text-sm"></div>
+    <div class="flex gap-4 mt-6">
+      <button onclick="submitOrder()" class="w-full bg-blue-600 text-white py-3 rounded-lg">確定</button>
+      <button onclick="closeModal()" class="w-full bg-gray-200 py-3 rounded-lg">戻る</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================
+   商品データ
+========================= */
+
+const beans = [
+  {id:"A", name:"Ethiopian Natural"},
+  {id:"B", name:"Colombia Supremo"},
+  {id:"C", name:"Guatemala SHB"},
+  {id:"D", name:"Brazil Santos"},
+  {id:"E", name:"Kenya AA"}
+];
+
+const sweets = [
+  {id:"S1", name:"Cheesecake"},
+  {id:"S2", name:"Chocolate Gateau"},
+  {id:"S3", name:"Tiramisu"},
+  {id:"S4", name:"Pound Cake"},
+  {id:"S5", name:"Apple Tart"}
+];
+
+const sizes = [100,200,300];
+const DAILY_STOCK = 50;
+const MAX_PER_ITEM = 3;
+
+
+/* =========================
+   初期表示
+========================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderProducts();
+  setupDate();
+});
+
+
+/* =========================
+   商品描画
+========================= */
+
+function renderProducts(){
+  const area = document.getElementById("productArea");
+
+  // BEANS
+  let html = `
+    <div>
+      <h2 class="text-2xl mb-8 font-semibold">Coffee Beans</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+  `;
+
+  beans.forEach(bean => {
+    html += `
+      <div class="bg-white p-6 rounded-2xl shadow-sm space-y-4">
+        <h3 class="font-medium">${bean.name}</h3>
+    `;
+
+    sizes.forEach(size => {
+      html += `
+        <div class="flex justify-between items-center">
+          <span>${size}g</span>
+          <select 
+            data-type="bean"
+            data-id="${bean.id}"
+            data-size="${size}"
+            class="border rounded p-2 qtySelect">
+            ${createOptions()}
+          </select>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+  });
+
+  html += `</div></div>`;
+
+  // SWEETS
+  html += `
+    <div>
+      <h2 class="text-2xl mb-8 font-semibold">Sweets</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+  `;
+
+  sweets.forEach(item => {
+    html += `
+      <div class="bg-white p-6 rounded-2xl shadow-sm flex justify-between items-center">
+        <span>${item.name}</span>
+        <select 
+          data-type="sweet"
+          data-id="${item.id}"
+          class="border rounded p-2 qtySelect">
+          ${createOptions()}
+        </select>
+      </div>
+    `;
+  });
+
+  html += `</div></div>`;
+
+  area.innerHTML = html;
+}
+
+
+function createOptions(){
+  let opt = `<option value="0">0</option>`;
+  for(let i=1;i<=MAX_PER_ITEM;i++){
+    opt += `<option value="${i}">${i}</option>`;
+  }
+  return opt;
+}
+
+
+/* =========================
+   日付 & 時間設定
+========================= */
+
+function setupDate(){
+  const picker = document.getElementById("datePicker");
+  const today = new Date();
+  const max = new Date();
+  max.setDate(today.getDate()+7);
+
+  picker.min = today.toISOString().split("T")[0];
+  picker.max = max.toISOString().split("T")[0];
+  picker.addEventListener("change", generateTimeSlots);
+}
+
+function generateTimeSlots(){
+  const date = document.getElementById("datePicker").value;
+  const select = document.getElementById("timePicker");
+  select.innerHTML="";
+
+  if(!date) return;
+
+  const d = new Date(date);
+  const day = d.getDay();
+
+  if(day===3){
+    select.innerHTML="<option>定休日</option>";
+    return;
+  }
+
+  let close = 21;
+  if(day===5||day===6) close=23;
+
+  for(let h=8; h<close; h++){
+    select.innerHTML += `<option>${h}:00-${h+1}:00</option>`;
+  }
+}
+
+
+/* =========================
+   注文確認
+========================= */
+
+function collectOrder(){
+
+  const selects = document.querySelectorAll(".qtySelect");
+  let items = [];
+
+  selects.forEach(sel=>{
+    if(sel.value>0){
+      items.push({
+        type: sel.dataset.type,
+        id: sel.dataset.id,
+        size: sel.dataset.size || null,
+        qty: Number(sel.value)
+      });
+    }
+  });
+
+  return items;
+}
+
+function openConfirm(){
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const date = document.getElementById("datePicker").value;
+  const time = document.getElementById("timePicker").value;
+
+  if(!name || !phone || !date || !time){
+    alert("全て入力してください");
+    return;
+  }
+
+  const items = collectOrder();
+
+  if(items.length===0){
+    alert("商品を選択してください");
+    return;
+  }
+
+  let html = `
+    <p><b>名前:</b> ${name}</p>
+    <p><b>電話:</b> ${phone}</p>
+    <p><b>来店:</b> ${date} ${time}</p>
+    <hr class="my-3">
+  `;
+
+  items.forEach(i=>{
+    html += `<p>${i.type} ${i.id} ${i.size||""} × ${i.qty}</p>`;
+  });
+
+  document.getElementById("confirmContent").innerHTML = html;
+  document.getElementById("modal").classList.remove("hidden");
+  document.getElementById("modal").classList.add("flex");
+}
+
+function closeModal(){
+  document.getElementById("modal").classList.add("hidden");
+}
+
+
+/* =========================
+   注文確定
+========================= */
+
+function submitOrder(){
+  alert("予約完了しました（デモ版）");
+  location.reload();
+}
+
+</script>
+
+</body>
+</html>
