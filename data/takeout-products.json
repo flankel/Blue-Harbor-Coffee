@@ -1,1 +1,41 @@
-
+{
+  "beans": [
+    {
+      "id": "A",
+      "name": "Ethiopian Natural",
+      "image": "images/beans/ethiopian.jpg",
+      "sizes": [100, 200, 300]
+    },
+    {
+      "id": "B",
+      "name": "Colombia Supremo",
+      "image": "images/beans/colombia.jpg",
+      "sizes": [100, 200, 300]
+    },
+    {
+      "id": "C",
+      "name": "Guatemala SHB",
+      "image": "images/beans/guatemala.jpg",
+      "sizes": [100, 200, 300]
+    },
+    {
+      "id": "D",
+      "name": "Brazil Santos",
+      "image": "images/beans/brazil.jpg",
+      "sizes": [100, 200, 300]
+    },
+    {
+      "id": "E",
+      "name": "Kenya AA",
+      "image": "images/beans/kenya.jpg",
+      "sizes": [100, 200, 300]
+    }
+  ],
+  "sweets": [
+    { "id": "S1", "name": "Cheesecake" },
+    { "id": "S2", "name": "Chocolate Gateau" },
+    { "id": "S3", "name": "Tiramisu" },
+    { "id": "S4", "name": "Pound Cake" },
+    { "id": "S5", "name": "Apple Tart" }
+  ]
+}
