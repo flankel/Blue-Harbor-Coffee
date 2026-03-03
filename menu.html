@@ -76,6 +76,8 @@
       renderSetMenu(data.setmenu);
       renderList(data.coffee, "coffee", "COFFEE", "DRIP & ESPRESSO");
       renderList(data.food, "food", "SWEETS & FOOD", "HOMEMADE");
+      // ✅ 追加：描画後に高さ同期
+      syncMenuHeights();
     }
 
     function renderSetMenu(list) {
@@ -163,7 +165,7 @@
   }
     
   window.addEventListener("DOMContentLoaded", loadMenu);
-  window.addEventListener("load", syncMenuHeights);
+  //window.addEventListener("load", syncMenuHeights);
   let resizeTimeout;
 
   window.addEventListener("resize", () => {
