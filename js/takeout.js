@@ -46,6 +46,7 @@ function renderProducts(){
           <select 
             data-type="bean"
             data-id="${bean.id}"
+            data-name="${bean.name}"
             data-size="${size}"
             class="border rounded p-2 qtySelect">
             ${createOptions()}
@@ -80,6 +81,7 @@ function renderProducts(){
           <select 
             data-type="sweet"
             data-id="${item.id}"
+            data-name="${item.name}"
             class="border rounded p-2 qtySelect">
             ${createOptions()}
           </select>
