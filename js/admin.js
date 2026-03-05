@@ -73,7 +73,9 @@ if(!text.includes(search)) return;
 
 }
 
-if(order.date === today){
+/* 売上計算（受渡済のみ） */
+
+if(order.date === today && order.status === "completed"){
 todaySales += order.total;
 }
 
