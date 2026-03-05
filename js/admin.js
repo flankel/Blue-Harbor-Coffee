@@ -58,7 +58,7 @@ let todaySales = 0;
 let preparing = 0;
 let ready = 0;
 
-const today = new Date().toISOString().split("T")[0];
+const today = new Date().toLocaleDateString("sv-SE");
 
 allOrders.forEach(order=>{
 
@@ -75,8 +75,8 @@ if(!text.includes(search)) return;
 
 /* 売上計算（受渡済のみ） */
 
-if(order.date === today && order.status === "completed"){
-todaySales += order.total;
+if(order.status === "completed"){
+   todaySales += order.total;
 }
 
 if(order.status === "preparing") preparing++;
