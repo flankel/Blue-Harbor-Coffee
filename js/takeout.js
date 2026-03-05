@@ -212,13 +212,16 @@ function collectOrder(){
 
 function openConfirm(){
 
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const email = document.getElementById("email").value.trim();
   const date = document.getElementById("datePicker").value;
   const time = document.getElementById("timePicker").value;
+  const message = document.getElementById("message").value.trim();
 
-  if(!name || !phone || !date || !time){
-    alert("全て入力してください");
+  // 必須チェック
+  if(!name || !phone || !email || !date || !time){
+    alert("必須項目を全て入力してください");
     return;
   }
 
@@ -231,6 +234,7 @@ function openConfirm(){
   let html = `
     <p><b>名前:</b> ${name}</p>
     <p><b>電話:</b> ${phone}</p>
+    <p><b>メール:</b> ${email}</p>
     <p><b>来店:</b> ${date} ${time}</p>
     <hr class="my-3">
   `;
@@ -262,11 +266,21 @@ function openConfirm(){
     </p>
   `;
 
+  // 問い合わせがある場合のみ表示
+  if(message){
+    html += `
+      <hr class="my-4">
+      <p><b>お問い合わせ:</b></p>
+      <p class="text-sm text-slate-600 whitespace-pre-line">
+        ${message}
+      </p>
+    `;
+  }
+
   document.getElementById("confirmContent").innerHTML = html;
   document.getElementById("modal").classList.remove("hidden");
   document.getElementById("modal").classList.add("flex");
 }
-
 function closeModal(){
   document.getElementById("modal").classList.add("hidden");
 }
