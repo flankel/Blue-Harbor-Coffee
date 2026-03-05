@@ -156,7 +156,7 @@ function collectOrder(){
         id: sel.dataset.id,
         name: sel.dataset.name,
         size: sel.dataset.size || "",
-        qty: sel.value
+        qty: Number(sel.value)
       });
     }
   });
