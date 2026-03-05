@@ -1,3 +1,5 @@
+import { db, collection, addDoc } from "./firebase.js";
+
 const MAX_PER_ITEM = 3;
 let products = {};
 
@@ -286,7 +288,7 @@ function closeModal(){
 }
 
 // Mail
-function submitOrder(){
+async function submitOrder(){
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
@@ -301,13 +303,51 @@ function submitOrder(){
   let total = 0;
 
   items.forEach(i => {
+
     const subtotal = i.price * i.qty;
     total += subtotal;
 
     orderText += `${i.name} ${i.size ? i.size + "g" : ""} × ${i.qty} = ¥${subtotal}\n`;
+
   });
 
+
+  /* =========================
+     Firebase保存
+  ========================= */
+
+  try{
+
+    await addDoc(collection(db,"orders"),{
+
+      name: name,
+      phone: phone,
+      email: email,
+      message: message,
+      date: date,
+      time: time,
+      items: items,
+      total: total,
+      status: "new",
+      createdAt: new Date()
+
+    });
+
+  }catch(e){
+
+    console.error(e);
+    alert("注文保存エラー");
+    return;
+
+  }
+
+
+  /* =========================
+     EmailJS送信
+  ========================= */
+
   const templateParams = {
+
     name: name,
     phone: phone,
     email: email,
@@ -316,14 +356,20 @@ function submitOrder(){
     order: orderText,
     message: message || "なし",
     total: total.toLocaleString()
+
   };
 
   emailjs.send("service_l7e4fi8", "template_8fm7t8b", templateParams)
     .then(function(response) {
+
        alert("予約が完了しました。確認メールを送信しました。");
        location.reload();
+
     }, function(error) {
+
        alert("メール送信に失敗しました。");
        console.log(error);
+
     });
+
 }
