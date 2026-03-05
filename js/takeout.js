@@ -285,7 +285,45 @@ function closeModal(){
   document.getElementById("modal").classList.add("hidden");
 }
 
+// Mail
 function submitOrder(){
-  alert("予約完了しました（デモ版）");
-  location.reload();
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const date = document.getElementById("datePicker").value;
+  const time = document.getElementById("timePicker").value;
+  const message = document.getElementById("message").value.trim();
+
+  const items = collectOrder();
+
+  let orderText = "";
+  let total = 0;
+
+  items.forEach(i => {
+    const subtotal = i.price * i.qty;
+    total += subtotal;
+
+    orderText += `${i.name} ${i.size ? i.size + "g" : ""} × ${i.qty} = ¥${subtotal}\n`;
+  });
+
+  const templateParams = {
+    name: name,
+    phone: phone,
+    email: email,
+    date: date,
+    time: time,
+    order: orderText,
+    message: message || "なし",
+    total: total.toLocaleString()
+  };
+
+  emailjs.send("service_l7e4fi8", "template_8fm7t8b", templateParams)
+    .then(function(response) {
+       alert("予約が完了しました。確認メールを送信しました。");
+       location.reload();
+    }, function(error) {
+       alert("メール送信に失敗しました。");
+       console.log(error);
+    });
 }
