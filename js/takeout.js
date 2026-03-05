@@ -149,17 +149,40 @@ function generateTimeSlots(){
 function collectOrder(){
   const selects = document.querySelectorAll(".qtySelect");
   let items = [];
+
   selects.forEach(sel=>{
-    if(sel.value>0){
+    if(sel.value > 0){
+
+      const type = sel.dataset.type;
+      const id = sel.dataset.id;
+      const name = sel.dataset.name;
+      const size = sel.dataset.size || "";
+      const qty = Number(sel.value);
+
+      let price = 0;
+
+      if(type === "bean"){
+        const bean = products.beans.find(b => b.id === id);
+        price = bean.sizes[size];
+      }
+
+      if(type === "sweet"){
+        const sweet = products.sweets.find(s => s.id === id);
+        price = sweet.price;
+      }
+
       items.push({
-        type: sel.dataset.type,
-        id: sel.dataset.id,
-        name: sel.dataset.name,
-        size: sel.dataset.size || "",
-        qty: Number(sel.value)
+        type,
+        id,
+        name,
+        size,
+        qty,
+        price,
+        subtotal: price * qty
       });
     }
   });
+
   return items;
 }
 
@@ -176,7 +199,7 @@ function openConfirm(){
   }
 
   const items = collectOrder();
-  if(items.length===0){
+  if(items.length === 0){
     alert("商品を選択してください");
     return;
   }
@@ -188,9 +211,32 @@ function openConfirm(){
     <hr class="my-3">
   `;
 
-  items.forEach(i=>{
-    html += `<p>${i.name} ${i.size} × ${i.qty}</p>`;
+  let total = 0;
+
+  items.forEach(i => {
+
+    const subtotal = i.price * i.qty;
+    total += subtotal;
+
+    html += `
+      <div class="mb-3">
+        <p>
+          ${i.name} ${i.size ? i.size + "g" : ""} × ${i.qty}
+        </p>
+        <p class="text-sm text-slate-500">
+          ¥${i.price.toLocaleString()} × ${i.qty}
+          = <b>¥${subtotal.toLocaleString()}</b>
+        </p>
+      </div>
+    `;
   });
+
+  html += `
+    <hr class="my-4">
+    <p class="text-lg font-semibold text-right">
+      合計：¥${total.toLocaleString()}
+    </p>
+  `;
 
   document.getElementById("confirmContent").innerHTML = html;
   document.getElementById("modal").classList.remove("hidden");
