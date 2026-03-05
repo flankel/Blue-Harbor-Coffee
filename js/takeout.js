@@ -152,6 +152,7 @@ function collectOrder(){
       items.push({
         type: sel.dataset.type,
         id: sel.dataset.id,
+        name: sel.dataset.name,
         size: sel.dataset.size || "",
         qty: sel.value
       });
@@ -186,7 +187,7 @@ function openConfirm(){
   `;
 
   items.forEach(i=>{
-    html += `<p>${i.type} ${i.id} ${i.size} × ${i.qty}</p>`;
+    html += `<p>${i.name} ${i.size} × ${i.qty}</p>`;
   });
 
   document.getElementById("confirmContent").innerHTML = html;
