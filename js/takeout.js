@@ -373,3 +373,7 @@ async function submitOrder(){
     });
 
 }
+
+window.openConfirm = openConfirm;
+window.closeModal = closeModal;
+window.submitOrder = submitOrder;
