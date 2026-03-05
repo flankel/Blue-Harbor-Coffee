@@ -39,7 +39,7 @@ function renderProducts(){
         <h3 class="font-medium text-lg">${bean.name}</h3>
     `;
 
-    bean.sizes.forEach(size => {
+    Object.keys(bean.sizes).forEach(size => {
       html += `
         <div class="flex justify-between items-center">
           <span>${size}g</span>
