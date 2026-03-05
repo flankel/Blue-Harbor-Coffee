@@ -82,28 +82,39 @@ function renderProducts(){
   `;
 
   products.sweets.forEach(item => {
+  
     html += `
       <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5">
-
+  
         <div class="w-full h-48 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 text-sm">
           Coming Soon
         </div>
-
-        <div class="flex justify-between items-center">
-          <span class="font-medium">${item.name}</span>
+  
+        <div class="flex justify-between items-center py-2 border-b last:border-none">
+  
+          <div class="flex items-center gap-4">
+            <span class="font-medium text-base">
+              ${item.name}
+            </span>
+  
+            <span class="text-slate-500 text-sm">
+              ¥${item.price.toLocaleString()}
+            </span>
+          </div>
+  
           <select 
             data-type="sweet"
             data-id="${item.id}"
             data-name="${item.name}"
-            class="border rounded p-2 qtySelect">
+            class="border rounded-lg px-3 py-1 qtySelect">
             ${createOptions()}
           </select>
+  
         </div>
-
+  
       </div>
     `;
   });
-
   html += `</div></div>`;
 
   area.innerHTML = html;
