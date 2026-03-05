@@ -1,143 +1,83 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
+
 <meta charset="UTF-8">
-<title>Cafe Order Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Order Admin</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-getFirestore,
-collection,
-onSnapshot,
-doc,
-updateDoc,
-deleteDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-
-/* ===== Firebase設定 ===== */
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBlBC7PgW3aCvulWTJu3YMs9HPRydRdjY0",
-  authDomain: "blue-harbor-takeout.firebaseapp.com",
-  projectId: "blue-harbor-takeout",
-  storageBucket: "blue-harbor-takeout.firebasestorage.app",
-  messagingSenderId: "687997239074",
-  appId: "1:687997239074:web:d29a92a47c69e2f67aaf7b",
-  measurementId: "G-3S75RH1N5G"
-};
-
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-
-/* ===== 注文リアルタイム取得 ===== */
-
-const orderList = document.getElementById("orders");
-
-onSnapshot(collection(db,"orders"),(snapshot)=>{
-
-  orderList.innerHTML="";
-
-  snapshot.forEach(docSnap=>{
-
-    const data = docSnap.data();
-
-    const card = document.createElement("div");
-    card.className="bg-white shadow p-4 rounded-lg mb-4";
-
-    card.innerHTML = `
-
-      <div class="flex justify-between">
-
-        <div>
-
-          <p class="font-bold text-lg">${data.name}</p>
-          <p>${data.phone}</p>
-          <p>${data.date} ${data.time}</p>
-
-        </div>
-
-        <div class="text-right">
-
-          <p class="text-lg font-bold">¥${data.total}</p>
-
-          <p class="text-sm ${data.status==="done"?"text-green-600":"text-orange-500"}">
-            ${data.status==="done"?"完了":"未対応"}
-          </p>
-
-        </div>
-
-      </div>
-
-      <pre class="bg-slate-100 p-3 mt-3 rounded text-sm">${data.order}</pre>
-
-      <div class="flex gap-2 mt-3">
-
-        <button onclick="completeOrder('${docSnap.id}')"
-        class="bg-green-500 text-white px-3 py-1 rounded">
-        完了
-        </button>
-
-        <button onclick="deleteOrder('${docSnap.id}')"
-        class="bg-red-500 text-white px-3 py-1 rounded">
-        削除
-        </button>
-
-      </div>
-
-    `;
-
-    orderList.appendChild(card);
-
-  });
-
-});
-
-
-/* ===== 完了処理 ===== */
-
-window.completeOrder = async(id)=>{
-
-  await updateDoc(doc(db,"orders",id),{
-
-    status:"done"
-
-  });
-
-};
-
-
-/* ===== 削除 ===== */
-
-window.deleteOrder = async(id)=>{
-
-  if(confirm("削除しますか？")){
-
-    await deleteDoc(doc(db,"orders",id));
-
-  }
-
-};
-
-</script>
-
 </head>
 
+<body class="bg-slate-100 text-slate-800">
 
-<body class="bg-slate-100 p-10">
+<div class="max-w-7xl mx-auto p-10">
 
-<h1 class="text-3xl font-bold mb-8">
-Cafe Orders
+<h1 class="text-3xl font-semibold mb-8">
+Cafe Order Dashboard
 </h1>
 
+<!-- ダッシュボード -->
+<div class="grid md:grid-cols-4 gap-4 mb-10">
 
-<div id="orders"></div>
+<div class="bg-white p-6 rounded-xl shadow">
+<p class="text-sm text-slate-500">注文数</p>
+<p id="orderCount" class="text-2xl font-semibold">0</p>
+</div>
+
+<div class="bg-white p-6 rounded-xl shadow">
+<p class="text-sm text-slate-500">今日の売上</p>
+<p id="todaySales" class="text-2xl font-semibold">¥0</p>
+</div>
+
+<div class="bg-white p-6 rounded-xl shadow">
+<p class="text-sm text-slate-500">準備中</p>
+<p id="preparingCount" class="text-2xl font-semibold">0</p>
+</div>
+
+<div class="bg-white p-6 rounded-xl shadow">
+<p class="text-sm text-slate-500">受渡し待ち</p>
+<p id="readyCount" class="text-2xl font-semibold">0</p>
+</div>
+
+</div>
+
+
+<!-- フィルター -->
+<div class="flex flex-wrap gap-4 mb-8">
+
+<input
+id="searchInput"
+placeholder="名前 / 電話で検索"
+class="border p-2 rounded-lg">
+
+<input
+type="date"
+id="filterDate"
+class="border p-2 rounded-lg">
+
+<button
+onclick="clearFilter()"
+class="bg-gray-200 px-4 py-2 rounded-lg">
+リセット
+</button>
+
+</div>
+
+
+<!-- 注文一覧 -->
+<div id="orders" class="grid md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+
+</div>
+
+<audio id="orderSound">
+<source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3">
+</audio>
+
+<script type="module" src="js/admin.js"></script>
 
 </body>
 </html>
