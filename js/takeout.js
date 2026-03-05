@@ -40,21 +40,34 @@ function renderProducts(){
     `;
 
     Object.keys(bean.sizes).forEach(size => {
+
+      const price = bean.sizes[size];
+    
       html += `
-        <div class="flex justify-between items-center">
-          <span>${size}g</span>
+        <div class="flex justify-between items-center py-2 border-b last:border-none">
+    
+          <div class="flex items-center gap-4">
+            <span class="font-medium text-base">
+              ${size}g
+            </span>
+    
+            <span class="text-slate-500 text-sm">
+              ¥${price.toLocaleString()}
+            </span>
+          </div>
+    
           <select 
             data-type="bean"
             data-id="${bean.id}"
             data-name="${bean.name}"
             data-size="${size}"
-            class="border rounded p-2 qtySelect">
+            class="border rounded-lg px-3 py-1 qtySelect">
             ${createOptions()}
           </select>
+    
         </div>
       `;
     });
-
     html += `</div>`;
   });
 
