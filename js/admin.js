@@ -238,7 +238,7 @@ function updateDashboard(){
   let preparing = 0
   let ready = 0
 
-  const today = new Date().toISOString().split("T")[0]
+  const today = new Date().toLocaleDateString("sv-SE")
 
   orders.forEach(o=>{
 
