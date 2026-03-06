@@ -25,6 +25,7 @@ const db = getFirestore(app)
 
 
 let orders = []
+let currentTab = "today"
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -75,7 +76,15 @@ function renderOrders(){
 
   container.innerHTML=""
 
+  const today = new Date().toLocaleDateString("sv-SE")
+
   orders.forEach(order=>{
+
+    /* ===== タブ判定 ===== */
+
+    if(currentTab==="past" && order.date >= today) return
+    if(currentTab==="today" && order.date !== today) return
+    if(currentTab==="future" && order.date <= today) return
 
     let itemsHTML=""
 
@@ -260,5 +269,27 @@ function updateDashboard(){
   document.getElementById("preparingCount").innerText = preparing
 
   document.getElementById("readyCount").innerText = ready
+
+}
+
+
+
+/* ======================
+タブ切替
+====================== */
+
+window.switchTab = function(tab){
+
+  currentTab = tab
+
+  document.querySelectorAll(".tabBtn").forEach(btn=>{
+    btn.classList.remove("bg-slate-800","text-white")
+    btn.classList.add("bg-slate-200")
+  })
+
+  event.target.classList.remove("bg-slate-200")
+  event.target.classList.add("bg-slate-800","text-white")
+
+  renderOrders()
 
 }
