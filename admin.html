@@ -32,9 +32,7 @@ const auth = getAuth(app)
 onAuthStateChanged(auth,(user)=>{
 
 if(!user){
-
 location.href="login.html"
-
 }
 
 })
@@ -55,6 +53,8 @@ location.href="login.html"
 
 <div class="max-w-7xl mx-auto p-10">
 
+<!-- ヘッダー -->
+
 <div class="flex justify-between mb-10">
 
 <h1 class="text-3xl font-semibold">
@@ -68,6 +68,7 @@ class="bg-red-500 text-white px-4 py-2 rounded">
 </button>
 
 </div>
+
 
 <!-- ダッシュボード -->
 
@@ -95,7 +96,40 @@ class="bg-red-500 text-white px-4 py-2 rounded">
 
 </div>
 
-<div id="orders" class="grid md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+
+<!-- フィルター -->
+
+<div class="bg-white p-6 rounded-xl shadow mb-10 flex flex-wrap gap-4 items-center">
+
+<input
+id="searchInput"
+type="text"
+placeholder="名前・電話で検索"
+class="border rounded-lg px-3 py-2 w-64">
+
+<input
+id="filterDate"
+type="date"
+class="border rounded-lg px-3 py-2">
+
+<button
+onclick="clearFilter()"
+class="bg-slate-500 text-white px-4 py-2 rounded">
+
+クリア
+
+</button>
+
+</div>
+
+
+<!-- 注文一覧 -->
+
+<div
+id="orders"
+class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+</div>
 
 </div>
 
