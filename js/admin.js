@@ -233,6 +233,7 @@ window.deleteOrder = async function(id){
 ====================== */
 
 function updateDashboard(){
+  console.log(orders)
 
   let todaySales = 0
   let preparing = 0
