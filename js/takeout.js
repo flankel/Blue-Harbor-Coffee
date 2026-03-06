@@ -381,8 +381,8 @@ async function submitOrder(){
 
   };
 
-  console.log("orderText =", orderText);
-  console.log("templateParams =", templateParams);
+  //console.log("orderText =", orderText);
+  //console.log("templateParams =", templateParams);
 
   emailjs.send("service_l7e4fi8","template_8fm7t8b",templateParams)
 
