@@ -1,4 +1,5 @@
 import { db, collection, addDoc } from "./firebase.js";
+import { serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const MAX_PER_ITEM = 3;
 let products = {};
@@ -21,6 +22,8 @@ async function loadProducts(){
 function renderProducts(){
 
   const area = document.getElementById("productArea");
+
+  if(!products.beans) return;
 
   let html = `
     <div>
@@ -70,10 +73,12 @@ function renderProducts(){
         </div>
       `;
     });
+
     html += `</div>`;
   });
 
   html += `</div></div>`;
+
 
   /* SWEETS */
 
@@ -117,6 +122,7 @@ function renderProducts(){
       </div>
     `;
   });
+
   html += `</div></div>`;
 
   area.innerHTML = html;
@@ -135,19 +141,26 @@ function createOptions(){
 ========================= */
 
 function setupDate(){
+
   const picker = document.getElementById("datePicker");
+
   const today = new Date();
   const max = new Date();
+
   max.setDate(today.getDate()+7);
 
   picker.min = today.toISOString().split("T")[0];
   picker.max = max.toISOString().split("T")[0];
+
   picker.addEventListener("change", generateTimeSlots);
+
 }
 
 function generateTimeSlots(){
+
   const date = document.getElementById("datePicker").value;
   const select = document.getElementById("timePicker");
+
   select.innerHTML="";
 
   if(!date) return;
@@ -156,27 +169,37 @@ function generateTimeSlots(){
   const day = d.getDay();
 
   if(day===3){
+
     select.innerHTML="<option>定休日</option>";
     return;
+
   }
 
   let close = 21;
+
   if(day===5||day===6) close=23;
 
   for(let h=8; h<close; h++){
+
     select.innerHTML += `<option>${h}:00-${h+1}:00</option>`;
+
   }
+
 }
 
+
 /* =========================
-   注文処理
+   注文収集
 ========================= */
 
 function collectOrder(){
+
   const selects = document.querySelectorAll(".qtySelect");
+
   let items = [];
 
   selects.forEach(sel=>{
+
     if(sel.value > 0){
 
       const type = sel.dataset.type;
@@ -188,13 +211,17 @@ function collectOrder(){
       let price = 0;
 
       if(type === "bean"){
+
         const bean = products.beans.find(b => b.id === id);
         price = bean.sizes[size];
+
       }
 
       if(type === "sweet"){
+
         const sweet = products.sweets.find(s => s.id === id);
         price = sweet.price;
+
       }
 
       items.push({
@@ -206,11 +233,19 @@ function collectOrder(){
         price,
         subtotal: price * qty
       });
+
     }
+
   });
 
   return items;
+
 }
+
+
+/* =========================
+   確認モーダル
+========================= */
 
 function openConfirm(){
 
@@ -221,74 +256,66 @@ function openConfirm(){
   const time = document.getElementById("timePicker").value;
   const message = document.getElementById("message").value.trim();
 
-  // 必須チェック
   if(!name || !phone || !email || !date || !time){
+
     alert("必須項目を全て入力してください");
     return;
+
   }
 
   const items = collectOrder();
+
   if(items.length === 0){
+
     alert("商品を選択してください");
     return;
+
   }
 
-  let html = `
-    <p><b>名前:</b> ${name}</p>
-    <p><b>電話:</b> ${phone}</p>
-    <p><b>メール:</b> ${email}</p>
-    <p><b>来店:</b> ${date} ${time}</p>
-    <hr class="my-3">
-  `;
-
+  let html = "";
   let total = 0;
 
-  items.forEach(i => {
+  items.forEach(i=>{
 
     const subtotal = i.price * i.qty;
     total += subtotal;
 
-    html += `
-      <div class="mb-3">
-        <p>
-          ${i.name} ${i.size ? i.size + "g" : ""} × ${i.qty}
-        </p>
-        <p class="text-sm text-slate-500">
-          ¥${i.price.toLocaleString()} × ${i.qty}
-          = <b>¥${subtotal.toLocaleString()}</b>
-        </p>
-      </div>
-    `;
+    html += `<p>${i.name} ${i.size ? i.size + "g" : ""} × ${i.qty} = ¥${subtotal.toLocaleString()}</p>`;
+
   });
 
-  html += `
-    <hr class="my-4">
-    <p class="text-lg font-semibold text-right">
-      合計：¥${total.toLocaleString()}
-    </p>
-  `;
-
-  // 問い合わせがある場合のみ表示
-  if(message){
-    html += `
-      <hr class="my-4">
-      <p><b>お問い合わせ:</b></p>
-      <p class="text-sm text-slate-600 whitespace-pre-line">
-        ${message}
-      </p>
-    `;
-  }
+  html += `<hr class="my-4"><p class="text-lg font-semibold">合計 ¥${total.toLocaleString()}</p>`;
 
   document.getElementById("confirmContent").innerHTML = html;
-  document.getElementById("modal").classList.remove("hidden");
-  document.getElementById("modal").classList.add("flex");
-}
-function closeModal(){
-  document.getElementById("modal").classList.add("hidden");
+
+  const modal = document.getElementById("modal");
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+
 }
 
-// Mail
+function closeModal(){
+
+  const modal = document.getElementById("modal");
+
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+
+}
+
+
+/* =========================
+   注文送信
+========================= */
+
+let sending = false;
+
 async function submitOrder(){
+
+  if(sending) return;
+
+  sending = true;
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
@@ -299,22 +326,11 @@ async function submitOrder(){
 
   const items = collectOrder();
 
-  let orderText = "";
   let total = 0;
 
-  items.forEach(i => {
-
-    const subtotal = i.price * i.qty;
-    total += subtotal;
-
-    orderText += `${i.name} ${i.size ? i.size + "g" : ""} × ${i.qty} = ¥${subtotal}\n`;
-
+  items.forEach(i=>{
+    total += i.price * i.qty;
   });
-
-
-  /* =========================
-     Firebase保存
-  ========================= */
 
   try{
 
@@ -329,7 +345,7 @@ async function submitOrder(){
       items: items,
       total: total,
       status: "new",
-      createdAt: new Date()
+      createdAt: serverTimestamp()
 
     });
 
@@ -337,14 +353,12 @@ async function submitOrder(){
 
     console.error(e);
     alert("注文保存エラー");
+
+    sending = false;
+
     return;
 
   }
-
-
-  /* =========================
-     EmailJS送信
-  ========================= */
 
   const templateParams = {
 
@@ -353,24 +367,26 @@ async function submitOrder(){
     email: email,
     date: date,
     time: time,
-    order: orderText,
+    order: JSON.stringify(items,null,2),
     message: message || "なし",
     total: total.toLocaleString()
 
   };
 
-  emailjs.send("service_l7e4fi8", "template_8fm7t8b", templateParams)
-    .then(function(response) {
+  emailjs.send("service_l7e4fi8","template_8fm7t8b",templateParams)
 
-       alert("予約が完了しました。確認メールを送信しました。");
-       location.reload();
+  .then(()=>{
 
-    }, function(error) {
+    alert("予約が完了しました");
+    location.reload();
 
-       alert("メール送信に失敗しました。");
-       console.log(error);
+  })
 
-    });
+  .catch(()=>{
+
+    alert("メール送信エラー");
+
+  });
 
 }
 
