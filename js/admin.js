@@ -73,11 +73,11 @@ if(!text.includes(search)) return;
 }
 
 /* 売上（受渡済のみ） */
-
 if(order.date === today && order.status === "completed"){
-todaySales += Number(order.total);
+  todaySales += Number(order.total);
 }
 
+  
 if(order.status === "preparing") preparing++;
 if(order.status === "ready") ready++;
 
