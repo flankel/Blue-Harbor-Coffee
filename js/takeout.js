@@ -375,7 +375,7 @@ async function submitOrder(){
     email: email,
     date: date,
     time: time,
-    order: orderText,
+    order_details: orderText,
     message: message || "なし",
     total: total.toLocaleString()
 
