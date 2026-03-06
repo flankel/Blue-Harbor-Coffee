@@ -8,6 +8,7 @@ updateDoc,
 deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
 const orderArea = document.getElementById("orders");
 const sound = document.getElementById("orderSound");
 
@@ -18,6 +19,8 @@ let firstLoad = true;
 /* ======================
 リアルタイム取得
 ====================== */
+
+try{
 
 onSnapshot(collection(db,"orders"),(snapshot)=>{
 
@@ -34,13 +37,19 @@ allOrders.push(order);
 
 renderOrders();
 
-if(!firstLoad){
-sound.play();
+if(!firstLoad && sound){
+sound.play().catch(()=>{});
 }
 
 firstLoad = false;
 
 });
+
+}catch(e){
+
+console.error("Firestore読み込みエラー",e);
+
+}
 
 
 /* ======================
@@ -49,8 +58,13 @@ firstLoad = false;
 
 function renderOrders(){
 
-const search = document.getElementById("searchInput").value.toLowerCase();
-const dateFilter = document.getElementById("filterDate").value;
+if(!orderArea) return;
+
+const searchInput = document.getElementById("searchInput");
+const dateInput = document.getElementById("filterDate");
+
+const search = searchInput ? searchInput.value.toLowerCase() : "";
+const dateFilter = dateInput ? dateInput.value : "";
 
 orderArea.innerHTML = "";
 
@@ -66,18 +80,18 @@ if(dateFilter && order.date !== dateFilter) return;
 
 if(search){
 
-const text = (order.name + order.phone).toLowerCase();
+const text = ((order.name || "") + (order.phone || "")).toLowerCase();
 
 if(!text.includes(search)) return;
 
 }
 
 /* 売上（受渡済のみ） */
+
 if(order.date === today && order.status === "completed"){
-  todaySales += Number(order.total);
+todaySales += Number(order.total || 0);
 }
 
-  
 if(order.status === "preparing") preparing++;
 if(order.status === "ready") ready++;
 
@@ -85,14 +99,18 @@ renderOrder(order);
 
 });
 
-document.getElementById("orderCount").innerText = allOrders.length;
 
-document.getElementById("todaySales").innerText =
-"¥" + todaySales.toLocaleString();
+const countEl = document.getElementById("orderCount");
+if(countEl) countEl.innerText = allOrders.length;
 
-document.getElementById("preparingCount").innerText = preparing;
+const salesEl = document.getElementById("todaySales");
+if(salesEl) salesEl.innerText = "¥" + todaySales.toLocaleString();
 
-document.getElementById("readyCount").innerText = ready;
+const preparingEl = document.getElementById("preparingCount");
+if(preparingEl) preparingEl.innerText = preparing;
+
+const readyEl = document.getElementById("readyCount");
+if(readyEl) readyEl.innerText = ready;
 
 }
 
@@ -105,7 +123,7 @@ function renderOrder(order){
 
 let itemsHTML = "";
 
-/* 商品表示（ここが重要） */
+/* 商品表示 */
 
 if(order.items && order.items.length > 0){
 
@@ -115,11 +133,11 @@ itemsHTML += `
 <div class="flex justify-between text-sm border-b py-1">
 
 <span>
-${item.name} ${item.size ? item.size+"g":""}
+${item.name || ""} ${item.size ? item.size+"g":""}
 </span>
 
 <span>
-${item.qty} × ¥${item.price}
+${item.qty || 0} × ¥${item.price || 0}
 </span>
 
 </div>
@@ -146,21 +164,21 @@ card.innerHTML = `
 <div class="flex justify-between items-center">
 
 <h2 class="font-semibold text-lg">
-${order.name}
+${order.name || "名無し"}
 </h2>
 
 <span class="text-xs px-2 py-1 rounded ${statusColor(order.status)}">
-${order.status}
+${order.status || ""}
 </span>
 
 </div>
 
 <div class="text-sm text-slate-500 space-y-1">
 
-<p>📞 ${order.phone}</p>
-<p>📧 ${order.email}</p>
-<p>📅 ${order.date}</p>
-<p>⏰ ${order.time}</p>
+<p>📞 ${order.phone || ""}</p>
+<p>📧 ${order.email || ""}</p>
+<p>📅 ${order.date || ""}</p>
+<p>⏰ ${order.time || ""}</p>
 
 </div>
 
@@ -171,7 +189,7 @@ ${itemsHTML}
 </div>
 
 <div class="text-right font-semibold pt-3 border-t">
-合計 ¥${order.total}
+合計 ¥${Number(order.total || 0).toLocaleString()}
 </div>
 
 <div class="flex gap-2 pt-4 flex-wrap">
@@ -239,9 +257,17 @@ return "bg-gray-200";
 
 window.updateStatus = async function(id,status){
 
+try{
+
 await updateDoc(doc(db,"orders",id),{
 status:status
 });
+
+}catch(e){
+
+console.error("ステータス更新エラー",e);
+
+}
 
 }
 
@@ -254,7 +280,15 @@ window.deleteOrder = async function(id){
 
 if(!confirm("削除しますか？")) return;
 
+try{
+
 await deleteDoc(doc(db,"orders",id));
+
+}catch(e){
+
+console.error("削除エラー",e);
+
+}
 
 }
 
@@ -263,16 +297,22 @@ await deleteDoc(doc(db,"orders",id));
 フィルター
 ====================== */
 
-document.getElementById("searchInput")
-.addEventListener("input",renderOrders);
+const searchEl = document.getElementById("searchInput");
+const dateEl = document.getElementById("filterDate");
 
-document.getElementById("filterDate")
-.addEventListener("change",renderOrders);
+if(searchEl){
+searchEl.addEventListener("input",renderOrders);
+}
+
+if(dateEl){
+dateEl.addEventListener("change",renderOrders);
+}
+
 
 window.clearFilter = function(){
 
-document.getElementById("searchInput").value="";
-document.getElementById("filterDate").value="";
+if(searchEl) searchEl.value="";
+if(dateEl) dateEl.value="";
 
 renderOrders();
 
