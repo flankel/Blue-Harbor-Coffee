@@ -6,6 +6,7 @@ collection,
 getDocs,
 doc,
 updateDoc,
+deleteDoc,
 orderBy,
 query
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
@@ -33,48 +34,40 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-/* =========================
-   注文取得
-========================= */
+/* ======================
+注文取得
+====================== */
 
 async function loadOrders(){
 
-  try{
+  const q = query(
+    collection(db,"orders"),
+    orderBy("createdAt","desc")
+  )
 
-    const q = query(
-      collection(db,"orders"),
-      orderBy("createdAt","desc")
-    )
+  const snapshot = await getDocs(q)
 
-    const snapshot = await getDocs(q)
+  orders = []
 
-    orders = []
+  snapshot.forEach(docSnap=>{
 
-    snapshot.forEach(docSnap=>{
-
-      orders.push({
-        id:docSnap.id,
-        ...docSnap.data()
-      })
-
+    orders.push({
+      id:docSnap.id,
+      ...docSnap.data()
     })
 
-    renderOrders()
-    updateDashboard()
+  })
 
-  }catch(e){
-
-    console.error("Firestore取得エラー",e)
-
-  }
+  renderOrders()
+  updateDashboard()
 
 }
 
 
 
-/* =========================
-   注文表示
-========================= */
+/* ======================
+注文表示
+====================== */
 
 function renderOrders(){
 
@@ -91,9 +84,19 @@ function renderOrders(){
       order.items.forEach(i=>{
 
         itemsHTML += `
-        <div class="text-sm">
-        ${i.name} ${i.size ? i.size+"g":""} × ${i.qty}
+
+        <div class="flex justify-between text-sm border-b py-1">
+
+          <span>
+          ${i.name} ${i.size ? i.size+"g":""}
+          </span>
+
+          <span>
+          ${i.qty} × ¥${i.price}
+          </span>
+
         </div>
+
         `
 
       })
@@ -102,62 +105,66 @@ function renderOrders(){
 
     const card = document.createElement("div")
 
-    card.className="bg-white p-6 rounded-xl shadow space-y-4"
+    card.className="bg-white p-6 rounded-xl shadow space-y-3"
 
     card.innerHTML=`
 
-    <div class="flex justify-between">
+    <div class="flex justify-between items-center">
 
-      <div>
+      <h2 class="font-semibold text-lg">
+      ${order.name}
+      </h2>
 
-        <p class="font-semibold">${order.name}</p>
-        <p class="text-sm text-slate-500">${order.phone}</p>
-        <p class="text-sm text-slate-500">${order.email}</p>
-
-      </div>
-
-      <div class="text-right">
-
-        <p class="text-sm">${order.date}</p>
-        <p class="text-sm">${order.time}</p>
-
-      </div>
+      <span class="text-xs px-2 py-1 rounded ${statusColor(order.status)}">
+      ${order.status}
+      </span>
 
     </div>
 
-    <div class="border-t pt-3 space-y-1">
+    <div class="text-sm text-slate-500 space-y-1">
+
+      <p>📞 ${order.phone}</p>
+      <p>📧 ${order.email}</p>
+      <p>📅 ${order.date}</p>
+      <p>⏰ ${order.time}</p>
+
+    </div>
+
+    <div class="pt-3 space-y-1">
 
       ${itemsHTML}
 
     </div>
 
-    <div class="border-t pt-3 flex justify-between items-center">
+    <div class="text-right font-semibold pt-3 border-t">
+    合計 ¥${order.total}
+    </div>
 
-      <p class="font-semibold">
-      ¥${Number(order.total).toLocaleString()}
-      </p>
+    <div class="flex gap-2 pt-4 flex-wrap">
 
-      <select
-      onchange="updateStatus('${order.id}',this.value)"
-      class="border rounded px-2 py-1">
+      <button
+      onclick="updateStatus('${order.id}','preparing')"
+      class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600">
+      準備中
+      </button>
 
-        <option value="new" ${order.status==="new"?"selected":""}>
-        新規
-        </option>
+      <button
+      onclick="updateStatus('${order.id}','ready')"
+      class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">
+      準備完了
+      </button>
 
-        <option value="preparing" ${order.status==="preparing"?"selected":""}>
-        準備中
-        </option>
+      <button
+      onclick="updateStatus('${order.id}','completed')"
+      class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+      受渡済
+      </button>
 
-        <option value="ready" ${order.status==="ready"?"selected":""}>
-        受渡し待ち
-        </option>
-
-        <option value="done" ${order.status==="done"?"selected":""}>
-        完了
-        </option>
-
-      </select>
+      <button
+      onclick="deleteOrder('${order.id}')"
+      class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
+      削除
+      </button>
 
     </div>
 
@@ -171,52 +178,72 @@ function renderOrders(){
 
 
 
-/* =========================
-   ステータス更新
-========================= */
+/* ======================
+ステータス色
+====================== */
 
-window.updateStatus = async (id,status)=>{
+function statusColor(status){
 
-  try{
+if(status==="new") return "bg-red-200 text-red-700"
+if(status==="preparing") return "bg-yellow-200 text-yellow-700"
+if(status==="ready") return "bg-green-200 text-green-700"
+if(status==="completed") return "bg-blue-200 text-blue-700"
 
-    await updateDoc(
-      doc(db,"orders",id),
-      {status:status}
-    )
-
-  }catch(e){
-
-    console.error("status update error",e)
-
-  }
+return "bg-gray-200"
 
 }
 
 
 
-/* =========================
-   ダッシュボード更新
-========================= */
+/* ======================
+ステータス更新
+====================== */
+
+window.updateStatus = async function(id,status){
+
+  await updateDoc(
+    doc(db,"orders",id),
+    {status:status}
+  )
+
+  await loadOrders()
+
+}
+
+
+
+/* ======================
+削除
+====================== */
+
+window.deleteOrder = async function(id){
+
+  if(!confirm("削除しますか？")) return
+
+  await deleteDoc(doc(db,"orders",id))
+
+  await loadOrders()
+
+}
+
+
+
+/* ======================
+ダッシュボード
+====================== */
 
 function updateDashboard(){
 
-  const orderCount = orders.length
-
-  document.getElementById("orderCount").innerText = orderCount
-
-
-  let todaySales=0
-  let preparing=0
-  let ready=0
+  let todaySales = 0
+  let preparing = 0
+  let ready = 0
 
   const today = new Date().toISOString().split("T")[0]
 
   orders.forEach(o=>{
 
-    if(o.date===today){
-
+    if(o.date===today && o.status==="completed"){
       todaySales += Number(o.total)
-
     }
 
     if(o.status==="preparing") preparing++
@@ -224,11 +251,13 @@ function updateDashboard(){
 
   })
 
+  document.getElementById("orderCount").innerText = orders.length
 
   document.getElementById("todaySales").innerText =
   "¥"+todaySales.toLocaleString()
 
   document.getElementById("preparingCount").innerText = preparing
+
   document.getElementById("readyCount").innerText = ready
 
 }
