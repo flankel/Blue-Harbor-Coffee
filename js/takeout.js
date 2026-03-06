@@ -362,9 +362,9 @@ async function submitOrder(){
   
   const orderText = items.map(i => {
 
-  const size = i.size ? ` ${i.size}g` : "";
+    const size = i.size ? ` ${i.size}g` : "";
 
-  return `${i.name}${size} ×${i.qty}　¥${i.subtotal.toLocaleString()}`;
+    return `${i.name}${size} ×${i.qty}　¥${i.subtotal.toLocaleString()}`;
 
   }).join("\n");
 
@@ -382,7 +382,8 @@ async function submitOrder(){
   };
 
   console.log("orderText =", orderText);
-  
+  console.log("templateParams =", templateParams);
+
   emailjs.send("service_l7e4fi8","template_8fm7t8b",templateParams)
 
   .then(()=>{
