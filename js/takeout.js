@@ -359,6 +359,14 @@ async function submitOrder(){
     return;
 
   }
+  
+  const orderText = items.map(i => {
+
+  const size = i.size ? ` ${i.size}g` : "";
+
+  return `${i.name}${size} ×${i.qty}　¥${i.subtotal.toLocaleString()}`;
+
+  }).join("\n");
 
   const templateParams = {
 
@@ -367,12 +375,12 @@ async function submitOrder(){
     email: email,
     date: date,
     time: time,
-    order: JSON.stringify(items,null,2),
+    order: orderText,
     message: message || "なし",
     total: total.toLocaleString()
 
   };
-
+  
   emailjs.send("service_l7e4fi8","template_8fm7t8b",templateParams)
 
   .then(()=>{
