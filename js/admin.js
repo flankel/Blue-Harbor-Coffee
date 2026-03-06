@@ -242,7 +242,7 @@ function updateDashboard(){
 
   orders.forEach(o=>{
 
-    if(o.date===today && o.status==="done"){
+    if(o.date===today && o.status==="completed"){
       todaySales += Number(o.total)
     }
 
