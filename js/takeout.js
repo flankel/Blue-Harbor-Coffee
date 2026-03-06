@@ -380,6 +380,8 @@ async function submitOrder(){
     total: total.toLocaleString()
 
   };
+
+  console.log(templateParams);
   
   emailjs.send("service_l7e4fi8","template_8fm7t8b",templateParams)
 
