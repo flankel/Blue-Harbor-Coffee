@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Order Confirmation | Blue Harbor Coffee</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+
+<body class="bg-slate-50 text-slate-800">
+
+
+<!-- Header -->
+
+<div id="header"></div>
+
+
+
+<div class="pt-20 sm:pt-24">
+
+<div class="max-w-4xl mx-auto px-6 py-16">
+
+
+<!-- Title -->
+
+<div class="text-center mb-16">
+
+<h1 class="text-4xl font-light tracking-widest mb-4">
+
+Order Confirmation
+
+</h1>
+
+<p class="text-slate-500">
+
+注文内容の確認
+
+</p>
+
+</div>
+
+
+
+<!-- Order Info -->
+
+<div class="bg-white p-10 rounded-2xl shadow-sm mb-10">
+
+<h2 class="text-2xl mb-8 font-semibold">
+
+ご注文内容
+
+</h2>
+
+
+<div id="orderItems" class="space-y-3 text-sm">
+
+</div>
+
+
+<div class="border-t mt-6 pt-6 text-lg font-semibold">
+
+合計金額
+
+<span id="orderTotal" class="ml-2"></span>
+
+</div>
+
+</div>
+
+
+
+<!-- Customer Info -->
+
+<div class="bg-white p-10 rounded-2xl shadow-sm">
+
+
+<h2 class="text-2xl mb-8 font-semibold">
+
+お客様情報
+
+</h2>
+
+
+<div class="space-y-3 text-sm">
+
+
+<div>
+
+<span class="text-slate-500">お名前：</span>
+
+<span id="c_name"></span>
+
+</div>
+
+
+<div>
+
+<span class="text-slate-500">電話番号：</span>
+
+<span id="c_phone"></span>
+
+</div>
+
+
+<div>
+
+<span class="text-slate-500">メール：</span>
+
+<span id="c_email"></span>
+
+</div>
+
+
+<div>
+
+<span class="text-slate-500">来店日：</span>
+
+<span id="c_date"></span>
+
+</div>
+
+
+<div>
+
+<span class="text-slate-500">来店時間：</span>
+
+<span id="c_time"></span>
+
+</div>
+
+
+<div>
+
+<span class="text-slate-500">お問い合わせ：</span>
+
+<span id="c_message"></span>
+
+</div>
+
+
+</div>
+
+
+
+<!-- Buttons -->
+
+<div class="flex gap-4 mt-10">
+
+
+<button
+
+onclick="backToCustomer()"
+
+class="w-full bg-gray-200 py-4 rounded-xl hover:bg-gray-300 transition"
+
+>
+
+戻る
+
+</button>
+
+
+<button
+
+id="submitBtn"
+
+onclick="submitOrder()"
+
+class="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 transition"
+
+>
+
+注文確定
+
+</button>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Footer -->
+
+<footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400">
+
+© 2024 Blue Harbor Coffee Roasters.
+
+</footer>
+
+
+
+<!-- Header Loader -->
+
+<script src="js/loadHeader.js"></script>
+
+
+<!-- EmailJS -->
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+
+(function(){
+
+  emailjs.init("wK3E-NyEcLx-5tbSL");
+
+})();
+
+</script>
+
+
+
+<!-- Confirm Script -->
+
+<script type="module" src="js/confirm.js"></script>
+
+
+
+</body>
+
+</html>
