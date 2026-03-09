@@ -120,11 +120,34 @@ container.appendChild(row);
 
 });
 
+
+// ==============================
+// 金額計算
+// ==============================
+
+const taxRate = 0.08;
+
+const subtotal = orderData.total;
+
+const tax = Math.round(subtotal * taxRate);
+
+const totalWithTax = subtotal + tax;
+
+
+// ==============================
+// 表示
+// ==============================
+
+document.getElementById("orderSubtotal").textContent =
+"¥" + subtotal.toLocaleString();
+
+document.getElementById("orderTax").textContent =
+"¥" + tax.toLocaleString();
+
 document.getElementById("orderTotal").textContent =
-"¥" + orderData.total.toLocaleString();
+"¥" + totalWithTax.toLocaleString();
 
 }
-
 
 // ==============================
 // 顧客表示
