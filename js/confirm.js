@@ -271,9 +271,9 @@ message: customerData.message || ""
 
 await emailjs.send(
 
-"default_service",
+"service_l7e4fi8",
 
-"template_takeout_store",
+"template_8fm7t8b",
 
 {
 
