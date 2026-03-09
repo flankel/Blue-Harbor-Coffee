@@ -330,18 +330,20 @@ return nameCol + qtyCol + priceCol;
 
 });
 
+const taxRate = 0.08;
+
+const subtotal = total;
+const tax = Math.round(subtotal * taxRate);
+const totalWithTax = subtotal + tax;
+
 const totalLine =
 "\n" +
 divider +
 "\n" +
-"合計".padEnd(28) +
-`¥${total.toLocaleString()}`;
-
-return [
-header,
-divider,
-...lines,
-totalLine
-].join("\n");
+"小計(税抜)".padEnd(28) + `¥${subtotal.toLocaleString()}` + "\n" +
+"消費税(8%)".padEnd(28) + `¥${tax.toLocaleString()}` + "\n" +
+divider +
+"\n" +
+"合計(税込)".padEnd(28) + `¥${totalWithTax.toLocaleString()}`;
 
 }
