@@ -281,7 +281,7 @@ function updateDashboard(){
 タブ切替
 ====================== */
 
-window.switchTab = function(e,tab){
+window.switchTab = function(tab){
 
   currentTab = tab
 
@@ -290,8 +290,12 @@ window.switchTab = function(e,tab){
     btn.classList.add("bg-slate-200")
   })
 
-  e.target.classList.remove("bg-slate-200")
-  e.target.classList.add("bg-slate-800","text-white")
+  const activeBtn = document.querySelector(`[onclick="switchTab('${tab}')"]`)
+
+  if(activeBtn){
+    activeBtn.classList.remove("bg-slate-200")
+    activeBtn.classList.add("bg-slate-800","text-white")
+  }
 
   renderOrders()
 
