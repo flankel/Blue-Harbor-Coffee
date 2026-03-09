@@ -47,7 +47,6 @@ let isSubmitting = false;
 
 document.addEventListener("DOMContentLoaded", init);
 
-
 function init(){
 
 loadSession();
@@ -149,6 +148,7 @@ document.getElementById("orderTotal").textContent =
 
 }
 
+
 // ==============================
 // 顧客表示
 // ==============================
@@ -200,15 +200,60 @@ btn.textContent = "送信中...";
 
 try{
 
+// ==============================
+// 金額計算
+// ==============================
+
+const taxRate = 0.08;
+
+const subtotal = orderData.total;
+
+const tax = Math.round(subtotal * taxRate);
+
+const total = subtotal + tax;
+
+
+// ==============================
+// 注文番号生成
+// ==============================
+
+const orderNumber =
+"BH-" + Date.now().toString().slice(-6);
+
+
+// ==============================
+// 日付キー
+// ==============================
+
+const today = new Date();
+
+const dayKey =
+today.getFullYear() + "-" +
+String(today.getMonth()+1).padStart(2,"0") + "-" +
+String(today.getDate()).padStart(2,"0");
+
+
+// ==============================
+// Firestore保存
+// ==============================
+
 const orderRef = await addDoc(collection(db,"orders"),{
 
 store: "blueharbor",
 
+orderNumber: orderNumber,
+
+status: "new",
+
 createdAt: serverTimestamp(),
+
+dayKey: dayKey,
 
 items: orderData.items,
 
-total: orderData.total,
+subtotal: subtotal,
+tax: tax,
+total: total,
 
 customer: {
 name: customerData.name,
@@ -226,12 +271,23 @@ message: customerData.message || ""
 });
 
 
-await sendEmails(orderRef.id);
+// ==============================
+// メール送信
+// ==============================
+
+await sendEmails(orderRef.id,total);
 
 
+// ==============================
 // storage削除
+// ==============================
+
 clearOrder();
 
+
+// ==============================
+// 完了画面
+// ==============================
 
 location.href = "complete.html";
 
@@ -257,9 +313,9 @@ isSubmitting = false;
 // Email送信
 // ==============================
 
-async function sendEmails(orderId){
+async function sendEmails(orderId,total){
 
-const itemsText = formatOrderItems(orderData.items, orderData.total);
+const itemsText = formatOrderItems(orderData.items,total);
 
 await emailjs.send(
 
@@ -275,7 +331,7 @@ email: customerData.email,
 date: customerData.date,
 time: customerData.time,
 items: itemsText,
-total: orderData.total,
+total: total,
 message: customerData.message || ""
 }
 
@@ -318,22 +374,19 @@ return nameCol + qtyCol + priceCol;
 
 const taxRate = 0.08;
 
-const subtotal = total;
+const subtotal = total / 1.08;
 
-const tax = Math.round(subtotal * taxRate);
-
-const totalWithTax = subtotal + tax;
-
+const tax = total - subtotal;
 
 const totalLine =
 "\n" +
 divider +
 "\n" +
-"小計(税抜)".padEnd(28) + `¥${subtotal.toLocaleString()}` + "\n" +
-"消費税(8%)".padEnd(28) + `¥${tax.toLocaleString()}` + "\n" +
+"小計(税抜)".padEnd(28) + `¥${Math.round(subtotal).toLocaleString()}` + "\n" +
+"消費税(8%)".padEnd(28) + `¥${Math.round(tax).toLocaleString()}` + "\n" +
 divider +
 "\n" +
-"合計(税込)".padEnd(28) + `¥${totalWithTax.toLocaleString()}`;
+"合計(税込)".padEnd(28) + `¥${total.toLocaleString()}`;
 
 
 return [
