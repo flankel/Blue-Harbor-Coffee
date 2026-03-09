@@ -1,12 +1,18 @@
 // confirm.js
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
 import {
 getFirestore,
 collection,
 addDoc,
 serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import {
+getOrderBundle,
+clearOrder
+} from "./orderStorage.js";
 
 
 // ==============================
@@ -41,34 +47,38 @@ let isSubmitting = false;
 
 document.addEventListener("DOMContentLoaded", init);
 
+
 function init(){
 
 loadSession();
+
 renderOrder();
+
 renderCustomer();
 
 }
 
 
 // ==============================
-// sessionStorage読み込み
+// session読み込み
 // ==============================
 
 function loadSession(){
 
-const order = sessionStorage.getItem("orderData");
-const customer = sessionStorage.getItem("customerData");
+const bundle = getOrderBundle();
 
-if(!order || !customer){
+if(!bundle){
 
 alert("注文情報が見つかりません");
+
 location.href = "takeout.html";
+
 return;
 
 }
 
-orderData = JSON.parse(order);
-customerData = JSON.parse(customer);
+orderData = bundle.order;
+customerData = bundle.customer;
 
 }
 
@@ -80,6 +90,7 @@ customerData = JSON.parse(customer);
 function renderOrder(){
 
 const container = document.getElementById("orderItems");
+
 container.innerHTML = "";
 
 orderData.items.forEach(item => {
@@ -122,11 +133,17 @@ document.getElementById("orderTotal").textContent =
 function renderCustomer(){
 
 document.getElementById("c_name").textContent = customerData.name;
+
 document.getElementById("c_phone").textContent = customerData.phone;
+
 document.getElementById("c_email").textContent = customerData.email;
+
 document.getElementById("c_date").textContent = customerData.date;
+
 document.getElementById("c_time").textContent = customerData.time;
-document.getElementById("c_message").textContent = customerData.message || "";
+
+document.getElementById("c_message").textContent =
+customerData.message || "";
 
 }
 
@@ -153,7 +170,9 @@ if(isSubmitting) return;
 isSubmitting = true;
 
 const btn = document.getElementById("submitBtn");
+
 btn.disabled = true;
+
 btn.textContent = "送信中...";
 
 try{
@@ -165,6 +184,7 @@ store: "blueharbor",
 createdAt: serverTimestamp(),
 
 items: orderData.items,
+
 total: orderData.total,
 
 customer: {
@@ -182,12 +202,16 @@ message: customerData.message || ""
 
 });
 
+
 await sendEmails(orderRef.id);
 
-sessionStorage.removeItem("orderData");
-sessionStorage.removeItem("customerData");
+
+// storage削除
+clearOrder();
+
 
 location.href = "complete.html";
+
 
 }catch(err){
 
@@ -196,6 +220,7 @@ console.error(err);
 alert("注文送信に失敗しました。");
 
 btn.disabled = false;
+
 btn.textContent = "注文確定";
 
 isSubmitting = false;
@@ -214,8 +239,11 @@ async function sendEmails(orderId){
 const itemsText = formatOrderItems(orderData.items, orderData.total);
 
 await emailjs.send(
+
 "service_l7e4fi8",
+
 "template_8fm7t8b",
+
 {
 order_id: orderId,
 name: customerData.name,
@@ -227,13 +255,14 @@ items: itemsText,
 total: orderData.total,
 message: customerData.message || ""
 }
+
 );
 
 }
 
 
 // ==============================
-// 注文内容フォーマット（メール用）
+// 注文内容フォーマット
 // ==============================
 
 function formatOrderItems(items,total){
@@ -254,18 +283,24 @@ const name = item.size
 const subtotal = item.price * item.qty;
 
 const nameCol = name.padEnd(22," ");
+
 const qtyCol = (`×${item.qty}`).padEnd(6," ");
+
 const priceCol = `¥${subtotal.toLocaleString()}`;
 
 return nameCol + qtyCol + priceCol;
 
 });
 
+
 const taxRate = 0.08;
 
 const subtotal = total;
+
 const tax = Math.round(subtotal * taxRate);
+
 const totalWithTax = subtotal + tax;
+
 
 const totalLine =
 "\n" +
@@ -276,6 +311,7 @@ divider +
 divider +
 "\n" +
 "合計(税込)".padEnd(28) + `¥${totalWithTax.toLocaleString()}`;
+
 
 return [
 header,
