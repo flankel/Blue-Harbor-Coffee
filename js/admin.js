@@ -80,7 +80,9 @@ function renderOrders(){
 
   orders.forEach(order=>{
 
-    const orderDate = order.pickup?.date
+    const orderDate = order.pickup?.date || order.date
+
+    if(!orderDate) return
 
     /* ===== タブ判定 ===== */
 
@@ -114,6 +116,12 @@ function renderOrders(){
 
     }
 
+    const name = order.customer?.name || order.name || ""
+    const phone = order.customer?.phone || order.phone || ""
+    const email = order.customer?.email || order.email || ""
+    const date = order.pickup?.date || order.date || ""
+    const time = order.pickup?.time || order.time || ""
+
     const card = document.createElement("div")
 
     card.className="bg-white p-6 rounded-xl shadow space-y-3"
@@ -123,7 +131,7 @@ function renderOrders(){
     <div class="flex justify-between items-center">
 
       <h2 class="font-semibold text-lg">
-      ${order.customer?.name || ""}
+      ${name}
       </h2>
 
       <span class="text-xs px-2 py-1 rounded ${statusColor(order.status)}">
@@ -134,10 +142,10 @@ function renderOrders(){
 
     <div class="text-sm text-slate-500 space-y-1">
 
-      <p>📞 ${order.customer?.phone || ""}</p>
-      <p>📧 ${order.customer?.email || ""}</p>
-      <p>📅 ${order.pickup?.date || ""}</p>
-      <p>⏰ ${order.pickup?.time || ""}</p>
+      <p>📞 ${phone}</p>
+      <p>📧 ${email}</p>
+      <p>📅 ${date}</p>
+      <p>⏰ ${time}</p>
 
     </div>
 
@@ -148,7 +156,7 @@ function renderOrders(){
     </div>
 
     <div class="text-right font-semibold pt-3 border-t">
-    合計 ¥${order.total}
+    合計 ¥${Number(order.total).toLocaleString()}
     </div>
 
     <div class="flex gap-2 pt-4 flex-wrap">
@@ -249,11 +257,11 @@ function updateDashboard(){
   let preparing = 0
   let ready = 0
 
-  const today = new Date().toLocaleDateString("sv-SE")
+  const today = new Date().toISOString().slice(0,10)
 
   orders.forEach(o=>{
 
-    const orderDate = o.pickup?.date
+    const orderDate = o.pickup?.date || o.date
 
     if(orderDate===today && o.status==="completed"){
       todaySales += Number(o.total)
