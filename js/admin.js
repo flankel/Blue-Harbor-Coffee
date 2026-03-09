@@ -80,11 +80,13 @@ function renderOrders(){
 
   orders.forEach(order=>{
 
+    const orderDate = order.pickup?.date
+
     /* ===== タブ判定 ===== */
 
-    if(currentTab==="past" && order.date >= today) return
-    if(currentTab==="today" && order.date !== today) return
-    if(currentTab==="future" && order.date <= today) return
+    if(currentTab==="past" && orderDate >= today) return
+    if(currentTab==="today" && orderDate !== today) return
+    if(currentTab==="future" && orderDate <= today) return
 
     let itemsHTML=""
 
@@ -121,7 +123,7 @@ function renderOrders(){
     <div class="flex justify-between items-center">
 
       <h2 class="font-semibold text-lg">
-      ${order.name}
+      ${order.customer?.name || ""}
       </h2>
 
       <span class="text-xs px-2 py-1 rounded ${statusColor(order.status)}">
@@ -132,10 +134,10 @@ function renderOrders(){
 
     <div class="text-sm text-slate-500 space-y-1">
 
-      <p>📞 ${order.phone}</p>
-      <p>📧 ${order.email}</p>
-      <p>📅 ${order.date}</p>
-      <p>⏰ ${order.time}</p>
+      <p>📞 ${order.customer?.phone || ""}</p>
+      <p>📧 ${order.customer?.email || ""}</p>
+      <p>📅 ${order.pickup?.date || ""}</p>
+      <p>⏰ ${order.pickup?.time || ""}</p>
 
     </div>
 
@@ -242,7 +244,6 @@ window.deleteOrder = async function(id){
 ====================== */
 
 function updateDashboard(){
-  //console.log(orders)
 
   let todaySales = 0
   let preparing = 0
@@ -252,7 +253,9 @@ function updateDashboard(){
 
   orders.forEach(o=>{
 
-    if(o.date===today && o.status==="completed"){
+    const orderDate = o.pickup?.date
+
+    if(orderDate===today && o.status==="completed"){
       todaySales += Number(o.total)
     }
 
@@ -278,7 +281,7 @@ function updateDashboard(){
 タブ切替
 ====================== */
 
-window.switchTab = function(tab){
+window.switchTab = function(e,tab){
 
   currentTab = tab
 
@@ -287,8 +290,8 @@ window.switchTab = function(tab){
     btn.classList.add("bg-slate-200")
   })
 
-  event.target.classList.remove("bg-slate-200")
-  event.target.classList.add("bg-slate-800","text-white")
+  e.target.classList.remove("bg-slate-200")
+  e.target.classList.add("bg-slate-800","text-white")
 
   renderOrders()
 
