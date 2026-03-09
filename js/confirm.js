@@ -231,10 +231,7 @@ isSubmitting = false;
 
 async function sendEmails(orderId){
 
-const itemsText = orderData.items
-.map(i => `${i.name} × ${i.qty}`)
-.join("\n");
-
+const itemsText = formatOrderItems(orderData.items, orderData.total);
 
 
 // 顧客メール
@@ -251,6 +248,8 @@ order_id: orderId,
 
 name: customerData.name,
 
+phone: customerData.phone,
+
 email: customerData.email,
 
 date: customerData.date,
@@ -259,12 +258,13 @@ time: customerData.time,
 
 items: itemsText,
 
-total: orderData.total
+total: orderData.total,
+
+message: customerData.message || ""
 
 }
 
 );
-
 
 
 // 店舗メール
@@ -298,5 +298,50 @@ message: customerData.message || ""
 }
 
 );
+
+}
+
+// ==============================
+// 注文内容フォーマット（メール用）
+// ==============================
+
+function formatOrderItems(items, total){
+
+const header =
+"商品".padEnd(22) +
+"数量".padEnd(6) +
+"小計";
+
+const divider = "-".repeat(40);
+
+const lines = items.map(item => {
+
+const name = item.size
+? `${item.name} ${item.size}g`
+: item.name;
+
+const subtotal = item.price * item.qty;
+
+const nameCol = name.padEnd(22, " ");
+const qtyCol = (`×${item.qty}`).padEnd(6, " ");
+const priceCol = `¥${subtotal.toLocaleString()}`;
+
+return nameCol + qtyCol + priceCol;
+
+});
+
+const totalLine =
+"\n" +
+divider +
+"\n" +
+"合計".padEnd(28) +
+`¥${total.toLocaleString()}`;
+
+return [
+header,
+divider,
+...lines,
+totalLine
+].join("\n");
 
 }
