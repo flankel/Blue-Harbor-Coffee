@@ -54,16 +54,25 @@ Order Confirmation
 
 
 <!-- 合計金額 -->
-<div class="border-t mt-6 pt-6 flex justify-between items-center text-lg font-semibold">
+<div class="border-t mt-6 pt-6 space-y-2 text-sm">
 
-<span>合計金額</span>
+<div class="flex justify-between">
+<span>小計</span>
+<span id="orderSubtotal"></span>
+</div>
 
+<div class="flex justify-between text-slate-500">
+<span>消費税（8%）</span>
+<span id="orderTax"></span>
+</div>
+
+<div class="flex justify-between text-lg font-semibold pt-2 border-t">
+<span>合計（税込）</span>
 <span id="orderTotal"></span>
-
 </div>
 
 </div>
-
+</div>
 
 
 <!-- Customer Info -->
