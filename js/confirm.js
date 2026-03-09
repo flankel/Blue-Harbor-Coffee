@@ -157,10 +157,19 @@ if(isSubmitting) return;
 isSubmitting = true;
 
 const btn = document.getElementById("submitBtn");
+
 btn.disabled = true;
 btn.textContent = "送信中...";
 
+
+// 20秒タイムアウト
+const timeout = new Promise((_, reject) =>
+setTimeout(() => reject(new Error("timeout")), 20000)
+);
+
 try{
+
+const submitProcess = async () => {
 
 // Firestore保存
 
@@ -189,6 +198,40 @@ message: customerData.message || ""
 
 });
 
+
+// Email送信
+
+await sendEmails(orderRef.id);
+
+
+// session削除
+
+sessionStorage.removeItem("orderData");
+sessionStorage.removeItem("customerData");
+
+
+// 完了画面
+
+location.href = "complete.html";
+
+};
+
+await Promise.race([submitProcess(), timeout]);
+
+}catch(err){
+
+console.error(err);
+
+alert("注文送信に失敗しました。通信状況を確認してもう一度お試しください。");
+
+btn.disabled = false;
+btn.textContent = "注文確定";
+
+isSubmitting = false;
+
+}
+
+};
 
 
 // Email送信
