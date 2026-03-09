@@ -1,125 +1,77 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TAKEOUT</title>
+
+<title>TAKEOUT | Blue Harbor Coffee</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
 <body class="bg-slate-50 text-slate-800">
+
+<!-- Header -->
 <div id="header"></div>
+
 <div class="pt-20 sm:pt-24">
+
 <div class="max-w-6xl mx-auto px-6 py-16">
 
-  <div class="text-center mb-16">
-    <h1 class="text-4xl font-light tracking-widest mb-4">TAKEOUT</h1>
-    <p class="text-slate-500">Online Reservation</p>
-  </div>
+<!-- Page Title -->
+<div class="text-center mb-16">
 
-  <div id="productArea" class="space-y-20"></div>
+<h1 class="text-4xl font-light tracking-widest mb-4">
+TAKEOUT
+</h1>
 
-<div class="mt-24 bg-white p-10 rounded-2xl shadow-sm">
-  <h2 class="text-2xl mb-8 font-semibold">お客様情報</h2>
+<p class="text-slate-500">
+Online Reservation
+</p>
 
-  <div class="grid md:grid-cols-2 gap-6">
-
-    <!-- 名前 -->
-    <div class="space-y-2">
-      <label class="text-sm text-slate-600">
-        お名前 <span class="text-red-500">*</span>
-      </label>
-      <input id="name" 
-        class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-black focus:outline-none">
-    </div>
-
-    <!-- 電話 -->
-    <div class="space-y-2">
-      <label class="text-sm text-slate-600">
-        電話番号 <span class="text-red-500">*</span>
-      </label>
-      <input id="phone" 
-        class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-black focus:outline-none">
-    </div>
-
-    <!-- メール -->
-    <div class="space-y-2">
-      <label class="text-sm text-slate-600">
-        メールアドレス <span class="text-red-500">*</span>
-      </label>
-      <input id="email" type="email"
-        class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-black focus:outline-none">
-    </div>
-
-    <!-- 来店日 -->
-    <div class="space-y-2">
-      <label for="datePicker" class="text-sm text-slate-600">
-        来店日 <span class="text-red-500">*</span>
-      </label>
-      <input 
-        id="datePicker"
-        type="date"
-        class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-black focus:outline-none">
-    </div>
-
-    <!-- 来店時間 -->
-    <div class="space-y-2">
-      <label class="text-sm text-slate-600">
-        来店時間 <span class="text-red-500">*</span>
-      </label>
-      <select id="timePicker" 
-        class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-black focus:outline-none">
-      </select>
-    </div>
-
-  </div>
-
-  <!-- 問い合わせ（横幅いっぱい） -->
-  <div class="mt-8 space-y-2">
-    <label class="text-sm text-slate-600">
-      ご質問・お問い合わせ（任意）
-    </label>
-    <textarea id="message"
-      rows="4"
-      class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-black focus:outline-none"
-      placeholder="アレルギーの有無やご要望などがあればご記入ください">
-    </textarea>
-  </div>
-
-  <button onclick="openConfirm()" 
-    class="mt-10 w-full bg-blue-600 text-white py-4 rounded-xl text-lg hover:bg-blue-700 transition">
-    注文確認へ
-  </button>
 </div>
+
+
+<!-- 商品エリア -->
+<div id="productArea" class="space-y-20"></div>
+
+
+<!-- 次へボタン -->
+<div class="mt-24 text-center">
+
+<button
+onclick="goCustomer()"
+class="bg-blue-600 text-white px-12 py-4 rounded-xl text-lg hover:bg-blue-700 transition">
+
+お客様情報入力へ
+
+</button>
+
+</div>
+
+
 </div>
 </div>
 
-<div id="modal" class="fixed inset-0 bg-black/40 hidden items-center justify-center">
-  <div class="bg-white w-[90%] max-w-lg p-8 rounded-2xl">
-    <h3 class="text-xl font-semibold mb-6">注文確認</h3>
-    <div id="confirmContent" class="space-y-2 text-sm"></div>
-    <div class="flex gap-4 mt-6">
-      <button onclick="submitOrder()" class="w-full bg-blue-600 text-white py-3 rounded-lg">確定</button>
-      <button onclick="closeModal()" class="w-full bg-gray-200 py-3 rounded-lg">戻る</button>
-    </div>
-  </div>
-</div>
 
-<footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">
+<!-- Footer -->
+
+<footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400">
+
 © 2024 Blue Harbor Coffee Roasters.
+
 </footer>
 
+
+<!-- Header Loader -->
 <script src="js/loadHeader.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-<script>
-(function(){
-  emailjs.init("wK3E-NyEcLx-5tbSL");
-})();
-</script>
-
+<!-- TAKEOUT SCRIPT -->
 <script type="module" src="js/takeout.js"></script>
+
 
 </body>
 </html>
