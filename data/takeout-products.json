@@ -52,7 +52,7 @@
     }
   ],
   "sweets": [
-    { "id": "S1", "name": "Classic Custard Pudding",   "image": "images/TakeOut/Sweets/.png", "price": 520 },
+    { "id": "S1", "name": "Classic Custard Pudding",   "image": "images/TakeOut/Sweets/ClassicCustardPudding.png", "price": 520 },
     { "id": "S2", "name": "Setouchi Lemon Tart",       "image": "images/TakeOut/Sweets/.png", "price": 720 },
     { "id": "S3", "name": "Setouchi Lemon Pound Cake", "image": "images/TakeOut/Sweets/.png", "price": 520 },
     { "id": "S4", "name": "Blueberry Cheesecake",      "image": "images/TakeOut/Sweets/.png", "price": 780 },
