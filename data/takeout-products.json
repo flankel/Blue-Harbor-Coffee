@@ -52,10 +52,10 @@
     }
   ],
   "sweets": [
-    { "id": "S1", "name": "Cheesecake", "price": 520 },
-    { "id": "S2", "name": "Chocolate Gateau", "price": 580 },
-    { "id": "S3", "name": "Tiramisu", "price": 560 },
-    { "id": "S4", "name": "Pound Cake", "price": 480 },
-    { "id": "S5", "name": "Apple Tart", "price": 600 }
+    { "id": "S1", "name": "Classic Custard Pudding", "price": 520 },
+    { "id": "S2", "name": "Setouchi Lemon Tart", "price": 720 },
+    { "id": "S3", "name": "Setouchi Lemon Pound Cake", "price": 520 },
+    { "id": "S4", "name": "Blueberry Cheesecake", "price": 780 },
+    { "id": "S5", "name": "Blueberry Scone", "price": 480 }
   ]
 }
