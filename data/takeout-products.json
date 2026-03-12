@@ -59,22 +59,22 @@
     },
     { "id": "S2",
       "name": "Setouchi Lemon Tart",
-      "image": "images/TakeOut/Sweets/.png",
+      "image": "images/TakeOut/Sweets/SetouchiLemonTart.png",
       "price": 720 
     },
     { "id": "S3", 
       "name": "Setouchi Lemon Pound Cake", 
-      "image": "images/TakeOut/Sweets/.png", 
+      "image": "images/TakeOut/Sweets/SetouchiLemonPoundCake.png", 
       "price": 520 
     },
     { "id": "S4", 
       "name": "Blueberry Cheesecake",
-      "image": "images/TakeOut/Sweets/.png",
+      "image": "images/TakeOut/Sweets/BlueberryCheesecake.png",
       "price": 780 
     },
     { "id": "S5", 
       "name": "Blueberry Scone",           
-      "image": "images/TakeOut/Sweets/.png", 
+      "image": "images/TakeOut/Sweets/BlueberryScone.png", 
       "price": 480 
     }
   ]
