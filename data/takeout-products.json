@@ -3,7 +3,7 @@
     {
       "id": "A",
       "name": "Ethiopian Natural",
-      "image": "images/beans/ethiopian.jpg",
+      "image": "images/beans/EthiopianNatural.png",
       "sizes": {
         "100": 850,
         "200": 1600,
@@ -13,7 +13,7 @@
     {
       "id": "B",
       "name": "Colombia Supremo",
-      "image": "images/beans/colombia.jpg",
+      "image": "images/beans/ColombiaSupremo.png",
       "sizes": {
         "100": 800,
         "200": 1500,
@@ -23,7 +23,7 @@
     {
       "id": "C",
       "name": "Guatemala SHB",
-      "image": "images/beans/guatemala.jpg",
+      "image": "images/beans/GuatemalaSHB.png",
       "sizes": {
         "100": 900,
         "200": 1700,
@@ -33,7 +33,7 @@
     {
       "id": "D",
       "name": "Brazil Santos",
-      "image": "images/beans/brazil.jpg",
+      "image": "images/beans/BrazilSantos.png",
       "sizes": {
         "100": 750,
         "200": 1400,
@@ -43,7 +43,7 @@
     {
       "id": "E",
       "name": "Kenya AA",
-      "image": "images/beans/kenya.jpg",
+      "image": "images/beans/KenyaAA.png",
       "sizes": {
         "100": 950,
         "200": 1800,
