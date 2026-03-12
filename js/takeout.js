@@ -58,7 +58,7 @@ function renderProducts(){
       html += `
         <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5">
 
-          <div class="w-full aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 flex items-center justify-center p-4">
+          <div class="w-full aspect-[4/3] overflow-hidden rounded-xl flex items-center justify-center">
             <img src="${bean.image}" 
             class="max-w-full max-h-full object-contain hover:scale-105 transition duration-500">
           </div>
@@ -127,7 +127,7 @@ function renderProducts(){
       html += `
         <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5">
 
-          <div class="w-full aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 flex items-center justify-center p-4">
+          <div class="w-full aspect-[4/3] overflow-hidden rounded-xl flex items-center justify-center">
             <img src="${item.image}" 
             class="max-w-full max-h-full object-contain hover:scale-105 transition duration-500">
           </div>
@@ -172,7 +172,6 @@ function renderProducts(){
   area.innerHTML = html;
 
 }
-
 
 /* =========================
    数量セレクト作成
