@@ -58,9 +58,9 @@ function renderProducts(){
       html += `
         <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5">
 
-          <div class="w-full h-48 overflow-hidden rounded-xl bg-slate-100">
+          <div class="w-full aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 flex items-center justify-center p-4">
             <img src="${bean.image}" 
-            class="w-full h-full object-cover hover:scale-110 transition duration-500">
+            class="max-w-full max-h-full object-contain hover:scale-105 transition duration-500">
           </div>
 
           <h3 class="font-medium text-lg">
@@ -127,9 +127,11 @@ function renderProducts(){
       html += `
         <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5">
 
-         <div class="w-full h-48 overflow-hidden rounded-xl bg-slate-100 flex items-center justify-center">
-            <img src="${item.image}" class="w-full h-full object-contain hover:scale-110 transition duration-500">
-         </div>
+          <div class="w-full aspect-[4/3] overflow-hidden rounded-xl bg-slate-100 flex items-center justify-center p-4">
+            <img src="${item.image}" 
+            class="max-w-full max-h-full object-contain hover:scale-105 transition duration-500">
+          </div>
+
           <div class="flex justify-between items-center py-2">
 
             <div class="flex items-center gap-4">
