@@ -324,22 +324,20 @@ updateSummary();
    数量表示更新
 ========================= */
 
-function updateQtyDisplay(id,size){
+function updateQtyDisplay(id, size){
 
 const key = id + size;
-
 const qty = cart[key] || 0;
 
-const el = document.getElementById(`qty-${id}-${size}`);
+const elementId = size ? `qty-${id}-${size}` : `qty-${id}`;
+
+const el = document.getElementById(elementId);
 
 if(el){
-
 el.textContent = qty;
-
 }
 
 }
-
 
 /* =========================
    注文サマリー更新
