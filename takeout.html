@@ -11,53 +11,117 @@
 
 </head>
 
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-stone-50 text-slate-800">
 
 <!-- Header -->
 <div id="header"></div>
 
-<div class="pt-20 sm:pt-24">
 
-<div class="max-w-6xl mx-auto px-6 py-16">
+<!-- Hero Section -->
+<section class="relative h-[320px] md:h-[420px] overflow-hidden">
 
-<!-- Page Title -->
-<div class="text-center mb-16">
+<img
+src="images/hero/takeout.jpg"
+class="absolute inset-0 w-full h-full object-cover"
+>
 
-<h1 class="text-4xl font-light tracking-widest mb-4">
+<div class="absolute inset-0 bg-black/40"></div>
+
+<div class="relative z-10 h-full flex items-center justify-center text-center text-white">
+
+<div>
+
+<h1 class="text-4xl md:text-5xl tracking-widest mb-4">
 TAKEOUT
 </h1>
 
-<p class="text-slate-500">
+<p class="text-sm tracking-widest opacity-90">
 Online Reservation
 </p>
 
 </div>
 
+</div>
 
-<!-- 商品エリア -->
-<div id="productArea" class="space-y-20"></div>
+</section>
 
 
-<!-- 次へボタン -->
-<div class="mt-24 text-center">
+<!-- Main Area -->
+<div class="max-w-7xl mx-auto px-6 py-16">
+
+<div class="grid lg:grid-cols-[2fr_1fr] gap-16">
+
+
+<!-- Product Area -->
+<div id="productArea" class="space-y-24"></div>
+
+
+<!-- Sticky Order Summary -->
+<div class="sticky top-28 h-fit">
+
+<div class="bg-white p-8 rounded-2xl shadow-lg">
+
+<h3 class="text-xl mb-6 tracking-wide">
+Your Order
+</h3>
+
+<div id="orderSummary" class="space-y-2 text-sm text-slate-700"></div>
+
+<div class="border-t mt-6 pt-4 flex justify-between font-semibold text-lg">
+
+<span>Total</span>
+
+<span id="totalPrice">
+¥0
+</span>
+
+</div>
 
 <button
 onclick="goCustomer()"
-class="bg-blue-600 text-white px-12 py-4 rounded-xl text-lg hover:bg-blue-700 transition">
+class="mt-8 w-full bg-amber-900 text-white py-4 rounded-full hover:bg-amber-800 transition shadow-md"
+>
 
-お客様情報入力へ
+ご注文内容を確認
+
+</button>
+
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+
+<!-- Mobile Floating Cart -->
+<div
+class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-xl p-4 md:hidden flex justify-between items-center"
+>
+
+<span
+id="mobileTotal"
+class="font-semibold text-lg"
+>
+
+¥0
+
+</span>
+
+<button
+onclick="goCustomer()"
+class="bg-amber-900 text-white px-6 py-3 rounded-full hover:bg-amber-800 transition"
+>
+
+注文確認
 
 </button>
 
 </div>
 
 
-</div>
-</div>
-
-
 <!-- Footer -->
-
 <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400">
 
 © 2024 Blue Harbor Coffee Roasters.
