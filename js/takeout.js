@@ -6,6 +6,7 @@
 const MAX_PER_ITEM = 3;
 
 let products = {};
+let cart = {};
 
 
 /* =========================
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await loadProducts();
   renderProducts();
+  setupEvents();
 
 });
 
@@ -43,203 +45,455 @@ function renderProducts(){
   let html = "";
 
 
-  /* Coffee Beans */
+/* Coffee Beans */
 
-  if(products.beans){
+if(products.beans){
 
-    html += `
-      <div>
-        <h2 class="text-2xl mb-8 font-semibold">Coffee Beans</h2>
-        <div class="grid md:grid-cols-2 gap-10">
-    `;
+html += `
+<div>
 
-    products.beans.forEach(bean => {
+<h2 class="text-3xl font-light tracking-wider mb-10">
+Coffee Beans
+</h2>
 
-      html += `
-        <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5">
+<div class="grid md:grid-cols-2 gap-14">
+`;
 
-          <div class="w-full aspect-[4/3] overflow-hidden rounded-xl flex items-center justify-center">
-            <img src="${bean.image}" 
-            class="max-w-full max-h-full object-contain hover:scale-105 transition duration-500">
-          </div>
+products.beans.forEach(bean => {
 
-          <h3 class="font-medium text-lg">
-            ${bean.name}
-          </h3>
-      `;
+html += `
+<div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
-      Object.keys(bean.sizes).forEach(size => {
+<div class="aspect-[4/3] overflow-hidden">
 
-        const price = bean.sizes[size];
+<img src="${bean.image}"
+class="w-full h-full object-cover hover:scale-110 transition duration-700">
 
-        html += `
-          <div class="flex justify-between items-center py-2 border-b last:border-none">
+</div>
 
-            <div class="flex items-center gap-4">
+<div class="p-6 space-y-4">
 
-              <span class="font-medium text-base">
-                ${size}g
-              </span>
+<h3 class="text-xl font-light">
+${bean.name}
+</h3>
+`;
 
-              <span class="text-slate-500 text-sm">
-                ¥${price.toLocaleString()}
-              </span>
+Object.keys(bean.sizes).forEach(size => {
 
-            </div>
+const price = bean.sizes[size];
 
-            <select
-              data-type="bean"
-              data-id="${bean.id}"
-              data-name="${bean.name}"
-              data-size="${size}"
-              class="border rounded-lg px-3 py-1 qtySelect">
+html += `
 
-              ${createOptions()}
+<div class="flex justify-between items-center py-2 border-b last:border-none">
 
-            </select>
+<div>
 
-          </div>
-        `;
+<span>${size}g</span>
 
-      });
+<span class="text-slate-500 ml-2">
+¥${price.toLocaleString()}
+</span>
 
-      html += `</div>`;
+</div>
 
-    });
+<div class="flex items-center gap-2">
 
-    html += `</div></div>`;
+<button
+class="qtyMinus px-3 py-1 bg-slate-100 rounded"
+data-type="bean"
+data-id="${bean.id}"
+data-name="${bean.name}"
+data-size="${size}"
+>
 
-  }
+−
 
+</button>
 
-  /* Sweets */
+<span
+class="w-6 text-center"
+id="qty-${bean.id}-${size}"
+>
 
-  if(products.sweets){
+0
 
-    html += `
-      <div>
-        <h2 class="text-2xl mb-8 font-semibold">Sweets</h2>
-        <div class="grid md:grid-cols-2 gap-10">
-    `;
+</span>
 
-    products.sweets.forEach(item => {
+<button
+class="qtyPlus px-3 py-1 bg-slate-100 rounded"
+data-type="bean"
+data-id="${bean.id}"
+data-name="${bean.name}"
+data-size="${size}"
+>
 
-      html += `
-        <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5">
+＋
 
-          <div class="w-full aspect-[4/3] overflow-hidden rounded-xl flex items-center justify-center">
-            <img src="${item.image}" 
-            class="max-w-full max-h-full object-contain hover:scale-105 transition duration-500">
-          </div>
+</button>
 
-          <div class="flex justify-between items-center py-2">
+</div>
 
-            <div class="flex items-center gap-4">
+</div>
+`;
 
-              <span class="font-medium text-base">
-                ${item.name}
-              </span>
+});
 
-              <span class="text-slate-500 text-sm">
-                ¥${item.price.toLocaleString()}
-              </span>
+html += `
+</div>
+</div>
+`;
 
-            </div>
+});
 
-            <select
-              data-type="sweet"
-              data-id="${item.id}"
-              data-name="${item.name}"
-              data-price="${item.price}"
-              class="border rounded-lg px-3 py-1 qtySelect">
-
-              ${createOptions()}
-
-            </select>
-
-          </div>
-
-        </div>
-      `;
-
-    });
-
-    html += `</div></div>`;
-
-  }
-
-
-  area.innerHTML = html;
+html += `</div></div>`;
 
 }
 
+
+
+/* Sweets */
+
+if(products.sweets){
+
+html += `
+<div>
+
+<h2 class="text-3xl font-light tracking-wider mb-10">
+Sweets
+</h2>
+
+<div class="grid md:grid-cols-2 gap-14">
+`;
+
+products.sweets.forEach(item => {
+
+html += `
+<div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
+
+<div class="aspect-[4/3] overflow-hidden">
+
+<img src="${item.image}"
+class="w-full h-full object-cover hover:scale-110 transition duration-700">
+
+</div>
+
+<div class="p-6 flex justify-between items-center">
+
+<div>
+
+<div class="text-lg">
+${item.name}
+</div>
+
+<div class="text-slate-500 text-sm">
+¥${item.price.toLocaleString()}
+</div>
+
+</div>
+
+<div class="flex items-center gap-2">
+
+<button
+class="qtyMinus px-3 py-1 bg-slate-100 rounded"
+data-type="sweet"
+data-id="${item.id}"
+data-name="${item.name}"
+>
+
+−
+
+</button>
+
+<span
+class="w-6 text-center"
+id="qty-${item.id}"
+>
+
+0
+
+</span>
+
+<button
+class="qtyPlus px-3 py-1 bg-slate-100 rounded"
+data-type="sweet"
+data-id="${item.id}"
+data-name="${item.name}"
+>
+
+＋
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+`;
+
+});
+
+html += `</div></div>`;
+
+}
+
+
+area.innerHTML = html;
+
+}
+
+
 /* =========================
-   数量セレクト作成
+   イベント設定
 ========================= */
 
-function createOptions(){
+function setupEvents(){
 
-  let opt = `<option value="0">0</option>`;
+document.addEventListener("click", e => {
 
-  for(let i=1;i<=MAX_PER_ITEM;i++){
+if(e.target.classList.contains("qtyPlus")){
 
-    opt += `<option value="${i}">${i}</option>`;
+increaseQty(e.target);
 
-  }
+}
 
-  return opt;
+if(e.target.classList.contains("qtyMinus")){
+
+decreaseQty(e.target);
+
+}
+
+});
 
 }
 
 
 /* =========================
-   注文収集
+   数量増加
+========================= */
+
+function increaseQty(btn){
+
+const type = btn.dataset.type;
+const id = btn.dataset.id;
+const name = btn.dataset.name;
+const size = btn.dataset.size || "";
+
+const key = id + size;
+
+if(!cart[key]) cart[key] = 0;
+
+if(cart[key] >= MAX_PER_ITEM) return;
+
+cart[key]++;
+
+updateQtyDisplay(id,size);
+updateSummary();
+
+}
+
+
+/* =========================
+   数量減少
+========================= */
+
+function decreaseQty(btn){
+
+const id = btn.dataset.id;
+const size = btn.dataset.size || "";
+
+const key = id + size;
+
+if(!cart[key]) return;
+
+cart[key]--;
+
+if(cart[key] <= 0){
+
+delete cart[key];
+
+}
+
+updateQtyDisplay(id,size);
+updateSummary();
+
+}
+
+
+/* =========================
+   数量表示更新
+========================= */
+
+function updateQtyDisplay(id,size){
+
+const key = id + size;
+
+const qty = cart[key] || 0;
+
+const el = document.getElementById(`qty-${id}-${size}`);
+
+if(el){
+
+el.textContent = qty;
+
+}
+
+}
+
+
+/* =========================
+   注文サマリー更新
+========================= */
+
+function updateSummary(){
+
+const summary = document.getElementById("orderSummary");
+const totalEl = document.getElementById("totalPrice");
+const mobileTotal = document.getElementById("mobileTotal");
+
+let html = "";
+let total = 0;
+
+Object.keys(cart).forEach(key => {
+
+const qty = cart[key];
+
+let label = "";
+let price = 0;
+
+
+/* Beans */
+
+products.beans.forEach(bean => {
+
+Object.keys(bean.sizes).forEach(size => {
+
+if(key === bean.id + size){
+
+label = `${bean.name} ${size}g`;
+price = bean.sizes[size];
+
+}
+
+});
+
+});
+
+
+/* Sweets */
+
+products.sweets.forEach(sweet => {
+
+if(key === sweet.id){
+
+label = sweet.name;
+price = sweet.price;
+
+}
+
+});
+
+
+const subtotal = price * qty;
+
+total += subtotal;
+
+html += `
+<div class="flex justify-between">
+
+<span>
+${label} ×${qty}
+</span>
+
+<span>
+¥${subtotal.toLocaleString()}
+</span>
+
+</div>
+`;
+
+});
+
+summary.innerHTML = html;
+
+totalEl.textContent = "¥" + total.toLocaleString();
+
+if(mobileTotal){
+
+mobileTotal.textContent = "¥" + total.toLocaleString();
+
+}
+
+}
+
+
+/* =========================
+   注文データ作成
 ========================= */
 
 function collectOrder(){
 
-  const selects = document.querySelectorAll(".qtySelect");
+let items = [];
 
-  let items = [];
+Object.keys(cart).forEach(key => {
 
-  selects.forEach(sel => {
+const qty = cart[key];
 
-    const qty = Number(sel.value);
 
-    if(qty > 0){
+/* Beans */
 
-      const type = sel.dataset.type;
-      const id = sel.dataset.id;
-      const name = sel.dataset.name;
-      const size = sel.dataset.size || "";
-      const price = Number(sel.dataset.price) || null;
+products.beans.forEach(bean => {
 
-      let itemPrice = price;
+Object.keys(bean.sizes).forEach(size => {
 
-      if(type === "bean"){
+if(key === bean.id + size){
 
-        const bean = products.beans.find(b => b.id === id);
-        itemPrice = bean.sizes[size];
+const price = bean.sizes[size];
 
-      }
+items.push({
 
-      items.push({
+type: "bean",
+id: bean.id,
+name: bean.name,
+size: size,
+qty: qty,
+price: price,
+subtotal: price * qty
 
-        type: type,
-        id: id,
-        name: name,
-        size: size,
-        qty: qty,
-        price: itemPrice,
-        subtotal: itemPrice * qty
+});
 
-      });
+}
 
-    }
+});
 
-  });
+});
 
-  return items;
+
+/* Sweets */
+
+products.sweets.forEach(sweet => {
+
+if(key === sweet.id){
+
+items.push({
+
+type: "sweet",
+id: sweet.id,
+name: sweet.name,
+size: "",
+qty: qty,
+price: sweet.price,
+subtotal: sweet.price * qty
+
+});
+
+}
+
+});
+
+});
+
+return items;
 
 }
 
@@ -250,31 +504,33 @@ function collectOrder(){
 
 function goCustomer(){
 
-  const items = collectOrder();
+const items = collectOrder();
 
-  if(items.length === 0){
+if(items.length === 0){
 
-    alert("商品を選択してください");
-    return;
+alert("商品を選択してください");
+return;
 
-  }
+}
 
-  let total = 0;
+let total = 0;
 
-  items.forEach(i => {
-    total += i.subtotal;
-  });
+items.forEach(i => {
 
-  const orderData = {
+total += i.subtotal;
 
-    items: items,
-    total: total
+});
 
-  };
+const orderData = {
 
-  sessionStorage.setItem("orderData", JSON.stringify(orderData));
+items: items,
+total: total
 
-  location.href = "customer.html";
+};
+
+sessionStorage.setItem("orderData", JSON.stringify(orderData));
+
+location.href = "customer.html";
 
 }
 
