@@ -27,12 +27,24 @@
 <!-- HERO -->
 <section class="relative h-[80vh] md:h-[600px] w-full bg-gray-900 overflow-hidden page-enter">
 
+  <!-- PC HERO -->
   <img
     src="images/TakeOut/hero.png"
     alt="Takeout hero"
-    class="absolute inset-0 w-full h-full object-cover opacity-70"
+    class="hidden md:block absolute inset-0 w-full h-full object-cover opacity-70"
   >
 
+  <!-- MOBILE HERO -->
+  <img
+    src="images/TakeOut/hero-sm.png"
+    alt="Takeout hero mobile"
+    class="md:hidden absolute inset-0 w-full h-full object-cover opacity-70"
+  >
+
+  <!-- overlay -->
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <!-- text -->
   <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
 
     <p class="font-eng tracking-[0.3em] text-sm md:text-base mb-4 text-blue-200">
@@ -44,9 +56,7 @@
     </h2>
 
   </div>
-
-</section>
-  
+</section>  
 <!-- Main Area -->
 <div class="max-w-7xl mx-auto px-6 py-16">
 
