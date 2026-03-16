@@ -25,17 +25,34 @@
 <div id="header"></div>
 
 <!-- HERO -->
-<section class="hero page-enter">
+<!-- HERO -->
+<section class="relative w-full aspect-video overflow-hidden page-enter">
 
-  <img src="images/TakeOut/hero.png">
+  <img
+    src="images/TakeOut/hero.png"
+    alt="Takeout hero"
+    class="absolute inset-0 w-full h-full object-cover object-[82%_22%]"
+  >
 
-  <div class="hero-text">
-    <p>TAKE OUT</p>
-    <h2>Online Reservation</h2>
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <div class="absolute inset-0 flex items-center justify-center text-center text-white px-6">
+
+    <div>
+
+      <p class="font-eng tracking-[0.35em] text-xs md:text-sm mb-4 text-blue-200">
+        TAKE OUT
+      </p>
+
+      <h2 class="text-4xl md:text-6xl font-eng font-bold leading-tight">
+        Online<br>Reservation
+      </h2>
+
+    </div>
+
   </div>
 
-</section>
-  
+</section>  
 <!-- Main Area -->
 <div class="max-w-7xl mx-auto px-6 py-16">
 
