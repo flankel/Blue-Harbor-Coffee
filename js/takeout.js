@@ -90,7 +90,7 @@ html += `
 
 <span>${size}g</span>
 
-<span class="text-slate-500 ml-2">
+<span class="text-blue-600 font-semibold ml-2">
 ¥${price.toLocaleString()}
 </span>
 
@@ -185,7 +185,7 @@ class="w-full h-full object-cover hover:scale-110 transition duration-700">
 ${item.name}
 </div>
 
-<div class="text-slate-500 text-sm">
+<div class="text-blue-600 text-sm font-semibold">
 ¥${item.price.toLocaleString()}
 </div>
 
@@ -403,10 +403,9 @@ html += `
 ${label} ×${qty}
 </span>
 
-<span>
+<span class="text-blue-600 font-semibold">
 ¥${subtotal.toLocaleString()}
 </span>
-
 </div>
 `;
 
