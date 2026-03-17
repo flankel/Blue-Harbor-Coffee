@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   setupDate();
 
+  renderCart(); // ★追加
+
 });
 
 
@@ -54,6 +56,46 @@ function checkOrderData(){
     location.href = "takeout.html";
 
   }
+
+}
+
+
+/* =========================
+   カート表示（追加）
+========================= */
+
+function renderCart(){
+
+  const order = JSON.parse(sessionStorage.getItem("orderData") || "{}");
+
+  const container = document.getElementById("cartItems");
+  const totalEl = document.getElementById("totalPrice");
+
+  if(!container || !totalEl) return;
+
+  let total = 0;
+
+  container.innerHTML = "";
+
+  Object.values(order).forEach(item => {
+
+    const div = document.createElement("div");
+    div.className = "flex justify-between";
+
+    const price = item.price * item.quantity;
+
+    div.innerHTML = `
+      <span>${item.name} × ${item.quantity}</span>
+      <span>¥${price}</span>
+    `;
+
+    container.appendChild(div);
+
+    total += price;
+
+  });
+
+  totalEl.textContent = `¥${total}`;
 
 }
 
@@ -211,6 +253,26 @@ function validateInput(data){
 
 
 /* =========================
+   同意チェック（追加）
+========================= */
+
+function checkAgreement(){
+
+  const agree = document.getElementById("agree");
+
+  if(!agree || !agree.checked){
+
+    alert("個人情報の取り扱いに同意してください");
+    return false;
+
+  }
+
+  return true;
+
+}
+
+
+/* =========================
    サニタイズ
 ========================= */
 
@@ -228,6 +290,9 @@ function sanitize(text){
 ========================= */
 
 function goConfirm(){
+
+  // ★同意チェック追加
+  if(!checkAgreement()) return;
 
   const name = sanitize(document.getElementById("name").value.trim());
 
@@ -258,11 +323,8 @@ function goConfirm(){
 
 
   sessionStorage.setItem(
-
     "customerData",
-
     JSON.stringify(customerData)
-
   );
 
 
@@ -283,5 +345,4 @@ function backToMenu(){
 
 
 window.goConfirm = goConfirm;
-
 window.backToMenu = backToMenu;
