@@ -1,15 +1,13 @@
 fetch("header.html")
   .then(res => res.text())
   .then(data => {
-    const headerContainer = document.getElementById("header");
-    headerContainer.innerHTML = data;
+    document.getElementById("header").innerHTML = data;
 
-    // ==============================
-    // ナビのアクティブ判定（←ここ修正）
-    // ==============================
+    // ★ 現在のページを取得
     const current = location.pathname.split("/").pop();
 
-    headerContainer.querySelectorAll(".nav-link").forEach(link => {
+    // ★ nav-link を全部チェック（←そのまま）
+    document.querySelectorAll(".nav-link").forEach(link => {
       const href = link.getAttribute("href");
 
       if (href === current || (current === "" && href === "index.html")) {
