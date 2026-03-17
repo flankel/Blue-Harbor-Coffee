@@ -5,11 +5,11 @@ fetch("header.html")
     headerContainer.innerHTML = data;
 
     // ==============================
-    // ナビのアクティブ判定
+    // ナビのアクティブ判定（←ここ修正）
     // ==============================
     const current = location.pathname.split("/").pop();
 
-    document.querySelectorAll(".nav-link").forEach(link => {
+    headerContainer.querySelectorAll(".nav-link").forEach(link => {
       const href = link.getAttribute("href");
 
       if (href === current || (current === "" && href === "index.html")) {
