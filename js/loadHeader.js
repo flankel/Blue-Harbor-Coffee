@@ -4,15 +4,33 @@ fetch("header.html")
     const headerContainer = document.getElementById("header");
     headerContainer.innerHTML = data;
 
-    // 🔥 複数回測定（スマホ対策）
-    adjustHeaderSpacer();
-    setTimeout(adjustHeaderSpacer, 100);
-    setTimeout(adjustHeaderSpacer, 300);
+    const header = headerContainer.querySelector("header");
+    const spacer = document.getElementById("headerSpacer");
+
+    if (!header || !spacer) return;
+
+    // ==============================
+    // 🔥 高さセット関数
+    // ==============================
+    const setHeight = () => {
+      spacer.style.height = header.offsetHeight + "px";
+    };
+
+    // 初期実行（複数回で確実に合わせる）
+    requestAnimationFrame(setHeight);
+    setTimeout(setHeight, 50);
+    setTimeout(setHeight, 150);
+    setTimeout(setHeight, 300);
+
+    // 🔥 これが最重要（高さ変化を自動追従）
+    const observer = new ResizeObserver(() => {
+      setHeight();
+    });
+    observer.observe(header);
 
     // ★ 現在のページを取得
     const current = location.pathname.split("/").pop();
 
-    // ★ nav-link を全部チェック
     document.querySelectorAll(".nav-link").forEach(link => {
       const href = link.getAttribute("href");
 
@@ -24,23 +42,22 @@ fetch("header.html")
 
 
 // ==============================
-// header高さ調整（完全版）
+// 念のための保険
 // ==============================
-function adjustHeaderSpacer() {
+window.addEventListener("resize", () => {
   const header = document.querySelector("#header header");
   const spacer = document.getElementById("headerSpacer");
 
-  if (!header || !spacer) return;
-
-  requestAnimationFrame(() => {
+  if (header && spacer) {
     spacer.style.height = header.offsetHeight + "px";
-  });
-}
+  }
+});
 
+window.addEventListener("orientationchange", () => {
+  const header = document.querySelector("#header header");
+  const spacer = document.getElementById("headerSpacer");
 
-// ==============================
-// イベント
-// ==============================
-window.addEventListener("load", adjustHeaderSpacer);
-window.addEventListener("resize", adjustHeaderSpacer);
-window.addEventListener("orientationchange", adjustHeaderSpacer);
+  if (header && spacer) {
+    spacer.style.height = header.offsetHeight + "px";
+  }
+});
