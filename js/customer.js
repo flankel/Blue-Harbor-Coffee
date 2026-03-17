@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   setupDate();
 
-  renderCart(); // ★追加
+  renderCart();
 
 });
 
@@ -61,44 +61,65 @@ function checkOrderData(){
 
 
 /* =========================
-   カート表示（追加）
+   カート取得（複数対応）
+========================= */
+
+function getCartItems(){
+
+  const raw = sessionStorage.getItem("orderData");
+  if(!raw) return [];
+
+  const data = JSON.parse(raw);
+
+  // ★すでに配列
+  if(Array.isArray(data)){
+    return data;
+  }
+
+  // ★単一オブジェクト → 配列化（互換対応）
+  return [data];
+
+}
+
+
+/* =========================
+   カート表示
 ========================= */
 
 function renderCart(){
 
-  const order = JSON.parse(sessionStorage.getItem("orderData") || "{}");
+  const raw = sessionStorage.getItem("orderData");
+  if(!raw) return;
+
+  const data = JSON.parse(raw);
+
+  const items = data.items || []; // ★ここが最重要
 
   const container = document.getElementById("cartItems");
   const totalEl = document.getElementById("totalPrice");
 
   if(!container || !totalEl) return;
 
-  let total = 0;
-
   container.innerHTML = "";
 
-  Object.values(order).forEach(item => {
+  items.forEach(item => {
 
     const div = document.createElement("div");
     div.className = "flex justify-between";
 
-    const price = item.price * item.quantity;
-
     div.innerHTML = `
-      <span>${item.name} × ${item.quantity}</span>
-      <span>¥${price}</span>
+      <span>${item.name}${item.size ? " " + item.size + "g" : ""} × ${item.qty}</span>
+      <span>¥${item.subtotal.toLocaleString()}</span>
     `;
 
     container.appendChild(div);
 
-    total += price;
-
   });
 
-  totalEl.textContent = `¥${total}`;
+  // ★合計は保存済みを使う（ズレ防止）
+  totalEl.textContent = `¥${data.total.toLocaleString()}`;
 
 }
-
 
 /* =========================
    日付設定
@@ -192,59 +213,43 @@ function generateTimeSlots(){
 function validateInput(data){
 
   if(!data.name){
-
     alert("お名前を入力してください");
     return false;
-
   }
 
   if(!data.phone){
-
     alert("電話番号を入力してください");
     return false;
-
   }
 
   if(!/^[0-9\-]+$/.test(data.phone)){
-
     alert("電話番号の形式が正しくありません");
     return false;
-
   }
 
   if(!data.email){
-
     alert("メールアドレスを入力してください");
     return false;
-
   }
 
   if(!/^\S+@\S+\.\S+$/.test(data.email)){
-
     alert("メールアドレス形式が正しくありません");
     return false;
-
   }
 
   if(!data.date){
-
     alert("来店日を選択してください");
     return false;
-
   }
 
   if(!data.time){
-
     alert("来店時間を選択してください");
     return false;
-
   }
 
   if(data.time === "定休日"){
-
     alert("この日は定休日です");
     return false;
-
   }
 
   return true;
@@ -253,7 +258,7 @@ function validateInput(data){
 
 
 /* =========================
-   同意チェック（追加）
+   同意チェック
 ========================= */
 
 function checkAgreement(){
@@ -261,10 +266,8 @@ function checkAgreement(){
   const agree = document.getElementById("agree");
 
   if(!agree || !agree.checked){
-
     alert("個人情報の取り扱いに同意してください");
     return false;
-
   }
 
   return true;
@@ -291,42 +294,31 @@ function sanitize(text){
 
 function goConfirm(){
 
-  // ★同意チェック追加
+  // ★同意チェック
   if(!checkAgreement()) return;
 
   const name = sanitize(document.getElementById("name").value.trim());
-
   const phone = sanitize(document.getElementById("phone").value.trim());
-
   const email = sanitize(document.getElementById("email").value.trim());
-
   const date = document.getElementById("datePicker").value;
-
   const time = document.getElementById("timePicker").value;
-
   const message = sanitize(document.getElementById("message").value.trim());
 
-
   const customerData = {
-
     name,
     phone,
     email,
     date,
     time,
     message
-
   };
 
-
   if(!validateInput(customerData)) return;
-
 
   sessionStorage.setItem(
     "customerData",
     JSON.stringify(customerData)
   );
-
 
   location.href = "confirm.html";
 
