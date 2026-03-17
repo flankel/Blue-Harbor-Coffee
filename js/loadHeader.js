@@ -15,3 +15,15 @@
           }
         });
       });
+
+    function adjustHeaderSpacer() {
+        const header = document.querySelector("header");
+        const spacer = document.getElementById("headerSpacer");
+
+        if (header && spacer) {
+            spacer.style.height = header.offsetHeight + "px";
+        }
+    }
+
+    window.addEventListener("load", adjustHeaderSpacer);
+    window.addEventListener("resize", adjustHeaderSpacer);
