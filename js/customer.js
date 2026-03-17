@@ -12,7 +12,7 @@ let CONFIG = null;
 
 
 /* =========================
-   初期化
+   初期化（★一本化）
 ========================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupDate();
 
   renderCart();
+
+  setupAgreementUI(); // ★ここに統合
 
 });
 
@@ -71,12 +73,10 @@ function getCartItems(){
 
   const data = JSON.parse(raw);
 
-  // ★すでに配列
   if(Array.isArray(data)){
     return data;
   }
 
-  // ★単一オブジェクト → 配列化（互換対応）
   return [data];
 
 }
@@ -93,7 +93,7 @@ function renderCart(){
 
   const data = JSON.parse(raw);
 
-  const items = data.items || []; // ★ここが最重要
+  const items = data.items || [];
 
   const container = document.getElementById("cartItems");
   const totalEl = document.getElementById("totalPrice");
@@ -116,10 +116,10 @@ function renderCart(){
 
   });
 
-  // ★合計は保存済みを使う（ズレ防止）
   totalEl.textContent = `¥${data.total.toLocaleString()}`;
 
 }
+
 
 /* =========================
    日付設定
@@ -163,8 +163,6 @@ function generateTimeSlots(){
   const day = selectedDate.getDay();
 
 
-  /* 定休日 */
-
   if(day === CONFIG.closedDay){
 
     select.innerHTML = `<option>定休日</option>`;
@@ -190,8 +188,6 @@ function generateTimeSlots(){
 
 
   for(let h = CONFIG.openHour; h < closeHour; h++){
-
-    /* 今日の場合は過去時間を除外 */
 
     if(isToday){
 
@@ -289,12 +285,48 @@ function sanitize(text){
 
 
 /* =========================
+   同意UI制御（★分離）
+========================= */
+
+function setupAgreementUI(){
+
+  const agree = document.getElementById("agree");
+  const btn = document.getElementById("confirmBtn");
+
+  if(!agree || !btn) return;
+
+  // 初期状態（重要）
+  btn.disabled = true;
+  btn.classList.add("bg-gray-300","cursor-not-allowed");
+  btn.classList.remove("bg-blue-600","hover:bg-blue-700");
+
+  agree.addEventListener("change", () => {
+
+    if(agree.checked){
+
+      btn.disabled = false;
+      btn.classList.remove("bg-gray-300","cursor-not-allowed");
+      btn.classList.add("bg-blue-600","hover:bg-blue-700");
+
+    }else{
+
+      btn.disabled = true;
+      btn.classList.add("bg-gray-300","cursor-not-allowed");
+      btn.classList.remove("bg-blue-600","hover:bg-blue-700");
+
+    }
+
+  });
+
+}
+
+
+/* =========================
    確認ページへ
 ========================= */
 
 function goConfirm(){
 
-  // ★同意チェック
   if(!checkAgreement()) return;
 
   const name = sanitize(document.getElementById("name").value.trim());
@@ -334,37 +366,6 @@ function backToMenu(){
   location.href = "takeout.html";
 
 }
-
-/* =========================
-   同意チェックUI制御
-========================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const agree = document.getElementById("agree");
-  const btn = document.getElementById("confirmBtn");
-
-  if(!agree || !btn) return;
-
-  agree.addEventListener("change", () => {
-
-    if(agree.checked){
-
-      btn.disabled = false;
-      btn.classList.remove("bg-gray-300","cursor-not-allowed");
-      btn.classList.add("bg-blue-600","hover:bg-blue-700");
-
-    }else{
-
-      btn.disabled = true;
-      btn.classList.add("bg-gray-300","cursor-not-allowed");
-      btn.classList.remove("bg-blue-600","hover:bg-blue-700");
-
-    }
-
-  });
-
-});
 
 
 window.goConfirm = goConfirm;
