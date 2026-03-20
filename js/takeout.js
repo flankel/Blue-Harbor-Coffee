@@ -252,15 +252,11 @@ function setupEvents(){
 document.addEventListener("click", e => {
 
 if(e.target.classList.contains("qtyPlus")){
-
-increaseQty(e.target);
-
+  increaseQty(e.target);
 }
 
 if(e.target.classList.contains("qtyMinus")){
-
-decreaseQty(e.target);
-
+  decreaseQty(e.target);
 }
 
 });
@@ -274,12 +270,10 @@ decreaseQty(e.target);
 
 function increaseQty(btn){
 
-const type = btn.dataset.type;
 const id = btn.dataset.id;
-const name = btn.dataset.name;
 const size = btn.dataset.size || "";
 
-const key = id + size;
+const key = `${id}-${size}`;
 
 if(!cart[key]) cart[key] = 0;
 
@@ -309,9 +303,7 @@ if(!cart[key]) return;
 cart[key]--;
 
 if(cart[key] <= 0){
-
-delete cart[key];
-
+  delete cart[key];
 }
 
 updateQtyDisplay(id,size);
@@ -334,10 +326,11 @@ const elementId = size ? `qty-${id}-${size}` : `qty-${id}`;
 const el = document.getElementById(elementId);
 
 if(el){
-el.textContent = qty;
+  el.textContent = qty;
 }
 
 }
+
 
 /* =========================
    注文サマリー更新
@@ -366,7 +359,7 @@ products.beans.forEach(bean => {
 
 Object.keys(bean.sizes).forEach(size => {
 
-if(key === bean.id + size){
+if(key === `${bean.id}-${size}`){
 
 label = `${bean.name} ${size}g`;
 price = bean.sizes[size];
@@ -382,7 +375,7 @@ price = bean.sizes[size];
 
 products.sweets.forEach(sweet => {
 
-if(key === sweet.id){
+if(key === `${sweet.id}-`){
 
 label = sweet.name;
 price = sweet.price;
@@ -393,7 +386,6 @@ price = sweet.price;
 
 
 const subtotal = price * qty;
-
 total += subtotal;
 
 html += `
@@ -416,9 +408,7 @@ summary.innerHTML = html;
 totalEl.textContent = "¥" + total.toLocaleString();
 
 if(mobileTotal){
-
-mobileTotal.textContent = "¥" + total.toLocaleString();
-
+  mobileTotal.textContent = "¥" + total.toLocaleString();
 }
 
 }
@@ -443,21 +433,19 @@ products.beans.forEach(bean => {
 
 Object.keys(bean.sizes).forEach(size => {
 
-if(key === bean.id + size){
+if(key === `${bean.id}-${size}`){
 
 const price = bean.sizes[size];
 
 items.push({
-
-type: "bean",
-id: bean.id,
-name: bean.name,
-size: size,
-qty: qty,
-price: price,
-subtotal: price * qty,
-image: bean.image
-
+  type: "bean",
+  id: bean.id,
+  name: bean.name,
+  size: size,
+  qty: qty,
+  price: price,
+  subtotal: price * qty,
+  image: bean.image
 });
 
 }
@@ -471,19 +459,17 @@ image: bean.image
 
 products.sweets.forEach(sweet => {
 
-if(key === sweet.id){
+if(key === `${sweet.id}-`){
 
 items.push({
-
-type: "sweet",
-id: sweet.id,
-name: sweet.name,
-size: "",
-qty: qty,
-price: sweet.price,
-subtotal: sweet.price * qty,
-image: sweet.image 
-
+  type: "sweet",
+  id: sweet.id,
+  name: sweet.name,
+  size: "",
+  qty: qty,
+  price: sweet.price,
+  subtotal: sweet.price * qty,
+  image: sweet.image
 });
 
 }
@@ -506,25 +492,19 @@ function goCustomer(){
 const items = collectOrder();
 
 if(items.length === 0){
-
-alert("商品を選択してください");
-return;
-
+  alert("商品を選択してください");
+  return;
 }
 
 let total = 0;
 
 items.forEach(i => {
-
-total += i.subtotal;
-
+  total += i.subtotal;
 });
 
 const orderData = {
-
-items: items,
-total: total
-
+  items: items,
+  total: total
 };
 
 sessionStorage.setItem("orderData", JSON.stringify(orderData));
