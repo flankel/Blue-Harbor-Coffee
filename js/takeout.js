@@ -82,22 +82,27 @@ html += `
 <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 <div class="aspect-[4/3] overflow-hidden">
-
-<img src="${bean.image}"
-class="w-full h-full object-cover hover:scale-110 transition duration-700">
-
+<img src="${bean.image}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
 </div>
 
 <div class="p-6 space-y-4">
 
 <h3 class="leading-tight">
-<div class="text-lg font-light">
-${bean.name.jp}
-</div>
-<div class="text-xs text-gray-500">
-${bean.name.en}
-</div>
+<div class="text-lg font-light">${bean.name.jp}</div>
+<div class="text-xs text-gray-500">${bean.name.en}</div>
 </h3>
+
+${bean.tag ? `
+<div class="inline-block text-xs px-2 py-1 border border-blue-300 rounded text-blue-500">
+${bean.tag}
+</div>
+` : ""}
+
+${bean.desc ? `
+<p class="text-sm text-gray-500 leading-snug">
+${bean.desc.jp}
+</p>
+` : ""}
 `;
 
 Object.keys(bean.sizes).forEach(size => {
@@ -116,45 +121,27 @@ html += `
 
 <div class="flex items-center gap-2">
 
-<button
-class="qtyMinus px-3 py-1 bg-slate-100 rounded"
-data-id="${bean.id}"
-data-size="${size}"
->
-−
-</button>
+<button class="qtyMinus px-3 py-1 bg-slate-100 rounded"
+data-id="${bean.id}" data-size="${size}">−</button>
 
-<span
-class="w-6 text-center"
-id="qty-${bean.id}-${size}"
->
+<span class="w-6 text-center" id="qty-${bean.id}-${size}">
 ${cart[`${bean.id}-${size}`] || 0}
 </span>
 
-<button
-class="qtyPlus px-3 py-1 bg-slate-100 rounded"
-data-id="${bean.id}"
-data-size="${size}"
->
-＋
-</button>
+<button class="qtyPlus px-3 py-1 bg-slate-100 rounded"
+data-id="${bean.id}" data-size="${size}">＋</button>
 
 </div>
 
-</div>
-`;
-
-});
-
-html += `
-</div>
 </div>
 `;
 
 });
 
 html += `</div></div>`;
+});
 
+html += `</div></div>`;
 }
 
 
@@ -178,53 +165,47 @@ html += `
 <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 <div class="aspect-[4/3] overflow-hidden">
-
-<img src="${item.image}"
-class="w-full h-full object-cover hover:scale-110 transition duration-700">
-
+<img src="${item.image}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
 </div>
 
-<div class="p-6 flex justify-between items-center">
-
-<div class="flex flex-col items-start">
+<div class="p-6 space-y-3">
 
 <div class="leading-tight">
-<div class="text-lg">
-${item.name.jp}
-</div>
-<div class="text-xs text-gray-500">
-${item.name.en}
-</div>
+<div class="text-lg">${item.name.jp}</div>
+<div class="text-xs text-gray-500">${item.name.en}</div>
 </div>
 
-<div class="text-blue-600 text-sm font-semibold mt-1">
+${item.tag ? `
+<div class="inline-block text-xs px-2 py-1 border border-blue-300 rounded text-blue-500">
+${item.tag}
+</div>
+` : ""}
+
+${item.desc ? `
+<p class="text-sm text-gray-500 leading-snug">
+${item.desc.jp}
+</p>
+` : ""}
+
+<div class="flex justify-between items-center">
+
+<div class="text-blue-600 text-sm font-semibold">
 ¥${item.price.toLocaleString()} （税込）
-</div>
-
 </div>
 
 <div class="flex items-center gap-2">
 
-<button
-class="qtyMinus px-3 py-1 bg-slate-100 rounded"
-data-id="${item.id}"
->
-−
-</button>
+<button class="qtyMinus px-3 py-1 bg-slate-100 rounded"
+data-id="${item.id}">−</button>
 
-<span
-class="w-6 text-center"
-id="qty-${item.id}"
->
+<span class="w-6 text-center" id="qty-${item.id}">
 ${cart[`${item.id}-`] || 0}
 </span>
 
-<button
-class="qtyPlus px-3 py-1 bg-slate-100 rounded"
-data-id="${item.id}"
->
-＋
-</button>
+<button class="qtyPlus px-3 py-1 bg-slate-100 rounded"
+data-id="${item.id}">＋</button>
+
+</div>
 
 </div>
 
@@ -287,14 +268,15 @@ function increaseQty(btn){
 
 const id = btn.dataset.id;
 const size = btn.dataset.size || "";
-
 const key = `${id}-${size}`;
 
 if(!cart[key]) cart[key] = 0;
-
 if(cart[key] >= MAX_PER_ITEM) return;
 
 cart[key]++;
+
+btn.classList.add("scale-pop");
+setTimeout(()=> btn.classList.remove("scale-pop"),150);
 
 saveCart();
 refreshAll();
@@ -310,7 +292,6 @@ function decreaseQty(btn){
 
 const id = btn.dataset.id;
 const size = btn.dataset.size || "";
-
 const key = `${id}-${size}`;
 
 if(!cart[key]) return;
@@ -336,7 +317,6 @@ function summaryIncrease(btn){
 const key = btn.dataset.key;
 
 if(!cart[key]) cart[key] = 0;
-
 if(cart[key] >= MAX_PER_ITEM) return;
 
 cart[key]++;
@@ -366,11 +346,15 @@ refreshAll();
 function summaryDelete(btn){
 
 const key = btn.dataset.key;
+const row = btn.closest("div");
 
-delete cart[key];
+row.classList.add("fade-out");
 
-saveCart();
-refreshAll();
+setTimeout(() => {
+  delete cart[key];
+  saveCart();
+  refreshAll();
+}, 300);
 
 }
 
@@ -421,7 +405,7 @@ function saveCart(){
 
 
 /* =========================
-   数量表示更新
+   数量表示更新（アニメーション付き）
 ========================= */
 
 function updateQtyDisplay(id, size){
@@ -434,6 +418,11 @@ const el = document.getElementById(elementId);
 
 if(el){
   el.textContent = qty;
+
+  el.classList.add("scale-pop");
+  setTimeout(() => {
+    el.classList.remove("scale-pop");
+  }, 150);
 }
 
 }
@@ -490,9 +479,7 @@ total += subtotal;
 html += `
 <div class="flex justify-between items-center py-2 border-b">
 
-<div>
-${label}
-</div>
+<div>${label}</div>
 
 <div class="flex items-center gap-2">
 
@@ -546,7 +533,6 @@ Object.keys(cart).forEach(key => {
 
 const qty = cart[key];
 
-/* Beans */
 products.beans.forEach(bean => {
 Object.keys(bean.sizes).forEach(size => {
 if(key === `${bean.id}-${size}`){
@@ -565,7 +551,6 @@ image: bean.image
 });
 });
 
-/* Sweets */
 products.sweets.forEach(sweet => {
 if(key === `${sweet.id}-`){
 items.push({
