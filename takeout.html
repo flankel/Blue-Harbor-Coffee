@@ -10,13 +10,49 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
+
 <style>
   body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #333; }
-    .font-eng { font-family: 'Jost', sans-serif; }
-    .page-enter { animation: fadeIn 0.6s ease-out forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
-    .nav-link.active svg { color: #1d4ed8; }  
+  .font-eng { font-family: 'Jost', sans-serif; }
+
+  .page-enter { animation: fadeIn 0.6s ease-out forwards; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
+  .nav-link.active svg { color: #1d4ed8; }
+
+  /* 🔥 タグバッジ */
+  .tag-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #2563eb;
+    color: white;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+
+  .tag-no1 {
+    background: #ef4444;
+  }
+
+  /* 🔥 アニメーション */
+  .scale-pop {
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+  }
+
+  .fade-out {
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+  }
+
 </style>
 
 <body class="bg-stone-50 text-slate-800">
@@ -49,109 +85,85 @@
 
     <div class="text-center md:text-left max-w-xl">
 
-    <!-- MAIN TITLE -->
-    <h2 class="font-eng text-5xl md:text-7xl font-bold tracking-wide text-white mb-3">
-      TAKE OUT
-    </h2>
+      <h2 class="font-eng text-5xl md:text-7xl font-bold tracking-wide text-white mb-3">
+        TAKE OUT
+      </h2>
 
-    <!-- SUB TITLE -->
-    <p class="font-eng text-sm md:text-lg tracking-[0.3em] text-blue-200 opacity-80 mt-6 md:mt-8">
-    ONLINE RESERVATION
-    </p>
+      <p class="font-eng text-sm md:text-lg tracking-[0.3em] text-blue-200 opacity-80 mt-6 md:mt-8">
+        ONLINE RESERVATION
+      </p>
+
+    </div>
   </div>
-</div>
 </section>
 
 <!-- Main Area -->
 <div class="max-w-7xl mx-auto px-6 py-16">
 
-<div class="grid lg:grid-cols-[2fr_1fr] gap-16">
+  <div class="grid lg:grid-cols-[2fr_1fr] gap-16">
 
+    <!-- Product Area -->
+    <div id="productArea" class="space-y-24"></div>
 
-<!-- Product Area -->
-<div id="productArea" class="space-y-24"></div>
+    <!-- Sticky Order Summary -->
+    <div class="sticky top-28 h-fit">
 
+      <div class="bg-white p-8 rounded-2xl shadow-lg">
 
-<!-- Sticky Order Summary -->
-<div class="sticky top-28 h-fit">
+        <h3 class="text-xl mb-6 tracking-wide">
+          Your Order
+        </h3>
 
-<div class="bg-white p-8 rounded-2xl shadow-lg">
+        <div id="orderSummary" class="space-y-2 text-sm text-slate-700"></div>
 
-<h3 class="text-xl mb-6 tracking-wide">
-Your Order
-</h3>
+        <div class="border-t mt-6 pt-4 flex justify-between font-semibold text-lg">
+          <span>Total</span>
+          <span id="totalPrice">¥0</span>
+        </div>
 
-<div id="orderSummary" class="space-y-2 text-sm text-slate-700"></div>
+        <button
+          onclick="goCustomer()"
+          class="mt-8 w-full bg-amber-900 text-white py-4 rounded-full hover:bg-amber-800 transition shadow-md"
+        >
+          お客様情報入力へ
+        </button>
 
-<div class="border-t mt-6 pt-4 flex justify-between font-semibold text-lg">
+      </div>
 
-<span>Total</span>
+    </div>
 
-<span id="totalPrice">
-¥0
-</span>
-
-</div>
-
-<button
-onclick="goCustomer()"
-class="mt-8 w-full bg-amber-900 text-white py-4 rounded-full hover:bg-amber-800 transition shadow-md"
->
-
-お客様情報入力へ
-
-</button>
+  </div>
 
 </div>
-
-</div>
-
-
-</div>
-</div>
-
 
 <!-- Mobile Floating Cart -->
 <div
 class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-xl p-4 md:hidden flex justify-between items-center"
 >
 
-<span
-id="mobileTotal"
-class="font-semibold text-lg"
->
-
+<span id="mobileTotal" class="font-semibold text-lg">
 ¥0
-
 </span>
 
 <button
 onclick="goCustomer()"
 class="bg-amber-900 text-white px-6 py-3 rounded-full hover:bg-amber-800 transition"
 >
-
 お客様情報入力へ
-
 </button>
 
 </div>
 
-
 <!-- Footer -->
 <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400">
-
 © 2024 Blue Harbor Coffee Roasters.
-
 </footer>
-
 
 <!-- Header Loader -->
 <script src="js/loadHeader.js"></script>
 
-
 <!-- TAKEOUT SCRIPT -->
 <script type="module" src="js/takeout.js"></script>
-
 
 </body>
 </html>
