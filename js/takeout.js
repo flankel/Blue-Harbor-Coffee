@@ -190,7 +190,7 @@ ${item.desc.jp}
 <div class="flex justify-between items-center">
 
 <div class="text-blue-600 text-sm font-semibold">
-¥${item.price.toLocaleString()} （税込）
+¥${item.price.toLocaleString()}
 </div>
 
 <div class="flex items-center gap-2">
