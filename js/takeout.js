@@ -16,8 +16,10 @@ let cart = {};
 document.addEventListener("DOMContentLoaded", async () => {
 
   await loadProducts();
+  loadCart(); // ★追加（復元）
   renderProducts();
   setupEvents();
+  updateSummary(); // ★追加
 
 });
 
@@ -30,6 +32,21 @@ async function loadProducts(){
 
   const res = await fetch("data/takeout-products.json");
   products = await res.json();
+
+}
+
+
+/* =========================
+   カート復元（★追加）
+========================= */
+
+function loadCart(){
+
+  const saved = localStorage.getItem("cart");
+
+  if(saved){
+    cart = JSON.parse(saved);
+  }
 
 }
 
@@ -115,7 +132,7 @@ class="w-6 text-center"
 id="qty-${bean.id}-${size}"
 >
 
-0
+${cart[`${bean.id}-${size}`] || 0}
 
 </span>
 
@@ -209,7 +226,7 @@ class="w-6 text-center"
 id="qty-${item.id}"
 >
 
-0
+${cart[`${item.id}-`] || 0}
 
 </span>
 
@@ -281,6 +298,8 @@ if(cart[key] >= MAX_PER_ITEM) return;
 
 cart[key]++;
 
+saveCart(); // ★追加
+
 updateQtyDisplay(id,size);
 updateSummary();
 
@@ -306,9 +325,20 @@ if(cart[key] <= 0){
   delete cart[key];
 }
 
+saveCart(); // ★追加
+
 updateQtyDisplay(id,size);
 updateSummary();
 
+}
+
+
+/* =========================
+   カート保存（★追加）
+========================= */
+
+function saveCart(){
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 
@@ -507,7 +537,7 @@ const orderData = {
   total: total
 };
 
-sessionStorage.setItem("orderData", JSON.stringify(orderData));
+localStorage.setItem("orderData", JSON.stringify(orderData)); // ★変更
 
 location.href = "customer.html";
 
