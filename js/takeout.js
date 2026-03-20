@@ -90,8 +90,13 @@ class="w-full h-full object-cover hover:scale-110 transition duration-700">
 
 <div class="p-6 space-y-4">
 
-<h3 class="text-xl font-light">
-${bean.name}
+<h3 class="leading-tight">
+<div class="text-lg font-light">
+${bean.name.jp}
+</div>
+<div class="text-xs text-gray-500">
+${bean.name.en}
+</div>
 </h3>
 `;
 
@@ -181,11 +186,21 @@ class="w-full h-full object-cover hover:scale-110 transition duration-700">
 
 <div class="p-6 flex justify-between items-center">
 
-<div>
-<div class="text-lg">${item.name}</div>
-<div class="text-blue-600 text-sm font-semibold">
-¥${item.price.toLocaleString()}
+<div class="flex flex-col items-start">
+
+<div class="leading-tight">
+<div class="text-lg">
+${item.name.jp}
 </div>
+<div class="text-xs text-gray-500">
+${item.name.en}
+</div>
+</div>
+
+<div class="text-blue-600 text-sm font-semibold mt-1">
+¥${item.price.toLocaleString()} （税込）
+</div>
+
 </div>
 
 <div class="flex items-center gap-2">
@@ -377,23 +392,20 @@ refreshAll();
 
 
 /* =========================
-   共通更新（🔥修正ポイント）
+   共通更新
 ========================= */
 
 function refreshAll(){
 
-// ★全ての数量表示を一旦リセット
 document.querySelectorAll('[id^="qty-"]').forEach(el => {
   el.textContent = 0;
 });
 
-// ★cartの内容だけ再反映
 Object.keys(cart).forEach(key => {
   const [id, size] = key.split("-");
   updateQtyDisplay(id, size);
 });
 
-// ★サマリー更新
 updateSummary();
 
 }
@@ -440,7 +452,6 @@ const mobileTotal = document.getElementById("mobileTotal");
 let html = "";
 let total = 0;
 
-/* 空表示 */
 if(Object.keys(cart).length === 0){
   summary.innerHTML = "<p class='text-gray-400'>カートは空です</p>";
   totalEl.textContent = "¥0";
@@ -459,7 +470,7 @@ let price = 0;
 products.beans.forEach(bean => {
 Object.keys(bean.sizes).forEach(size => {
 if(key === `${bean.id}-${size}`){
-label = `${bean.name} ${size}g`;
+label = `${bean.name.jp} ${size}g`;
 price = bean.sizes[size];
 }
 });
@@ -468,7 +479,7 @@ price = bean.sizes[size];
 /* Sweets */
 products.sweets.forEach(sweet => {
 if(key === `${sweet.id}-`){
-label = sweet.name;
+label = sweet.name.jp;
 price = sweet.price;
 }
 });
@@ -504,7 +515,6 @@ ${label}
 
 });
 
-/* 全クリアボタン */
 html += `
 <div class="text-right mt-4">
 <button class="clearCart px-4 py-2 text-sm text-red-500 border border-red-300 rounded hover:bg-red-50">
@@ -544,7 +554,7 @@ const price = bean.sizes[size];
 items.push({
 type: "bean",
 id: bean.id,
-name: bean.name,
+name: bean.name.jp,
 size: size,
 qty: qty,
 price: price,
@@ -561,7 +571,7 @@ if(key === `${sweet.id}-`){
 items.push({
 type: "sweet",
 id: sweet.id,
-name: sweet.name,
+name: sweet.name.jp,
 size: "",
 qty: qty,
 price: sweet.price,
