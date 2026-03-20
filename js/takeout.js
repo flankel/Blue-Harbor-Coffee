@@ -16,10 +16,10 @@ let cart = {};
 document.addEventListener("DOMContentLoaded", async () => {
 
   await loadProducts();
-  loadCart(); // ★追加（復元）
+  loadCart();
   renderProducts();
   setupEvents();
-  updateSummary(); // ★追加
+  updateSummary();
 
 });
 
@@ -37,7 +37,7 @@ async function loadProducts(){
 
 
 /* =========================
-   カート復元（★追加）
+   カート復元
 ========================= */
 
 function loadCart(){
@@ -100,52 +100,38 @@ Object.keys(bean.sizes).forEach(size => {
 const price = bean.sizes[size];
 
 html += `
-
 <div class="flex justify-between items-center py-2 border-b last:border-none">
 
 <div>
-
 <span>${size}g</span>
-
 <span class="text-blue-600 font-semibold ml-2">
 ¥${price.toLocaleString()}
 </span>
-
 </div>
 
 <div class="flex items-center gap-2">
 
 <button
 class="qtyMinus px-3 py-1 bg-slate-100 rounded"
-data-type="bean"
 data-id="${bean.id}"
-data-name="${bean.name}"
 data-size="${size}"
 >
-
 −
-
 </button>
 
 <span
 class="w-6 text-center"
 id="qty-${bean.id}-${size}"
 >
-
 ${cart[`${bean.id}-${size}`] || 0}
-
 </span>
 
 <button
 class="qtyPlus px-3 py-1 bg-slate-100 rounded"
-data-type="bean"
 data-id="${bean.id}"
-data-name="${bean.name}"
 data-size="${size}"
 >
-
 ＋
-
 </button>
 
 </div>
@@ -165,7 +151,6 @@ html += `
 html += `</div></div>`;
 
 }
-
 
 
 /* Sweets */
@@ -197,63 +182,45 @@ class="w-full h-full object-cover hover:scale-110 transition duration-700">
 <div class="p-6 flex justify-between items-center">
 
 <div>
-
-<div class="text-lg">
-${item.name}
-</div>
-
+<div class="text-lg">${item.name}</div>
 <div class="text-blue-600 text-sm font-semibold">
 ¥${item.price.toLocaleString()}
 </div>
-
 </div>
 
 <div class="flex items-center gap-2">
 
 <button
 class="qtyMinus px-3 py-1 bg-slate-100 rounded"
-data-type="sweet"
 data-id="${item.id}"
-data-name="${item.name}"
 >
-
 −
-
 </button>
 
 <span
 class="w-6 text-center"
 id="qty-${item.id}"
 >
-
 ${cart[`${item.id}-`] || 0}
-
 </span>
 
 <button
 class="qtyPlus px-3 py-1 bg-slate-100 rounded"
-data-type="sweet"
 data-id="${item.id}"
-data-name="${item.name}"
 >
-
 ＋
-
 </button>
 
 </div>
 
 </div>
-
 </div>
 `;
 
 });
 
 html += `</div></div>`;
-
 }
-
 
 area.innerHTML = html;
 
@@ -274,6 +241,22 @@ if(e.target.classList.contains("qtyPlus")){
 
 if(e.target.classList.contains("qtyMinus")){
   decreaseQty(e.target);
+}
+
+if(e.target.classList.contains("summaryPlus")){
+  summaryIncrease(e.target);
+}
+
+if(e.target.classList.contains("summaryMinus")){
+  summaryDecrease(e.target);
+}
+
+if(e.target.classList.contains("summaryDelete")){
+  summaryDelete(e.target);
+}
+
+if(e.target.classList.contains("clearCart")){
+  clearCartAll();
 }
 
 });
@@ -298,8 +281,7 @@ if(cart[key] >= MAX_PER_ITEM) return;
 
 cart[key]++;
 
-saveCart(); // ★追加
-
+saveCart();
 updateQtyDisplay(id,size);
 updateSummary();
 
@@ -325,8 +307,7 @@ if(cart[key] <= 0){
   delete cart[key];
 }
 
-saveCart(); // ★追加
-
+saveCart();
 updateQtyDisplay(id,size);
 updateSummary();
 
@@ -334,7 +315,87 @@ updateSummary();
 
 
 /* =========================
-   カート保存（★追加）
+   サマリー操作
+========================= */
+
+function summaryIncrease(btn){
+
+const key = btn.dataset.key;
+
+if(!cart[key]) cart[key] = 0;
+
+if(cart[key] >= MAX_PER_ITEM) return;
+
+cart[key]++;
+
+saveCart();
+refreshAll();
+
+}
+
+function summaryDecrease(btn){
+
+const key = btn.dataset.key;
+
+if(!cart[key]) return;
+
+cart[key]--;
+
+if(cart[key] <= 0){
+  delete cart[key];
+}
+
+saveCart();
+refreshAll();
+
+}
+
+function summaryDelete(btn){
+
+const key = btn.dataset.key;
+
+delete cart[key];
+
+saveCart();
+refreshAll();
+
+}
+
+
+/* =========================
+   全削除
+========================= */
+
+function clearCartAll(){
+
+if(!confirm("カートをすべて削除しますか？")) return;
+
+cart = {};
+
+saveCart();
+refreshAll();
+
+}
+
+
+/* =========================
+   共通更新
+========================= */
+
+function refreshAll(){
+
+Object.keys(cart).forEach(key => {
+  const [id, size] = key.split("-");
+  updateQtyDisplay(id, size);
+});
+
+updateSummary();
+
+}
+
+
+/* =========================
+   カート保存
 ========================= */
 
 function saveCart(){
@@ -352,7 +413,6 @@ const key = `${id}-${size}`;
 const qty = cart[key] || 0;
 
 const elementId = size ? `qty-${id}-${size}` : `qty-${id}`;
-
 const el = document.getElementById(elementId);
 
 if(el){
@@ -375,6 +435,14 @@ const mobileTotal = document.getElementById("mobileTotal");
 let html = "";
 let total = 0;
 
+/* 空表示 */
+if(Object.keys(cart).length === 0){
+  summary.innerHTML = "<p class='text-gray-400'>カートは空です</p>";
+  totalEl.textContent = "¥0";
+  if(mobileTotal) mobileTotal.textContent = "¥0";
+  return;
+}
+
 Object.keys(cart).forEach(key => {
 
 const qty = cart[key];
@@ -382,56 +450,63 @@ const qty = cart[key];
 let label = "";
 let price = 0;
 
-
 /* Beans */
-
 products.beans.forEach(bean => {
-
 Object.keys(bean.sizes).forEach(size => {
-
 if(key === `${bean.id}-${size}`){
-
 label = `${bean.name} ${size}g`;
 price = bean.sizes[size];
-
 }
-
 });
-
 });
-
 
 /* Sweets */
-
 products.sweets.forEach(sweet => {
-
 if(key === `${sweet.id}-`){
-
 label = sweet.name;
 price = sweet.price;
-
 }
-
 });
-
 
 const subtotal = price * qty;
 total += subtotal;
 
 html += `
-<div class="flex justify-between">
+<div class="flex justify-between items-center py-2 border-b">
 
-<span>
-${label} ×${qty}
-</span>
+<div>
+${label}
+</div>
 
-<span class="text-blue-600 font-semibold">
+<div class="flex items-center gap-2">
+
+<button class="summaryMinus px-2 py-1 bg-slate-100 rounded" data-key="${key}">−</button>
+
+<span class="w-6 text-center">${qty}</span>
+
+<button class="summaryPlus px-2 py-1 bg-slate-100 rounded" data-key="${key}">＋</button>
+
+<button class="summaryDelete px-2 py-1 text-red-500" data-key="${key}">✕</button>
+
+<span class="text-blue-600 font-semibold ml-3">
 ¥${subtotal.toLocaleString()}
 </span>
+
+</div>
+
 </div>
 `;
 
 });
+
+/* 全クリアボタン */
+html += `
+<div class="text-right mt-4">
+<button class="clearCart px-4 py-2 text-sm text-red-500 border border-red-300 rounded hover:bg-red-50">
+全てクリア
+</button>
+</div>
+`;
 
 summary.innerHTML = html;
 
@@ -456,54 +531,39 @@ Object.keys(cart).forEach(key => {
 
 const qty = cart[key];
 
-
 /* Beans */
-
 products.beans.forEach(bean => {
-
 Object.keys(bean.sizes).forEach(size => {
-
 if(key === `${bean.id}-${size}`){
-
 const price = bean.sizes[size];
-
 items.push({
-  type: "bean",
-  id: bean.id,
-  name: bean.name,
-  size: size,
-  qty: qty,
-  price: price,
-  subtotal: price * qty,
-  image: bean.image
+type: "bean",
+id: bean.id,
+name: bean.name,
+size: size,
+qty: qty,
+price: price,
+subtotal: price * qty,
+image: bean.image
 });
-
 }
-
 });
-
 });
-
 
 /* Sweets */
-
 products.sweets.forEach(sweet => {
-
 if(key === `${sweet.id}-`){
-
 items.push({
-  type: "sweet",
-  id: sweet.id,
-  name: sweet.name,
-  size: "",
-  qty: qty,
-  price: sweet.price,
-  subtotal: sweet.price * qty,
-  image: sweet.image
+type: "sweet",
+id: sweet.id,
+name: sweet.name,
+size: "",
+qty: qty,
+price: sweet.price,
+subtotal: sweet.price * qty,
+image: sweet.image
 });
-
 }
-
 });
 
 });
@@ -537,7 +597,7 @@ const orderData = {
   total: total
 };
 
-localStorage.setItem("orderData", JSON.stringify(orderData)); // ★変更
+localStorage.setItem("orderData", JSON.stringify(orderData));
 
 location.href = "customer.html";
 
