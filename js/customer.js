@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   renderCart();
 
-  setupAgreementUI(); // ★ここに統合
+  setupAgreementUI();
 
 });
 
@@ -49,7 +49,7 @@ async function loadConfig(){
 
 function checkOrderData(){
 
-  const order = sessionStorage.getItem("orderData");
+  const order = localStorage.getItem("orderData"); // ★変更
 
   if(!order){
 
@@ -68,7 +68,7 @@ function checkOrderData(){
 
 function getCartItems(){
 
-  const raw = sessionStorage.getItem("orderData");
+  const raw = localStorage.getItem("orderData"); // ★変更
   if(!raw) return [];
 
   const data = JSON.parse(raw);
@@ -88,7 +88,7 @@ function getCartItems(){
 
 function renderCart(){
 
-  const raw = sessionStorage.getItem("orderData");
+  const raw = localStorage.getItem("orderData"); // ★変更
   if(!raw) return;
 
   const data = JSON.parse(raw);
@@ -132,6 +132,7 @@ function renderCart(){
   totalEl.textContent = `¥${data.total.toLocaleString()}`;
 
 }
+
 
 /* =========================
    日付設定
@@ -297,7 +298,7 @@ function sanitize(text){
 
 
 /* =========================
-   同意UI制御（★分離）
+   同意UI制御
 ========================= */
 
 function setupAgreementUI(){
@@ -307,7 +308,6 @@ function setupAgreementUI(){
 
   if(!agree || !btn) return;
 
-  // 初期状態（重要）
   btn.disabled = true;
   btn.classList.add("bg-gray-300","cursor-not-allowed");
   btn.classList.remove("bg-blue-600","hover:bg-blue-700");
@@ -359,7 +359,7 @@ function goConfirm(){
 
   if(!validateInput(customerData)) return;
 
-  sessionStorage.setItem(
+  localStorage.setItem( // ★変更
     "customerData",
     JSON.stringify(customerData)
   );
