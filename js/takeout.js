@@ -78,8 +78,16 @@ Coffee Beans
 
 products.beans.forEach(bean => {
 
+const isNo1 = bean.tag && bean.tag.includes("No.1");
+
 html += `
-<div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
+<div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
+
+${bean.tag ? `
+<div class="tag-badge ${isNo1 ? "tag-no1" : ""}">
+${bean.tag}
+</div>
+` : ""}
 
 <div class="aspect-[4/3] overflow-hidden">
 <img src="${bean.image}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
@@ -91,12 +99,6 @@ html += `
 <div class="text-lg font-light">${bean.name.jp}</div>
 <div class="text-xs text-gray-500">${bean.name.en}</div>
 </h3>
-
-${bean.tag ? `
-<div class="inline-block text-xs px-2 py-1 border border-blue-300 rounded text-blue-500">
-${bean.tag}
-</div>
-` : ""}
 
 ${bean.desc ? `
 <p class="text-sm text-gray-500 leading-snug">
@@ -161,8 +163,16 @@ Sweets
 
 products.sweets.forEach(item => {
 
+const isNo1 = item.tag && item.tag.includes("No.1");
+
 html += `
-<div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
+<div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
+
+${item.tag ? `
+<div class="tag-badge ${isNo1 ? "tag-no1" : ""}">
+${item.tag}
+</div>
+` : ""}
 
 <div class="aspect-[4/3] overflow-hidden">
 <img src="${item.image}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
@@ -174,12 +184,6 @@ html += `
 <div class="text-lg">${item.name.jp}</div>
 <div class="text-xs text-gray-500">${item.name.en}</div>
 </div>
-
-${item.tag ? `
-<div class="inline-block text-xs px-2 py-1 border border-blue-300 rounded text-blue-500">
-${item.tag}
-</div>
-` : ""}
 
 ${item.desc ? `
 <p class="text-sm text-gray-500 leading-snug">
@@ -405,7 +409,7 @@ function saveCart(){
 
 
 /* =========================
-   数量表示更新（アニメーション付き）
+   数量表示更新
 ========================= */
 
 function updateQtyDisplay(id, size){
