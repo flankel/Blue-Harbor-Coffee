@@ -2,7 +2,10 @@
   "beans": [
     {
       "id": "A",
-      "name": "Ethiopian Natural",
+      "name": {
+        "jp": "エチオピア ナチュラル",
+        "en": "Ethiopian Natural"
+      },
       "image": "images/TakeOut/Beans/EthiopianNatural.png",
       "sizes": {
         "100": 850,
@@ -12,7 +15,10 @@
     },
     {
       "id": "B",
-      "name": "Colombia Supremo",
+      "name": {
+        "jp": "コロンビア スプレモ",
+        "en": "Colombia Supremo"
+      },
       "image": "images/TakeOut/Beans/ColombiaSupremo.png",
       "sizes": {
         "100": 800,
@@ -22,7 +28,10 @@
     },
     {
       "id": "C",
-      "name": "Guatemala SHB",
+      "name": {
+        "jp": "グアテマラ SHB",
+        "en": "Guatemala SHB"
+      },
       "image": "images/TakeOut/Beans/GuatemalaSHB.png",
       "sizes": {
         "100": 900,
@@ -32,7 +41,10 @@
     },
     {
       "id": "D",
-      "name": "Brazil Santos",
+      "name": {
+        "jp": "ブラジル サントス",
+        "en": "Brazil Santos"
+      },
       "image": "images/TakeOut/Beans/BrazilSantos.png",
       "sizes": {
         "100": 750,
@@ -42,7 +54,10 @@
     },
     {
       "id": "E",
-      "name": "Kenya AA",
+      "name": {
+        "jp": "ケニア AA",
+        "en": "Kenya AA"
+      },
       "image": "images/TakeOut/Beans/KenyaAA.png",
       "sizes": {
         "100": 950,
@@ -52,30 +67,50 @@
     }
   ],
   "sweets": [
-    { "id": "S1", 
-      "name": "Classic Custard Pudding",
+    {
+      "id": "S1",
+      "name": {
+        "jp": "クラシック カスタードプリン",
+        "en": "Classic Custard Pudding"
+      },
       "image": "images/TakeOut/Sweets/ClassicCustardPudding.png",
-      "price": 520 
+      "price": 520
     },
-    { "id": "S2",
-      "name": "Setouchi Lemon Tart",
+    {
+      "id": "S2",
+      "name": {
+        "jp": "瀬戸内レモンタルト",
+        "en": "Setouchi Lemon Tart"
+      },
       "image": "images/TakeOut/Sweets/SetouchiLemonTart.png",
-      "price": 720 
+      "price": 720
     },
-    { "id": "S3", 
-      "name": "Setouchi Lemon Pound Cake", 
-      "image": "images/TakeOut/Sweets/SetouchiLemonPoundCake.png", 
-      "price": 520 
+    {
+      "id": "S3",
+      "name": {
+        "jp": "瀬戸内レモンパウンドケーキ",
+        "en": "Setouchi Lemon Pound Cake"
+      },
+      "image": "images/TakeOut/Sweets/SetouchiLemonPoundCake.png",
+      "price": 520
     },
-    { "id": "S4", 
-      "name": "Blueberry Cheesecake",
+    {
+      "id": "S4",
+      "name": {
+        "jp": "ブルーベリーチーズケーキ",
+        "en": "Blueberry Cheesecake"
+      },
       "image": "images/TakeOut/Sweets/BlueberryCheesecake.png",
-      "price": 780 
+      "price": 780
     },
-    { "id": "S5", 
-      "name": "Blueberry Scone",           
-      "image": "images/TakeOut/Sweets/BlueberryScone.png", 
-      "price": 480 
+    {
+      "id": "S5",
+      "name": {
+        "jp": "ブルーベリースコーン",
+        "en": "Blueberry Scone"
+      },
+      "image": "images/TakeOut/Sweets/BlueberryScone.png",
+      "price": 480
     }
   ]
 }
