@@ -282,8 +282,7 @@ if(cart[key] >= MAX_PER_ITEM) return;
 cart[key]++;
 
 saveCart();
-updateQtyDisplay(id,size);
-updateSummary();
+refreshAll();
 
 }
 
@@ -308,8 +307,7 @@ if(cart[key] <= 0){
 }
 
 saveCart();
-updateQtyDisplay(id,size);
-updateSummary();
+refreshAll();
 
 }
 
@@ -379,16 +377,23 @@ refreshAll();
 
 
 /* =========================
-   共通更新
+   共通更新（🔥修正ポイント）
 ========================= */
 
 function refreshAll(){
 
+// ★全ての数量表示を一旦リセット
+document.querySelectorAll('[id^="qty-"]').forEach(el => {
+  el.textContent = 0;
+});
+
+// ★cartの内容だけ再反映
 Object.keys(cart).forEach(key => {
   const [id, size] = key.split("-");
   updateQtyDisplay(id, size);
 });
 
+// ★サマリー更新
 updateSummary();
 
 }
