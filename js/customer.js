@@ -105,11 +105,24 @@ function renderCart(){
   items.forEach(item => {
 
     const div = document.createElement("div");
-    div.className = "flex justify-between";
+    div.className = "flex items-center gap-4 border-b py-3";
 
     div.innerHTML = `
-      <span>${item.name}${item.size ? " " + item.size + "g" : ""} × ${item.qty}</span>
-      <span>¥${item.subtotal.toLocaleString()}</span>
+      <img src="${item.image}" 
+           class="w-16 h-16 object-cover rounded-xl shadow-sm">
+
+      <div class="flex-1">
+        <p class="font-semibold">
+          ${item.name}
+        </p>
+        <p class="text-sm text-gray-500">
+          ${item.size ? item.size + "g × " : "× "}${item.qty}
+        </p>
+      </div>
+
+      <p class="font-bold">
+        ¥${item.subtotal.toLocaleString()}
+      </p>
     `;
 
     container.appendChild(div);
@@ -119,7 +132,6 @@ function renderCart(){
   totalEl.textContent = `¥${data.total.toLocaleString()}`;
 
 }
-
 
 /* =========================
    日付設定
