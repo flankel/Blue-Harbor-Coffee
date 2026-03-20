@@ -9,11 +9,6 @@ addDoc,
 serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-import {
-getOrderBundle,
-clearOrder
-} from "./orderStorage.js";
-
 
 // ==============================
 // Firebase設定
@@ -49,7 +44,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 function init(){
 
-loadSession();
+loadStorage();
 
 renderOrder();
 
@@ -59,14 +54,15 @@ renderCustomer();
 
 
 // ==============================
-// session読み込み
+// storage読み込み（★変更）
 // ==============================
 
-function loadSession(){
+function loadStorage(){
 
-const bundle = getOrderBundle();
+const order = localStorage.getItem("orderData");
+const customer = localStorage.getItem("customerData");
 
-if(!bundle){
+if(!order || !customer){
 
 alert("注文情報が見つかりません");
 
@@ -76,14 +72,14 @@ return;
 
 }
 
-orderData = bundle.order;
-customerData = bundle.customer;
+orderData = JSON.parse(order);
+customerData = JSON.parse(customer);
 
 }
 
 
 // ==============================
-// 注文表示
+// 注文表示（★画像対応）
 // ==============================
 
 function renderOrder(){
@@ -102,12 +98,15 @@ const subtotal = item.price * item.qty;
 
 const row = document.createElement("div");
 
-row.className = "flex justify-between border-b py-2";
+row.className = "flex items-center gap-4 border-b py-3";
 
 row.innerHTML = `
-<div>
-<div class="font-medium">${name}</div>
-<div class="text-sm text-gray-500">× ${item.qty}</div>
+<img src="${item.image}"
+     class="w-16 h-16 object-cover rounded-xl shadow-sm">
+
+<div class="flex-1">
+  <div class="font-medium">${name}</div>
+  <div class="text-sm text-gray-500">× ${item.qty}</div>
 </div>
 
 <div class="font-medium">
@@ -279,10 +278,12 @@ await sendEmails(orderRef.id,total);
 
 
 // ==============================
-// storage削除
+// storage削除（★変更）
 // ==============================
 
-clearOrder();
+localStorage.removeItem("orderData");
+localStorage.removeItem("customerData");
+localStorage.removeItem("cart");
 
 
 // ==============================
