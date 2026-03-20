@@ -302,7 +302,7 @@ function decreaseQty(btn){
 const id = btn.dataset.id;
 const size = btn.dataset.size || "";
 
-const key = id + size;
+const key = `${id}-${size}`;
 
 if(!cart[key]) return;
 
@@ -326,7 +326,7 @@ updateSummary();
 
 function updateQtyDisplay(id, size){
 
-const key = id + size;
+const key = `${id}-${size}`;
 const qty = cart[key] || 0;
 
 const elementId = size ? `qty-${id}-${size}` : `qty-${id}`;
@@ -455,7 +455,8 @@ name: bean.name,
 size: size,
 qty: qty,
 price: price,
-subtotal: price * qty
+subtotal: price * qty,
+image: bean.image
 
 });
 
@@ -480,7 +481,8 @@ name: sweet.name,
 size: "",
 qty: qty,
 price: sweet.price,
-subtotal: sweet.price * qty
+subtotal: sweet.price * qty,
+image: sweet.image 
 
 });
 
