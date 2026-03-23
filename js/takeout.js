@@ -544,7 +544,7 @@ const price = bean.sizes[size];
 items.push({
 type: "bean",
 id: bean.id,
-name: bean.name.jp,
+name: `${bean.name.jp} ${size}g`, // ★ 修正
 size: size,
 qty: qty,
 price: price,
@@ -575,7 +575,6 @@ image: sweet.image
 return items;
 
 }
-
 
 /* =========================
    次ページへ
