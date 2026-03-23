@@ -43,18 +43,14 @@ let isSubmitting = false;
 document.addEventListener("DOMContentLoaded", init);
 
 function init(){
-
 loadStorage();
-
 renderOrder();
-
 renderCustomer();
-
 }
 
 
 // ==============================
-// storage読み込み（★変更）
+// storage読み込み
 // ==============================
 
 function loadStorage(){
@@ -63,13 +59,9 @@ const order = localStorage.getItem("orderData");
 const customer = localStorage.getItem("customerData");
 
 if(!order || !customer){
-
 alert("注文情報が見つかりません");
-
 location.href = "takeout.html";
-
 return;
-
 }
 
 orderData = JSON.parse(order);
@@ -79,7 +71,7 @@ customerData = JSON.parse(customer);
 
 
 // ==============================
-// 注文表示（★画像対応）
+// 注文表示
 // ==============================
 
 function renderOrder(){
@@ -90,9 +82,7 @@ container.innerHTML = "";
 
 orderData.items.forEach(item => {
 
-const name = item.size
-? `${item.name} ${item.size}g`
-: item.name;
+const name = item.name;
 
 const subtotal = item.price * item.qty;
 
@@ -155,15 +145,10 @@ document.getElementById("orderTotal").textContent =
 function renderCustomer(){
 
 document.getElementById("c_name").textContent = customerData.name;
-
 document.getElementById("c_phone").textContent = customerData.phone;
-
 document.getElementById("c_email").textContent = customerData.email;
-
 document.getElementById("c_date").textContent = customerData.date;
-
 document.getElementById("c_time").textContent = customerData.time;
-
 document.getElementById("c_message").textContent =
 customerData.message || "";
 
@@ -175,9 +160,7 @@ customerData.message || "";
 // ==============================
 
 window.backToCustomer = function(){
-
 location.href = "customer.html";
-
 }
 
 
@@ -194,35 +177,17 @@ isSubmitting = true;
 const btn = document.getElementById("submitBtn");
 
 btn.disabled = true;
-
 btn.textContent = "送信中...";
 
 try{
 
-// ==============================
-// 金額計算
-// ==============================
-
 const taxRate = 0.08;
-
 const subtotal = orderData.total;
-
 const tax = Math.round(subtotal * taxRate);
-
 const total = subtotal + tax;
-
-
-// ==============================
-// 注文番号生成
-// ==============================
 
 const orderNumber =
 "BH-" + Date.now().toString().slice(-6);
-
-
-// ==============================
-// 日付キー
-// ==============================
 
 const today = new Date();
 
@@ -231,21 +196,12 @@ today.getFullYear() + "-" +
 String(today.getMonth()+1).padStart(2,"0") + "-" +
 String(today.getDate()).padStart(2,"0");
 
-
-// ==============================
-// Firestore保存
-// ==============================
-
 const orderRef = await addDoc(collection(db,"orders"),{
 
 store: "blueharbor",
-
 orderNumber: orderNumber,
-
 status: "new",
-
 createdAt: serverTimestamp(),
-
 dayKey: dayKey,
 
 items: orderData.items,
@@ -271,27 +227,103 @@ message: customerData.message || ""
 
 
 // ==============================
+// HTMLメール生成
+// ==============================
+
+const itemsRows = orderData.items.map(item => {
+
+const subtotal = item.price * item.qty;
+
+return `
+<tr>
+  <td>${item.name}</td>
+  <td align="center">${item.qty}</td>
+  <td align="right">¥${subtotal.toLocaleString()}</td>
+</tr>
+`;
+
+}).join("");
+
+const htmlContent = `
+<table width="100%" style="font-family:sans-serif;background:#f8f6f3;padding:20px;">
+<tr><td align="center">
+<table width="600" style="background:#fff;padding:30px;border-radius:10px;">
+
+<tr><td align="center">
+<img src="https://your-domain.com/logo.png" width="120">
+</td></tr>
+
+<tr><td style="padding:20px 0;">
+ご予約ありがとうございます ☕
+</td></tr>
+
+<tr><td>
+<strong>注文番号：</strong>${orderRef.id}<br>
+<strong>お名前：</strong>${customerData.name}<br>
+<strong>来店：</strong>${customerData.date} ${customerData.time}
+</td></tr>
+
+<tr><td style="padding-top:20px;">
+<table width="100%" border="1" style="border-collapse:collapse;font-size:13px;">
+<tr>
+<th>商品</th><th>数量</th><th>小計</th>
+</tr>
+${itemsRows}
+<tr>
+<td colspan="2" align="right">小計</td>
+<td align="right">¥${subtotal.toLocaleString()}</td>
+</tr>
+<tr>
+<td colspan="2" align="right">税</td>
+<td align="right">¥${tax.toLocaleString()}</td>
+</tr>
+<tr>
+<td colspan="2" align="right"><strong>合計</strong></td>
+<td align="right"><strong>¥${total.toLocaleString()}</strong></td>
+</tr>
+</table>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+`;
+
+
+// ==============================
 // メール送信
 // ==============================
 
-await sendEmails(orderRef.id,total);
+await emailjs.send(
+
+"service_l7e4fi8",
+"template_8fm7t8b",
+
+{
+order_id: orderRef.id,
+name: customerData.name,
+phone: customerData.phone,
+email: customerData.email,
+date: customerData.date,
+time: customerData.time,
+items: "※HTMLメールを表示してください",
+html: htmlContent,
+total: total,
+message: customerData.message || ""
+}
+
+);
 
 
 // ==============================
-// storage削除（★変更）
+// storage削除
 // ==============================
 
 localStorage.removeItem("orderData");
 localStorage.removeItem("customerData");
 localStorage.removeItem("cart");
 
-
-// ==============================
-// 完了画面
-// ==============================
-
 location.href = "complete.html";
-
 
 }catch(err){
 
@@ -300,101 +332,9 @@ console.error(err);
 alert("注文送信に失敗しました。");
 
 btn.disabled = false;
-
 btn.textContent = "注文確定";
-
 isSubmitting = false;
 
 }
 
 };
-
-
-// ==============================
-// Email送信
-// ==============================
-
-async function sendEmails(orderId,total){
-
-const itemsText = formatOrderItems(orderData.items,total);
-
-await emailjs.send(
-
-"service_l7e4fi8",
-
-"template_8fm7t8b",
-
-{
-order_id: orderId,
-name: customerData.name,
-phone: customerData.phone,
-email: customerData.email,
-date: customerData.date,
-time: customerData.time,
-items: itemsText,
-total: total,
-message: customerData.message || ""
-}
-
-);
-
-}
-
-
-// ==============================
-// 注文内容フォーマット
-// ==============================
-
-function formatOrderItems(items,total){
-
-const header =
-"商品".padEnd(22) +
-"数量".padEnd(6) +
-"小計";
-
-const divider = "-".repeat(40);
-
-const lines = items.map(item => {
-
-const name = item.size
-? `${item.name} ${item.size}g`
-: item.name;
-
-const subtotal = item.price * item.qty;
-
-const nameCol = name.padEnd(22," ");
-
-const qtyCol = (`×${item.qty}`).padEnd(6," ");
-
-const priceCol = `¥${subtotal.toLocaleString()}`;
-
-return nameCol + qtyCol + priceCol;
-
-});
-
-
-const taxRate = 0.08;
-
-const subtotal = total / 1.08;
-
-const tax = total - subtotal;
-
-const totalLine =
-"\n" +
-divider +
-"\n" +
-"小計(税抜)".padEnd(28) + `¥${Math.round(subtotal).toLocaleString()}` + "\n" +
-"消費税(8%)".padEnd(28) + `¥${Math.round(tax).toLocaleString()}` + "\n" +
-divider +
-"\n" +
-"合計(税込)".padEnd(28) + `¥${total.toLocaleString()}`;
-
-
-return [
-header,
-divider,
-...lines,
-totalLine
-].join("\n");
-
-}
