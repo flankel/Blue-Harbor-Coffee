@@ -82,8 +82,6 @@ container.innerHTML = "";
 
 orderData.items.forEach(item => {
 
-const name = item.name;
-
 const subtotal = item.price * item.qty;
 
 const row = document.createElement("div");
@@ -95,7 +93,7 @@ row.innerHTML = `
      class="w-16 h-16 object-cover rounded-xl shadow-sm">
 
 <div class="flex-1">
-  <div class="font-medium">${name}</div>
+  <div class="font-medium">${item.name}</div>
   <div class="text-sm text-gray-500">× ${item.qty}</div>
 </div>
 
@@ -116,9 +114,7 @@ container.appendChild(row);
 const taxRate = 0.08;
 
 const subtotal = orderData.total;
-
 const tax = Math.round(subtotal * taxRate);
-
 const totalWithTax = subtotal + tax;
 
 
@@ -227,66 +223,88 @@ message: customerData.message || ""
 
 
 // ==============================
-// HTMLメール生成
+// 商品HTML生成
 // ==============================
 
 const itemsRows = orderData.items.map(item => {
 
-const subtotal = item.price * item.qty;
+const sub = item.price * item.qty;
 
 return `
 <tr>
-  <td>${item.name}</td>
-  <td align="center">${item.qty}</td>
-  <td align="right">¥${subtotal.toLocaleString()}</td>
+  <td style="padding:8px;border:1px solid #ddd;">${item.name}</td>
+  <td style="padding:8px;border:1px solid #ddd;text-align:center;">${item.qty}</td>
+  <td style="padding:8px;border:1px solid #ddd;text-align:right;">¥${sub.toLocaleString()}</td>
 </tr>
 `;
 
 }).join("");
 
+
+// ==============================
+// HTMLメール生成
+// ==============================
+
 const htmlContent = `
-<table width="100%" style="font-family:sans-serif;background:#f8f6f3;padding:20px;">
-<tr><td align="center">
-<table width="600" style="background:#fff;padding:30px;border-radius:10px;">
+<div style="font-family:Arial,sans-serif;background:#f7f7f7;padding:20px;">
+<div style="max-width:600px;margin:auto;background:#ffffff;padding:24px;border-radius:12px;">
 
-<tr><td align="center">
-<img src="https://your-domain.com/logo.png" width="120">
-</td></tr>
+<div style="text-align:center;margin-bottom:20px;">
+<img src="https://i.imgur.com/Jzav6rK.png" style="width:120px;">
+</div>
 
-<tr><td style="padding:20px 0;">
-ご予約ありがとうございます ☕
-</td></tr>
+<h2 style="text-align:center;">TAKEOUTのご予約ありがとうございます</h2>
 
-<tr><td>
-<strong>注文番号：</strong>${orderRef.id}<br>
-<strong>お名前：</strong>${customerData.name}<br>
-<strong>来店：</strong>${customerData.date} ${customerData.time}
-</td></tr>
+<h3>■ 注文番号</h3>
+<p>${orderRef.id}</p>
 
-<tr><td style="padding-top:20px;">
-<table width="100%" border="1" style="border-collapse:collapse;font-size:13px;">
-<tr>
-<th>商品</th><th>数量</th><th>小計</th>
+<h3>■ お客様情報</h3>
+<p>
+お名前：${customerData.name}<br>
+電話番号：${customerData.phone}<br>
+メール：${customerData.email}
+</p>
+
+<h3>■ ご来店日時</h3>
+<p>${customerData.date} ${customerData.time}</p>
+
+<h3>■ ご注文内容</h3>
+
+<table style="width:100%;border-collapse:collapse;">
+<tr style="background:#f0f0f0;">
+<th style="padding:8px;border:1px solid #ddd;">商品</th>
+<th style="padding:8px;border:1px solid #ddd;">数量</th>
+<th style="padding:8px;border:1px solid #ddd;">小計</th>
 </tr>
+
 ${itemsRows}
+
 <tr>
-<td colspan="2" align="right">小計</td>
-<td align="right">¥${subtotal.toLocaleString()}</td>
+<td colspan="2" style="padding:8px;text-align:right;">小計</td>
+<td style="padding:8px;text-align:right;">¥${subtotal.toLocaleString()}</td>
 </tr>
+
 <tr>
-<td colspan="2" align="right">税</td>
-<td align="right">¥${tax.toLocaleString()}</td>
+<td colspan="2" style="padding:8px;text-align:right;">消費税</td>
+<td style="padding:8px;text-align:right;">¥${tax.toLocaleString()}</td>
 </tr>
-<tr>
-<td colspan="2" align="right"><strong>合計</strong></td>
-<td align="right"><strong>¥${total.toLocaleString()}</strong></td>
+
+<tr style="font-weight:bold;">
+<td colspan="2" style="padding:8px;text-align:right;">合計</td>
+<td style="padding:8px;text-align:right;">¥${total.toLocaleString()}</td>
 </tr>
-</table>
-</td></tr>
 
 </table>
-</td></tr>
-</table>
+
+<h3 style="margin-top:20px;">■ お問い合わせ</h3>
+<p>${customerData.message || ""}</p>
+
+<p style="text-align:center;margin-top:30px;">
+ご来店をお待ちしております。
+</p>
+
+</div>
+</div>
 `;
 
 
@@ -295,23 +313,11 @@ ${itemsRows}
 // ==============================
 
 await emailjs.send(
-
 "service_l7e4fi8",
 "template_8fm7t8b",
-
 {
-order_id: orderRef.id,
-name: customerData.name,
-phone: customerData.phone,
-email: customerData.email,
-date: customerData.date,
-time: customerData.time,
-items: "※HTMLメールを表示してください",
-html: htmlContent,
-total: total,
-message: customerData.message || ""
+html: htmlContent
 }
-
 );
 
 
