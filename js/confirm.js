@@ -331,6 +331,7 @@ await emailjs.send(
 "template_8fm7t8b",
 {
 message: htmlContent // ★ここ重要（html → message）
+to_email: customerData.email
 }
 );
 }catch(e){
