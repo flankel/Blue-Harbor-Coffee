@@ -43,6 +43,14 @@ let isSubmitting = false;
 document.addEventListener("DOMContentLoaded", init);
 
 function init(){
+
+// ★ EmailJS初期化（ここが超重要）
+if (typeof emailjs !== "undefined") {
+emailjs.init("wK3E-NyEcLx-5tbSL");
+} else {
+console.error("EmailJSが読み込まれていません");
+}
+
 loadStorage();
 renderOrder();
 renderCustomer();
@@ -192,6 +200,11 @@ today.getFullYear() + "-" +
 String(today.getMonth()+1).padStart(2,"0") + "-" +
 String(today.getDate()).padStart(2,"0");
 
+
+// ==============================
+// Firestore保存（ここは成功させる）
+// ==============================
+
 const orderRef = await addDoc(collection(db,"orders"),{
 
 store: "blueharbor",
@@ -309,16 +322,20 @@ ${itemsRows}
 
 
 // ==============================
-// メール送信
+// メール送信（失敗しても注文は通す）
 // ==============================
 
+try{
 await emailjs.send(
 "service_l7e4fi8",
 "template_8fm7t8b",
 {
-html: htmlContent
+message: htmlContent // ★ここ重要（html → message）
 }
 );
+}catch(e){
+console.warn("メール送信失敗:", e);
+}
 
 
 // ==============================
@@ -333,9 +350,9 @@ location.href = "complete.html";
 
 }catch(err){
 
-console.error(err);
+console.error("🔥エラー詳細:", err);
 
-alert("注文送信に失敗しました。");
+alert(err.message || "注文送信に失敗しました。");
 
 btn.disabled = false;
 btn.textContent = "注文確定";
