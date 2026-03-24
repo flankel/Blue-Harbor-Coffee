@@ -331,7 +331,7 @@ await emailjs.send(
 "template_8fm7t8b",
 {
 html: htmlContent,
-to_email: curtomerData.email,
+to_email: customerData.email,
 }
 );
 }catch(e){
