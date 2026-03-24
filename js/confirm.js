@@ -250,7 +250,7 @@ const htmlContent = `
 <div style="max-width:600px;margin:auto;background:#ffffff;padding:24px;border-radius:12px;">
 
 <div style="text-align:center;margin-bottom:20px;">
-<img src="https://i.imgur.com/Jzav6rK.png" style="width:120px;">
+<img src="https://i.imgur.com/HUnjkKj.png" style="width:120px;">
 </div>
 
 <h2 style="text-align:center;">TAKEOUTのご予約ありがとうございます</h2>
