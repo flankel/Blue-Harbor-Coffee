@@ -35,27 +35,32 @@
       }
     }
     
-  .nav-link.active {
-    color: #1d4ed8 !important;
-    border-bottom: 2px solid #3b82f6;
-  }
+    .nav-link.active {
+      color: #1d4ed8 !important;
+      border-bottom: 2px solid #3b82f6;
+    }
 
-  .nav-link.active svg {
-    color: #1d4ed8 !important;
-  }
+    .nav-link.active svg {
+      color: #1d4ed8 !important;
+    }
 
+    /* リスト初期化 */
     ul,
     ul.list-disc {
       list-style: none !important;
       padding-left: 0 !important;
     }
 
-    li {
+    /* ✅ 豆リスト専用（ここが重要） */
+    .bean-list li {
       position: relative;
-      padding-left: 30px;
+      padding-left: 32px;
+      margin-bottom: 12px;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
     }
 
-    li::before {
+    .bean-list li::before {
       content: "";
       position: absolute;
       left: 0;
@@ -66,7 +71,7 @@
       border-radius: 50% / 60%;
     }
 
-    li::after {
+    .bean-list li::after {
       content: "";
       position: absolute;
       left: 7px;
@@ -218,7 +223,7 @@
   <div>
     <h3 id="beans-title" class="text-2xl font-medium mb-6"></h3>
     <p id="beans-text" class="mb-4"></p>
-    <ul id="beans-list"></ul>
+    <ul id="beans-list" class="bean-list"></ul>
   </div>
 
 </div>
@@ -247,7 +252,7 @@
 
   <div>
     <p id="fruits-text" class="mb-4"></p>
-    <ul id="fruits-list"></ul>
+    <ul id="fruits-list" class="bean-list"></ul>
   </div>
 
 </div>
