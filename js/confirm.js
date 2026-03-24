@@ -330,8 +330,7 @@ await emailjs.send(
 "service_l7e4fi8",
 "template_8fm7t8b",
 {
-html: htmlContent, 
-to_email: customerData.email
+html: htmlContent
 }
 );
 }catch(e){
