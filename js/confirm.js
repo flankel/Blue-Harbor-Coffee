@@ -330,7 +330,7 @@ await emailjs.send(
 "service_l7e4fi8",
 "template_8fm7t8b",
 {
-message: htmlContent, // ★ここ重要（html → message）
+html: htmlContent, 
 to_email: customerData.email
 }
 );
