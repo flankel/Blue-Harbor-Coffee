@@ -1,4 +1,4 @@
-// renderHome.js (PC版でも画像サイズ適正、高さ調整)
+// renderHome.js (morning/night 画像サイズを daytime と同じに固定)
 
 async function loadHome() {
   const res = await fetch("data/text.json");
@@ -34,17 +34,16 @@ function renderSections(sections) {
 
     const layout = sec.reverse
       ? "flex flex-col md:flex-row-reverse"
-      : "grid md:grid-cols-2";
+      : "flex flex-col md:flex-row"; // grid から flex に統一
 
     const textColor = sec.text || "text-gray-600";
     const titleColor = sec.titleColor || "";
 
-    // セクションに min-height を設定しつつ、画像アスペクト比は元に戻す
     const html = `
-      <div class="mb-24 ${layout} gap-10 items-center ${sec.bg} p-8 rounded-xl min-h-[auto] md:min-h-[500px] md:max-h-[650px]">
+      <div class="mb-24 ${layout} gap-10 items-stretch ${sec.bg} p-8 rounded-xl">
         <img src="${sec.image}" 
              class="w-full md:w-1/2 aspect-[4/3] object-cover rounded">
-        <div class="${sec.reverse ? "md:w-1/2" : ""}">
+        <div class="w-full md:w-1/2 flex flex-col justify-center">
           <h3 class="text-2xl font-bold mb-2 ${titleColor}">${sec.title}</h3>
           <p class="text-sm text-blue-600 font-eng mb-4">${sec.subtitle}</p>
           <p class="${textColor} leading-loose">${bodyHTML}</p>
