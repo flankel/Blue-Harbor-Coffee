@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   loadContent();
 });
 
-
 // ==============================
 // JSON読み込み
 // ==============================
@@ -24,13 +23,12 @@ async function loadContent() {
   // BEANS
   setText("beans-title", data.beans.title);
   setText("beans-text", data.beans.text);
-  setList("beans-list", data.beans.list);
+  setBeansList("beans-list", data.beans.list);
 
   // FRUITS
   setText("fruits-text", data.fruits.text);
   setList("fruits-list", data.fruits.list);
 }
-
 
 // ==============================
 // 汎用関数
@@ -52,6 +50,40 @@ function setList(id, items) {
   });
 }
 
+// ==============================
+// BEANS専用リスト（英語名＋日本語＋説明）
+// ==============================
+function setBeansList(id, items) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.innerHTML = "";
+
+  items.forEach(item => {
+    const li = document.createElement("li");
+
+    // 英語名（大きめ）
+    const en = document.createElement("span");
+    en.className = "name-en";
+    en.textContent = item.en;
+
+    // 日本語名
+    const jp = document.createElement("span");
+    jp.className = "name-jp";
+    jp.textContent = item.jp;
+
+    // 説明文
+    const desc = document.createElement("span");
+    desc.className = "desc";
+    desc.textContent = item.desc;
+
+    li.appendChild(en);
+    li.appendChild(jp);
+    li.appendChild(desc);
+
+    el.appendChild(li);
+  });
+}
 
 // ==============================
 // コーヒー豆装飾
