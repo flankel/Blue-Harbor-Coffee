@@ -1,4 +1,4 @@
-// renderHome.js
+// renderHome.js (PC向けゆったり版)
 
 async function loadHome() {
   const res = await fetch("data/text.json");
@@ -39,10 +39,11 @@ function renderSections(sections) {
     const textColor = sec.text || "text-gray-600";
     const titleColor = sec.titleColor || "";
 
-    // ここで min-height を追加（スマホ自動、PC md 以上 700px）
+    // セクションに min-height を追加、PCでゆったり
     const html = `
       <div class="mb-24 ${layout} gap-10 items-center ${sec.bg} p-8 rounded-xl min-h-[auto] md:min-h-[700px]">
-        <img src="${sec.image}" class="w-full md:w-1/2 aspect-[4/3] object-cover rounded">
+        <img src="${sec.image}" 
+             class="w-full md:w-1/2 aspect-[4/3] md:aspect-[16/9] object-cover rounded">
         <div class="${sec.reverse ? "md:w-1/2" : ""}">
           <h3 class="text-2xl font-bold mb-2 ${titleColor}">${sec.title}</h3>
           <p class="text-sm text-blue-600 font-eng mb-4">${sec.subtitle}</p>
