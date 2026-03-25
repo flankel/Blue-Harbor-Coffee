@@ -14,24 +14,24 @@
     "text": "エチオピア、コロンビア、グアテマラ、ブラジル、ケニアの5カ国の農園と直接契約し、品質・倫理・持続可能性を満たした豆のみを仕入れています。",
     "list": [
       {
-        "name": {"jp": "エチオピア ナチュラル", "en": "Ethiopian Natural"},
-        "desc": {"jp": "ベリーのような甘さと華やかな香り。エチオピア南部の高地で栽培。", "en": "Berry-like sweetness with floral aroma. Grown in southern Ethiopia highlands."}
+        "name": {"en": "Ethiopian Natural", "jp": "エチオピア ナチュラル"},
+        "desc": {"en": "Berry-like sweetness with floral aroma. Grown in southern Ethiopia highlands.", "jp": "ベリーのような甘さと華やかな香り。エチオピア南部の高地で栽培。"}
       },
       {
-        "name": {"jp": "コロンビア スプレモ", "en": "Colombia Supremo"},
-        "desc": {"jp": "バランスの良い味わいとやさしいコク。毎日飲みたくなる定番。", "en": "Well-balanced flavor with mild richness. A perfect daily coffee."}
+        "name": {"en": "Colombia Supremo", "jp": "コロンビア スプレモ"},
+        "desc": {"en": "Well-balanced flavor with mild richness. A perfect daily coffee.", "jp": "バランスの良い味わいとやさしいコク。毎日飲みたくなる定番。"}
       },
       {
-        "name": {"jp": "グアテマラ SHB", "en": "Guatemala SHB"},
-        "desc": {"jp": "チョコレートのようなコクとほのかな酸味。標高の高い地域で栽培。", "en": "Rich chocolate-like body with subtle acidity from high-altitude farms."}
+        "name": {"en": "Guatemala SHB", "jp": "グアテマラ SHB"},
+        "desc": {"en": "Rich chocolate-like body with subtle acidity from high-altitude farms.", "jp": "チョコレートのようなコクとほのかな酸味。標高の高い地域で栽培。"}
       },
       {
-        "name": {"jp": "ブラジル サントス", "en": "Brazil Santos"},
-        "desc": {"jp": "ナッツのような香ばしさとやわらかな口当たり。", "en": "Nutty aroma with a smooth and gentle mouthfeel."}
+        "name": {"en": "Brazil Santos", "jp": "ブラジル サントス"},
+        "desc": {"en": "Nutty aroma with a smooth and gentle mouthfeel.", "jp": "ナッツのような香ばしさとやわらかな口当たり。"}
       },
       {
-        "name": {"jp": "ケニア AA", "en": "Kenya AA"},
-        "desc": {"jp": "しっかりしたコクと明るい酸味。フルーティーな後味が特徴。", "en": "Full-bodied with bright acidity and a fruity finish."}
+        "name": {"en": "Kenya AA", "jp": "ケニア AA"},
+        "desc": {"en": "Full-bodied with bright acidity and a fruity finish.", "jp": "しっかりしたコクと明るい酸味。フルーティーな後味が特徴。"}
       }
     ]
   },
