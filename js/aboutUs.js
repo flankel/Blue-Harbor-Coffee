@@ -51,7 +51,7 @@ function setList(id, items) {
 }
 
 // ==============================
-// BEANS専用リスト（英語名＋日本語＋説明）
+// BEANS専用リスト（英語タイトル＋日本語名＋日本語説明）
 // ==============================
 function setBeansList(id, items) {
   const el = document.getElementById(id);
@@ -62,24 +62,24 @@ function setBeansList(id, items) {
   items.forEach(item => {
     const li = document.createElement("li");
 
-    // 英語名（大きめ）
+    // 英語タイトル（大きめ）
     const en = document.createElement("span");
-    en.className = "name-en";
-    en.textContent = item.en;
+    en.className = "name-en block text-lg font-semibold mb-1";
+    en.textContent = item.name.en;
 
     // 日本語名
     const jp = document.createElement("span");
-    jp.className = "name-jp";
-    jp.textContent = item.jp;
+    jp.className = "name-jp block text-base mb-1";
+    jp.textContent = item.name.jp;
 
-    // 説明文
-    const desc = document.createElement("span");
-    desc.className = "desc";
-    desc.textContent = item.desc;
+    // 日本語説明
+    const descJp = document.createElement("span");
+    descJp.className = "desc-jp block text-sm text-gray-700 mb-2";
+    descJp.textContent = item.desc.jp;
 
     li.appendChild(en);
     li.appendChild(jp);
-    li.appendChild(desc);
+    li.appendChild(descJp);
 
     el.appendChild(li);
   });
