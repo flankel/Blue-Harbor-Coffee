@@ -1,4 +1,4 @@
-// renderHome.js (PC向けゆったり版)
+// renderHome.js (PC版でも画像サイズ適正、高さ調整)
 
 async function loadHome() {
   const res = await fetch("data/text.json");
@@ -39,11 +39,11 @@ function renderSections(sections) {
     const textColor = sec.text || "text-gray-600";
     const titleColor = sec.titleColor || "";
 
-    // セクションに min-height を追加、PCでゆったり
+    // セクションに min-height を設定しつつ、画像アスペクト比は元に戻す
     const html = `
-      <div class="mb-24 ${layout} gap-10 items-center ${sec.bg} p-8 rounded-xl min-h-[auto] md:min-h-[700px]">
+      <div class="mb-24 ${layout} gap-10 items-center ${sec.bg} p-8 rounded-xl min-h-[auto] md:min-h-[500px] md:max-h-[650px]">
         <img src="${sec.image}" 
-             class="w-full md:w-1/2 aspect-[4/3] md:aspect-[16/9] object-cover rounded">
+             class="w-full md:w-1/2 aspect-[4/3] object-cover rounded">
         <div class="${sec.reverse ? "md:w-1/2" : ""}">
           <h3 class="text-2xl font-bold mb-2 ${titleColor}">${sec.title}</h3>
           <p class="text-sm text-blue-600 font-eng mb-4">${sec.subtitle}</p>
