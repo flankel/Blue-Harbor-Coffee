@@ -84,7 +84,7 @@ html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${bean.tag ? `
-<div class="tag-badge ${isNo1 ? "tag-no1" : ""}">
+<div class="ribbon">
 ${bean.tag}
 </div>
 ` : ""}
@@ -169,7 +169,7 @@ html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${item.tag ? `
-<div class="tag-badge ${isNo1 ? "tag-no1" : ""}">
+<div class="ribbon">
 ${item.tag}
 </div>
 ` : ""}
@@ -544,7 +544,7 @@ const price = bean.sizes[size];
 items.push({
 type: "bean",
 id: bean.id,
-name: `${bean.name.jp} ${size}g`, // ★ 修正
+name: `${bean.name.jp} ${size}g`,
 size: size,
 qty: qty,
 price: price,
@@ -575,6 +575,7 @@ image: sweet.image
 return items;
 
 }
+
 
 /* =========================
    次ページへ
