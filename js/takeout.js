@@ -85,7 +85,13 @@ html += `
 
 ${bean.tag ? `
 <div class="ribbon">
-${bean.tag}
+  <div class="ribbon-inner ${
+    bean.tag.toLowerCase().includes("no.1") ? "no1" :
+    bean.tag.includes("人気") ? "popular" :
+    bean.tag.includes("おすすめ") ? "recommend" : ""
+  }">
+    ${bean.tag}
+  </div>
 </div>
 ` : ""}
 
@@ -170,7 +176,13 @@ html += `
 
 ${item.tag ? `
 <div class="ribbon">
-${item.tag}
+  <div class="ribbon-inner ${
+    item.tag.toLowerCase().includes("no.1") ? "no1" :
+    item.tag.includes("人気") ? "popular" :
+    item.tag.includes("おすすめ") ? "recommend" : ""
+  }">
+    ${item.tag}
+  </div>
 </div>
 ` : ""}
 
