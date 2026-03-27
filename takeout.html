@@ -45,44 +45,45 @@
      👑 強化リボン（ズレ防止版）
   ========================= */
   .ribbon {
-    position: absolute;
-    top: 12px;
-    left: -60px;
-    width: 240px;
+  position: absolute;
+  top: 12px;
+  left: -60px;
+  width: 240px;
+  height: 40px; /* ← これ追加（超重要） */
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    text-align: center;
+  padding: 0; /* ← これに変更 */
 
-    background: linear-gradient(135deg, #ffd700, #f59e0b, #b45309);
-    color: white;
+  text-align: center;
 
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+  background: linear-gradient(135deg, #ffd700, #f59e0b, #b45309);
+  color: white;
 
-    padding: 10px 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
 
-    transform: rotate(-45deg);
-    transform-origin: center;
+  transform: rotate(-45deg);
+  transform-origin: center;
 
-    box-shadow:
-      0 10px 25px rgba(0,0,0,0.35),
-      inset 0 1px 0 rgba(255,255,255,0.5);
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.5);
 
-    z-index: 20;
+  z-index: 20;
 
-    animation: shine 2.5s infinite ease-in-out;
-  }
-
+  animation: shine 2.5s infinite ease-in-out;
+}
   /* 👑 王冠 */
-  .ribbon::before {
-    content: "👑";
-    margin-right: 6px;
-    font-size: 16px;
-  }
+.ribbon::before {
+  content: "👑";
+  margin-right: 6px;
+  display: inline-flex;
+  align-items: center;
+}
 
   /* 折り返し影 */
   .ribbon::after {
