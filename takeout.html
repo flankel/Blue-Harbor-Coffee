@@ -24,7 +24,6 @@
   .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
   .nav-link.active svg { color: #1d4ed8; }
 
-  /* 🔥 タグバッジ（未使用でも残してOK） */
   .tag-badge {
     position: absolute;
     top: 12px;
@@ -42,48 +41,51 @@
   }
 
   /* =========================
-     👑 強化リボン（ズレ防止版）
+     👑 完全中央リボン（最終版）
   ========================= */
   .ribbon {
-  position: absolute;
-  top: 12px;
-  left: -60px;
-  width: 240px;
-  height: 40px; /* ← これ追加（超重要） */
+    position: absolute;
+    top: 20px;
+    left: -70px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 260px;
+    height: 48px;
 
-  padding: 0; /* ← これに変更 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  text-align: center;
+    /* ←これが超重要（ズレ補正） */
+    transform: rotate(-45deg) translateY(6px);
 
-  background: linear-gradient(135deg, #ffd700, #f59e0b, #b45309);
-  color: white;
+    transform-origin: center;
 
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+    background: linear-gradient(135deg, #ffd700, #f59e0b, #b45309);
+    color: white;
 
-  transform: rotate(-45deg);
-  transform-origin: center;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
 
-  box-shadow:
-    0 10px 25px rgba(0,0,0,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.5);
+    text-align: center;
+    line-height: 1;
 
-  z-index: 20;
+    box-shadow:
+      0 10px 25px rgba(0,0,0,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.5);
 
-  animation: shine 2.5s infinite ease-in-out;
-}
+    z-index: 20;
+
+    animation: shine 2.5s infinite ease-in-out;
+  }
+
   /* 👑 王冠 */
-.ribbon::before {
-  content: "👑";
-  margin-right: 6px;
-  display: inline-flex;
-  align-items: center;
-}
+  .ribbon::before {
+    content: "👑";
+    margin-right: 6px;
+    display: flex;
+    align-items: center;
+  }
 
   /* 折り返し影 */
   .ribbon::after {
@@ -105,10 +107,9 @@
   }
 
   .relative:hover .ribbon {
-    transform: rotate(-45deg) scale(1.08);
+    transform: rotate(-45deg) translateY(6px) scale(1.08);
   }
 
-  /* 🔥 アニメーション */
   .scale-pop {
     transform: scale(1.2);
     transition: transform 0.2s ease;
@@ -130,24 +131,20 @@
 <!-- HERO -->
 <section class="relative h-[80vh] md:h-[600px] w-full bg-gray-900 overflow-hidden page-enter">
 
-  <!-- PC HERO -->
   <img
     src="images/TakeOut/hero.png"
     alt="Takeout hero"
     class="hidden md:block absolute inset-0 w-full h-full object-cover opacity-70"
   >
 
-  <!-- MOBILE HERO -->
   <img
     src="images/TakeOut/hero-sm.png"
     alt="Takeout hero mobile"
     class="md:hidden w-full h-auto object-contain"
   >
 
-  <!-- overlay -->
   <div class="absolute inset-0 bg-black/40"></div>
 
-  <!-- text -->
   <div class="absolute inset-0 flex items-center md:items-center justify-center md:justify-start text-white px-6 md:px-16">
 
     <div class="text-center md:text-left max-w-xl">
@@ -169,10 +166,8 @@
 
   <div class="grid lg:grid-cols-[2fr_1fr] gap-16">
 
-    <!-- Product Area -->
     <div id="productArea" class="space-y-24"></div>
 
-    <!-- Sticky Order Summary -->
     <div class="sticky top-28 h-fit">
 
       <div class="bg-white p-8 rounded-2xl shadow-lg">
@@ -203,7 +198,6 @@
 
 </div>
 
-<!-- Mobile Floating Cart -->
 <div
 class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-xl p-4 md:hidden flex justify-between items-center"
 >
@@ -221,15 +215,11 @@ class="bg-amber-900 text-white px-6 py-3 rounded-full hover:bg-amber-800 transit
 
 </div>
 
-<!-- Footer -->
 <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400">
 © 2024 Blue Harbor Coffee Roasters.
 </footer>
 
-<!-- Header Loader -->
 <script src="js/loadHeader.js"></script>
-
-<!-- TAKEOUT SCRIPT -->
 <script type="module" src="js/takeout.js"></script>
 
 </body>
