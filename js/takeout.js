@@ -84,17 +84,10 @@ html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${bean.tag ? `
-<div class="ribbon">
-  <div class="ribbon-inner ${
-    bean.tag.toLowerCase().includes("no.1") ? "no1" :
-    bean.tag.includes("人気") ? "popular" :
-    bean.tag.includes("おすすめ") ? "recommend" : ""
-  }">
-    ${bean.tag}
-  </div>
+<div class="ribbon ${mapTagClass(bean.tag)}">
+  ${bean.tag}
 </div>
 ` : ""}
-
 <div class="aspect-[4/3] overflow-hidden">
 <img src="${bean.image}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
 </div>
@@ -175,14 +168,8 @@ html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${item.tag ? `
-<div class="ribbon">
-  <div class="ribbon-inner ${
-    item.tag.toLowerCase().includes("no.1") ? "no1" :
-    item.tag.includes("人気") ? "popular" :
-    item.tag.includes("おすすめ") ? "recommend" : ""
-  }">
-    ${item.tag}
-  </div>
+<div class="ribbon ${mapTagClass(item.tag)}">
+  ${item.tag}
 </div>
 ` : ""}
 
@@ -586,6 +573,20 @@ image: sweet.image
 
 return items;
 
+}
+
+// tag
+function mapTagClass(tag){
+
+  const t = tag.toLowerCase();
+
+  if(t.includes("no.1")) return "no1";
+  if(t.includes("人気")) return "popular";
+  if(t.includes("おすすめ")) return "recommend";
+  if(t.includes("限定")) return "limited";
+  if(t.includes("new") || t.includes("新")) return "new";
+
+  return "";
 }
 
 
