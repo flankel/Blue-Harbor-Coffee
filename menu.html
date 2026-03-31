@@ -47,7 +47,7 @@
 
     .menu-item img { width:112px; height:112px; object-fit:cover; }
 
-    /* ★ ヘッダーを確実に前面に */
+    /* ヘッダー前面 */
     #header {
       position: fixed;
       top: 0;
@@ -179,33 +179,13 @@ function renderList(list, id, titleMain, titleSub) {
   container.innerHTML = html;
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  loadMenu();
-
-  // ★ ヘッダー読み込み後に余白調整（重要）
-  setTimeout(() => {
-    const header = document.getElementById("header");
-    const main = document.querySelector("main");
-    if (header && main) {
-      main.style.paddingTop = header.offsetHeight + "px";
-    }
-  }, 300);
-});
+window.addEventListener("DOMContentLoaded", loadMenu);
 
 let resizeTimeout;
 
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(() => {
-    syncMenuHeights();
-
-    const header = document.getElementById("header");
-    const main = document.querySelector("main");
-    if (header && main) {
-      main.style.paddingTop = header.offsetHeight + "px";
-    }
-
-  }, 150);
+  resizeTimeout = setTimeout(syncMenuHeights, 150);
 });
 </script>
 
@@ -216,8 +196,8 @@ window.addEventListener("resize", () => {
   <!-- HEADER -->
   <div id="header"></div>
 
-  <!-- ★ ここ重要：paddingはJSで動的に設定 -->
-  <main class="flex-grow bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed">
+  <!-- ★ここだけ修正（超重要） -->
+  <main class="flex-grow pt-[160px] md:pt-[120px] bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed">
 
     <div class="py-12 md:py-20 px-4">
       <div class="max-w-5xl mx-auto menu-board p-8 md:p-16 rounded-sm relative page-enter">
