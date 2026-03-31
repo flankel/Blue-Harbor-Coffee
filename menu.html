@@ -17,6 +17,17 @@
     }
     .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
     .nav-link.active svg { color: #1d4ed8; }
+
+    /* 🔥 これが今回の本質（ヘッダー分の逃がし） */
+    main {
+      padding-top: 120px;
+    }
+    @media (min-width: 768px) {
+      main {
+        padding-top: 96px;
+      }
+    }
+
     .menu-board {
       background-color: #1a1a1a;
       color: #f8f8f8;
@@ -44,24 +55,21 @@
       const foodItems = document.querySelectorAll("#food .menu-item");
       const count = Math.min(coffeeItems.length, foodItems.length);
 
-      // 🔹 スマホ時は高さ揃えを解除して終了
       if (window.innerWidth < 640) {
         for (let i = 0; i < count; i++) {
           coffeeItems[i].style.height = "auto";
           foodItems[i].style.height = "auto";
         }
-        
-      return;
+        return;
       }
 
-      // 🔹 PC時のみ高さ同期
       for (let i = 0; i < count; i++) {
         coffeeItems[i].style.height = "auto";
         foodItems[i].style.height = "auto";
 
         const h = Math.max(
-        coffeeItems[i].offsetHeight,
-        foodItems[i].offsetHeight
+          coffeeItems[i].offsetHeight,
+          foodItems[i].offsetHeight
         );
 
         coffeeItems[i].style.height = h + "px";
@@ -76,7 +84,7 @@
       renderSetMenu(data.setmenu);
       renderList(data.coffee, "coffee", "COFFEE", "DRIP & ESPRESSO");
       renderList(data.food, "food", "SWEETS & FOOD", "HOMEMADE");
-      // 描画後に高さ同期
+
       syncMenuHeights();
     }
 
@@ -161,23 +169,22 @@
         `;
       });
 
-    container.innerHTML = html;
-  }
+      container.innerHTML = html;
+    }
     
-  window.addEventListener("DOMContentLoaded", loadMenu);
-  //window.addEventListener("load", syncMenuHeights);
-  let resizeTimeout;
+    window.addEventListener("DOMContentLoaded", loadMenu);
 
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(syncMenuHeights, 150);
-  });
-    
-</script>
+    let resizeTimeout;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(syncMenuHeights, 150);
+    });
+  </script>
 </head>
 
 <body class="bg-gray-100 flex flex-col min-h-screen">
   <div id="header"></div>  
+
   <main class="flex-grow bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-fixed">
     <div class="py-12 md:py-20 px-4">
       <div class="max-w-5xl mx-auto menu-board p-8 md:p-16 rounded-sm relative page-enter">
@@ -187,7 +194,6 @@
           <p class="text-blue-400 font-eng text-sm tracking-widest uppercase">Freshly Roasted in our Harbor</p>
         </div>
 
-        <!-- SET MENU -->
         <section id="setmenu" class="mb-20"></section>
 
         <div class="grid md:grid-cols-2 gap-16">
@@ -208,6 +214,7 @@
   <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">
     © 2024 Blue Harbor Coffee Roasters.
   </footer>
+
   <script src="js/loadHeader.js"></script>
 </body>
 </html>
