@@ -103,6 +103,32 @@
       display: block;
       margin-top: 2px;
     }
+
+    /* ★ 追加：豆装飾 */
+    .bean-decoration {
+      display: flex;
+      justify-content: center;
+    }
+
+    .bean {
+      width: 10px;
+      height: 16px;
+      background-color: #78350f;
+      border-radius: 50% / 60%;
+      position: relative;
+    }
+
+    .bean::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: white;
+      border-radius: 50%;
+      transform: rotate(10deg);
+    }
   </style>
 </head>
 
@@ -223,6 +249,17 @@
   <footer class="bg-gray-50 border-t py-12 text-center text-xs text-gray-400 font-eng">
     © 2024 Blue Harbor Coffee Roasters.
   </footer>
+
+  <!-- ★ 追加：コーヒー豆テンプレート -->
+  <template id="coffee-beans">
+    <div class="flex justify-center gap-3">
+      <span class="bean"></span>
+      <span class="bean"></span>
+      <span class="bean"></span>
+      <span class="bean"></span>
+      <span class="bean"></span>
+    </div>
+  </template>
 
   <script src="js/loadHeader.js"></script>
   <script src="js/aboutUs.js"></script>
