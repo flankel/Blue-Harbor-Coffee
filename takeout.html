@@ -24,8 +24,24 @@
   .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
   .nav-link.active svg { color: #1d4ed8; }
 
+  .tag-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #2563eb;
+    color: white;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+
+  .tag-no1 {
+    background: #ef4444;
+  }
+
   /* =========================
-     🎖️ バッジ（リボン付き）
+     🎖️ バッジ（新仕様）
   ========================= */
   .badge {
     position: absolute;
@@ -57,68 +73,30 @@
       inset 0 -3px 6px rgba(0,0,0,0.3);
   }
 
-  /* ▼ リボンの足（左） */
-  .badge::before {
-    content: "";
-    position: absolute;
-    bottom: -18px;
-    left: 8px;
-
-    width: 0;
-    height: 0;
-
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 18px solid currentColor;
-
-    filter: brightness(0.8);
-  }
-
-  /* ▼ リボンの足（右） */
-  .badge::after {
-    content: "";
-    position: absolute;
-    bottom: -18px;
-    right: 8px;
-
-    width: 0;
-    height: 0;
-
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 18px solid currentColor;
-
-    filter: brightness(0.7);
-  }
-
   /* ⭐ おすすめ */
   .badge.recommend {
     background: radial-gradient(circle at 30% 30%, #60a5fa, #1e3a8a);
-    color: #60a5fa;
   }
 
   /* 🔥 人気 */
   .badge.popular {
     background: radial-gradient(circle at 30% 30%, #f87171, #7f1d1d);
-    color: #f87171;
   }
 
   /* 👑 No.1 */
   .badge.no1 {
     background: radial-gradient(circle at 30% 30%, #fde68a, #b45309);
-    color: #fbbf24;
+    color: #78350f;
   }
 
   /* ⏰ 期間限定 */
   .badge.limited {
     background: radial-gradient(circle at 30% 30%, #c084fc, #581c87);
-    color: #c084fc;
   }
 
   /* 🆕 新商品 */
   .badge.new {
     background: radial-gradient(circle at 30% 30%, #4ade80, #14532d);
-    color: #4ade80;
   }
 
   .relative:hover .badge {
