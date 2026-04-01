@@ -84,7 +84,7 @@ html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${bean.tag ? `
-<div class="ribbon ${mapTagClass(bean.tag)}">
+<div class="badge ${mapTagClass(bean.tag)}">
   ${bean.tag}
 </div>
 ` : ""}
@@ -168,7 +168,7 @@ html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${item.tag ? `
-<div class="ribbon ${mapTagClass(item.tag)}">
+<div class="badge ${mapTagClass(item.tag)}">
   ${item.tag}
 </div>
 ` : ""}
