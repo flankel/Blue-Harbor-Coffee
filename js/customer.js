@@ -200,6 +200,18 @@ function generateTimeSlots(){
     now.toISOString().split("T")[0] === date;
 
 
+  /* =========================
+     ★ 追加：当日受付終了チェック
+  ========================= */
+  if(isToday && now.getHours() >= closeHour - 1){
+
+    select.innerHTML = `<option>本日の受付は終了しました</option>`;
+
+    return;
+
+  }
+
+
   for(let h = CONFIG.openHour; h < closeHour; h++){
 
     if(isToday){
@@ -213,7 +225,6 @@ function generateTimeSlots(){
   }
 
 }
-
 
 /* =========================
    入力チェック
