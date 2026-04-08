@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  injectCoffeeBeans();
+  injectCoffeeMugs();   // ★追加（マグ）
   loadContent();
 });
 
@@ -51,16 +51,48 @@ function setList(id, items) {
 }
 
 // ==============================
-// BEANS専用リスト
+// BEANS専用リスト（★豆追加）
 // ==============================
 function setBeansList(id, items) {
   const el = document.getElementById(id);
   if (!el) return;
 
+  const template = document.getElementById("coffee-beans");
+
   el.innerHTML = "";
 
-  items.forEach(item => {
+  items.forEach((item, index) => {
     const li = document.createElement("li");
+
+    // ★ レイアウト用ラッパー
+    const wrapper = document.createElement("div");
+    wrapper.className = "flex items-start gap-3";
+
+    // =========================
+    // 豆SVG
+    // =========================
+    if (template) {
+      const clone = template.content.cloneNode(true);
+
+      // ID衝突回避
+      const gradient = clone.querySelector("#beanMain");
+      if (gradient) {
+        const uniqueId = "beanMain-" + index + "-" + Math.random().toString(36).substr(2, 5);
+        gradient.id = uniqueId;
+
+        const ellipse = clone.querySelector("ellipse");
+        if (ellipse) {
+          ellipse.setAttribute("fill", `url(#${uniqueId})`);
+        }
+      }
+
+      wrapper.appendChild(clone);
+    }
+
+    // =========================
+    // テキスト
+    // =========================
+    const textWrap = document.createElement("div");
 
     const en = document.createElement("span");
     en.className = "name-en block text-lg font-semibold mb-1";
@@ -74,47 +106,46 @@ function setBeansList(id, items) {
     descJp.className = "desc-jp block text-sm text-gray-700 mb-2";
     descJp.textContent = item.desc.jp;
 
-    li.appendChild(en);
-    li.appendChild(jp);
-    li.appendChild(descJp);
+    textWrap.appendChild(en);
+    textWrap.appendChild(jp);
+    textWrap.appendChild(descJp);
 
+    wrapper.appendChild(textWrap);
+    li.appendChild(wrapper);
     el.appendChild(li);
   });
 }
 
 // ==============================
-// コーヒー豆装飾（★ここが本題）
+// マグ装飾（★追加）
 // ==============================
-function injectCoffeeBeans() {
-  const template = document.getElementById("coffee-beans");
+function injectCoffeeMugs() {
+  const template = document.getElementById("coffee-mug");
   if (!template) return;
 
-  document.querySelectorAll(".bean-decoration").forEach(container => {
+  document.querySelectorAll(".mug-row").forEach(container => {
 
-    // wrapper生成
-    const wrapper = document.createElement("div");
-    wrapper.className = "flex justify-center items-center gap-4";
+    container.innerHTML = "";
 
     for (let i = 0; i < 5; i++) {
-
-      // テンプレ複製
       const clone = template.content.cloneNode(true);
 
-      // ===== ID衝突回避 =====
-      const gradient = clone.querySelector("#beanMain");
-      if (gradient) {
-        const uniqueId = "beanMain-" + i + "-" + Math.random().toString(36).substr(2, 5);
-        gradient.id = uniqueId;
+      // ★ 少しズラす（見た目向上）
+      const wrapper = document.createElement("div");
+      wrapper.style.transform = `
+        translateY(${Math.abs(i - 2) * 4}px)
+        rotate(${(i - 2) * 6}deg)
+      `;
 
-        const ellipse = clone.querySelector("ellipse");
-        if (ellipse) {
-          ellipse.setAttribute("fill", `url(#${uniqueId})`);
-        }
-      }
+      // 湯気ずらし
+      const steams = clone.querySelectorAll(".steam");
+      steams.forEach((s, index) => {
+        s.style.animationDelay = `${index * 0.3 + i * 0.2}s`;
+      });
 
       wrapper.appendChild(clone);
+      container.appendChild(wrapper);
     }
 
-    container.appendChild(wrapper);
   });
 }
