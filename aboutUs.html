@@ -228,36 +228,40 @@
 
   <!-- ★ 立体コーヒー豆SVG -->
   <!-- ★ コーヒー豆SVG（単体テンプレ） -->
-  <template id="coffee-bean-single">
-  <svg width="32" height="64" viewBox="0 0 20 50" xmlns="http://www.w3.org/2000/svg">
+  <template id="coffee-beans">
+  <div class="flex justify-center items-center gap-4">
 
-    <defs>
-      <radialGradient id="beanMain" cx="40%" cy="30%" r="70%">
-        <stop offset="0%" stop-color="#c08a5a"/>
-        <stop offset="40%" stop-color="#8b5a2b"/>
-        <stop offset="100%" stop-color="#3b220f"/>
-      </radialGradient>
+    <!-- ① 左 -->
+    <svg width="32" height="64" viewBox="0 0 20 50">
+      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
+      <path d="M6 9 C4 18, 10 32, 8 41" stroke="#f5e6d3" stroke-width="1.2"/>
+    </svg>
 
-      <radialGradient id="beanEdge" cx="50%" cy="50%" r="70%">
-        <stop offset="70%" stop-color="transparent"/>
-        <stop offset="100%" stop-color="#2a160a"/>
-      </radialGradient>
+    <!-- ② やや左 -->
+    <svg width="32" height="64" viewBox="0 0 20 50">
+      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
+      <path d="M8 9 C6 18, 12 32, 10 41" stroke="#f5e6d3" stroke-width="1.2"/>
+    </svg>
 
-      <radialGradient id="beanHighlight" cx="30%" cy="25%" r="30%">
-        <stop offset="0%" stop-color="white" stop-opacity="0.5"/>
-        <stop offset="100%" stop-color="white" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
+    <!-- ③ 正面 -->
+    <svg width="32" height="64" viewBox="0 0 20 50">
+      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
+      <path d="M10 9 C7 18, 13 32, 10 41" stroke="#f5e6d3" stroke-width="1.2"/>
+    </svg>
 
-    <!-- 豆本体 -->
-    <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanMain)"/>
-    <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanEdge)"/>
-    <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanHighlight)"/>
+    <!-- ④ やや右 -->
+    <svg width="32" height="64" viewBox="0 0 20 50">
+      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
+      <path d="M12 9 C14 18, 8 32, 10 41" stroke="#f5e6d3" stroke-width="1.2"/>
+    </svg>
 
-    <!-- スリット -->
-    <path d="M7 9 C5 18, 11 32, 9 41" stroke="#f5e6d3" stroke-width="1.2"/>
+    <!-- ⑤ 右（裏寄り） -->
+    <svg width="32" height="64" viewBox="0 0 20 50">
+      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
+      <path d="M14 9 C16 18, 10 32, 12 41" stroke="#f5e6d3" stroke-width="1.2"/>
+    </svg>
 
-  </svg>
+  </div>
   </template>  
   <script src="js/loadHeader.js"></script>
   <script src="js/aboutUs.js"></script>
