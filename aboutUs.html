@@ -301,40 +301,48 @@
 <template id="coffee-mug">
   <svg width="32" height="52" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
 
-    <!-- 湯気 -->
-    <g stroke="#8B5E3C" stroke-width="1.4" fill="none" stroke-linecap="round">
-      <path d="M20 22 C18 16, 22 14, 20 10">
-        <animate attributeName="d"
-          values="
-            M20 22 C18 16, 22 14, 20 10;
-            M20 22 C22 16, 18 14, 20 10;
-            M20 22 C18 16, 22 14, 20 10"
-          dur="2.2s"
+    <!-- 湯気（♨︎風） -->
+    <g stroke="#8B5E3C" stroke-width="2" fill="none" stroke-linecap="round">
+      
+      <!-- 左 -->
+      <path d="M20 24 
+               C14 18, 26 16, 20 10
+               C16 6, 24 6, 20 2">
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          values="0 0; 1 -2; 0 0"
+          dur="2.4s"
           repeatCount="indefinite"/>
       </path>
 
-      <path d="M30 22 C28 16, 32 14, 30 10">
-        <animate attributeName="d"
-          values="
-            M30 22 C28 16, 32 14, 30 10;
-            M30 22 C32 16, 28 14, 30 10;
-            M30 22 C28 16, 32 14, 30 10"
+      <!-- 中央（少し大きく） -->
+      <path d="M30 24 
+               C24 18, 36 16, 30 10
+               C26 6, 34 6, 30 2">
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          values="0 0; 0 -3; 0 0"
+          dur="2s"
+          repeatCount="indefinite"/>
+      </path>
+
+      <!-- 右 -->
+      <path d="M40 24 
+               C34 18, 46 16, 40 10
+               C36 6, 44 6, 40 2">
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          values="0 0; -1 -2; 0 0"
           dur="2.6s"
           repeatCount="indefinite"/>
       </path>
 
-      <path d="M40 22 C38 16, 42 14, 40 10">
-        <animate attributeName="d"
-          values="
-            M40 22 C38 16, 42 14, 40 10;
-            M40 22 C42 16, 38 14, 40 10;
-            M40 22 C38 16, 42 14, 40 10"
-          dur="3s"
-          repeatCount="indefinite"/>
-      </path>
     </g>
 
-    <!-- カップ（ブラウン） -->
+    <!-- カップ -->
     <rect x="15" y="30" width="30" height="26"
       rx="5"
       fill="#8B5E3C"
@@ -348,12 +356,12 @@
       stroke-width="1.4"
       stroke-linecap="round"/>
 
-    <!-- ソーサー（皿） -->
+    <!-- ソーサー -->
     <ellipse cx="30" cy="62" rx="20" ry="4"
       fill="#A67C52"
       opacity="0.9"/>
 
-    <!-- 影（軽く） -->
+    <!-- 影 -->
     <ellipse cx="30" cy="66" rx="16" ry="3"
       fill="#000"
       opacity="0.08"/>
