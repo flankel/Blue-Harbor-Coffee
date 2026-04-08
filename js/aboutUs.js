@@ -86,7 +86,7 @@ function setBeansList(id, items) {
 // コーヒー豆装飾（★ここが本題）
 // ==============================
 function injectCoffeeBeans() {
-  const template = document.getElementById("coffee-bean-single");
+  const template = document.getElementById("coffee-beans");
   if (!template) return;
 
   document.querySelectorAll(".bean-decoration").forEach(container => {
