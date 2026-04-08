@@ -224,71 +224,38 @@
   </footer>
 
   <!-- ★ 立体コーヒー豆SVG -->
-  <template id="coffee-beans">
-  <div class="flex justify-center items-center">
-    <svg width="220" height="70" viewBox="0 0 220 70" xmlns="http://www.w3.org/2000/svg">
+  <!-- ★ コーヒー豆SVG（単体テンプレ） -->
+  <template id="coffee-bean-single">
+  <svg width="32" height="64" viewBox="0 0 20 50" xmlns="http://www.w3.org/2000/svg">
 
-      <defs>
-        <radialGradient id="beanMain" cx="40%" cy="30%" r="70%">
-          <stop offset="0%" stop-color="#c08a5a"/>
-          <stop offset="40%" stop-color="#8b5a2b"/>
-          <stop offset="100%" stop-color="#3b220f"/>
-        </radialGradient>
+    <defs>
+      <radialGradient id="beanMain" cx="40%" cy="30%" r="70%">
+        <stop offset="0%" stop-color="#c08a5a"/>
+        <stop offset="40%" stop-color="#8b5a2b"/>
+        <stop offset="100%" stop-color="#3b220f"/>
+      </radialGradient>
 
-        <radialGradient id="beanEdge" cx="50%" cy="50%" r="70%">
-          <stop offset="70%" stop-color="transparent"/>
-          <stop offset="100%" stop-color="#2a160a"/>
-        </radialGradient>
+      <radialGradient id="beanEdge" cx="50%" cy="50%" r="70%">
+        <stop offset="70%" stop-color="transparent"/>
+        <stop offset="100%" stop-color="#2a160a"/>
+      </radialGradient>
 
-        <radialGradient id="beanHighlight" cx="30%" cy="25%" r="30%">
-          <stop offset="0%" stop-color="white" stop-opacity="0.5"/>
-          <stop offset="100%" stop-color="white" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
+      <radialGradient id="beanHighlight" cx="30%" cy="25%" r="30%">
+        <stop offset="0%" stop-color="white" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
 
-      <!-- ① 左寄り -->
-      <g transform="translate(10,10)">
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanMain)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanEdge)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanHighlight)"/>
-        <path d="M7 9 C5 18, 11 32, 9 41" stroke="#f5e6d3" stroke-width="1.2"/>
-      </g>
+    <!-- 豆本体 -->
+    <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanMain)"/>
+    <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanEdge)"/>
+    <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanHighlight)"/>
 
-      <!-- ② やや左 -->
-      <g transform="translate(55,10)">
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanMain)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanEdge)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanHighlight)"/>
-        <path d="M9 9 C7 18, 13 32, 11 41" stroke="#f5e6d3" stroke-width="1.2"/>
-      </g>
+    <!-- スリット -->
+    <path d="M7 9 C5 18, 11 32, 9 41" stroke="#f5e6d3" stroke-width="1.2"/>
 
-      <!-- ③ 正面 -->
-      <g transform="translate(100,10)">
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanMain)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanEdge)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanHighlight)"/>
-        <path d="M10 9 C7 18, 13 32, 10 41" stroke="#f5e6d3" stroke-width="1.2"/>
-      </g>
-
-      <!-- ④ やや右 -->
-      <g transform="translate(145,10)">
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanMain)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanEdge)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanHighlight)"/>
-        <path d="M11 9 C13 18, 7 32, 9 41" stroke="#f5e6d3" stroke-width="1.2"/>
-      </g>
-
-      <!-- ⑤ 右寄り（裏方向） -->
-      <g transform="translate(190,10)">
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanMain)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanEdge)"/>
-        <ellipse cx="10" cy="25" rx="8" ry="16" fill="url(#beanHighlight)"/>
-        <path d="M13 9 C15 18, 9 32, 11 41" stroke="#f5e6d3" stroke-width="1.2"/>
-      </g>
-
-    </svg>
-  </div>
-</template>
+  </svg>
+  </template>  
   <script src="js/loadHeader.js"></script>
   <script src="js/aboutUs.js"></script>
 
