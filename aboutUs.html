@@ -106,9 +106,14 @@
       display: flex;
       justify-content: center;
     }
-    .bean-decoration div {
+
+    /* ★ 追加：マグを並べるための行 */
+    .mug-row {
+      display: flex;
       gap: 12px;
+      align-items: flex-end;
     }
+
   </style>
 </head>
 
@@ -135,10 +140,14 @@
     <section class="bg-white py-24 px-6">
 
       <h2 class="text-center mb-20">
-        <div class="bean-decoration mb-6"></div>
+        <div class="bean-decoration mb-6">
+          <div class="mug-row"></div>
+        </div>
         <span class="block text-xs tracking-[0.5em] text-gray-400 font-eng mb-2">BLUE HARBOR COFFEE</span>
         <span class="text-4xl md:text-5xl font-light tracking-widest text-gray-900">PHILOSOPHY</span>
-        <div class="bean-decoration mt-6"></div>
+        <div class="bean-decoration mt-6">
+          <div class="mug-row"></div>
+        </div>
       </h2>
 
       <div class="max-w-3xl mx-auto text-center">
@@ -153,9 +162,13 @@
     <section class="bg-slate-50 py-24 px-6">
 
       <h2 class="text-center mb-16">
-        <div class="bean-decoration mb-6"></div>
+        <div class="bean-decoration mb-6">
+          <div class="mug-row"></div>
+        </div>
         <span class="text-4xl md:text-5xl font-light tracking-widest text-gray-900">OWNER</span>
-        <div class="bean-decoration mt-6"></div>
+        <div class="bean-decoration mt-6">
+          <div class="mug-row"></div>
+        </div>
       </h2>
 
       <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -177,9 +190,13 @@
     <section class="bg-white py-24 px-6">
 
       <h2 class="text-center mb-16">
-        <div class="bean-decoration mb-6"></div>
+        <div class="bean-decoration mb-6">
+          <div class="mug-row"></div>
+        </div>
         <span class="text-4xl md:text-5xl font-light tracking-widest text-gray-900">SIGNATURE BEANS</span>
-        <div class="bean-decoration mt-6"></div>
+        <div class="bean-decoration mt-6">
+          <div class="mug-row"></div>
+        </div>
       </h2>
 
       <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -201,9 +218,13 @@
     <section class="bg-amber-50 py-24 px-6">
 
       <h2 class="text-center mb-16">
-        <div class="bean-decoration mb-6"></div>
+        <div class="bean-decoration mb-6">
+          <div class="mug-row"></div>
+        </div>
         <span class="text-4xl md:text-5xl font-light tracking-widest text-gray-900">FRUITS</span>
-        <div class="bean-decoration mt-6"></div>
+        <div class="bean-decoration mt-6">
+          <div class="mug-row"></div>
+        </div>
       </h2>
 
       <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -226,13 +247,11 @@
     © 2024 Blue Harbor Coffee Roasters.
   </footer>
 
-  <!-- ★ 立体コーヒー豆SVG -->
   <!-- ★ コーヒー豆SVG（単体テンプレ） -->
 <template id="coffee-beans">
   <svg width="44" height="70" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
 
     <defs>
-      <!-- 本体 -->
       <radialGradient id="beanMain" cx="35%" cy="25%" r="75%">
         <stop offset="0%" stop-color="#e6b67f"/>
         <stop offset="40%" stop-color="#c48744"/>
@@ -240,26 +259,22 @@
         <stop offset="100%" stop-color="#4d2c14"/>
       </radialGradient>
 
-      <!-- ハイライト -->
       <radialGradient id="beanHighlight" cx="25%" cy="20%" r="45%">
         <stop offset="0%" stop-color="rgba(255,255,255,0.7)"/>
         <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
       </radialGradient>
 
-      <!-- 外側影 -->
       <radialGradient id="beanShadow" cx="75%" cy="80%" r="55%">
         <stop offset="0%" stop-color="rgba(0,0,0,0.35)"/>
         <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
       </radialGradient>
 
-      <!-- 溝の凹みグラデ（面） -->
       <radialGradient id="grooveCore" cx="50%" cy="50%" r="60%">
         <stop offset="0%" stop-color="#1a0d05"/>
         <stop offset="60%" stop-color="#2b160a"/>
         <stop offset="100%" stop-color="#5a3416"/>
       </radialGradient>
 
-      <!-- 溝の縁（光） -->
       <linearGradient id="grooveEdge" x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="0%" stop-color="rgba(255,255,255,0.25)"/>
         <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
@@ -267,36 +282,39 @@
       </linearGradient>
     </defs>
 
-    <!-- ★ 傾き修正（右に倒す） -->
     <g transform="rotate(28 30 45)">
-
-      <!-- 本体 -->
       <ellipse cx="30" cy="45" rx="22" ry="30" fill="url(#beanMain)" />
-
-      <!-- ハイライト -->
       <ellipse cx="20" cy="28" rx="10" ry="12" fill="url(#beanHighlight)" />
-
-      <!-- 影 -->
       <ellipse cx="40" cy="62" rx="14" ry="16" fill="url(#beanShadow)" />
 
-      <!-- ===================== -->
-      <!-- 溝（“面”で作る） -->
-      <!-- ===================== -->
-
-      <!-- 溝のベース（凹み） -->
-      <ellipse cx="30" cy="45" rx="5.5" ry="26"
-               fill="url(#grooveCore)" />
-
-      <!-- 溝の縁（立体感） -->
+      <ellipse cx="30" cy="45" rx="5.5" ry="26" fill="url(#grooveCore)" />
       <ellipse cx="29.5" cy="45" rx="6.5" ry="27"
                fill="none"
                stroke="url(#grooveEdge)"
                stroke-width="1.2"
                opacity="0.6"/>
-
     </g>
   </svg>
 </template>
+
+<!-- coffee mug -->
+<template id="coffee-mug">
+  <div class="flex flex-col items-center">
+
+    <div class="flex gap-1 mb-1">
+      <div class="steam"></div>
+      <div class="steam delay-1"></div>
+      <div class="steam delay-2"></div>
+    </div>
+
+    <div class="relative">
+      <div class="w-20 h-14 bg-amber-200 border-2 border-amber-400 rounded-b-xl"></div>
+      <div class="absolute right-[-10px] top-3 w-6 h-6 border-2 border-amber-400 rounded-full"></div>
+    </div>
+
+  </div>
+</template>
+
   <script src="js/loadHeader.js"></script>
   <script src="js/aboutUs.js"></script>
 
