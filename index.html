@@ -48,6 +48,26 @@
       padding: 0;
       box-sizing: border-box;
     }
+  /* =========================
+       スマホ用：改行最適化
+  ========================= */
+  @media (max-width: 768px) {
+
+    /* 日本語の不自然な改行防止 */
+    #hero-title,
+    #concept-title,
+    #concept-desc {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      line-break: strict;
+    }
+
+    /* 英語の単語途中改行を防ぐ */
+    #hero-subtitle {
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+  }
   </style>
 
 </head>
