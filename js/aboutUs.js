@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  injectCoffeeMugs();   // ★追加（マグ）
+  injectCoffeeMugs();
   loadContent();
 });
 
@@ -25,9 +25,9 @@ async function loadContent() {
   setText("beans-text", data.beans.text);
   setBeansList("beans-list", data.beans.list);
 
-  // FRUITS
+  // FRUITS（★同じ関数に統一）
   setText("fruits-text", data.fruits.text);
-  setList("fruits-list", data.fruits.list);
+  setBeansList("fruits-list", data.fruits.list);
 }
 
 // ==============================
@@ -38,20 +38,8 @@ function setText(id, text) {
   if (el) el.textContent = text;
 }
 
-function setList(id, items) {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  el.innerHTML = "";
-  items.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    el.appendChild(li);
-  });
-}
-
 // ==============================
-// BEANS専用リスト（★豆追加）
+// BEANS & FRUITS 共通リスト
 // ==============================
 function setBeansList(id, items) {
   const el = document.getElementById(id);
@@ -64,9 +52,9 @@ function setBeansList(id, items) {
   items.forEach((item, index) => {
     const li = document.createElement("li");
 
-    // ★ レイアウト用ラッパー
+    // ★ 中央揃えに修正
     const wrapper = document.createElement("div");
-    wrapper.className = "flex items-start gap-3";
+    wrapper.className = "flex items-center gap-3";
 
     // =========================
     // 豆SVG
@@ -74,7 +62,14 @@ function setBeansList(id, items) {
     if (template) {
       const clone = template.content.cloneNode(true);
 
-      // ID衝突回避
+      // ★ サイズ調整（JS側でも軽く制御）
+      const svg = clone.querySelector("svg");
+      if (svg) {
+        svg.setAttribute("width", "26");
+        svg.setAttribute("height", "auto");
+      }
+
+      // ★ ID衝突回避
       const gradient = clone.querySelector("#beanMain");
       if (gradient) {
         const uniqueId = "beanMain-" + index + "-" + Math.random().toString(36).substr(2, 5);
@@ -94,21 +89,33 @@ function setBeansList(id, items) {
     // =========================
     const textWrap = document.createElement("div");
 
-    const en = document.createElement("span");
-    en.className = "name-en block text-lg font-semibold mb-1";
-    en.textContent = item.name.en;
+    // BEANS（オブジェクト形式）対応
+    if (typeof item === "object") {
 
-    const jp = document.createElement("span");
-    jp.className = "name-jp block text-base mb-1";
-    jp.textContent = item.name.jp;
+      const en = document.createElement("span");
+      en.className = "name-en block text-lg font-semibold mb-1";
+      en.textContent = item.name.en;
 
-    const descJp = document.createElement("span");
-    descJp.className = "desc-jp block text-sm text-gray-700 mb-2";
-    descJp.textContent = item.desc.jp;
+      const jp = document.createElement("span");
+      jp.className = "name-jp block text-base mb-1";
+      jp.textContent = item.name.jp;
 
-    textWrap.appendChild(en);
-    textWrap.appendChild(jp);
-    textWrap.appendChild(descJp);
+      const descJp = document.createElement("span");
+      descJp.className = "desc-jp block text-sm text-gray-700 mb-2";
+      descJp.textContent = item.desc.jp;
+
+      textWrap.appendChild(en);
+      textWrap.appendChild(jp);
+      textWrap.appendChild(descJp);
+
+    } else {
+      // FRUITS（文字列配列）対応
+      const text = document.createElement("span");
+      text.className = "text-base";
+      text.textContent = item;
+
+      textWrap.appendChild(text);
+    }
 
     wrapper.appendChild(textWrap);
     li.appendChild(wrapper);
@@ -117,7 +124,7 @@ function setBeansList(id, items) {
 }
 
 // ==============================
-// マグ装飾（★追加）
+// マグ装飾
 // ==============================
 function injectCoffeeMugs() {
   const template = document.getElementById("coffee-mug");
@@ -130,18 +137,10 @@ function injectCoffeeMugs() {
     for (let i = 0; i < 5; i++) {
       const clone = template.content.cloneNode(true);
 
-      // ★ 少しズラす（見た目向上）
       const wrapper = document.createElement("div");
-      wrapper.style.transform = `
-        translateY(${Math.abs(i - 2) * 4}px)
-        rotate(${(i - 2) * 6}deg)
-      `;
 
-      // 湯気ずらし
-      const steams = clone.querySelectorAll(".steam");
-      steams.forEach((s, index) => {
-        s.style.animationDelay = `${index * 0.3 + i * 0.2}s`;
-      });
+      // ★ 傾き削除（今回の要望）
+      wrapper.style.transform = `translateY(${Math.abs(i - 2) * 3}px)`;
 
       wrapper.appendChild(clone);
       container.appendChild(wrapper);
