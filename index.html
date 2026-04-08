@@ -49,26 +49,21 @@
       box-sizing: border-box;
     }
   /* =========================
-       スマホ用：改行最適化
+   スマホ用：孤立ワード防止
   ========================= */
   @media (max-width: 768px) {
 
-    /* 日本語の不自然な改行防止 */
     #hero-title,
     #concept-title,
     #concept-desc {
       word-break: keep-all;
-      overflow-wrap: break-word;
+      overflow-wrap: anywhere;
       line-break: strict;
+      text-wrap: balance;
     }
 
-    /* 英語の単語途中改行を防ぐ */
-    #hero-subtitle {
-      word-break: normal;
-      overflow-wrap: normal;
-    }
   }
-  </style>
+</style>
 
 </head>
 
