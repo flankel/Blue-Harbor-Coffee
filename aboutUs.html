@@ -229,61 +229,82 @@
   <!-- ★ 立体コーヒー豆SVG -->
   <!-- ★ コーヒー豆SVG（単体テンプレ） -->
 <template id="coffee-beans">
-  <svg width="42" height="70" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
+  <svg width="44" height="70" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
 
     <defs>
-      <!-- ベース -->
-      <radialGradient id="beanMain" cx="35%" cy="30%" r="70%">
-        <stop offset="0%" stop-color="#d6a46a"/>
-        <stop offset="40%" stop-color="#b8793c"/>
-        <stop offset="80%" stop-color="#8a5528"/>
-        <stop offset="100%" stop-color="#5a3416"/>
+      <!-- 本体グラデーション（明るめ＋深み） -->
+      <radialGradient id="beanMain" cx="35%" cy="25%" r="75%">
+        <stop offset="0%" stop-color="#e0b07a"/>
+        <stop offset="35%" stop-color="#c28745"/>
+        <stop offset="75%" stop-color="#8a5528"/>
+        <stop offset="100%" stop-color="#4d2c14"/>
       </radialGradient>
 
       <!-- ハイライト -->
-      <radialGradient id="beanHighlight" cx="30%" cy="25%" r="40%">
-        <stop offset="0%" stop-color="rgba(255,255,255,0.6)"/>
+      <radialGradient id="beanHighlight" cx="25%" cy="20%" r="45%">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.7)"/>
         <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
       </radialGradient>
 
-      <!-- 影 -->
-      <radialGradient id="beanShadow" cx="70%" cy="75%" r="50%">
-        <stop offset="0%" stop-color="rgba(0,0,0,0.25)"/>
+      <!-- 外側影 -->
+      <radialGradient id="beanShadow" cx="75%" cy="80%" r="55%">
+        <stop offset="0%" stop-color="rgba(0,0,0,0.35)"/>
         <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
       </radialGradient>
+
+      <!-- 溝の深さグラデーション -->
+      <linearGradient id="grooveDepth" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#2a160b"/>
+        <stop offset="50%" stop-color="#0f0703"/>
+        <stop offset="100%" stop-color="#2a160b"/>
+      </linearGradient>
     </defs>
 
-    <g transform="rotate(-18 30 45)">
+    <!-- ★ 強めに傾ける -->
+    <g transform="rotate(-32 30 45)">
 
-      <!-- 本体 -->
-      <ellipse cx="30" cy="45" rx="20" ry="32" fill="url(#beanMain)" />
+      <!-- 本体（横長寄り＝傾き強調） -->
+      <ellipse cx="30" cy="45" rx="22" ry="30" fill="url(#beanMain)" />
 
-      <!-- 光 -->
-      <ellipse cx="22" cy="28" rx="10" ry="14" fill="url(#beanHighlight)" />
+      <!-- ハイライト -->
+      <ellipse cx="20" cy="28" rx="10" ry="12" fill="url(#beanHighlight)" />
 
       <!-- 影 -->
-      <ellipse cx="38" cy="60" rx="12" ry="18" fill="url(#beanShadow)" />
+      <ellipse cx="40" cy="62" rx="14" ry="16" fill="url(#beanShadow)" />
 
-      <!-- 溝（影：太め・柔らかい） -->
-      <path d="M30 14 
-               C26 28, 26 38, 30 45
-               C34 52, 34 62, 30 76"
-            stroke="rgba(40,20,10,0.9)"
-            stroke-width="4.5"
+      <!-- ===================== -->
+      <!-- 溝（彫り込み表現） -->
+      <!-- ===================== -->
+
+      <!-- 溝の“深い部分” -->
+      <path d="M30 12 
+               C25 28, 25 38, 30 45
+               C35 52, 35 65, 30 78"
+            stroke="url(#grooveDepth)"
+            stroke-width="6"
             fill="none"
             stroke-linecap="round"
-            stroke-linejoin="round"
-            opacity="0.6"/>
+            opacity="0.9"/>
 
-      <!-- 溝（ハイライト：細く中央） -->
+      <!-- 溝の内側の締まり（より暗く） -->
       <path d="M30 14 
                C27 28, 27 38, 30 45
-               C33 52, 33 62, 30 76"
-            stroke="rgba(255,255,255,0.25)"
-            stroke-width="1.5"
+               C33 52, 33 63, 30 76"
+            stroke="rgba(0,0,0,0.7)"
+            stroke-width="2.5"
             fill="none"
             stroke-linecap="round"
-            stroke-linejoin="round"/>
+            opacity="0.6"/>
+
+      <!-- 溝の縁ハイライト（彫り込みのエッジ） -->
+      <path d="M30 12 
+               C26 28, 26 38, 30 45
+               C34 52, 34 65, 30 78"
+            stroke="rgba(255,255,255,0.25)"
+            stroke-width="1.2"
+            fill="none"
+            stroke-linecap="round"
+            opacity="0.7"/>
 
     </g>
   </svg>
