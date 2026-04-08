@@ -229,40 +229,38 @@
   <!-- ★ 立体コーヒー豆SVG -->
   <!-- ★ コーヒー豆SVG（単体テンプレ） -->
   <template id="coffee-beans">
-  <div class="flex justify-center items-center gap-4">
+  <svg width="36" height="72" viewBox="0 0 40 80" xmlns="http://www.w3.org/2000/svg">
 
-    <!-- ① 左 -->
-    <svg width="32" height="64" viewBox="0 0 20 50">
-      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
-      <path d="M6 9 C4 18, 10 32, 8 41" stroke="#f5e6d3" stroke-width="1.2"/>
-    </svg>
+    <defs>
+      <radialGradient id="beanMain" cx="50%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#6b3e1f"/>
+        <stop offset="60%" stop-color="#4b2e17"/>
+        <stop offset="100%" stop-color="#2a160b"/>
+      </radialGradient>
 
-    <!-- ② やや左 -->
-    <svg width="32" height="64" viewBox="0 0 20 50">
-      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
-      <path d="M8 9 C6 18, 12 32, 10 41" stroke="#f5e6d3" stroke-width="1.2"/>
-    </svg>
+      <linearGradient id="beanShine">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.25)"/>
+        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+      </linearGradient>
+    </defs>
 
-    <!-- ③ 正面 -->
-    <svg width="32" height="64" viewBox="0 0 20 50">
-      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
-      <path d="M10 9 C7 18, 13 32, 10 41" stroke="#f5e6d3" stroke-width="1.2"/>
-    </svg>
+    <!-- 本体 -->
+    <ellipse cx="20" cy="40" rx="16" ry="30" fill="url(#beanMain)" />
 
-    <!-- ④ やや右 -->
-    <svg width="32" height="64" viewBox="0 0 20 50">
-      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
-      <path d="M12 9 C14 18, 8 32, 10 41" stroke="#f5e6d3" stroke-width="1.2"/>
-    </svg>
+    <!-- 光沢 -->
+    <ellipse cx="14" cy="28" rx="6" ry="12" fill="url(#beanShine)" />
 
-    <!-- ⑤ 右（裏寄り） -->
-    <svg width="32" height="64" viewBox="0 0 20 50">
-      <ellipse cx="10" cy="25" rx="8" ry="16" fill="#5a3a1a"/>
-      <path d="M14 9 C16 18, 10 32, 12 41" stroke="#f5e6d3" stroke-width="1.2"/>
-    </svg>
+    <!-- 割れ目 -->
+    <path d="M20 10 
+             C16 25, 16 35, 20 40
+             C24 45, 24 60, 20 70"
+          stroke="#1a0d05"
+          stroke-width="2.5"
+          fill="none"
+          stroke-linecap="round"/>
 
-  </div>
-  </template>  
+  </svg>
+  </template>
   <script src="js/loadHeader.js"></script>
   <script src="js/aboutUs.js"></script>
 
