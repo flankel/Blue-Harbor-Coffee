@@ -51,7 +51,7 @@ function setList(id, items) {
 }
 
 // ==============================
-// BEANS専用リスト（英語タイトル＋日本語名＋日本語説明）
+// BEANS専用リスト
 // ==============================
 function setBeansList(id, items) {
   const el = document.getElementById(id);
@@ -62,17 +62,14 @@ function setBeansList(id, items) {
   items.forEach(item => {
     const li = document.createElement("li");
 
-    // 英語タイトル（大きめ）
     const en = document.createElement("span");
     en.className = "name-en block text-lg font-semibold mb-1";
     en.textContent = item.name.en;
 
-    // 日本語名
     const jp = document.createElement("span");
     jp.className = "name-jp block text-base mb-1";
     jp.textContent = item.name.jp;
 
-    // 日本語説明
     const descJp = document.createElement("span");
     descJp.className = "desc-jp block text-sm text-gray-700 mb-2";
     descJp.textContent = item.desc.jp;
@@ -86,13 +83,38 @@ function setBeansList(id, items) {
 }
 
 // ==============================
-// コーヒー豆装飾
+// コーヒー豆装飾（★ここが本題）
 // ==============================
 function injectCoffeeBeans() {
-  const tpl = document.getElementById("coffee-beans");
-  if (!tpl) return;
+  const template = document.getElementById("coffee-bean-single");
+  if (!template) return;
 
-  document.querySelectorAll(".bean-decoration").forEach(el => {
-    el.appendChild(tpl.content.cloneNode(true));
+  document.querySelectorAll(".bean-decoration").forEach(container => {
+
+    // wrapper生成
+    const wrapper = document.createElement("div");
+    wrapper.className = "flex justify-center items-center gap-4";
+
+    for (let i = 0; i < 5; i++) {
+
+      // テンプレ複製
+      const clone = template.content.cloneNode(true);
+
+      // ===== ID衝突回避 =====
+      const gradient = clone.querySelector("#beanMain");
+      if (gradient) {
+        const uniqueId = "beanMain-" + i + "-" + Math.random().toString(36).substr(2, 5);
+        gradient.id = uniqueId;
+
+        const ellipse = clone.querySelector("ellipse");
+        if (ellipse) {
+          ellipse.setAttribute("fill", `url(#${uniqueId})`);
+        }
+      }
+
+      wrapper.appendChild(clone);
+    }
+
+    container.appendChild(wrapper);
   });
 }
