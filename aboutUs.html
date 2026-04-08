@@ -299,54 +299,64 @@
 
 <!-- coffee mug -->
 <template id="coffee-mug">
-  <svg width="36" height="48" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+  <svg width="32" height="52" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
 
     <!-- 湯気 -->
-    <g stroke="#888" stroke-width="1.5" fill="none" stroke-linecap="round">
-      <path d="M20 18 C18 12, 22 10, 20 6">
+    <g stroke="#8B5E3C" stroke-width="1.4" fill="none" stroke-linecap="round">
+      <path d="M20 22 C18 16, 22 14, 20 10">
         <animate attributeName="d"
           values="
-            M20 18 C18 12, 22 10, 20 6;
-            M20 18 C22 12, 18 10, 20 6;
-            M20 18 C18 12, 22 10, 20 6"
-          dur="2s"
+            M20 22 C18 16, 22 14, 20 10;
+            M20 22 C22 16, 18 14, 20 10;
+            M20 22 C18 16, 22 14, 20 10"
+          dur="2.2s"
           repeatCount="indefinite"/>
       </path>
 
-      <path d="M30 18 C28 12, 32 10, 30 6">
+      <path d="M30 22 C28 16, 32 14, 30 10">
         <animate attributeName="d"
           values="
-            M30 18 C28 12, 32 10, 30 6;
-            M30 18 C32 12, 28 10, 30 6;
-            M30 18 C28 12, 32 10, 30 6"
-          dur="2.4s"
+            M30 22 C28 16, 32 14, 30 10;
+            M30 22 C32 16, 28 14, 30 10;
+            M30 22 C28 16, 32 14, 30 10"
+          dur="2.6s"
           repeatCount="indefinite"/>
       </path>
 
-      <path d="M40 18 C38 12, 42 10, 40 6">
+      <path d="M40 22 C38 16, 42 14, 40 10">
         <animate attributeName="d"
           values="
-            M40 18 C38 12, 42 10, 40 6;
-            M40 18 C42 12, 38 10, 40 6;
-            M40 18 C38 12, 42 10, 40 6"
-          dur="2.8s"
+            M40 22 C38 16, 42 14, 40 10;
+            M40 22 C42 16, 38 14, 40 10;
+            M40 22 C38 16, 42 14, 40 10"
+          dur="3s"
           repeatCount="indefinite"/>
       </path>
     </g>
 
-    <!-- カップ本体 -->
-    <rect x="15" y="25" width="30" height="25"
-      rx="4"
-      fill="white"
-      stroke="#444"
-      stroke-width="1.5"/>
+    <!-- カップ（ブラウン） -->
+    <rect x="15" y="30" width="30" height="26"
+      rx="5"
+      fill="#8B5E3C"
+      stroke="#5A3E2B"
+      stroke-width="1.2"/>
 
     <!-- 持ち手 -->
-    <path d="M45 30 C55 30, 55 45, 45 45"
+    <path d="M45 35 C55 35, 55 50, 45 50"
       fill="none"
-      stroke="#444"
-      stroke-width="1.5"
+      stroke="#5A3E2B"
+      stroke-width="1.4"
       stroke-linecap="round"/>
+
+    <!-- ソーサー（皿） -->
+    <ellipse cx="30" cy="62" rx="20" ry="4"
+      fill="#A67C52"
+      opacity="0.9"/>
+
+    <!-- 影（軽く） -->
+    <ellipse cx="30" cy="66" rx="16" ry="3"
+      fill="#000"
+      opacity="0.08"/>
 
   </svg>
 </template>
