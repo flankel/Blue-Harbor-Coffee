@@ -58,9 +58,12 @@ function renderSetMenu(list) {
         </h4>
         <p class="text-sm text-gray-400 font-eng mt-1">${item.en}</p>
         <p class="text-sm text-gray-300 mt-3 tracking-wide">${item.time}</p>
-        <ul class="text-base text-gray-200 space-y-2 mt-6 inline-block text-left leading-relaxed list-disc list-inside">
+
+        <!-- ★ここだけ修正 -->
+        <ul class="text-base text-gray-200 space-y-2 mt-6 text-left leading-relaxed list-disc list-inside w-full">
           ${items}
         </ul>
+
       </div>
     `;
   });
