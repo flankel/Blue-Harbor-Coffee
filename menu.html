@@ -44,10 +44,11 @@
     .menu-list { display:flex; flex-direction:column; gap:40px; }
     @media (max-width: 639px) {
       .menu-list li {
-        width: 100%;
-        white-space: normal;
-        word-break: keep-all;
-        overflow-wrap: break-word;
+        position: relative;
+        padding-left: 1.4em; /* 丸とテキストの間隔 */
+        margin-bottom: 0.6em;
+        line-height: 1.5;
+        list-style-position: outside; /* 丸をテキスト外に出す */
       }
     }
 
