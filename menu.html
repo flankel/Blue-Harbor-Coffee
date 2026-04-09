@@ -43,6 +43,15 @@
 
     .menu-list { display:flex; flex-direction:column; gap:40px; }
     @media (max-width: 639px) {
+      .menu-item {
+        flex-direction: column;   /* 画像とテキストを縦に */
+        align-items: flex-start;  /* 左揃え */
+      }
+
+      .menu-item .flex-grow {
+        width: 100%;              /* テキスト部分を幅いっぱいに */
+      }
+
       .menu-item ul {
         width: 100%;
         padding-left: 1.4em;
@@ -53,10 +62,8 @@
         white-space: normal;
         word-break: break-word;
         overflow-wrap: anywhere;
-        margin-bottom: 0.4em;
       }
     }
-
     .menu-item { display:flex; gap:20px; align-items:flex-start; }
 
     .menu-item img { width:112px; height:112px; object-fit:cover; }
