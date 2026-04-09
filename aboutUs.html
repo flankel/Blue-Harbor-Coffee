@@ -7,36 +7,23 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #333; }
+  /* 文章専用の折り返し調整 */
+  #philosophy-lead,
+  #philosophy-text1,
+  #philosophy-text2,
+  #owner-text1,
+  #owner-text2,
+  #beans-text,
+  #fruits-text {
+    line-height: 1.7;
+    word-break: keep-all; /* PC用：単語の途中改行を防ぐ */
+    overflow-wrap: break-word; /* 狭い幅で折り返す */
+    max-width: 100%;
+    word-wrap: break-word;
+  }
 
-    .font-eng { font-family: 'Jost', sans-serif; }
-
-    .page-enter { animation: fadeIn 0.6s ease-out forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-    .nav-link.active { color: #1d4ed8 !important; border-bottom: 2px solid #3b82f6; }
-    .nav-link.active svg { color: #1d4ed8 !important; }
-
-    ul, ul.list-disc { list-style: none !important; padding-left: 0 !important; }
-
-    /* ========================= Bean List ========================= */
-    .bean-list li {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 18px;
-      line-height: 1.4;
-      padding-left: 0;
-    }
-    .bean-list li::before, .bean-list li::after { display: none !important; }
-    .bean-list svg { width: 28px; height: auto; flex-shrink: 0; }
-    .bean-list li .name-en { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 1.1rem; color: #1d4ed8; }
-    .bean-list li .name-jp { font-weight: 500; font-size: 0.95rem; color: #333; }
-    .bean-list li .desc { font-size: 0.85rem; color: #666; margin-top: 2px; }
-
-    .mug-row { display: flex; justify-content: center; align-items: flex-end; gap: 12px; width: 100%; }
-
-    /* ========================= 文章専用の折り返し調整 ========================= */
+  /* スマホ対応（画面幅768px以下） */
+  @media screen and (max-width: 768px) {
     #philosophy-lead,
     #philosophy-text1,
     #philosophy-text2,
@@ -44,13 +31,10 @@
     #owner-text2,
     #beans-text,
     #fruits-text {
-      line-height: 1.7;
-      word-break: keep-all;
-      overflow-wrap: break-word;
-      max-width: 100%;
-      word-wrap: break-word;
+      word-break: break-word; /* 狭い画面では自動折り返し */
     }
-  </style>
+  }
+</style>
 </head>
   <body class="bg-white flex flex-col min-h-screen">
     <div id="header"></div>
