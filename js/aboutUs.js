@@ -55,6 +55,7 @@ function setBeansList(id, items) {
     // ★ 中央揃えに修正
     const wrapper = document.createElement("div");
     wrapper.className = "flex items-center gap-3";
+    wrapper.style.minWidth = "0"; // ★追加
 
     // =========================
     // 豆SVG
@@ -88,6 +89,7 @@ function setBeansList(id, items) {
     // テキスト
     // =========================
     const textWrap = document.createElement("div");
+    textWrap.style.minWidth = "0"; // ★追加
 
     // BEANS（オブジェクト形式）対応
     if (typeof item === "object") {
@@ -141,6 +143,7 @@ function injectCoffeeMugs() {
 
       // ★ 傾き削除（今回の要望）
       wrapper.style.transform = `translateY(${Math.abs(i - 2) * 3}px)`;
+      wrapper.style.minWidth = "0"; // ★追加
 
       wrapper.appendChild(clone);
       container.appendChild(wrapper);
