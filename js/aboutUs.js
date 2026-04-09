@@ -46,7 +46,6 @@ function setBeansList(id, items) {
   if (!el) return;
 
   const template = document.getElementById("coffee-beans");
-
   el.innerHTML = "";
 
   items.forEach((item, index) => {
@@ -55,7 +54,6 @@ function setBeansList(id, items) {
     // ★ 中央揃えに修正
     const wrapper = document.createElement("div");
     wrapper.className = "flex items-center gap-3";
-    wrapper.style.minWidth = "0"; // ★追加
 
     // =========================
     // 豆SVG
@@ -73,7 +71,8 @@ function setBeansList(id, items) {
       // ★ ID衝突回避
       const gradient = clone.querySelector("#beanMain");
       if (gradient) {
-        const uniqueId = "beanMain-" + index + "-" + Math.random().toString(36).substr(2, 5);
+        const uniqueId =
+          "beanMain-" + index + "-" + Math.random().toString(36).substr(2, 5);
         gradient.id = uniqueId;
 
         const ellipse = clone.querySelector("ellipse");
@@ -89,11 +88,9 @@ function setBeansList(id, items) {
     // テキスト
     // =========================
     const textWrap = document.createElement("div");
-    textWrap.style.minWidth = "0"; // ★追加
 
     // BEANS（オブジェクト形式）対応
     if (typeof item === "object") {
-
       const en = document.createElement("span");
       en.className = "name-en block text-lg font-semibold mb-1";
       en.textContent = item.name.en;
@@ -109,13 +106,11 @@ function setBeansList(id, items) {
       textWrap.appendChild(en);
       textWrap.appendChild(jp);
       textWrap.appendChild(descJp);
-
     } else {
       // FRUITS（文字列配列）対応
       const text = document.createElement("span");
       text.className = "text-base";
       text.textContent = item;
-
       textWrap.appendChild(text);
     }
 
@@ -132,22 +127,18 @@ function injectCoffeeMugs() {
   const template = document.getElementById("coffee-mug");
   if (!template) return;
 
-  document.querySelectorAll(".mug-row").forEach(container => {
-
+  document.querySelectorAll(".mug-row").forEach((container) => {
     container.innerHTML = "";
 
     for (let i = 0; i < 5; i++) {
       const clone = template.content.cloneNode(true);
-
       const wrapper = document.createElement("div");
 
       // ★ 傾き削除（今回の要望）
       wrapper.style.transform = `translateY(${Math.abs(i - 2) * 3}px)`;
-      wrapper.style.minWidth = "0"; // ★追加
 
       wrapper.appendChild(clone);
       container.appendChild(wrapper);
     }
-
   });
 }
