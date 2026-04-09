@@ -1,112 +1,85 @@
 <!DOCTYPE html>
-<html lang="ja" style="word-break: normal; line-break: strict;">
+<html lang="ja">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Harbor Coffee | Specialty Coffee Roaster</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-      body {
-        word-break: normal;
-        line-break: strict;
-        font-family: 'Zen Kaku Gothic New', sans-serif;
-        color: #333;
-      }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blue Harbor Coffee | Specialty Coffee Roaster</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      word-break: keep-all;           /* 日本語の単語途中での改行防止 */
+      line-break: strict;             /* 日本語の文節に沿った改行 */
+      overflow-wrap: break-word;      /* 英数字や長い単語のみ折り返す */
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      color: #333;
+    }
 
-      .font-eng { font-family: 'Jost', sans-serif; }
+    .font-eng { font-family: 'Jost', sans-serif; }
 
-      .page-enter {
-        animation: fadeIn 0.6s ease-out forwards;
-      }
+    .page-enter {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
 
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-      .nav-link.active {
-        color: #1d4ed8 !important;
-        border-bottom: 2px solid #3b82f6;
-      }
+    .nav-link.active { color: #1d4ed8 !important; border-bottom: 2px solid #3b82f6; }
+    .nav-link.active svg { color: #1d4ed8 !important; }
 
-      .nav-link.active svg { color: #1d4ed8 !important; }
+    ul, ul.list-disc { list-style: none !important; padding-left: 0 !important; }
 
-      ul, ul.list-disc { list-style: none !important; padding-left: 0 !important; }
+    /* ========================= Bean List（完全リニューアル） ========================= */
+    .bean-list li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      line-height: 1.4;
+      padding-left: 0; /* ★削除 */
+    }
 
-      /* ========================= Bean List（完全リニューアル） ========================= */
-      .bean-list li {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin-bottom: 18px;
-        line-height: 1.4;
-        padding-left: 0; /* ★削除 */
-      }
+    /* ★ 疑似要素の豆を完全削除 */
+    .bean-list li::before, .bean-list li::after { display: none !important; }
 
-      /* ★ 疑似要素の豆を完全削除 */
-      .bean-list li::before,
-      .bean-list li::after { display: none !important; }
+    /* ★ SVG豆サイズ調整 */
+    .bean-list svg { width: 28px; height: auto; flex-shrink: 0; }
 
-      /* ★ SVG豆サイズ調整 */
-      .bean-list svg { width: 28px; height: auto; flex-shrink: 0; }
+    /* テキスト側 */
+    .bean-list li .name-en {
+      font-family: 'Jost', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #1d4ed8;
+    }
+    .bean-list li .name-jp { font-weight: 500; font-size: 0.95rem; color: #333; }
+    .bean-list li .desc { font-size: 0.85rem; color: #666; margin-top: 2px; }
 
-      /* テキスト側 */
-      .bean-list li .name-en {
-        font-family: 'Jost', sans-serif;
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: #1d4ed8;
-      }
+    /* ★ 追加：マグを並べるための行 */
+    .mug-row {
+      display: flex;
+      justify-content: center; /* ★中央寄せ */
+      align-items: flex-end;
+      gap: 12px;
+      width: 100%; /* ★幅を明示 */
+    }
 
-      .bean-list li .name-jp {
-        font-weight: 500;
-        font-size: 0.95rem;
-        color: #333;
-      }
-
-      .bean-list li .desc {
-        font-size: 0.85rem;
-        color: #666;
-        margin-top: 2px;
-      }
-
-      /* ★ 追加：マグを並べるための行 */
-      .mug-row {
-        display: flex;
-        justify-content: center; /* ★中央寄せ */
-        align-items: flex-end;
-        gap: 12px;
-        width: 100%; /* ★幅を明示 */
-      }
-
-      /* ========================= 日本語テキストの自然な表示 ========================= */
-      #philosophy-lead,
-      #philosophy-text1,
-      #philosophy-text2,
-      #owner-text1,
-      #owner-text2,
-      #beans-text,
-      #fruits-text {
-        line-height: 1.7;
-        word-break: break-word;
-      }
-
-      @media (max-width: 768px) {
-        #philosophy-lead,
-        #philosophy-text1,
-        #philosophy-text2,
-        #owner-text1,
-        #owner-text2,
-        #beans-text,
-        #fruits-text {
-          line-height: 1.6;
-          padding-left: 1rem;
-          padding-right: 1rem;
-        }
-      }
-    </style>
-  </head>
+    /* ========================= 日本語テキスト専用の折り返し調整 ========================= */
+    #philosophy-lead,
+    #philosophy-text1,
+    #philosophy-text2,
+    #owner-text1,
+    #owner-text2,
+    #beans-text,
+    #fruits-text {
+      line-height: 1.7;
+      word-break: keep-all;       /* 単語途中での改行防止 */
+      overflow-wrap: break-word;  /* 英数字や長い単語だけ折り返す */
+    }
+  </style>
+</head>
   <body class="bg-white flex flex-col min-h-screen">
     <div id="header"></div>
     <main class="flex-grow">
