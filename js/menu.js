@@ -67,7 +67,7 @@ function renderSetMenu(list) {
         <p class="text-sm text-gray-400 font-eng mt-1">${item.en}</p>
         <p class="text-sm text-gray-300 mt-3 tracking-wide">${item.time}</p>
 
-        <ul class="text-base text-gray-200 space-y-2 mt-6 text-left leading-relaxed list-disc list-outside w-full">
+        <ul class="text-base text-gray-200 space-y-2 mt-6 text-left leading-relaxed list-disc list-inside w-full">
           ${items}
         </ul>
 
