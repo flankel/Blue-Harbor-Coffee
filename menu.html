@@ -8,7 +8,82 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-  body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #333; } .font-eng { font-family: 'Jost', sans-serif; } .page-enter { animation: fadeIn 0.6s ease-out forwards; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; } .nav-link.active svg { color: #1d4ed8; } .menu-board { background-color: #1a1a1a; color: #f8f8f8; border: 12px solid #3d2b1f; box-shadow: 0 20px 50px rgba(0,0,0,0.5); } .menu-board p { font-size: 15px; color: #d1d5db; line-height: 1.7; margin-top: 4px; letter-spacing: 0.02em; } @media (min-width:768px){ .menu-board p { font-size:16px; } } .menu-list { display:flex; flex-direction:column; gap:40px; } .menu-item { display:flex; gap:20px; align-items:flex-start; } .menu-item img { width:112px; height:112px; object-fit:cover; } /* ヘッダー前面 */ #header { position: fixed; top: 0; width: 100%; z-index: 9999; }
+  body {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    color: #333;
+  }
+  .font-eng {
+    font-family: 'Jost', sans-serif;
+  }
+  .page-enter {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+  }
+  .nav-link.active {
+    border-bottom: 2px solid #3b82f6;
+    color: #1d4ed8;
+  }
+  .nav-link.active svg {
+    color: #1d4ed8;
+  }
+  .menu-board {
+    background-color: #1a1a1a;
+    color: #f8f8f8;
+    border: 12px solid #3d2b1f;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  }
+  .menu-board p {
+    font-size: 15px;
+    color: #d1d5db;
+    line-height: 1.7;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+  @media (min-width:768px) {
+    .menu-board p {
+      font-size: 16px;
+    }
+  }
+  .menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .menu-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .menu-item img {
+    width: 112px;
+    height: 112px;
+    object-fit: cover;
+  }
+  /* ヘッダー前面 */
+  #header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+  #setmenu ul {
+    padding-left: 0;
+  }
+
+  #setmenu li {
+    display: block;
+    padding-left: 1.2em;
+    text-indent: -1.2em;
+  }
   </style>
 </head>
 
