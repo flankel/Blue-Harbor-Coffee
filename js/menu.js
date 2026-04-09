@@ -42,7 +42,9 @@ function renderSetMenu(list) {
   el.innerHTML = `
     <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-12 text-center">
       <span>SET MENU</span>
-      <span class="block text-[10px] text-gray-500 tracking-widest mt-1">TIME-BASED</span>
+      <span class="block text-[10px] text-gray-500 tracking-widest mt-1">
+        TIME-BASED
+      </span>
     </h3>
     <div class="space-y-20"></div>
   `;
@@ -52,14 +54,8 @@ function renderSetMenu(list) {
   let html = "";
 
   list.forEach(item => {
-
-    const isMobile = window.innerWidth < 640;
-
     const items = item.items
-      .map(i => isMobile
-        ? `<li class="pl-1 break-words [word-break:keep-all]">${i}</li>`
-        : `<li>${i}</li>`
-      )
+      .map(i => `<li>${i}</li>`)
       .join("");
 
     html += `
@@ -78,10 +74,7 @@ function renderSetMenu(list) {
         <p class="text-sm text-gray-400 font-eng mt-1">${item.en}</p>
         <p class="text-sm text-gray-300 mt-3 tracking-wide">${item.time}</p>
 
-        <ul class="${isMobile
-          ? 'text-base text-gray-200 space-y-2 mt-6 inline-block text-left leading-relaxed list-disc list-outside pl-5'
-          : 'text-base text-gray-200 space-y-2 mt-6 inline-block text-left leading-relaxed list-disc list-inside'
-        }">
+        <ul class="text-base text-gray-200 space-y-2 mt-6 inline-block text-left leading-relaxed list-disc list-inside">
           ${items}
         </ul>
       </div>
@@ -97,7 +90,9 @@ function renderList(list, id, titleMain, titleSub) {
   el.innerHTML = `
     <h3 class="font-eng text-2xl font-bold border-b border-white/20 pb-2 mb-10 flex justify-between items-center">
       <span>${titleMain}</span>
-      <span class="text-[10px] text-gray-500 tracking-widest">${titleSub}</span>
+      <span class="text-[10px] text-gray-500 tracking-widest">
+        ${titleSub}
+      </span>
     </h3>
     <div class="menu-list"></div>
   `;
