@@ -8,22 +8,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     body {
-      word-break: keep-all;           /* 日本語の単語途中での改行防止 */
-      line-break: strict;             /* 日本語の文節に沿った改行 */
-      overflow-wrap: break-word;      /* 英数字や長い単語のみ折り返す */
+      word-break: keep-all;
+      line-break: strict;
+      overflow-wrap: break-word;
       font-family: 'Zen Kaku Gothic New', sans-serif;
       color: #333;
     }
 
     .font-eng { font-family: 'Jost', sans-serif; }
 
-    .page-enter {
-      animation: fadeIn 0.6s ease-out forwards;
-    }
-
+    .page-enter { animation: fadeIn 0.6s ease-out forwards; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .nav-link.active { color: #1d4ed8 !important; border-bottom: 2px solid #3b82f6; }
@@ -31,42 +28,25 @@
 
     ul, ul.list-disc { list-style: none !important; padding-left: 0 !important; }
 
-    /* ========================= Bean List（完全リニューアル） ========================= */
+    /* ========================= Bean List ========================= */
     .bean-list li {
       display: flex;
       align-items: center;
       gap: 14px;
       margin-bottom: 18px;
       line-height: 1.4;
-      padding-left: 0; /* ★削除 */
+      padding-left: 0;
     }
 
-    /* ★ 疑似要素の豆を完全削除 */
     .bean-list li::before, .bean-list li::after { display: none !important; }
-
-    /* ★ SVG豆サイズ調整 */
     .bean-list svg { width: 28px; height: auto; flex-shrink: 0; }
-
-    /* テキスト側 */
-    .bean-list li .name-en {
-      font-family: 'Jost', sans-serif;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #1d4ed8;
-    }
+    .bean-list li .name-en { font-family: 'Jost', sans-serif; font-weight: 600; font-size: 1.1rem; color: #1d4ed8; }
     .bean-list li .name-jp { font-weight: 500; font-size: 0.95rem; color: #333; }
     .bean-list li .desc { font-size: 0.85rem; color: #666; margin-top: 2px; }
 
-    /* ★ 追加：マグを並べるための行 */
-    .mug-row {
-      display: flex;
-      justify-content: center; /* ★中央寄せ */
-      align-items: flex-end;
-      gap: 12px;
-      width: 100%; /* ★幅を明示 */
-    }
+    .mug-row { display: flex; justify-content: center; align-items: flex-end; gap: 12px; width: 100%; }
 
-    /* ========================= 日本語テキスト専用の折り返し調整 ========================= */
+    /* ========================= 日本語テキスト折り返し調整 ========================= */
     #philosophy-lead,
     #philosophy-text1,
     #philosophy-text2,
@@ -75,8 +55,19 @@
     #beans-text,
     #fruits-text {
       line-height: 1.7;
-      word-break: keep-all;       /* 単語途中での改行防止 */
-      overflow-wrap: break-word;  /* 英数字や長い単語だけ折り返す */
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      max-width: 100%;       /* 横幅制限を追加 */
+      word-wrap: break-word; /* 古いブラウザ対応 */
+    }
+
+    /* ========================= フルーツ部分のテキスト修正 ========================= */
+    #fruits-text {
+      display: block;
+      flex-shrink: 1;      /* Flexコンテナ内で縮小可能に */
+      word-break: normal;
+      overflow-wrap: break-word;
+      max-width: 100%;
     }
   </style>
 </head>
