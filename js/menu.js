@@ -52,8 +52,14 @@ function renderSetMenu(list) {
   let html = "";
 
   list.forEach(item => {
+
+    const isMobile = window.innerWidth < 640;
+
     const items = item.items
-      .map(i => `<li>${i}</li>`)
+      .map(i => isMobile
+        ? `<li class="pl-1 break-words [word-break:keep-all]">${i}</li>`
+        : `<li>${i}</li>`
+      )
       .join("");
 
     html += `
@@ -72,7 +78,10 @@ function renderSetMenu(list) {
         <p class="text-sm text-gray-400 font-eng mt-1">${item.en}</p>
         <p class="text-sm text-gray-300 mt-3 tracking-wide">${item.time}</p>
 
-        <ul class="text-base text-gray-200 space-y-2 mt-6 inline-block text-left leading-relaxed list-disc list-inside">
+        <ul class="${isMobile
+          ? 'text-base text-gray-200 space-y-2 mt-6 inline-block text-left leading-relaxed list-disc list-outside pl-5'
+          : 'text-base text-gray-200 space-y-2 mt-6 inline-block text-left leading-relaxed list-disc list-inside'
+        }">
           ${items}
         </ul>
       </div>
