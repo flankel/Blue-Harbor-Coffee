@@ -45,15 +45,7 @@ function renderSetMenu(list) {
 
   let html = "";
   list.forEach(item => {
-
-    // ★ここだけ修正（改行ポイント追加）
-    const items = item.items.map(i => {
-      const formatted = i
-        .replace(/・/g, "・<wbr>")
-        .replace(/([ァ-ンー]{2,})/g, "$1<wbr>");
-      return `<li>${formatted}</li>`;
-    }).join("");
-
+    const items = item.items.map(i => `<li>${i}</li>`).join("");
     html += `
       <div class="max-w-2xl mx-auto px-4 text-center">
         <div class="overflow-hidden w-full rounded shadow-md mb-8">
