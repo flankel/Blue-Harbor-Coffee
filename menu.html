@@ -68,6 +68,19 @@
     height: 112px;
     object-fit: cover;
   }
+    
+  @media (max-width: 640px) {
+    #setmenu ul {
+      list-style-position: outside; /* ← これが本体 */
+      padding-left: 1.25rem;        /* インデント調整 */
+    }
+
+    #setmenu li {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+  }
   /* ヘッダー前面 */
   #header {
     position: fixed;
