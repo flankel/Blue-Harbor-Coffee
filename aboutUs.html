@@ -50,34 +50,26 @@
       padding-left: 0 !important;
     }
 
-    /* =========================
-   Bean List（完全リニューアル）
-========================= */
-
 .bean-list li {
   display: flex;
   align-items: center;
   gap: 14px;
-
   margin-bottom: 18px;
   line-height: 1.4;
-  padding-left: 0; /* ★削除 */
+  padding-left: 0;
 }
 
-/* ★ 疑似要素の豆を完全削除 */
 .bean-list li::before,
 .bean-list li::after {
   display: none !important;
 }
 
-/* ★ SVG豆サイズ調整 */
 .bean-list svg {
   width: 28px;
   height: auto;
   flex-shrink: 0;
 }
 
-/* テキスト側 */
 .bean-list li .name-en {
   font-family: 'Jost', sans-serif;
   font-weight: 600;
@@ -97,13 +89,12 @@
   margin-top: 2px;
 }
 
-    /* ★ 追加：マグを並べるための行 */
 .mug-row {
   display: flex;
-  justify-content: center; /* ★中央寄せ */
+  justify-content: center;
   align-items: flex-end;
   gap: 12px;
-  width: 100%; /* ★幅を明示 */
+  width: 100%;
 }
 
   </style>
@@ -142,10 +133,10 @@
         </div>
       </h2>
 
-      <div class="max-w-3xl mx-auto text-center">
-        <p id="philosophy-lead" class="text-xl md:text-2xl text-gray-700 mb-8"></p>
-        <p id="philosophy-text1" class="text-gray-600 mb-6"></p>
-        <p id="philosophy-text2" class="text-gray-600"></p>
+      <div class="max-w-2xl mx-auto text-left">
+        <p id="philosophy-lead" class="text-xl md:text-2xl text-gray-700 mb-8 text-center leading-relaxed"></p>
+        <p id="philosophy-text1" class="text-gray-600 mb-6 leading-relaxed"></p>
+        <p id="philosophy-text2" class="text-gray-600 leading-relaxed"></p>
       </div>
 
     </section>
@@ -168,10 +159,10 @@
         <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200"
              class="w-full rounded-xl shadow-lg object-cover">
 
-        <div>
+        <div class="max-w-2xl text-left">
           <h3 id="owner-name" class="text-2xl font-medium mb-6"></h3>
-          <p id="owner-text1" class="mb-4"></p>
-          <p id="owner-text2"></p>
+          <p id="owner-text1" class="mb-4 leading-relaxed"></p>
+          <p id="owner-text2" class="leading-relaxed"></p>
         </div>
 
       </div>
@@ -196,9 +187,9 @@
         <img src="images/AboutUs/farmer.png"
              class="w-full rounded-xl shadow-lg object-cover">
 
-        <div>
+        <div class="max-w-2xl text-left">
           <h3 id="beans-title" class="text-2xl font-medium mb-6"></h3>
-          <p id="beans-text" class="mb-4"></p>
+          <p id="beans-text" class="mb-4 leading-relaxed"></p>
           <ul id="beans-list" class="bean-list"></ul>
         </div>
 
@@ -224,8 +215,8 @@
         <img src="images/AboutUs/blueberry_lemon.png"
              class="w-full rounded-xl shadow-lg object-cover">
 
-        <div>
-          <p id="fruits-text" class="mb-4"></p>
+        <div class="max-w-2xl text-left">
+          <p id="fruits-text" class="mb-4 leading-relaxed"></p>
           <ul id="fruits-list" class="bean-list"></ul>
         </div>
 
@@ -239,127 +230,6 @@
     © 2024 Blue Harbor Coffee Roasters.
   </footer>
 
-  <!-- ★ コーヒー豆SVG（単体テンプレ） -->
-<template id="coffee-beans">
-  <svg width="44" height="70" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
-
-    <defs>
-      <radialGradient id="beanMain" cx="35%" cy="25%" r="75%">
-        <stop offset="0%" stop-color="#e6b67f"/>
-        <stop offset="40%" stop-color="#c48744"/>
-        <stop offset="80%" stop-color="#8a5528"/>
-        <stop offset="100%" stop-color="#4d2c14"/>
-      </radialGradient>
-
-      <radialGradient id="beanHighlight" cx="25%" cy="20%" r="45%">
-        <stop offset="0%" stop-color="rgba(255,255,255,0.7)"/>
-        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-      </radialGradient>
-
-      <radialGradient id="beanShadow" cx="75%" cy="80%" r="55%">
-        <stop offset="0%" stop-color="rgba(0,0,0,0.35)"/>
-        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-      </radialGradient>
-
-      <radialGradient id="grooveCore" cx="50%" cy="50%" r="60%">
-        <stop offset="0%" stop-color="#1a0d05"/>
-        <stop offset="60%" stop-color="#2b160a"/>
-        <stop offset="100%" stop-color="#5a3416"/>
-      </radialGradient>
-
-      <linearGradient id="grooveEdge" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="rgba(255,255,255,0.25)"/>
-        <stop offset="50%" stop-color="rgba(255,255,255,0)"/>
-        <stop offset="100%" stop-color="rgba(0,0,0,0.2)"/>
-      </linearGradient>
-    </defs>
-
-    <g transform="rotate(28 30 45)">
-      <ellipse cx="30" cy="45" rx="22" ry="30" fill="url(#beanMain)" />
-      <ellipse cx="20" cy="28" rx="10" ry="12" fill="url(#beanHighlight)" />
-      <ellipse cx="40" cy="62" rx="14" ry="16" fill="url(#beanShadow)" />
-
-      <ellipse cx="30" cy="45" rx="5.5" ry="26" fill="url(#grooveCore)" />
-      <ellipse cx="29.5" cy="45" rx="6.5" ry="27"
-               fill="none"
-               stroke="url(#grooveEdge)"
-               stroke-width="1.2"
-               opacity="0.6"/>
-    </g>
-  </svg>
-</template>
-
-<!-- coffee mug -->
-<template id="coffee-mug">
-  <svg width="32" height="52" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
-
-    <!-- 湯気（♨︎風） -->
-    <g stroke="#8B5E3C" stroke-width="2" fill="none" stroke-linecap="round">
-      
-      <!-- 左 -->
-      <path d="M20 24 
-               C14 18, 26 16, 20 10
-               C16 6, 24 6, 20 2">
-        <animateTransform
-          attributeName="transform"
-          type="translate"
-          values="0 0; 1 -2; 0 0"
-          dur="2.4s"
-          repeatCount="indefinite"/>
-      </path>
-
-      <!-- 中央（少し大きく） -->
-      <path d="M30 24 
-               C24 18, 36 16, 30 10
-               C26 6, 34 6, 30 2">
-        <animateTransform
-          attributeName="transform"
-          type="translate"
-          values="0 0; 0 -3; 0 0"
-          dur="2s"
-          repeatCount="indefinite"/>
-      </path>
-
-      <!-- 右 -->
-      <path d="M40 24 
-               C34 18, 46 16, 40 10
-               C36 6, 44 6, 40 2">
-        <animateTransform
-          attributeName="transform"
-          type="translate"
-          values="0 0; -1 -2; 0 0"
-          dur="2.6s"
-          repeatCount="indefinite"/>
-      </path>
-
-    </g>
-
-    <!-- カップ -->
-    <rect x="15" y="30" width="30" height="26"
-      rx="5"
-      fill="#8B5E3C"
-      stroke="#5A3E2B"
-      stroke-width="1.2"/>
-
-    <!-- 持ち手 -->
-    <path d="M45 35 C55 35, 55 50, 45 50"
-      fill="none"
-      stroke="#5A3E2B"
-      stroke-width="1.4"
-      stroke-linecap="round"/>
-
-    <!-- ソーサー -->
-    <ellipse cx="30" cy="62" rx="20" ry="4"
-      fill="#A67C52"
-      opacity="0.9"/>
-
-    <!-- 影 -->
-    <ellipse cx="30" cy="66" rx="16" ry="3"
-      fill="#000"
-      opacity="0.08"/>
-
-  </svg>
-</template>
   <script src="js/loadHeader.js"></script>
   <script src="js/aboutUs.js"></script>
 
