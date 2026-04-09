@@ -45,7 +45,15 @@ function renderSetMenu(list) {
 
   let html = "";
   list.forEach(item => {
-    const items = item.items.map(i => `<li>${i}</li>`).join("");
+
+    // ★ここだけ修正（改行ポイント追加）
+    const items = item.items.map(i => {
+      const formatted = i
+        .replace(/・/g, "・<wbr>")
+        .replace(/([ァ-ンー]{2,})/g, "$1<wbr>");
+      return `<li>${formatted}</li>`;
+    }).join("");
+
     html += `
       <div class="max-w-2xl mx-auto px-4 text-center">
         <div class="overflow-hidden w-full rounded shadow-md mb-8">
@@ -59,7 +67,6 @@ function renderSetMenu(list) {
         <p class="text-sm text-gray-400 font-eng mt-1">${item.en}</p>
         <p class="text-sm text-gray-300 mt-3 tracking-wide">${item.time}</p>
 
-        <!-- ★ここだけ修正 -->
         <ul class="text-base text-gray-200 space-y-2 mt-6 text-left leading-relaxed list-disc list-inside w-full">
           ${items}
         </ul>
