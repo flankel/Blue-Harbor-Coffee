@@ -1,6 +1,6 @@
 /* =========================
    Blue Harbor Coffee
-   customer.js
+   customer.js（修正版）
 ========================= */
 
 
@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await loadConfig();
 
+  console.log("CONFIG:", CONFIG); // ★デバッグ
+
   setupDate();
 
   renderCart();
@@ -36,9 +38,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function loadConfig(){
 
-  const res = await fetch("data/store-config.json");
+  try {
 
-  CONFIG = await res.json();
+    const res = await fetch("data/storeInfo.json");
+
+    const data = await res.json();
+
+    CONFIG = data.config; // ★ここが最重要
+
+  } catch (err) {
+
+    console.error("config読み込み失敗:", err);
+    alert("設定の読み込みに失敗しました");
+
+  }
 
 }
 
@@ -49,7 +62,7 @@ async function loadConfig(){
 
 function checkOrderData(){
 
-  const order = localStorage.getItem("orderData"); // ★変更
+  const order = localStorage.getItem("orderData");
 
   if(!order){
 
@@ -68,13 +81,18 @@ function checkOrderData(){
 
 function getCartItems(){
 
-  const raw = localStorage.getItem("orderData"); // ★変更
+  const raw = localStorage.getItem("orderData");
   if(!raw) return [];
 
   const data = JSON.parse(raw);
 
+  // ★ 配列 or 単体 両対応
   if(Array.isArray(data)){
     return data;
+  }
+
+  if(data.items){
+    return data.items;
   }
 
   return [data];
@@ -88,12 +106,7 @@ function getCartItems(){
 
 function renderCart(){
 
-  const raw = localStorage.getItem("orderData"); // ★変更
-  if(!raw) return;
-
-  const data = JSON.parse(raw);
-
-  const items = data.items || [];
+  const items = getCartItems();
 
   const container = document.getElementById("cartItems");
   const totalEl = document.getElementById("totalPrice");
@@ -102,7 +115,11 @@ function renderCart(){
 
   container.innerHTML = "";
 
+  let total = 0;
+
   items.forEach(item => {
+
+    total += item.subtotal || 0;
 
     const div = document.createElement("div");
     div.className = "flex items-center gap-4 border-b py-3";
@@ -121,7 +138,7 @@ function renderCart(){
       </div>
 
       <p class="font-bold">
-        ¥${item.subtotal.toLocaleString()}
+        ¥${(item.subtotal || 0).toLocaleString()}
       </p>
     `;
 
@@ -129,7 +146,7 @@ function renderCart(){
 
   });
 
-  totalEl.textContent = `¥${data.total.toLocaleString()}`;
+  totalEl.textContent = `¥${total.toLocaleString()}`;
 
 }
 
@@ -139,6 +156,8 @@ function renderCart(){
 ========================= */
 
 function setupDate(){
+
+  if(!CONFIG) return;
 
   const picker = document.getElementById("datePicker");
 
@@ -162,6 +181,8 @@ function setupDate(){
 ========================= */
 
 function generateTimeSlots(){
+
+  if(!CONFIG) return;
 
   const date = document.getElementById("datePicker").value;
 
@@ -196,17 +217,14 @@ function generateTimeSlots(){
 
   const now = new Date();
 
-　const todayStr =
+  const todayStr =
       now.getFullYear() + "-" +
       String(now.getMonth() + 1).padStart(2, "0") + "-" +
       String(now.getDate()).padStart(2, "0");
 
-   const isToday = (todayStr === date);
+  const isToday = (todayStr === date);
 
 
-  /* =========================
-     ★ 追加：当日受付終了チェック
-  ========================= */
   if(isToday && now.getHours() >= closeHour - 1){
 
     select.innerHTML = `<option>本日の受付は終了しました</option>`;
@@ -229,6 +247,7 @@ function generateTimeSlots(){
   }
 
 }
+
 
 /* =========================
    入力チェック
@@ -374,7 +393,7 @@ function goConfirm(){
 
   if(!validateInput(customerData)) return;
 
-  localStorage.setItem( // ★変更
+  localStorage.setItem(
     "customerData",
     JSON.stringify(customerData)
   );
