@@ -91,11 +91,10 @@ ${bean.tag ? `
 <img src="${bean.image}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
 </div>
 
-<!-- ★ 修正：flex構造 -->
 <div class="p-6 flex flex-col">
 
-<!-- 上 -->
-<div class="space-y-4">
+<!-- 上（高さ固定） -->
+<div class="space-y-4 min-h-[120px]">
 
 <h3 class="leading-tight">
 <div class="text-lg font-light">${bean.name.jp}</div>
@@ -111,7 +110,7 @@ ${bean.desc.jp}
 </div>
 
 <!-- 下 -->
-<div class="mt-auto pt-4">
+<div class="pt-4">
 
 `;
 
@@ -184,11 +183,10 @@ ${item.tag ? `
 <img src="${item.image}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
 </div>
 
-<!-- ★ 修正：flex構造 -->
 <div class="p-6 flex flex-col">
 
-<!-- 上 -->
-<div class="space-y-3">
+<!-- 上（高さ固定） -->
+<div class="space-y-3 min-h-[100px]">
 
 <div class="leading-tight">
 <div class="text-lg">${item.name.jp}</div>
@@ -203,8 +201,8 @@ ${item.desc.jp}
 
 </div>
 
-<!-- 下（固定） -->
-<div class="flex justify-between items-center mt-auto pt-4">
+<!-- 下 -->
+<div class="flex justify-between items-center pt-4">
 
 <span class="text-blue-600 font-semibold">
 ¥${item.price.toLocaleString()}
