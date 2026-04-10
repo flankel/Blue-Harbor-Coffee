@@ -177,44 +177,45 @@ function setupDate(){
 
 if (notice) {
   notice.innerHTML = `
-    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 md:p-7 lg:p-8
-                text-sm md:text-base lg:text-lg leading-relaxed space-y-5">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm
+                p-4 sm:p-5 md:p-7 lg:p-8
+                text-sm sm:text-base lg:text-lg leading-relaxed space-y-4 sm:space-y-5">
 
       <!-- タイトル -->
-      <div class="border-b pb-3 border-slate-200">
-        <span class="text-slate-800 font-semibold text-base md:text-lg lg:text-xl">
+      <div class="border-b pb-2 sm:pb-3 border-slate-200">
+        <span class="text-slate-800 font-semibold text-base sm:text-lg lg:text-xl">
           ご予約に関する注意事項
         </span>
       </div>
 
       <!-- 必須項目 -->
       <div class="flex items-center gap-2 text-slate-700">
-        <span class="text-black text-[10px]">●</span>
+        <span class="text-black text-[10px] sm:text-xs leading-none">●</span>
         <span><span class="text-red-500 font-medium">*</span> は必須項目です</span>
       </div>
 
       <!-- 予約期間（強調：●も赤） -->
       <div class="flex items-center gap-2 text-red-600 font-semibold">
-        <span class="text-red-600 text-[10px]">●</span>
+        <span class="text-red-600 text-[10px] sm:text-xs leading-none">●</span>
         <span>ご予約は本日から${CONFIG.reserveLimitDays}日後まで可能です</span>
       </div>
 
       <!-- 通常情報 -->
       <ul class="space-y-3 text-slate-600">
         <li class="flex items-center gap-2">
-          <span class="text-black text-[10px]">●</span>
+          <span class="text-black text-[10px] sm:text-xs leading-none">●</span>
           <span>お受け取り時間は1時間単位でご指定いただけます</span>
         </li>
 
         <li class="flex items-center gap-2">
-          <span class="text-black text-[10px]">●</span>
+          <span class="text-black text-[10px] sm:text-xs leading-none">●</span>
           <span>当日の受付は閉店時間の1時間前までとなります</span>
         </li>
       </ul>
 
     </div>
   `;
-   }
+}
 }
 
 
