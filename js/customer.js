@@ -189,26 +189,26 @@ if (notice) {
       </div>
 
       <!-- 必須項目 -->
-      <div class="flex items-center gap-2 text-slate-700">
-        <span class="text-black text-[10px] sm:text-xs leading-none">●</span>
+      <div class="flex items-start sm:items-center gap-2 text-slate-700">
+        <span class="text-black text-[10px] sm:text-xs sm:mt-0 mt-[2px]">●</span>
         <span><span class="text-red-500 font-medium">*</span> は必須項目です</span>
       </div>
 
       <!-- 予約期間（強調：●も赤） -->
-      <div class="flex items-center gap-2 text-red-600 font-semibold">
-        <span class="text-red-600 text-[10px] sm:text-xs leading-none">●</span>
+      <div class="flex items-start sm:items-center gap-2 text-red-600 font-semibold">
+        <span class="text-red-600 text-[10px] sm:text-xs sm:mt-0 mt-[2px]">●</span>
         <span>ご予約は本日から${CONFIG.reserveLimitDays}日後まで可能です</span>
       </div>
 
       <!-- 通常情報 -->
       <ul class="space-y-3 text-slate-600">
-        <li class="flex items-center gap-2">
-          <span class="text-black text-[10px] sm:text-xs leading-none">●</span>
+        <li class="flex items-start sm:items-center gap-2">
+          <span class="text-black text-[10px] sm:text-xs sm:mt-0 mt-[2px]">●</span>
           <span>お受け取り時間は1時間単位でご指定いただけます</span>
         </li>
 
-        <li class="flex items-center gap-2">
-          <span class="text-black text-[10px] sm:text-xs leading-none">●</span>
+        <li class="flex items-start sm:items-center gap-2">
+          <span class="text-black text-[10px] sm:text-xs sm:mt-0 mt-[2px]">●</span>
           <span>当日の受付は閉店時間の1時間前までとなります</span>
         </li>
       </ul>
