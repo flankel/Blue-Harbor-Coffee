@@ -185,7 +185,7 @@ ${item.tag ? `
 </div>
 
 <!-- ★ 修正：flex構造 -->
-<div class="p-6 flex flex-col h-full">
+<div class="p-6 flex flex-col">
 
 <!-- 上 -->
 <div class="space-y-3">
