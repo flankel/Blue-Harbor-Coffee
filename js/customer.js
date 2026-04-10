@@ -173,6 +173,29 @@ function setupDate(){
 
   picker.addEventListener("change", generateTimeSlots);
 
+  const notice = document.getElementById("formNotice");
+
+  if (notice) {
+    notice.innerHTML = `
+      <p>
+        <span class="text-red-500 font-medium">*</span> は必須項目です
+      </p>
+
+      <p>
+        ※ ご予約は本日から${CONFIG.reserveLimitDays}日後まで可能です
+      </p>
+
+      <p>
+        ※ お受け取り時間は1時間単位でご指定いただけます
+      </p>
+
+      <p class="text-red-600 font-medium">
+        ⚠️ 当日の受付は閉店時間の1時間前までとなります
+      </p>
+    `;
+
+  }
+
 }
 
 
