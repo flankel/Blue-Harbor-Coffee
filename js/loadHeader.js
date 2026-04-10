@@ -1,35 +1,42 @@
-// ==============================
-// Header読み込み + active制御
-// ==============================
 fetch("header.html")
   .then(res => res.text())
   .then(data => {
     document.getElementById("header").innerHTML = data;
 
-    // ==============================
-    // 現在のページ取得（クエリ除去）
-    // ==============================
     let current = location.pathname.split("/").pop();
 
-    // クエリパラメータ除去（?以降）
     if (current.includes("?")) {
       current = current.split("?")[0];
     }
 
-    // ルート対策（/ のとき）
     if (current === "") {
       current = "index.html";
     }
 
-    // ==============================
-    // nav-link に active付与
-    // ==============================
+    // =========================
+    // TAKE OUT扱いページ定義
+    // =========================
+    const takeoutPages = [
+      "takeout.html",
+      "customer.html",
+      "confirm.html",
+      "complete.html"
+    ];
+
     document.querySelectorAll(".nav-link").forEach(link => {
       const href = link.getAttribute("href");
-
       if (!href) return;
 
+      // 通常のactive
       if (href === current) {
+        link.classList.add("active");
+      }
+
+      // TAKE OUT強制active
+      if (
+        takeoutPages.includes(current) &&
+        href === "takeout.html"
+      ) {
         link.classList.add("active");
       }
     });
