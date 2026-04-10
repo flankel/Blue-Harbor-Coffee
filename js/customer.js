@@ -175,40 +175,38 @@ function setupDate(){
 
   const notice = document.getElementById("formNotice");
 
-if (notice) {
-  notice.innerHTML = `
+   if (notice) {
+     notice.innerHTML = `
     <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 md:p-7 lg:p-8
                 text-sm md:text-base lg:text-lg leading-relaxed space-y-5">
 
       <!-- タイトル -->
-      <div class="flex items-center gap-2 border-b pb-3 border-slate-200">
+      <div class="border-b pb-3 border-slate-200">
         <span class="text-slate-800 font-semibold text-base md:text-lg lg:text-xl">
           ご予約に関する注意事項
         </span>
       </div>
 
       <!-- 必須項目 -->
-      <div class="flex items-start gap-2">
-        <span class="text-red-500 font-bold">*</span>
-        <span class="text-slate-700">
-          は必須項目です
-        </span>
+      <div class="flex items-start gap-2 text-slate-700">
+        <span class="text-black">●</span>
+        <span><span class="text-red-500 font-medium">*</span> は必須項目です</span>
       </div>
 
-      <!-- 重要（強調カード） -->
+      <!-- 重要（強調） -->
       <div class="bg-red-50 border border-red-200 text-red-700 font-semibold rounded-xl p-4">
-        ※ ご予約は本日から${CONFIG.reserveLimitDays}日後まで可能です
+        ● ご予約は本日から${CONFIG.reserveLimitDays}日後まで可能です
       </div>
 
       <!-- 通常情報 -->
       <ul class="space-y-3 text-slate-600">
         <li class="flex items-start gap-2">
-          <span>※</span>
+          <span class="text-black">●</span>
           <span>お受け取り時間は1時間単位でご指定いただけます</span>
         </li>
 
         <li class="flex items-start gap-2">
-          <span>⚠️</span>
+          <span class="text-black">●</span>
           <span>当日の受付は閉店時間の1時間前までとなります</span>
         </li>
       </ul>
