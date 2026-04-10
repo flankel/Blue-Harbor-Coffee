@@ -1,29 +1,35 @@
 fetch("header.html")
   .then(res => res.text())
   .then(data => {
-    document.getElementById("header").innerHTML = data;
+    const header = document.getElementById("header");
 
-    let current = location.pathname.split("/").pop().split("?")[0] || "index.html";
+    header.innerHTML = data;
 
-    const takeoutPages = new Set([
-      "takeout.html",
-      "customer.html",
-      "confirm.html",
-      "complete.html"
-    ]);
+    // DOM確定後1フレーム待つ（重要）
+    requestAnimationFrame(() => {
 
-    document.querySelectorAll(".nav-link").forEach(link => {
-      const href = link.getAttribute("href");
-      if (!href) return;
+      let current = location.pathname.split("/").pop().split("?")[0] || "index.html";
 
-      // 通常active
-      if (href === current) {
-        link.classList.add("active");
-      }
+      const takeoutPages = new Set([
+        "takeout.html",
+        "customer.html",
+        "confirm.html",
+        "complete.html"
+      ]);
 
-      // TAKEOUT強制active
-      if (takeoutPages.has(current) && href === "takeout.html") {
-        link.classList.add("active");
-      }
+      const links = header.querySelectorAll(".nav-link");
+
+      links.forEach(link => {
+        const href = link.getAttribute("href");
+        if (!href) return;
+
+        if (href === current) {
+          link.classList.add("active");
+        }
+
+        if (takeoutPages.has(current) && href === "takeout.html") {
+          link.classList.add("active");
+        }
+      });
     });
   });
