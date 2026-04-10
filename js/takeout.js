@@ -78,8 +78,6 @@ Coffee Beans
 
 products.beans.forEach(bean => {
 
-const isNo1 = bean.tag && bean.tag.includes("No.1");
-
 html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
@@ -88,11 +86,16 @@ ${bean.tag ? `
   ${bean.tag}
 </div>
 ` : ""}
+
 <div class="aspect-[4/3] overflow-hidden">
 <img src="${bean.image}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
 </div>
 
-<div class="p-6 space-y-4">
+<!-- ★ 修正：flex構造 -->
+<div class="p-6 flex flex-col h-full">
+
+<!-- 上 -->
+<div class="space-y-4">
 
 <h3 class="leading-tight">
 <div class="text-lg font-light">${bean.name.jp}</div>
@@ -104,6 +107,12 @@ ${bean.desc ? `
 ${bean.desc.jp}
 </p>
 ` : ""}
+
+</div>
+
+<!-- 下 -->
+<div class="mt-auto pt-4">
+
 `;
 
 Object.keys(bean.sizes).forEach(size => {
@@ -139,7 +148,7 @@ data-id="${bean.id}" data-size="${size}">＋</button>
 
 });
 
-html += `</div></div>`;
+html += `</div></div></div>`;
 });
 
 html += `</div></div>`;
@@ -162,8 +171,6 @@ Sweets
 
 products.sweets.forEach(item => {
 
-const isNo1 = item.tag && item.tag.includes("No.1");
-
 html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
@@ -177,7 +184,11 @@ ${item.tag ? `
 <img src="${item.image}" class="w-full h-full object-cover hover:scale-110 transition duration-700">
 </div>
 
-<div class="p-6 space-y-3">
+<!-- ★ 修正：flex構造 -->
+<div class="p-6 flex flex-col h-full">
+
+<!-- 上 -->
+<div class="space-y-3">
 
 <div class="leading-tight">
 <div class="text-lg">${item.name.jp}</div>
@@ -190,7 +201,10 @@ ${item.desc.jp}
 </p>
 ` : ""}
 
-<div class="flex justify-between items-center">
+</div>
+
+<!-- 下（固定） -->
+<div class="flex justify-between items-center mt-auto pt-4">
 
 <span class="text-blue-600 font-semibold">
 ¥${item.price.toLocaleString()}
