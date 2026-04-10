@@ -175,8 +175,8 @@ function setupDate(){
 
   const notice = document.getElementById("formNotice");
 
-   if (notice) {
-     notice.innerHTML = `
+if (notice) {
+  notice.innerHTML = `
     <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 md:p-7 lg:p-8
                 text-sm md:text-base lg:text-lg leading-relaxed space-y-5">
 
@@ -189,25 +189,25 @@ function setupDate(){
 
       <!-- 必須項目 -->
       <div class="flex items-start gap-2 text-slate-700">
-        <span class="text-black">●</span>
+        <span class="text-black text-[10px] leading-none mt-1">●</span>
         <span><span class="text-red-500 font-medium">*</span> は必須項目です</span>
       </div>
 
-      <!-- 予約期間（赤文字のみ強調） -->
+      <!-- 予約期間（強調：●も赤） -->
       <div class="flex items-start gap-2 text-red-600 font-semibold">
-        <span class="text-black">●</span>
+        <span class="text-red-600 text-[10px] leading-none mt-1">●</span>
         <span>ご予約は本日から${CONFIG.reserveLimitDays}日後まで可能です</span>
       </div>
 
       <!-- 通常情報 -->
       <ul class="space-y-3 text-slate-600">
         <li class="flex items-start gap-2">
-          <span class="text-black">●</span>
+          <span class="text-black text-[10px] leading-none mt-1">●</span>
           <span>お受け取り時間は1時間単位でご指定いただけます</span>
         </li>
 
         <li class="flex items-start gap-2">
-          <span class="text-black">●</span>
+          <span class="text-black text-[10px] leading-none mt-1">●</span>
           <span>当日の受付は閉店時間の1時間前までとなります</span>
         </li>
       </ul>
