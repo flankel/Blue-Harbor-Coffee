@@ -176,7 +176,7 @@ function setupDate(){
   const notice = document.getElementById("formNotice");
 
    if (notice) {
-  notice.innerHTML = `
+     notice.innerHTML = `
     <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 md:p-7 lg:p-8
                 text-sm md:text-base lg:text-lg leading-relaxed space-y-5">
 
