@@ -80,6 +80,7 @@ function loadStorage(){
 // 表示：注文
 // ==============================
 
+
 function renderOrder(){
 
   const container = document.getElementById("orderItems");
@@ -93,9 +94,16 @@ function renderOrder(){
     row.className = "flex items-center gap-4 border-b py-3";
 
     row.innerHTML = `
-      <div class="flex-1">${item.name}</div>
-      <div>× ${item.qty}</div>
-      <div>¥${subtotal.toLocaleString()}</div>
+      <img src="${item.image}" class="w-16 h-16 object-cover rounded-lg shadow-sm">
+
+      <div class="flex-1">
+        <div class="font-medium">${item.name}</div>
+        <div class="text-sm text-gray-500">× ${item.qty}</div>
+      </div>
+
+      <div class="font-medium">
+        ¥${subtotal.toLocaleString()}
+      </div>
     `;
 
     container.appendChild(row);
@@ -109,7 +117,6 @@ function renderOrder(){
   document.getElementById("orderTax").textContent = "¥" + tax.toLocaleString();
   document.getElementById("orderTotal").textContent = "¥" + total.toLocaleString();
 }
-
 
 // ==============================
 // 表示：顧客
