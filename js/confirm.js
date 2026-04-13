@@ -1,3 +1,4 @@
+
 // confirm.js
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -76,6 +77,56 @@ function loadStorage(){
 
 
 // ==============================
+// 表示：注文
+// ==============================
+
+function renderOrder(){
+
+  const container = document.getElementById("orderItems");
+  container.innerHTML = "";
+
+  orderData.items.forEach(item => {
+
+    const subtotal = item.price * item.qty;
+
+    const row = document.createElement("div");
+    row.className = "flex items-center gap-4 border-b py-3";
+
+    row.innerHTML = `
+      <div class="flex-1">${item.name}</div>
+      <div>× ${item.qty}</div>
+      <div>¥${subtotal.toLocaleString()}</div>
+    `;
+
+    container.appendChild(row);
+  });
+
+  const subtotal = orderData.total;
+  const tax = Math.round(subtotal * 0.08);
+  const total = subtotal + tax;
+
+  document.getElementById("orderSubtotal").textContent = "¥" + subtotal.toLocaleString();
+  document.getElementById("orderTax").textContent = "¥" + tax.toLocaleString();
+  document.getElementById("orderTotal").textContent = "¥" + total.toLocaleString();
+}
+
+
+// ==============================
+// 表示：顧客
+// ==============================
+
+function renderCustomer(){
+
+  document.getElementById("c_name").textContent = customerData.name;
+  document.getElementById("c_phone").textContent = customerData.phone;
+  document.getElementById("c_email").textContent = customerData.email;
+  document.getElementById("c_date").textContent = customerData.date;
+  document.getElementById("c_time").textContent = customerData.time;
+  document.getElementById("c_message").textContent = customerData.message || "";
+}
+
+
+// ==============================
 // 注文送信
 // ==============================
 
@@ -100,43 +151,48 @@ window.submitOrder = async function(){
     const orderNumber = "BH-" + Date.now().toString().slice(-6);
 
     // ==============================
-    // 🔥 Firestoreに直接保存
+    // Firestoreに直接保存
     // ==============================
 
     const docRef = await addDoc(collection(db, "orders"), {
+
       items: orderData.items,
       subtotal: subtotal,
       tax: tax,
       total: total,
       orderNumber: orderNumber,
+
       customer: {
         name: customerData.name,
         phone: customerData.phone,
         email: customerData.email
       },
-      pickup:{
+
+      pickup: {
         date: customerData.date,
         time: customerData.time
       },
+
       message: customerData.message || "",
+
       createdAt: serverTimestamp()
     });
 
     const orderId = docRef.id;
 
-
     // ==============================
-    // メール用HTML
+    // メール内容
     // ==============================
 
     const itemsRows = orderData.items.map(item => {
       const sub = item.price * item.qty;
       return `
-      <tr>
-        <td>${item.name}</td>
-        <td>${item.qty}</td>
-        <td>¥${sub.toLocaleString()}</td>
-      </tr>`;
+        <tr>
+          <td>${item.name}</td>
+          <td>${item.qty}</td>
+          <td>¥${sub.toLocaleString()}</td>
+        </tr>
+      `;
     }).join("");
 
     const htmlContent = `
@@ -144,7 +200,9 @@ window.submitOrder = async function(){
       <p>注文番号：${orderNumber}</p>
       <p>お名前：${customerData.name}</p>
       <p>受取：${customerData.date} ${customerData.time}</p>
-      <table>${itemsRows}</table>
+      <table border="1" cellpadding="6">
+        ${itemsRows}
+      </table>
       <p>合計：¥${total.toLocaleString()}</p>
     `;
 
@@ -184,7 +242,5 @@ window.submitOrder = async function(){
     btn.disabled = false;
     btn.textContent = "注文確定";
     isSubmitting = false;
-
   }
-
 };
