@@ -9,6 +9,11 @@ addDoc,
 serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+import {
+getFunctions,
+httpsCallable
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js";
+
 
 // ==============================
 // Firebase設定
@@ -25,6 +30,7 @@ appId: "1:687997239074:web:d29a92a47c69e2f67aaf7b"
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const functions = getFunctions(app);
 
 
 // ==============================
@@ -202,37 +208,30 @@ String(today.getDate()).padStart(2,"0");
 
 
 // ==============================
-// Firestore保存（ここは成功させる）
+// Functions呼び出し（Firestore直書きの代替）
 // ==============================
 
-const orderRef = await addDoc(collection(db,"orders"),{
+const createOrder = httpsCallable(functions, "createOrder");
 
-store: "blueharbor",
-orderNumber: orderNumber,
-status: "new",
-createdAt: serverTimestamp(),
-dayKey: dayKey,
-
+const result = await createOrder({
 items: orderData.items,
-
 subtotal: subtotal,
 tax: tax,
 total: total,
-
 customer: {
 name: customerData.name,
 phone: customerData.phone,
 email: customerData.email
 },
-
 pickup:{
 date: customerData.date,
 time: customerData.time
 },
-
 message: customerData.message || ""
-
 });
+
+const orderId = result.data.id;
+const orderNumberFromServer = result.data.orderNumber;
 
 
 // ==============================
@@ -269,7 +268,7 @@ const htmlContent = `
 <h2 style="text-align:center;">TAKEOUTのご予約ありがとうございます</h2>
 
 <h3>■ 注文番号</h3>
-<p>${orderRef.id}</p>
+<p>${orderNumberFromServer}</p>
 
 <h3>■ お客様情報</h3>
 <p>
