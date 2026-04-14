@@ -94,6 +94,25 @@ window.addEventListener("pageshow", () => {
 });
 
 // ==============================
+// 🔥 追加：強制同期（ズレ防止）
+// ==============================
+setInterval(() => {
+  if (typeof grecaptcha !== "undefined") {
+    const token = grecaptcha.getResponse();
+
+    if (!token) {
+      isHumanVerified = false;
+
+      const btn = document.getElementById("submitBtn");
+      if (btn) {
+        btn.disabled = true;
+        btn.classList.add("opacity-50", "cursor-not-allowed");
+      }
+    }
+  }
+}, 2000);
+
+// ==============================
 // storage読み込み
 // ==============================
 function loadStorage() {
@@ -177,7 +196,6 @@ window.backToCustomer = function () {
 window.submitOrder = async function () {
   if (isSubmitting) return;
 
-  // 🔥 フラグチェック（最重要）
   if (!isHumanVerified) {
     alert("reCAPTCHAを完了してください");
     return;
