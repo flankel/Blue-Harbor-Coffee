@@ -126,20 +126,27 @@ window.backToCustomer = function () {
 };
 
 // ==============================
-// 注文送信（🔥ここだけ追加）
+// 注文送信（🔥ここだけ強化）
 // ==============================
 window.submitOrder = async function () {
   if (isSubmitting) return;
 
-  // 🔥 reCAPTCHAチェック追加
+  // 🔥 reCAPTCHAチェック
   if (typeof grecaptcha === "undefined") {
     alert("reCAPTCHAの読み込みに失敗しました");
     return;
   }
 
   const token = grecaptcha.getResponse();
+
   if (!token) {
     alert("reCAPTCHAを確認してください");
+    return;
+  }
+
+  // 🔥 追加：トークン長チェック（簡易Bot対策）
+  if (token.length < 100) {
+    alert("不正な操作が検出されました");
     return;
   }
 
@@ -175,7 +182,8 @@ window.submitOrder = async function () {
       subtotal: subtotal,
       tax: tax,
       total: total,
-      recaptchaToken: token, // 🔥追加
+      recaptchaToken: token,
+      userAgent: navigator.userAgent, // 🔥追加（Bot検知用）
       customer: {
         name: customerData.name,
         phone: customerData.phone,
@@ -188,7 +196,6 @@ window.submitOrder = async function () {
       message: customerData.message || ""
     });
 
-    // 🔥 成功後リセット
     grecaptcha.reset();
 
     const itemsRows = orderData.items
@@ -260,7 +267,6 @@ window.submitOrder = async function () {
     btn.textContent = "注文確定";
     isSubmitting = false;
 
-    // 🔥 エラー時もリセット
     if (typeof grecaptcha !== "undefined") {
       grecaptcha.reset();
     }
