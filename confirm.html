@@ -154,11 +154,12 @@ Order Confirmation
 
 <!-- 🔥 reCAPTCHA（callback追加） -->
 <div class="flex justify-center">
-  <div 
-    class="g-recaptcha" 
-    data-sitekey="6LcVLbcsAAAAAOHmRkXC6ELjVlQ04vFNeMXW_rfQ"
-    data-callback="enableSubmit">
-  </div>
+<div 
+  class="g-recaptcha" 
+  data-sitekey="6LcVLbcsAAAAAOHmRkXC6ELjVlQ04vFNeMXW_rfQ"
+  data-callback="enableSubmit"
+  data-expired-callback="disableSubmit">
+</div>
 </div>
 
 <div class="flex gap-4">
