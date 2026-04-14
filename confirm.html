@@ -5,7 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order Confirmation | Blue Harbor Coffee</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -91,7 +93,6 @@ Order Confirmation
 
 <div class="divide-y divide-slate-200 text-sm">
 
-<!-- 名前 -->
 <div class="py-5">
   <div class="font-bold text-slate-800 text-sm mb-2 tracking-wide">
     お名前
@@ -101,7 +102,6 @@ Order Confirmation
   </div>
 </div>
 
-<!-- 電話番号 -->
 <div class="py-5">
   <div class="font-bold text-slate-800 text-sm mb-2 tracking-wide">
     電話番号
@@ -111,7 +111,6 @@ Order Confirmation
   </div>
 </div>
 
-<!-- メール -->
 <div class="py-5">
   <div class="font-bold text-slate-800 text-sm mb-2 tracking-wide">
     メール
@@ -121,7 +120,6 @@ Order Confirmation
   </div>
 </div>
 
-<!-- 来店日 -->
 <div class="py-5">
   <div class="font-bold text-slate-800 text-sm mb-2 tracking-wide">
     来店日
@@ -131,7 +129,6 @@ Order Confirmation
   </div>
 </div>
 
-<!-- 来店時間 -->
 <div class="py-5">
   <div class="font-bold text-slate-800 text-sm mb-2 tracking-wide">
     来店時間
@@ -141,7 +138,6 @@ Order Confirmation
   </div>
 </div>
 
-<!-- お問い合わせ -->
 <div class="py-5">
   <div class="font-bold text-slate-800 text-sm mb-2 tracking-wide">
     お問い合わせ
@@ -152,12 +148,17 @@ Order Confirmation
 </div>
 
 </div>
-
 </div>
 
 <!-- Buttons -->
-<div class="flex gap-4 mt-10">
+<div class="flex flex-col gap-6 mt-10">
 
+<!-- 🔥 reCAPTCHA -->
+<div class="flex justify-center">
+  <div class="g-recaptcha" data-sitekey="ここにSITE_KEYを入れる"></div>
+</div>
+
+<div class="flex gap-4">
 <button
 onclick="backToCustomer()"
 class="w-full bg-gray-200 py-4 rounded-xl hover:bg-gray-300 transition">
@@ -170,7 +171,6 @@ onclick="submitOrder()"
 class="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 transition">
 注文確定
 </button>
-
 </div>
 
 </div>
@@ -183,7 +183,12 @@ class="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 transitio
 </footer>
 
 <script src="js/loadHeader.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<!-- 🔥 reCAPTCHA読み込み -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <script type="module" src="js/confirm.js"></script>
 
 </body>
