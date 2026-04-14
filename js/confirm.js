@@ -55,7 +55,43 @@ function init() {
 // ==============================
 window.enableSubmit = function () {
   isHumanVerified = true;
+
+  const btn = document.getElementById("submitBtn");
+  if (btn) {
+    btn.disabled = false;
+    btn.classList.remove("opacity-50", "cursor-not-allowed");
+  }
 };
+
+// ==============================
+// 🔥 追加：reCAPTCHA期限切れ
+// ==============================
+window.disableSubmit = function () {
+  isHumanVerified = false;
+
+  const btn = document.getElementById("submitBtn");
+  if (btn) {
+    btn.disabled = true;
+    btn.classList.add("opacity-50", "cursor-not-allowed");
+  }
+};
+
+// ==============================
+// 🔥 追加：ページ復帰時リセット（戻る対策）
+// ==============================
+window.addEventListener("pageshow", () => {
+  if (typeof grecaptcha !== "undefined") {
+    grecaptcha.reset();
+  }
+
+  isHumanVerified = false;
+
+  const btn = document.getElementById("submitBtn");
+  if (btn) {
+    btn.disabled = true;
+    btn.classList.add("opacity-50", "cursor-not-allowed");
+  }
+});
 
 // ==============================
 // storage読み込み
@@ -211,7 +247,7 @@ window.submitOrder = async function () {
     });
 
     grecaptcha.reset();
-    isHumanVerified = false; // 🔥リセット（重要）
+    isHumanVerified = false;
 
     const itemsRows = orderData.items
       .map(item => {
@@ -227,7 +263,7 @@ window.submitOrder = async function () {
       })
       .join("");
 
-        const htmlContent = `
+    const htmlContent = `
       <div style="font-family:Arial,sans-serif;background:#f7f7f7;padding:20px;">
         <div style="max-width:600px;margin:auto;background:#ffffff;padding:24px;border-radius:12px;">
           <div style="text-align:center;margin-bottom:20px;">
@@ -279,7 +315,6 @@ window.submitOrder = async function () {
         </div>
       </div>
     `;
-
 
     try {
       await emailjs.send(
