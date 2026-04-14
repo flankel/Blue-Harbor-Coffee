@@ -30,6 +30,9 @@ let orderData = null;
 let customerData = null;
 let isSubmitting = false;
 
+// 🔥 追加：reCAPTCHA通過フラグ
+let isHumanVerified = false;
+
 // ==============================
 // 初期化
 // ==============================
@@ -46,6 +49,13 @@ function init() {
   renderOrder();
   renderCustomer();
 }
+
+// ==============================
+// 🔥 reCAPTCHA成功時
+// ==============================
+window.enableSubmit = function () {
+  isHumanVerified = true;
+};
 
 // ==============================
 // storage読み込み
@@ -126,12 +136,17 @@ window.backToCustomer = function () {
 };
 
 // ==============================
-// 注文送信（🔥ここだけ強化）
+// 注文送信（🔥強化版）
 // ==============================
 window.submitOrder = async function () {
   if (isSubmitting) return;
 
-  // 🔥 reCAPTCHAチェック
+  // 🔥 フラグチェック（最重要）
+  if (!isHumanVerified) {
+    alert("reCAPTCHAを完了してください");
+    return;
+  }
+
   if (typeof grecaptcha === "undefined") {
     alert("reCAPTCHAの読み込みに失敗しました");
     return;
@@ -144,7 +159,6 @@ window.submitOrder = async function () {
     return;
   }
 
-  // 🔥 追加：トークン長チェック（簡易Bot対策）
   if (token.length < 100) {
     alert("不正な操作が検出されました");
     return;
@@ -183,7 +197,7 @@ window.submitOrder = async function () {
       tax: tax,
       total: total,
       recaptchaToken: token,
-      userAgent: navigator.userAgent, // 🔥追加（Bot検知用）
+      userAgent: navigator.userAgent,
       customer: {
         name: customerData.name,
         phone: customerData.phone,
@@ -197,6 +211,7 @@ window.submitOrder = async function () {
     });
 
     grecaptcha.reset();
+    isHumanVerified = false; // 🔥リセット（重要）
 
     const itemsRows = orderData.items
       .map(item => {
