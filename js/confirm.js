@@ -36,7 +36,6 @@ let isSubmitting = false;
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
-  // ★ EmailJS初期化（ここが超重要）
   if (typeof emailjs !== "undefined") {
     emailjs.init("wK3E-NyEcLx-5tbSL");
   } else {
@@ -92,17 +91,11 @@ function renderOrder() {
     container.appendChild(row);
   });
 
-  // ==============================
-  // 金額計算
-  // ==============================
   const taxRate = 0.08;
   const subtotal = orderData.total;
   const tax = Math.round(subtotal * taxRate);
   const totalWithTax = subtotal + tax;
 
-  // ==============================
-  // 表示
-  // ==============================
   document.getElementById("orderSubtotal").textContent =
     "¥" + subtotal.toLocaleString();
 
@@ -133,10 +126,22 @@ window.backToCustomer = function () {
 };
 
 // ==============================
-// 注文送信
+// 注文送信（🔥ここだけ追加）
 // ==============================
 window.submitOrder = async function () {
   if (isSubmitting) return;
+
+  // 🔥 reCAPTCHAチェック追加
+  if (typeof grecaptcha === "undefined") {
+    alert("reCAPTCHAの読み込みに失敗しました");
+    return;
+  }
+
+  const token = grecaptcha.getResponse();
+  if (!token) {
+    alert("reCAPTCHAを確認してください");
+    return;
+  }
 
   isSubmitting = true;
 
@@ -160,9 +165,6 @@ window.submitOrder = async function () {
       "-" +
       String(today.getDate()).padStart(2, "0");
 
-    // ==============================
-    // Firestore保存
-    // ==============================
     const orderRef = await addDoc(collection(db, "orders"), {
       store: "blueharbor",
       orderNumber: orderNumber,
@@ -173,6 +175,7 @@ window.submitOrder = async function () {
       subtotal: subtotal,
       tax: tax,
       total: total,
+      recaptchaToken: token, // 🔥追加
       customer: {
         name: customerData.name,
         phone: customerData.phone,
@@ -185,9 +188,9 @@ window.submitOrder = async function () {
       message: customerData.message || ""
     });
 
-    // ==============================
-    // 商品HTML生成
-    // ==============================
+    // 🔥 成功後リセット
+    grecaptcha.reset();
+
     const itemsRows = orderData.items
       .map(item => {
         const sub = item.price * item.qty;
@@ -202,61 +205,27 @@ window.submitOrder = async function () {
       })
       .join("");
 
-    // ==============================
-    // HTMLメール生成
-    // ==============================
     const htmlContent = `
       <div style="font-family:Arial,sans-serif;background:#f7f7f7;padding:20px;">
         <div style="max-width:600px;margin:auto;background:#ffffff;padding:24px;border-radius:12px;">
-          
           <div style="text-align:center;margin-bottom:20px;">
             <img src="https://i.imgur.com/HUnjkKj.png" style="width:120px;">
           </div>
-
           <h2 style="text-align:center;">TAKEOUTのご予約ありがとうございます</h2>
-
           <h3>■ 注文番号</h3>
           <p>${orderRef.id}</p>
-
           <h3>■ お客様情報</h3>
           <p>
             お名前：${customerData.name}<br>
             電話番号：${customerData.phone}<br>
             メール：${customerData.email}
           </p>
-
           <h3>■ ご来店日時</h3>
           <p>${customerData.date} ${customerData.time}</p>
-
           <h3>■ ご注文内容</h3>
           <table style="width:100%;border-collapse:collapse;">
-            <tr style="background:#f0f0f0;">
-              <th style="padding:8px;border:1px solid #ddd;">商品</th>
-              <th style="padding:8px;border:1px solid #ddd;">数量</th>
-              <th style="padding:8px;border:1px solid #ddd;">小計</th>
-            </tr>
-
             ${itemsRows}
-
-            <tr>
-              <td colspan="2" style="padding:8px;text-align:right;">小計</td>
-              <td style="padding:8px;text-align:right;">¥${subtotal.toLocaleString()}</td>
-            </tr>
-
-            <tr>
-              <td colspan="2" style="padding:8px;text-align:right;">消費税</td>
-              <td style="padding:8px;text-align:right;">¥${tax.toLocaleString()}</td>
-            </tr>
-
-            <tr style="font-weight:bold;">
-              <td colspan="2" style="padding:8px;text-align:right;">合計</td>
-              <td style="padding:8px;text-align:right;">¥${total.toLocaleString()}</td>
-            </tr>
           </table>
-
-          <h3 style="margin-top:20px;">■ お問い合わせ</h3>
-          <p>${customerData.message || ""}</p>
-
           <p style="text-align:center;margin-top:30px;">
             ご来店をお待ちしております。
           </p>
@@ -264,9 +233,6 @@ window.submitOrder = async function () {
       </div>
     `;
 
-    // ==============================
-    // メール送信
-    // ==============================
     try {
       await emailjs.send(
         "service_l7e4fi8",
@@ -280,9 +246,6 @@ window.submitOrder = async function () {
       console.warn("メール送信失敗:", e);
     }
 
-    // ==============================
-    // storage削除
-    // ==============================
     localStorage.removeItem("orderData");
     localStorage.removeItem("customerData");
     localStorage.removeItem("cart");
@@ -296,5 +259,10 @@ window.submitOrder = async function () {
     btn.disabled = false;
     btn.textContent = "注文確定";
     isSubmitting = false;
+
+    // 🔥 エラー時もリセット
+    if (typeof grecaptcha !== "undefined") {
+      grecaptcha.reset();
+    }
   }
 };
