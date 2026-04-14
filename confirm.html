@@ -62,7 +62,6 @@ Order Confirmation
 
 <div id="orderItems" class="space-y-3 text-sm"></div>
 
-<!-- 合計金額 -->
 <div class="border-t mt-6 pt-6 space-y-2 text-sm">
 
 <div class="flex justify-between">
@@ -153,9 +152,13 @@ Order Confirmation
 <!-- Buttons -->
 <div class="flex flex-col gap-6 mt-10">
 
-<!-- 🔥 reCAPTCHA -->
+<!-- 🔥 reCAPTCHA（callback追加） -->
 <div class="flex justify-center">
-  <div class="g-recaptcha" data-sitekey="6LcVLbcsAAAAAOHmRkXC6ELjVlQ04vFNeMXW_rfQ"></div>
+  <div 
+    class="g-recaptcha" 
+    data-sitekey="6LcVLbcsAAAAAOHmRkXC6ELjVlQ04vFNeMXW_rfQ"
+    data-callback="enableSubmit">
+  </div>
 </div>
 
 <div class="flex gap-4">
@@ -165,10 +168,12 @@ class="w-full bg-gray-200 py-4 rounded-xl hover:bg-gray-300 transition">
 戻る
 </button>
 
+<!-- 🔥 初期状態は押せない -->
 <button
 id="submitBtn"
 onclick="submitOrder()"
-class="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 transition">
+disabled
+class="w-full bg-blue-600 text-white py-4 rounded-xl opacity-50 cursor-not-allowed">
 注文確定
 </button>
 </div>
@@ -188,6 +193,15 @@ class="w-full bg-blue-600 text-white py-4 rounded-xl hover:bg-blue-700 transitio
 
 <!-- 🔥 reCAPTCHA読み込み -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<!-- 🔥 ボタン有効化 -->
+<script>
+window.enableSubmit = function () {
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = false;
+  btn.classList.remove("opacity-50", "cursor-not-allowed");
+};
+</script>
 
 <script type="module" src="js/confirm.js"></script>
 
