@@ -54,67 +54,63 @@ function renderMap(map) {
    STORE INFO（Accessなし）
 ========================= */
 function renderStoreInfo(data) {
-  const container = document.getElementById("store-info");
-  if (!container) return;
+  const main = document.getElementById("store-info-main");
+  const side = document.getElementById("store-info-side");
+
+  if (!main || !side) return;
 
   const store = data.store;
 
-  container.innerHTML = `
-    <h3 class="text-2xl font-bold mb-8 tracking-wide">${store.name}</h3>
+  /* ===== 左（メイン） ===== */
+  main.innerHTML = `
 
-    <div class="grid md:grid-cols-2 gap-12">
+    <h3 class="text-2xl font-bold tracking-wide">
+      ${store.name}
+    </h3>
 
-      <!-- 左 -->
-      <div class="space-y-8">
+    <div>
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+        Address
+      </p>
+      <p class="text-lg leading-relaxed">
+        ${store.address}
+      </p>
+    </div>
 
-        <div>
-          <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
-            Address
-          </p>
-          <p class="text-lg leading-relaxed">
-            ${store.address}
-          </p>
-        </div>
+    <div>
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+        Phone Number
+      </p>
+      <p class="text-lg">
+        <a href="tel:${store.phone.replace(/-/g, "")}"
+           class="text-blue-600 hover:underline">
+           ${store.phone}
+        </a>
+      </p>
+    </div>
 
-        <div>
-          <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
-            Phone Number
-          </p>
-          <p class="text-lg">
-            <a href="tel:${store.phone.replace(/-/g, "")}"
-               class="text-blue-600 hover:underline">
-               ${store.phone}
-            </a>
-          </p>
-        </div>
-
-        <div>
-          <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
-            Opening Hours
-          </p>
-          ${renderHours(data.hours)}
-        </div>
-
-      </div>
-
-      <!-- 右 -->
-      <div class="space-y-8">
-
-        <div>
-          <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
-            Facilities
-          </p>
-          ${renderFacilities(data.facilities)}
-        </div>
-
-        ${renderSNS(data.sns)}
-
-      </div>
-
+    <div>
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+        Opening Hours
+      </p>
+      ${renderHours(data.hours)}
     </div>
   `;
-}
 
+  /* ===== 右（サブ） ===== */
+  side.innerHTML = `
+
+    <div>
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+        Facilities
+      </p>
+      ${renderFacilities(data.facilities)}
+    </div>
+
+    ${renderSNS(data.sns)}
+
+  `;
+}
 /* =========================
    ⭐ Access（Maps下・カード化）
 ========================= */
