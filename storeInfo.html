@@ -56,16 +56,16 @@
     <section class="bg-gray-50 py-20 px-6">
       <div class="max-w-6xl mx-auto page-enter">
 
-        <h2 class="text-3xl font-eng tracking-widest mb-10 text-center">
+        <h2 class="text-3xl font-eng tracking-widest mb-12 text-center">
           Maps & Access
         </h2>
 
         <!-- 地図 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
           <!-- 手書き風地図 -->
           <div class="w-full aspect-[16/9]">
-            <img id="map-image" src="" class="w-full h-full object-contain">
+            <img id="map-image" src="" class="w-full h-full object-contain rounded-xl shadow-md">
           </div>
 
           <!-- Google Map -->
@@ -80,9 +80,9 @@
 
         </div>
 
-        <!-- Access -->
-        <div id="access-info"
-             class="mt-12 text-center text-sm text-gray-600 space-y-2">
+        <!-- ⭐ Access（カード化＋重なり） -->
+        <div id="access-info" class="-mt-12 flex justify-center">
+          <!-- JSでカードが入る -->
         </div>
 
       </div>
@@ -100,17 +100,16 @@
 
         <div class="bg-gray-50 rounded-xl p-8 md:p-10 shadow-inner w-full">
 
-          <!-- ⭐ ここが変更ポイント -->
           <div class="grid md:grid-cols-3 gap-12">
 
             <!-- 左：メイン情報 -->
             <div class="md:col-span-2 space-y-8" id="store-info-main">
-              <!-- JSで中身が入る -->
+              <!-- JSで中身 -->
             </div>
 
             <!-- 右：サブ情報 -->
             <div class="space-y-8" id="store-info-side">
-              <!-- JSで中身が入る -->
+              <!-- JSで中身 -->
             </div>
 
           </div>
