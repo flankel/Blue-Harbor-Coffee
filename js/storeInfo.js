@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderGallery(data.gallery);
     renderMap(data.map);
     renderStoreInfo(data);
-    renderAccess(data); // ← 追加
+    renderAccess(data);
 
   } catch (err) {
     console.error("storeInfoの読み込みに失敗:", err);
@@ -51,7 +51,7 @@ function renderMap(map) {
 }
 
 /* =========================
-   STORE INFO（Access削除済み）
+   STORE INFO（Accessなし）
 ========================= */
 function renderStoreInfo(data) {
   const container = document.getElementById("store-info");
@@ -64,7 +64,7 @@ function renderStoreInfo(data) {
 
     <div class="grid md:grid-cols-2 gap-12">
 
-      <!-- 左：基本情報 -->
+      <!-- 左 -->
       <div class="space-y-8">
 
         <div>
@@ -97,7 +97,7 @@ function renderStoreInfo(data) {
 
       </div>
 
-      <!-- 右：詳細 -->
+      <!-- 右 -->
       <div class="space-y-8">
 
         <div>
@@ -116,7 +116,7 @@ function renderStoreInfo(data) {
 }
 
 /* =========================
-   ⭐ NEW：ACCESS（Mapsの下に表示）
+   ⭐ Access（Mapsに統合）
 ========================= */
 function renderAccess(data) {
   const container = document.getElementById("access-info");
@@ -125,17 +125,10 @@ function renderAccess(data) {
   const store = data.store;
 
   container.innerHTML = `
-    <div class="mt-12 bg-white rounded-xl p-8 shadow-md max-w-3xl mx-auto">
-
-      <h3 class="text-xl font-bold mb-6 tracking-widest text-center font-eng">
-        Access
-      </h3>
-
-      <div class="text-sm text-gray-600 space-y-2 text-center">
-        ${store.access.map(a => `<p>${a}</p>`).join("")}
-      </div>
-
-    </div>
+    <p class="font-eng tracking-widest text-gray-500 mb-2">
+      ACCESS
+    </p>
+    ${store.access.map(a => `<p>${a}</p>`).join("")}
   `;
 }
 
