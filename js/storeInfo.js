@@ -164,6 +164,9 @@ function renderHours(hours) {
 
           ${hours.map(h => {
 
+            /* =========================
+               CLOSED処理
+            ========================= */
             if (h.closed) {
               return `
                 <tr>
@@ -177,29 +180,39 @@ function renderHours(hours) {
               `;
             }
 
+            /* =========================
+               色判定（メイン）
+            ========================= */
+            const isSunday = h.day === "Sun";
+
             let textClass = "text-gray-800";
 
             if (h.highlight === "blue") {
               textClass = "text-blue-700 font-bold";
             }
 
-            if (h.highlight === "red") {
+            if (h.highlight === "red" || isSunday) {
               textClass = "text-red-700 font-bold";
             }
 
-            /* ⭐ここが修正ポイント（noteにも色反映） */
+            /* =========================
+               NOTE色（重要）
+            ========================= */
             let noteClass = "text-gray-500 text-xs mt-1";
-            if (h.highlight === "red") {
+
+            if (h.highlight === "red" || isSunday) {
               noteClass = "text-red-600 font-semibold text-xs mt-1";
             }
 
             return `
               <tr>
 
+                <!-- 曜日 -->
                 <th class="px-2 py-2 text-left w-12 border-r-2 border-gray-400 ${textClass}">
                   ${h.day}
                 </th>
 
+                <!-- 時間 -->
                 <td class="px-3 py-2 text-center border-l-2 border-gray-400">
 
                   <div class="${textClass} font-bold">
