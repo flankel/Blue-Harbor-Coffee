@@ -165,12 +165,12 @@ function renderHours(hours) {
 
             if (h.highlight === "blue") {
               rowClass = "bg-blue-50";
-              textClass = "text-blue-700 font-bold";
+              textClass = "text-blue-700";
             }
 
             if (h.highlight === "red") {
               rowClass = "bg-red-50";
-              textClass = "text-red-700 font-bold";
+              textClass = "text-red-700";
             }
 
             return `
@@ -179,7 +179,11 @@ function renderHours(hours) {
                   ${h.day}
                 </th>
                 <td class="px-3 py-2 text-center ${textClass} border-l-2 border-gray-300">
-                  ${h.open} — ${h.close}
+                  
+                  <span class="font-bold">
+                    ${h.open} — ${h.close}
+                  </span>
+
                   ${h.note ? `<div class="text-xs mt-1">${h.note}</div>` : ""}
                 </td>
               </tr>
