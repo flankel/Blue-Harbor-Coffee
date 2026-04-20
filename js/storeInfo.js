@@ -158,10 +158,10 @@ function renderHours(hours) {
             if (h.closed) {
               return `
                 <tr>
-                  <th class="bg-white px-2 py-2 text-left font-medium w-12 border-r-2 border-gray-300">
+                  <th class="bg-white px-2 py-2 text-left font-medium w-12 border-r-2 border-gray-400">
                     ${h.day}
                   </th>
-                  <td class="px-3 py-2 font-bold text-red-600 text-center">
+                  <td class="px-3 py-2 font-bold text-red-600 text-center border-l-2 border-gray-400">
                     CLOSED
                   </td>
                 </tr>
@@ -169,34 +169,34 @@ function renderHours(hours) {
             }
 
             let rowClass = "";
-            let textClass = "";
+
+            // ⚠️ 文字色だけ変える（背景は変えない）
+            let textClass = "text-gray-800";
 
             if (h.highlight === "blue") {
-              rowClass = "bg-blue-50";
-              textClass = "text-blue-700";
+              textClass = "text-blue-700 font-bold";
             }
 
             if (h.highlight === "red") {
-              rowClass = "bg-red-50";
-              textClass = "text-red-700";
+              textClass = "text-red-700 font-bold";
             }
 
             return `
               <tr class="${rowClass}">
-                
-                <!-- 曜日（左・細め・境界線強化） -->
+
+                <!-- 曜日 -->
                 <th class="px-2 py-2 text-left w-12 border-r-2 border-gray-400 ${textClass}">
                   ${h.day}
                 </th>
 
-                <!-- 時間（中央揃え＋太字） -->
-                <td class="px-3 py-2 text-center ${textClass}">
-                  
-                  <div class="font-bold">
+                <!-- 時間 -->
+                <td class="px-3 py-2 text-center border-l-2 border-gray-400">
+
+                  <div class="${textClass} font-bold">
                     ${h.open} — ${h.close}
                   </div>
 
-                  ${h.note ? `<div class="text-xs mt-1">${h.note}</div>` : ""}
+                  ${h.note ? `<div class="text-xs mt-1 text-gray-500">${h.note}</div>` : ""}
 
                 </td>
 
@@ -209,6 +209,7 @@ function renderHours(hours) {
     </div>
   `;
 }
+
 /* =========================
    FACILITIES
 ========================= */
