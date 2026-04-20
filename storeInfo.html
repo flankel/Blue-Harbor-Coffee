@@ -89,7 +89,7 @@
     </section>
 
     <!-- =========================
-         Details（修正済み）
+         Details（スマホ/PC分離）
     ========================== -->
     <section class="bg-white py-20 px-6">
       <div class="max-w-6xl mx-auto page-enter">
@@ -100,16 +100,22 @@
 
         <div class="bg-gray-50 rounded-xl p-8 md:p-10 shadow-inner w-full">
 
-          <!-- ✅ PCで2カラム / スマホは1カラム -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 
-            <!-- 左：すべて（営業時間以外） -->
-            <div id="store-info-main" class="space-y-8 max-w-md mx-auto">
-              <!-- JS -->
+            <!-- 左（スマホ + メイン情報） -->
+            <div id="store-info-main"
+                 class="space-y-8 max-w-md mx-auto">
+
+              <!-- ⭐ スマホだけ表示：Opening Hoursコピー -->
+              <div id="store-hours-mobile" class="block md:hidden">
+                <!-- JSで挿入 -->
+              </div>
+
             </div>
 
-            <!-- 右：営業時間のみ -->
-            <div id="store-hours" class="flex flex-col justify-center max-w-md mx-auto">
+            <!-- 右（PCのみ：Opening Hours） -->
+            <div id="store-hours"
+                 class="hidden md:flex flex-col justify-center max-w-md mx-auto">
               <!-- JS -->
             </div>
 
