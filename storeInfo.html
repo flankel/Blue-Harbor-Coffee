@@ -30,22 +30,37 @@
     <section class="relative h-[80vh] md:h-[620px] w-full overflow-hidden page-enter -mt-[112px] md:-mt-28">
       <img id="hero-image" src="" class="absolute inset-0 w-full h-full object-cover">
       <div class="absolute inset-0 bg-black/40"></div>
-
       <div class="relative h-full flex items-center justify-center text-white text-center">
         <h1 id="hero-title" class="text-5xl md:text-7xl font-eng font-bold tracking-widest"></h1>
       </div>
     </section>
 
-    <div class="max-w-6xl mx-auto py-20 px-6 page-enter">
+    <!-- =========================
+         Exterior
+    ========================== -->
+    <section class="bg-white py-20 px-6">
+      <div class="max-w-6xl mx-auto page-enter">
 
-      <!-- 外観ギャラリー -->
-      <div id="gallery" class="grid md:grid-cols-3 gap-6 mb-16"></div>
+        <h2 class="text-3xl font-eng tracking-widest mb-10 text-center">
+          Exterior
+        </h2>
 
-      <!-- 地図と情報（縦構造に変更） -->
-      <div class="bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100 p-6 md:p-10">
+        <div id="gallery" class="grid md:grid-cols-3 gap-6"></div>
 
-        <!-- 地図（横並び） -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      </div>
+    </section>
+
+    <!-- =========================
+         Maps & Access
+    ========================== -->
+    <section class="bg-gray-50 py-20 px-6">
+      <div class="max-w-6xl mx-auto page-enter">
+
+        <h2 class="text-3xl font-eng tracking-widest mb-10 text-center">
+          Maps & Access
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
           <!-- 手書き風地図 -->
           <div class="w-full aspect-[16/9]">
@@ -55,33 +70,42 @@
           <!-- Google Map -->
           <div class="w-full aspect-[16/9] rounded-xl overflow-hidden shadow-md">
             <iframe id="google-map"
-                src=""
-                width="100%" height="100%"
-                style="border:0;" allowfullscreen=""
-                loading="lazy">
+              src=""
+              width="100%" height="100%"
+              style="border:0;" allowfullscreen=""
+              loading="lazy">
             </iframe>
           </div>
 
         </div>
 
-        <!-- 店舗情報（下に配置） -->
+      </div>
+    </section>
+
+    <!-- =========================
+         Details
+    ========================== -->
+    <section class="bg-white py-20 px-6">
+      <div class="max-w-6xl mx-auto page-enter">
+
+        <h2 class="text-3xl font-eng tracking-widest mb-10 text-center">
+          Details
+        </h2>
+
         <div id="store-info"
           class="bg-gray-50 rounded-xl p-8 md:p-10 shadow-inner w-full">
         </div>
 
       </div>
+    </section>
 
-    </div>
   </main>
 
   <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">
     © 2024 Blue Harbor Coffee Roasters.
   </footer>
 
-  <!-- 共通ヘッダー -->
   <script src="js/loadHeader.js"></script>
-
-  <!-- 店舗情報 -->
   <script src="js/storeInfo.js"></script>
 
 </body>
