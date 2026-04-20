@@ -116,7 +116,7 @@ function renderStoreInfo(data) {
 }
 
 /* =========================
-   ⭐ Access（Mapsに統合）
+   ⭐ Access（Maps下・カード化）
 ========================= */
 function renderAccess(data) {
   const container = document.getElementById("access-info");
@@ -125,10 +125,17 @@ function renderAccess(data) {
   const store = data.store;
 
   container.innerHTML = `
-    <p class="font-eng tracking-widest text-gray-500 mb-2">
-      ACCESS
-    </p>
-    ${store.access.map(a => `<p>${a}</p>`).join("")}
+    <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 max-w-xl mx-auto text-center">
+
+      <h3 class="text-sm tracking-widest text-gray-400 mb-4">
+        ACCESS
+      </h3>
+
+      <div class="space-y-2 text-sm text-gray-700 leading-relaxed">
+        ${store.access.map(a => `<p>${a}</p>`).join("")}
+      </div>
+
+    </div>
   `;
 }
 
