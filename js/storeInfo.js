@@ -50,7 +50,7 @@ function renderMap(map) {
 }
 
 /* =========================
-   STORE INFO
+   STORE INFO（←ここを変更）
 ========================= */
 function renderStoreInfo(data) {
   const container = document.getElementById("store-info");
@@ -59,29 +59,67 @@ function renderStoreInfo(data) {
   const store = data.store;
 
   container.innerHTML = `
-    <h3 class="text-2xl font-bold mb-4 tracking-wide">${store.name}</h3>
+    <h3 class="text-2xl font-bold mb-8 tracking-wide">${store.name}</h3>
 
-    <div class="text-base mb-6 border-b border-gray-300 pb-4">
-      <p>${store.address}</p>
-      <p class="mt-2">
-        TEL: <a href="tel:${store.phone.replace(/-/g, "")}" class="text-blue-600 hover:underline">${store.phone}</a>
-      </p>
+    <div class="grid md:grid-cols-2 gap-12">
+
+      <!-- 左：基本情報 -->
+      <div class="space-y-8">
+
+        <div>
+          <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+            Address
+          </p>
+          <p class="text-lg leading-relaxed">
+            ${store.address}
+          </p>
+        </div>
+
+        <div>
+          <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+            Phone Number
+          </p>
+          <p class="text-lg">
+            <a href="tel:${store.phone.replace(/-/g, "")}"
+               class="text-blue-600 hover:underline">
+               ${store.phone}
+            </a>
+          </p>
+        </div>
+
+        <div>
+          <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+            Opening Hours
+          </p>
+          ${renderHours(data.hours)}
+        </div>
+
+      </div>
+
+      <!-- 右：詳細 -->
+      <div class="space-y-8">
+
+        <div>
+          <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+            Facilities
+          </p>
+          ${renderFacilities(data.facilities)}
+        </div>
+
+        <div>
+          <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+            Access
+          </p>
+          <div class="text-sm text-gray-600 space-y-1">
+            ${store.access.map(a => `<p>${a}</p>`).join("")}
+          </div>
+        </div>
+
+        ${renderSNS(data.sns)}
+
+      </div>
+
     </div>
-
-    <p class="text-sm text-gray-700 leading-relaxed mb-6">
-      ${store.concept}
-    </p>
-
-    <div class="mb-6 text-sm text-gray-600">
-      <p class="font-eng font-bold mb-2 tracking-wide">ACCESS</p>
-      ${store.access.map(a => `<p>${a}</p>`).join("")}
-    </div>
-
-    ${renderHours(data.hours)}
-
-    ${renderFacilities(data.facilities)}
-
-    ${renderSNS(data.sns)}
   `;
 }
 
@@ -90,9 +128,8 @@ function renderStoreInfo(data) {
 ========================= */
 function renderHours(hours) {
   return `
-    <div class="mb-6">
-      <p class="font-eng font-bold mb-3 tracking-wide">OPENING HOURS</p>
-      <table class="w-full text-sm border border-gray-200 rounded-lg overflow-hidden table-fixed">
+    <div class="text-sm">
+      <table class="w-full border border-gray-200 rounded-lg overflow-hidden table-fixed">
         <tbody class="divide-y divide-gray-200">
           ${hours.map(h => {
 
@@ -153,7 +190,7 @@ function renderFacilities(facilities) {
 ========================= */
 function renderSNS(sns) {
   return `
-    <div class="mt-6 text-sm">
+    <div class="text-sm">
       <p class="font-eng font-medium text-gray-600 mb-2">SNS</p>
       <a href="${sns.instagram}" class="text-blue-600 hover:underline mr-4">Instagram</a>
       <a href="${sns.twitter}" class="text-blue-600 hover:underline">X (Twitter)</a>
