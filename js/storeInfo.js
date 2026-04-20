@@ -55,21 +55,22 @@ function renderMap(map) {
 ========================= */
 function renderStoreInfo(data) {
   const main = document.getElementById("store-info-main");
-  const hours = document.getElementById("store-hours");
+  const pcHours = document.getElementById("store-hours");
+  const mobileHours = document.getElementById("store-hours-mobile");
 
-  if (!main || !hours) return;
+  if (!main || !pcHours || !mobileHours) return;
 
   const store = data.store;
 
-  /* ===== 左 ===== */
+  /* ===== 左（メイン） ===== */
   main.innerHTML = `
 
-    <h3 class="text-2xl font-bold tracking-wide text-center">
+    <h3 class="text-2xl font-bold tracking-wide text-left">
       ${store.name}
     </h3>
 
     <div>
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1 text-left">
         Address
       </p>
       <p class="text-lg leading-relaxed text-left">
@@ -78,7 +79,7 @@ function renderStoreInfo(data) {
     </div>
 
     <div>
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1 text-left">
         Phone Number
       </p>
       <p class="text-lg text-left">
@@ -90,29 +91,35 @@ function renderStoreInfo(data) {
     </div>
 
     <div>
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-left">
         Facilities
       </p>
       ${renderFacilities(data.facilities)}
     </div>
 
     ${renderSNS(data.sns)}
-
   `;
 
-  /* ===== 右（←これが消えてた） ===== */
-  hours.innerHTML = `
-
-    <div class="w-full max-w-md mx-auto">
+  /* ===== PC用営業時間 ===== */
+  pcHours.innerHTML = `
+    <div class="w-full">
       <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-center">
         Opening Hours
       </p>
       ${renderHours(data.hours)}
     </div>
+  `;
 
+  /* ===== スマホ用営業時間 ===== */
+  mobileHours.innerHTML = `
+    <div class="w-full mb-8">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-left">
+        Opening Hours
+      </p>
+      ${renderHours(data.hours)}
+    </div>
   `;
 }
-
 /* =========================
    ⭐ Access
 ========================= */
