@@ -80,16 +80,16 @@
 
         </div>
 
-        <!-- ⭐ Access（カード化＋重なり） -->
+        <!-- Access -->
         <div id="access-info" class="mt-12 flex justify-center">
-          <!-- JSでカードが入る -->
+          <!-- JSでカード -->
         </div>
 
       </div>
     </section>
 
     <!-- =========================
-         Details
+         Details（←ここが修正ポイント）
     ========================== -->
     <section class="bg-white py-20 px-6">
       <div class="max-w-6xl mx-auto page-enter">
@@ -100,16 +100,17 @@
 
         <div class="bg-gray-50 rounded-xl p-8 md:p-10 shadow-inner w-full">
 
-          <div class="grid md:grid-cols-3 gap-12">
+          <!-- ✅ 2カラムに修正 -->
+          <div class="grid md:grid-cols-2 gap-12">
 
-            <!-- 左：メイン情報 -->
-            <div class="md:col-span-2 space-y-8" id="store-info-main">
-              <!-- JSで中身 -->
+            <!-- 左 -->
+            <div id="store-info-main" class="space-y-8">
+              <!-- JS -->
             </div>
 
-            <!-- 右：サブ情報 -->
-            <div class="space-y-8" id="store-info-side">
-              <!-- JSで中身 -->
+            <!-- 右 -->
+            <div id="store-info-side" class="space-y-8">
+              <!-- JS -->
             </div>
 
           </div>
