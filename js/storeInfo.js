@@ -51,24 +51,42 @@ function renderMap(map) {
 }
 
 /* =========================
-   STORE INFO（修正済み）
+   STORE INFO（修正版：順番保証）
 ========================= */
 function renderStoreInfo(data) {
   const main = document.getElementById("store-info-main");
   const pcHours = document.getElementById("store-hours");
   const mobileHours = document.getElementById("store-hours-mobile");
 
-  if (!main || !pcHours || !mobileHours) return;
+  if (!main) return;
 
   const store = data.store;
 
-  /* ===== 左（メイン） ===== */
+  /* =========================
+     PC（左右分割）
+  ========================= */
+  if (pcHours) {
+    pcHours.innerHTML = `
+      <div class="w-full">
+        <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-center">
+          Opening Hours
+        </p>
+        ${renderHours(data.hours)}
+      </div>
+    `;
+  }
+
+  /* =========================
+     スマホ（順番制御）
+     Address → Phone → Hours → Facilities → SNS
+  ========================= */
   main.innerHTML = `
 
     <h3 class="text-2xl font-bold tracking-wide text-left">
       ${store.name}
     </h3>
 
+    <!-- Address -->
     <div>
       <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1 text-left">
         Address
@@ -78,6 +96,7 @@ function renderStoreInfo(data) {
       </p>
     </div>
 
+    <!-- Phone -->
     <div>
       <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1 text-left">
         Phone Number
@@ -90,6 +109,15 @@ function renderStoreInfo(data) {
       </p>
     </div>
 
+    <!-- ⭐ Opening Hours（ここでスマホ順序を固定） -->
+    <div class="md:hidden">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-left">
+        Opening Hours
+      </p>
+      ${renderHours(data.hours)}
+    </div>
+
+    <!-- Facilities -->
     <div>
       <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-left">
         Facilities
@@ -97,31 +125,13 @@ function renderStoreInfo(data) {
       ${renderFacilities(data.facilities)}
     </div>
 
+    <!-- SNS -->
     ${renderSNS(data.sns)}
   `;
-
-  /* ===== PC用営業時間 ===== */
-  pcHours.innerHTML = `
-    <div class="w-full">
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-center">
-        Opening Hours
-      </p>
-      ${renderHours(data.hours)}
-    </div>
-  `;
-
-  /* ===== スマホ用営業時間 ===== */
-  mobileHours.innerHTML = `
-    <div class="w-full mb-8">
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-left">
-        Opening Hours
-      </p>
-      ${renderHours(data.hours)}
-    </div>
-  `;
 }
+
 /* =========================
-   ⭐ Access
+   ACCESS
 ========================= */
 function renderAccess(data) {
   const container = document.getElementById("access-info");
@@ -168,9 +178,6 @@ function renderHours(hours) {
               `;
             }
 
-            let rowClass = "";
-
-            // ⚠️ 文字色だけ変える（背景は変えない）
             let textClass = "text-gray-800";
 
             if (h.highlight === "blue") {
@@ -182,14 +189,12 @@ function renderHours(hours) {
             }
 
             return `
-              <tr class="${rowClass}">
+              <tr>
 
-                <!-- 曜日 -->
                 <th class="px-2 py-2 text-left w-12 border-r-2 border-gray-400 ${textClass}">
                   ${h.day}
                 </th>
 
-                <!-- 時間 -->
                 <td class="px-3 py-2 text-center border-l-2 border-gray-400">
 
                   <div class="${textClass} font-bold">
