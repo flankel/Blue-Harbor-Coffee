@@ -64,24 +64,24 @@ function renderStoreInfo(data) {
   /* ===== 左（営業時間以外すべて） ===== */
   main.innerHTML = `
 
-    <h3 class="text-2xl font-bold tracking-wide">
+    <h3 class="text-2xl font-bold tracking-wide text-center">
       ${store.name}
     </h3>
 
     <div>
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1 text-center">
         Address
       </p>
-      <p class="text-lg leading-relaxed">
+      <p class="text-lg leading-relaxed text-left">
         ${store.address}
       </p>
     </div>
 
     <div>
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1 text-center">
         Phone Number
       </p>
-      <p class="text-lg">
+      <p class="text-lg text-left">
         <a href="tel:${store.phone.replace(/-/g, "")}"
            class="text-blue-600 hover:underline">
            ${store.phone}
@@ -90,7 +90,7 @@ function renderStoreInfo(data) {
     </div>
 
     <div>
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-center">
         Facilities
       </p>
       ${renderFacilities(data.facilities)}
@@ -104,7 +104,7 @@ function renderStoreInfo(data) {
   hours.innerHTML = `
 
     <div>
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-center">
         Opening Hours
       </p>
       ${renderHours(data.hours)}
@@ -190,7 +190,7 @@ function renderHours(hours) {
 ========================= */
 function renderFacilities(facilities) {
   return `
-    <div class="grid grid-cols-2 gap-y-3 text-sm">
+    <div class="grid grid-cols-2 gap-y-3 text-sm text-left">
       ${facilities.map(f => `
         <div class="font-eng font-medium text-gray-600">${f.label}</div>
         <div>${f.value}</div>
@@ -200,14 +200,22 @@ function renderFacilities(facilities) {
 }
 
 /* =========================
-   SNS
+   SNS（統一済み）
 ========================= */
 function renderSNS(sns) {
   return `
-    <div class="text-sm">
-      <p class="font-eng font-medium text-gray-600 mb-2">SNS</p>
-      <a href="${sns.instagram}" class="text-blue-600 hover:underline mr-4">Instagram</a>
-      <a href="${sns.twitter}" class="text-blue-600 hover:underline">X (Twitter)</a>
+    <div>
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-2 text-center">
+        SNS
+      </p>
+      <div class="text-lg text-left space-x-4">
+        <a href="${sns.instagram}" class="text-blue-600 hover:underline">
+          Instagram
+        </a>
+        <a href="${sns.twitter}" class="text-blue-600 hover:underline">
+          X (Twitter)
+        </a>
+      </div>
     </div>
   `;
 }
