@@ -143,17 +143,18 @@ function renderAccess(data) {
 function renderHours(hours) {
   return `
     <div class="text-sm max-w-xs mx-auto">
-      <table class="w-full border border-gray-200 rounded-lg overflow-hidden table-fixed">
+      <table class="w-full border border-gray-300 rounded-lg overflow-hidden table-fixed">
         <tbody class="divide-y divide-gray-200">
+
           ${hours.map(h => {
 
             if (h.closed) {
               return `
                 <tr>
-                  <th class="bg-white px-2 py-2 text-left font-medium w-12">
+                  <th class="bg-white px-2 py-2 text-left font-medium w-12 border-r-2 border-gray-300">
                     ${h.day}
                   </th>
-                  <td class="px-3 py-2 font-bold text-red-600 text-center border-l-2 border-gray-300">
+                  <td class="px-3 py-2 font-bold text-red-600 text-center">
                     CLOSED
                   </td>
                 </tr>
@@ -175,20 +176,27 @@ function renderHours(hours) {
 
             return `
               <tr class="${rowClass}">
-                <th class="px-2 py-2 text-left w-12 ${textClass}">
+                
+                <!-- 曜日（左・細め・境界線強化） -->
+                <th class="px-2 py-2 text-left w-12 border-r-2 border-gray-400 ${textClass}">
                   ${h.day}
                 </th>
-                <td class="px-3 py-2 text-center ${textClass} border-l-2 border-gray-300">
+
+                <!-- 時間（中央揃え＋太字） -->
+                <td class="px-3 py-2 text-center ${textClass}">
                   
-                  <span class="font-bold">
+                  <div class="font-bold">
                     ${h.open} — ${h.close}
-                  </span>
+                  </div>
 
                   ${h.note ? `<div class="text-xs mt-1">${h.note}</div>` : ""}
+
                 </td>
+
               </tr>
             `;
           }).join("")}
+
         </tbody>
       </table>
     </div>
