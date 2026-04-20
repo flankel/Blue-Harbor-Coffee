@@ -89,7 +89,7 @@
     </section>
 
     <!-- =========================
-         Details（←ここが修正ポイント）
+         Details（修正済み）
     ========================== -->
     <section class="bg-white py-20 px-6">
       <div class="max-w-6xl mx-auto page-enter">
@@ -100,16 +100,16 @@
 
         <div class="bg-gray-50 rounded-xl p-8 md:p-10 shadow-inner w-full">
 
-          <!-- ✅ 2カラムに修正 -->
-          <div class="grid md:grid-cols-2 gap-12">
+          <!-- ✅ PCで2カラム / スマホは1カラム -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 
-            <!-- 左 -->
+            <!-- 左：すべて（営業時間以外） -->
             <div id="store-info-main" class="space-y-8">
               <!-- JS -->
             </div>
 
-            <!-- 右 -->
-            <div id="store-info-side" class="space-y-8">
+            <!-- 右：営業時間のみ -->
+            <div id="store-hours" class="space-y-8">
               <!-- JS -->
             </div>
 
