@@ -142,7 +142,7 @@ function renderAccess(data) {
 ========================= */
 function renderHours(hours) {
   return `
-    <div class="text-sm">
+    <div class="text-sm max-w-xs mx-auto">
       <table class="w-full border border-gray-200 rounded-lg overflow-hidden table-fixed">
         <tbody class="divide-y divide-gray-200">
           ${hours.map(h => {
@@ -150,8 +150,12 @@ function renderHours(hours) {
             if (h.closed) {
               return `
                 <tr>
-                  <th class="bg-white px-3 py-2 text-left font-medium w-16">${h.day}</th>
-                  <td class="px-3 py-2 font-bold text-red-600">CLOSED</td>
+                  <th class="bg-white px-3 py-2 text-left font-medium w-16">
+                    ${h.day}
+                  </th>
+                  <td class="px-3 py-2 font-bold text-red-600 text-center border-l border-gray-200">
+                    CLOSED
+                  </td>
                 </tr>
               `;
             }
@@ -171,8 +175,10 @@ function renderHours(hours) {
 
             return `
               <tr class="${rowClass}">
-                <th class="px-3 py-2 text-left w-16 ${textClass}">${h.day}</th>
-                <td class="px-3 py-2 ${textClass}">
+                <th class="px-3 py-2 text-left w-16 ${textClass}">
+                  ${h.day}
+                </th>
+                <td class="px-3 py-2 text-center ${textClass} border-l border-gray-200">
                   ${h.open} — ${h.close}
                   ${h.note ? `<div class="text-xs mt-1">${h.note}</div>` : ""}
                 </td>
@@ -184,7 +190,6 @@ function renderHours(hours) {
     </div>
   `;
 }
-
 /* =========================
    FACILITIES
 ========================= */
