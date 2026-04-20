@@ -61,48 +61,60 @@ function renderStoreInfo(data) {
 
   const store = data.store;
 
-  /* ===== 左（営業時間以外すべて） ===== */
+  /* ===== 左 ===== */
   main.innerHTML = `
 
-  <h3 class="text-2xl font-bold tracking-wide text-center">
-    ${store.name}
-  </h3>
+    <h3 class="text-2xl font-bold tracking-wide text-center">
+      ${store.name}
+    </h3>
 
-  <div>
-    <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
-      Address
-    </p>
-    <p class="text-lg leading-relaxed text-left">
-      ${store.address}
-    </p>
-  </div>
+    <div>
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+        Address
+      </p>
+      <p class="text-lg leading-relaxed text-left">
+        ${store.address}
+      </p>
+    </div>
 
-  <div>
-    <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
-      Phone Number
-    </p>
-    <p class="text-lg text-left">
-      <a href="tel:${store.phone.replace(/-/g, "")}"
-         class="text-blue-600 hover:underline">
-         ${store.phone}
-      </a>
-    </p>
-  </div>
+    <div>
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-1">
+        Phone Number
+      </p>
+      <p class="text-lg text-left">
+        <a href="tel:${store.phone.replace(/-/g, "")}"
+           class="text-blue-600 hover:underline">
+           ${store.phone}
+        </a>
+      </p>
+    </div>
 
-  <div>
-    <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
-      Facilities
-    </p>
-    ${renderFacilities(data.facilities)}
-  </div>
+    <div>
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+        Facilities
+      </p>
+      ${renderFacilities(data.facilities)}
+    </div>
 
-  ${renderSNS(data.sns)}
+    ${renderSNS(data.sns)}
 
-`;
+  `;
+
+  /* ===== 右（←これが消えてた） ===== */
+  hours.innerHTML = `
+
+    <div class="w-full max-w-md mx-auto">
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-center">
+        Opening Hours
+      </p>
+      ${renderHours(data.hours)}
+    </div>
+
+  `;
 }
 
 /* =========================
-   ⭐ Access（Maps下・カード化）
+   ⭐ Access
 ========================= */
 function renderAccess(data) {
   const container = document.getElementById("access-info");
@@ -188,7 +200,7 @@ function renderFacilities(facilities) {
 }
 
 /* =========================
-   SNS（統一済み）
+   SNS
 ========================= */
 function renderSNS(sns) {
   return `
