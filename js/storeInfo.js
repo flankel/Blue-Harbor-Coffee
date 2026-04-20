@@ -150,10 +150,10 @@ function renderHours(hours) {
             if (h.closed) {
               return `
                 <tr>
-                  <th class="bg-white px-3 py-2 text-left font-medium w-16">
+                  <th class="bg-white px-2 py-2 text-left font-medium w-12">
                     ${h.day}
                   </th>
-                  <td class="px-3 py-2 font-bold text-red-600 text-center border-l border-gray-200">
+                  <td class="px-3 py-2 font-bold text-red-600 text-center border-l-2 border-gray-300">
                     CLOSED
                   </td>
                 </tr>
@@ -175,10 +175,10 @@ function renderHours(hours) {
 
             return `
               <tr class="${rowClass}">
-                <th class="px-3 py-2 text-left w-16 ${textClass}">
+                <th class="px-2 py-2 text-left w-12 ${textClass}">
                   ${h.day}
                 </th>
-                <td class="px-3 py-2 text-center ${textClass} border-l border-gray-200">
+                <td class="px-3 py-2 text-center ${textClass} border-l-2 border-gray-300">
                   ${h.open} — ${h.close}
                   ${h.note ? `<div class="text-xs mt-1">${h.note}</div>` : ""}
                 </td>
