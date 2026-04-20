@@ -51,7 +51,7 @@ function renderMap(map) {
 }
 
 /* =========================
-   STORE INFO（修正版：順番保証）
+   STORE INFO（修正版）
 ========================= */
 function renderStoreInfo(data) {
   const main = document.getElementById("store-info-main");
@@ -63,7 +63,7 @@ function renderStoreInfo(data) {
   const store = data.store;
 
   /* =========================
-     PC（左右分割）
+     PC（左右）
   ========================= */
   if (pcHours) {
     pcHours.innerHTML = `
@@ -77,8 +77,7 @@ function renderStoreInfo(data) {
   }
 
   /* =========================
-     スマホ（順番制御）
-     Address → Phone → Hours → Facilities → SNS
+     スマホ（順序固定）
   ========================= */
   main.innerHTML = `
 
@@ -109,7 +108,7 @@ function renderStoreInfo(data) {
       </p>
     </div>
 
-    <!-- ⭐ Opening Hours（ここでスマホ順序を固定） -->
+    <!-- Opening Hours（スマホのみここで順序保証） -->
     <div class="md:hidden">
       <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-left">
         Opening Hours
@@ -155,7 +154,7 @@ function renderAccess(data) {
 }
 
 /* =========================
-   HOURS
+   HOURS（🔥修正ポイントここ）
 ========================= */
 function renderHours(hours) {
   return `
@@ -188,6 +187,12 @@ function renderHours(hours) {
               textClass = "text-red-700 font-bold";
             }
 
+            /* ⭐ここが修正ポイント（noteにも色反映） */
+            let noteClass = "text-gray-500 text-xs mt-1";
+            if (h.highlight === "red") {
+              noteClass = "text-red-600 font-semibold text-xs mt-1";
+            }
+
             return `
               <tr>
 
@@ -201,7 +206,7 @@ function renderHours(hours) {
                     ${h.open} — ${h.close}
                   </div>
 
-                  ${h.note ? `<div class="text-xs mt-1 text-gray-500">${h.note}</div>` : ""}
+                  ${h.note ? `<div class="${noteClass}">${h.note}</div>` : ""}
 
                 </td>
 
