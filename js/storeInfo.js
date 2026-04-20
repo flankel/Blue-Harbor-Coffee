@@ -51,17 +51,17 @@ function renderMap(map) {
 }
 
 /* =========================
-   STORE INFO（Accessなし）
+   STORE INFO（修正済み）
 ========================= */
 function renderStoreInfo(data) {
   const main = document.getElementById("store-info-main");
-  const side = document.getElementById("store-info-side");
+  const hours = document.getElementById("store-hours");
 
-  if (!main || !side) return;
+  if (!main || !hours) return;
 
   const store = data.store;
 
-  /* ===== 左（メイン） ===== */
+  /* ===== 左（営業時間以外すべて） ===== */
   main.innerHTML = `
 
     <h3 class="text-2xl font-bold tracking-wide">
@@ -91,17 +91,6 @@ function renderStoreInfo(data) {
 
     <div>
       <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
-        Opening Hours
-      </p>
-      ${renderHours(data.hours)}
-    </div>
-  `;
-
-  /* ===== 右（サブ） ===== */
-  side.innerHTML = `
-
-    <div>
-      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
         Facilities
       </p>
       ${renderFacilities(data.facilities)}
@@ -110,7 +99,20 @@ function renderStoreInfo(data) {
     ${renderSNS(data.sns)}
 
   `;
+
+  /* ===== 右（営業時間のみ） ===== */
+  hours.innerHTML = `
+
+    <div>
+      <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3">
+        Opening Hours
+      </p>
+      ${renderHours(data.hours)}
+    </div>
+
+  `;
 }
+
 /* =========================
    ⭐ Access（Maps下・カード化）
 ========================= */
