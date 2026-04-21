@@ -5,7 +5,11 @@
 
 const MAX_PER_ITEM = 3;
 
-let products = {};
+let products = {
+  beans: [],
+  sweets: []
+};
+
 let cart = {};
 
 
@@ -31,7 +35,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function loadProducts(){
 
   const res = await fetch("data/takeout-products.json");
-  products = await res.json();
+  const data = await res.json();
+
+  products = {
+    beans: data.beans || [],
+    sweets: data.sweets || []
+  };
 
 }
 
@@ -64,7 +73,7 @@ function renderProducts(){
 
 /* Coffee Beans */
 
-if(products.beans){
+if(products.beans && products.beans.length > 0){
 
 html += `
 <div>
@@ -156,7 +165,7 @@ html += `</div></div>`;
 
 /* Sweets */
 
-if(products.sweets){
+if(products.sweets && products.sweets.length > 0){
 
 html += `
 <div>
