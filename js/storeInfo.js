@@ -219,7 +219,15 @@ function renderHours(hours) {
                     ${h.open} — ${h.close}
                   </div>
 
-                  ${h.note ? `<div class="${noteClass}">${h.note}</div>` : ""}
+                  ${h.note ? `
+  <div class="${noteClass}">
+    ${
+      (isMobile && h.day === "日")
+        ? h.note.replace(" ", "<br>")
+        : h.note
+    }
+  </div>
+` : ""}
 
                 </td>
 
