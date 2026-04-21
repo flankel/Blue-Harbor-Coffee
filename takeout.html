@@ -38,54 +38,62 @@
     background: #ef4444;
   }
 
-  /* =========================
-     🔺 三角リボンバッジ
-  ========================= */
-  .badge {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-top: 80px solid #2563eb;   /* デフォ色 */
-    border-right: 80px solid transparent;
-    z-index: 20;
-  }
+/* =========================
+   🔺 三角リボン（完成版）
+========================= */
+.badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
 
-  .badge::after {
-    content: attr(data-label);
-    position: absolute;
-    top: -65px;
-    left: 10px;
-    transform: rotate(-45deg);
-    transform-origin: left top;
+  border-top: 90px solid #2563eb;
+  border-right: 90px solid transparent;
 
-    font-size: 11px;
-    font-weight: 700;
-    color: white;
-    white-space: nowrap;
-  }
+  z-index: 20;
+}
 
-  /* 色バリエーション */
-  .badge.recommend {
-    border-top-color: #2563eb;
-  }
+/* テキスト帯 */
+.badge::after {
+  content: attr(data-label);
+  position: absolute;
 
-  .badge.popular {
-    border-top-color: #ef4444;
-  }
+  top: -68px;
+  left: -8px;
 
-  .badge.no1 {
-    border-top-color: #f59e0b;
-  }
+  width: 120px;
+  text-align: center;
 
-  .badge.limited {
-    border-top-color: #8b5cf6;
-  }
+  transform: rotate(-45deg);
 
-  .badge.new {
-    border-top-color: #10b981;
-  }
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #ffffff; /* ← 強制白 */
+  letter-spacing: 0.05em;
+}
+
+/* 色バリエーション */
+.badge.recommend {
+  border-top-color: #2563eb;
+}
+
+.badge.popular {
+  border-top-color: #ef4444;
+}
+
+.badge.no1 {
+  border-top-color: #f59e0b;
+}
+
+.badge.limited {
+  border-top-color: #8b5cf6;
+}
+
+.badge.new {
+  border-top-color: #10b981;
+}
 
   /* ホバーちょい強調 */
   .relative:hover .badge {
