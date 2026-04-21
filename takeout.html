@@ -39,66 +39,57 @@
   }
 
   /* =========================
-     🎖️ バッジ（新仕様）
+     🔺 三角リボンバッジ
   ========================= */
   .badge {
     position: absolute;
-    top: 14px;
-    left: 14px;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 80px solid #2563eb;   /* デフォ色 */
+    border-right: 80px solid transparent;
+    z-index: 20;
+  }
 
-    width: 72px;
-    height: 72px;
-
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .badge::after {
+    content: attr(data-label);
+    position: absolute;
+    top: -65px;
+    left: 10px;
+    transform: rotate(-45deg);
+    transform-origin: left top;
 
     font-size: 11px;
-    font-weight: 800;
-    text-align: center;
-    line-height: 1.2;
-
+    font-weight: 700;
     color: white;
-
-    z-index: 20;
-
-    border: 3px solid rgba(255,255,255,0.8);
-
-    box-shadow:
-      0 6px 15px rgba(0,0,0,0.3),
-      inset 0 2px 4px rgba(255,255,255,0.4),
-      inset 0 -3px 6px rgba(0,0,0,0.3);
+    white-space: nowrap;
   }
 
-  /* ⭐ おすすめ */
+  /* 色バリエーション */
   .badge.recommend {
-    background: radial-gradient(circle at 30% 30%, #60a5fa, #1e3a8a);
+    border-top-color: #2563eb;
   }
 
-  /* 🔥 人気 */
   .badge.popular {
-    background: radial-gradient(circle at 30% 30%, #f87171, #7f1d1d);
+    border-top-color: #ef4444;
   }
 
-  /* 👑 No.1 */
   .badge.no1 {
-    background: radial-gradient(circle at 30% 30%, #fde68a, #b45309);
-    color: #78350f;
+    border-top-color: #f59e0b;
   }
 
-  /* ⏰ 期間限定 */
   .badge.limited {
-    background: radial-gradient(circle at 30% 30%, #c084fc, #581c87);
+    border-top-color: #8b5cf6;
   }
 
-  /* 🆕 新商品 */
   .badge.new {
-    background: radial-gradient(circle at 30% 30%, #4ade80, #14532d);
+    border-top-color: #10b981;
   }
 
+  /* ホバーちょい強調 */
   .relative:hover .badge {
-    transform: scale(1.1);
+    transform: scale(1.05);
     transition: transform 0.2s ease;
   }
 
@@ -111,16 +102,6 @@
     opacity: 0;
     transform: translateX(10px);
     transition: all 0.3s ease;
-  }
-
-  /* =========================
-     🔧 追加（これだけ）
-     親要素を強制的にrelative化
-  ========================= */
-  #productArea > div,
-  #productArea .menu-item,
-  #productArea .bg-white {
-    position: relative;
   }
 
 </style>
