@@ -51,19 +51,18 @@ function renderMap(map) {
 }
 
 /* =========================
-   STORE INFO（修正版）
+   STORE INFO
 ========================= */
 function renderStoreInfo(data) {
   const main = document.getElementById("store-info-main");
   const pcHours = document.getElementById("store-hours");
-  const mobileHours = document.getElementById("store-hours-mobile");
 
   if (!main) return;
 
   const store = data.store;
 
   /* =========================
-     PC（左右）
+     PC
   ========================= */
   if (pcHours) {
     pcHours.innerHTML = `
@@ -77,10 +76,9 @@ function renderStoreInfo(data) {
   }
 
   /* =========================
-     スマホ（順序固定）
+     スマホ
   ========================= */
   main.innerHTML = `
-
     <h3 class="text-2xl font-bold tracking-wide text-left">
       ${store.name}
     </h3>
@@ -103,12 +101,12 @@ function renderStoreInfo(data) {
       <p class="text-lg text-left">
         <a href="tel:${store.phone.replace(/-/g, "")}"
            class="text-blue-600 hover:underline">
-           ${store.phone}
+          ${store.phone}
         </a>
       </p>
     </div>
 
-    <!-- Opening Hours（スマホのみここで順序保証） -->
+    <!-- Opening Hours -->
     <div class="md:hidden">
       <p class="text-xs tracking-widest text-gray-400 font-eng uppercase mb-3 text-left">
         Opening Hours
@@ -140,7 +138,6 @@ function renderAccess(data) {
 
   container.innerHTML = `
     <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 max-w-xl mx-auto text-center">
-
       <h3 class="text-sm tracking-widest text-gray-400 mb-4">
         ACCESS
       </h3>
@@ -148,15 +145,18 @@ function renderAccess(data) {
       <div class="space-y-2 text-sm text-gray-700 leading-relaxed">
         ${store.access.map(a => `<p>${a}</p>`).join("")}
       </div>
-
     </div>
   `;
 }
 
 /* =========================
-   HOURS（🔥修正ポイントここ）
+   HOURS（🔥ここ修正）
 ========================= */
 function renderHours(hours) {
+
+  // 🔥 ここで判定（これが必要）
+  const isMobile = window.innerWidth < 768;
+
   return `
     <div class="text-sm max-w-xs mx-auto">
       <table class="w-full border border-gray-300 rounded-lg overflow-hidden table-fixed">
@@ -164,9 +164,7 @@ function renderHours(hours) {
 
           ${hours.map(h => {
 
-            /* =========================
-               CLOSED処理
-            ========================= */
+            /* CLOSED */
             if (h.closed) {
               return `
                 <tr>
@@ -180,10 +178,8 @@ function renderHours(hours) {
               `;
             }
 
-            /* =========================
-               色判定（メイン）
-            ========================= */
-            const isSunday = h.day === "Sun";
+            /* 色判定 */
+            const isSunday = h.day === "日";
 
             let textClass = "text-gray-800";
 
@@ -195,9 +191,7 @@ function renderHours(hours) {
               textClass = "text-red-700 font-bold";
             }
 
-            /* =========================
-               NOTE色（重要）
-            ========================= */
+            /* NOTE色 */
             let noteClass = "text-gray-500 text-xs mt-1";
 
             if (h.highlight === "red" || isSunday) {
@@ -219,15 +213,19 @@ function renderHours(hours) {
                     ${h.open} — ${h.close}
                   </div>
 
-                  ${h.note ? `
-  <div class="${noteClass}">
-    ${
-      (isMobile && h.day === "日")
-        ? h.note.replace(" ", "<br>")
-        : h.note
-    }
-  </div>
-` : ""}
+                  ${
+                    h.note
+                      ? `
+                        <div class="${noteClass}">
+                          ${
+                            (isMobile && h.day === "日")
+                              ? h.note.replace("場合 ", "場合<br>")
+                              : h.note
+                          }
+                        </div>
+                      `
+                      : ""
+                  }
 
                 </td>
 
