@@ -113,6 +113,16 @@
     transition: all 0.3s ease;
   }
 
+  /* =========================
+     🔧 追加（これだけ）
+     親要素を強制的にrelative化
+  ========================= */
+  #productArea > div,
+  #productArea .menu-item,
+  #productArea .bg-white {
+    position: relative;
+  }
+
 </style>
 
 <body class="bg-stone-50 text-slate-800">
