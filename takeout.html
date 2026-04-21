@@ -38,64 +38,64 @@
     background: #ef4444;
   }
 
-/* =========================
-   🔺 三角リボン（完成版）
-========================= */
-.badge {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
+  /* =========================
+     🔺 三角リボン（完全版）
+  ========================= */
+  .badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    z-index: 20;
+  }
 
-  border-top: 90px solid #2563eb;
-  border-right: 90px solid transparent;
+  .badge::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 90px solid #2563eb;
+    border-right: 90px solid transparent;
+  }
 
-  z-index: 20;
-}
+  .badge::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 18px;
+    left: -35px;
+    width: 140px;
+    text-align: center;
+    transform: rotate(-45deg);
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+  }
 
-/* テキスト帯 */
-.badge::after {
-  content: attr(data-label);
-  position: absolute;
+  .badge.recommend::before {
+    border-top-color: #2563eb;
+  }
 
-  top: -68px;
-  left: -8px;
+  .badge.popular::before {
+    border-top-color: #ef4444;
+  }
 
-  width: 120px;
-  text-align: center;
+  .badge.no1::before {
+    border-top-color: #f59e0b;
+  }
 
-  transform: rotate(-45deg);
+  .badge.limited::before {
+    border-top-color: #8b5cf6;
+  }
 
-  font-size: 12px;
-  font-weight: 700;
+  .badge.new::before {
+    border-top-color: #10b981;
+  }
 
-  color: #ffffff; /* ← 強制白 */
-  letter-spacing: 0.05em;
-}
-
-/* 色バリエーション */
-.badge.recommend {
-  border-top-color: #2563eb;
-}
-
-.badge.popular {
-  border-top-color: #ef4444;
-}
-
-.badge.no1 {
-  border-top-color: #f59e0b;
-}
-
-.badge.limited {
-  border-top-color: #8b5cf6;
-}
-
-.badge.new {
-  border-top-color: #10b981;
-}
-
-  /* ホバーちょい強調 */
   .relative:hover .badge {
     transform: scale(1.05);
     transition: transform 0.2s ease;
