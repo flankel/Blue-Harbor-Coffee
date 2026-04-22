@@ -91,9 +91,7 @@ html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${bean.tag ? `
-<div class="badge ${mapTagClass(bean.tag)}">
-  ${bean.tag}
-</div>
+<div class="badge ${mapTagClass(bean.tag)}" data-label="${bean.tag}"></div>
 ` : ""}
 
 <div class="aspect-[4/3] overflow-hidden">
@@ -102,7 +100,6 @@ ${bean.tag ? `
 
 <div class="p-6 flex flex-col">
 
-<!-- 上（高さ固定） -->
 <div class="space-y-4 min-h-[120px]">
 
 <h3 class="leading-tight">
@@ -118,9 +115,7 @@ ${bean.desc.jp}
 
 </div>
 
-<!-- 下 -->
 <div class="pt-4">
-
 `;
 
 Object.keys(bean.sizes).forEach(size => {
@@ -183,9 +178,7 @@ html += `
 <div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${item.tag ? `
-<div class="badge ${mapTagClass(item.tag)}">
-  ${item.tag}
-</div>
+<div class="badge ${mapTagClass(item.tag)}" data-label="${item.tag}"></div>
 ` : ""}
 
 <div class="aspect-[4/3] overflow-hidden">
@@ -194,7 +187,6 @@ ${item.tag ? `
 
 <div class="p-6 flex flex-col">
 
-<!-- 上（高さ固定） -->
 <div class="space-y-3 min-h-[100px]">
 
 <div class="leading-tight">
@@ -210,7 +202,6 @@ ${item.desc.jp}
 
 </div>
 
-<!-- 下 -->
 <div class="flex justify-between items-center pt-4">
 
 <span class="text-blue-600 font-semibold">
@@ -245,7 +236,6 @@ html += `</div></div>`;
 area.innerHTML = html;
 
 }
-
 
 /* =========================
    イベント設定
