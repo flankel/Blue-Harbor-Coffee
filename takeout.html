@@ -62,13 +62,13 @@
     border-right: 90px solid transparent;
   }
 
-  /* ★ ここが本命修正 */
+  /* ★ 三角の“重心”に完全配置 */
   .badge::after {
     content: attr(data-label);
     position: absolute;
 
-    top: 50%;
-    left: 50%;
+    top: 33.33%;
+    left: 33.33%;
 
     transform: translate(-50%, -50%) rotate(-45deg);
 
@@ -78,6 +78,9 @@
     letter-spacing: 0.05em;
     white-space: nowrap;
     text-align: center;
+
+    /* はみ出し防止 */
+    max-width: 70px;
   }
 
   .badge.recommend::before {
