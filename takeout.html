@@ -39,8 +39,9 @@
   }
 
   /* =========================
-     🔺 三角リボン（完全版）
+     🔺 三角リボン（最終完成版）
   ========================= */
+
   .badge {
     position: absolute;
     top: 0;
@@ -49,8 +50,10 @@
     height: 90px;
     overflow: hidden;
     z-index: 20;
+    pointer-events: none;
   }
 
+  /* 三角 */
   .badge::before {
     content: "";
     position: absolute;
@@ -58,51 +61,59 @@
     left: 0;
     width: 0;
     height: 0;
-    border-top: 90px solid #2563eb;
+    border-top: 90px solid;
     border-right: 90px solid transparent;
   }
 
-  /* ★ 三角の“重心”に完全配置 */
+  /* 文字（完全中央固定） */
   .badge::after {
-    content: attr(data-label);
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 90px;
 
-    top: 33.33%;
-    left: 33.33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    transform: translate(-50%, -50%) rotate(-45deg);
-
-    font-size: 12px;
-    font-weight: 700;
     color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
     letter-spacing: 0.05em;
-    white-space: nowrap;
     text-align: center;
+    white-space: nowrap;
 
-    /* はみ出し防止 */
-    max-width: 70px;
+    transform: rotate(-45deg);
   }
 
-  .badge.recommend::before {
-    border-top-color: #2563eb;
+  /* ===== 色とテキスト統一 ===== */
+
+  /* No.1（金） */
+  .badge.no1::before {
+    border-top-color: #d4af37;
+  }
+  .badge.no1::after {
+    content: "No.1";
   }
 
-  .badge.popular::before {
+  /* Limited（紫） */
+  .badge.limited::before {
+    border-top-color: #7c3aed;
+  }
+  .badge.limited::after {
+    content: "Limited";
+  }
+
+  /* NEW（赤） */
+  .badge.new::before {
     border-top-color: #ef4444;
   }
-
-  .badge.no1::before {
-    border-top-color: #f59e0b;
+  .badge.new::after {
+    content: "NEW";
   }
 
-  .badge.limited::before {
-    border-top-color: #8b5cf6;
-  }
-
-  .badge.new::before {
-    border-top-color: #10b981;
-  }
-
+  /* ホバー */
   .relative:hover .badge {
     transform: scale(1.05);
     transition: transform 0.2s ease;
