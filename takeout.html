@@ -62,28 +62,22 @@
     border-right: 90px solid transparent;
   }
 
+  /* ★ ここが本命修正 */
   .badge::after {
     content: attr(data-label);
     position: absolute;
 
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
 
-    width: 90px;
-    height: 90px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transform: rotate(-45deg) translateY(-2px);
-    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(-45deg);
 
     font-size: 12px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: 0.05em;
     white-space: nowrap;
+    text-align: center;
   }
 
   .badge.recommend::before {
