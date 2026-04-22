@@ -10,7 +10,7 @@
         "jp": "ベリーのような甘さと華やかな香り。エチオピア南部の高地で栽培。",
         "en": "Berry-like sweetness with floral aroma. Grown in southern Ethiopia highlands."
       },
-      "tag": "おすすめ",
+      "tag": "No.1",
       "image": "images/TakeOut/Beans/EthiopianNatural.png",
       "sizes": {
         "100": 850,
@@ -46,7 +46,7 @@
         "jp": "チョコレートのようなコクとほのかな酸味。標高の高い地域で栽培。",
         "en": "Rich chocolate-like body with subtle acidity from high-altitude farms."
       },
-      "tag": "人気",
+      "tag": "Limited",
       "image": "images/TakeOut/Beans/GuatemalaSHB.png",
       "sizes": {
         "100": 900,
@@ -82,7 +82,7 @@
         "jp": "しっかりしたコクと明るい酸味。フルーティーな後味が特徴。",
         "en": "Full-bodied with bright acidity and a fruity finish."
       },
-      "tag": "No.1",
+      "tag": "New",
       "image": "images/TakeOut/Beans/KenyaAA.png",
       "sizes": {
         "100": 950,
@@ -116,7 +116,7 @@
         "jp": "瀬戸内レモンの爽やかな酸味とサクサクのタルト生地。",
         "en": "Refreshing Setouchi lemon with a crispy tart base."
       },
-      "tag": "おすすめ",
+      "tag": "Limited",
       "image": "images/TakeOut/Sweets/SetouchiLemonTart.png",
       "price": 720
     },
@@ -144,7 +144,7 @@
         "jp": "濃厚チーズと甘酸っぱいブルーベリーの相性が抜群。",
         "en": "Rich cheesecake paired with sweet and tangy blueberries."
       },
-      "tag": "人気",
+      "tag": "NEW",
       "image": "images/TakeOut/Sweets/BlueberryCheesecake.png",
       "price": 780
     },
