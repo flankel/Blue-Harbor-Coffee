@@ -65,7 +65,7 @@
     border-right: 90px solid transparent;
   }
 
-  /* 🔥 完全中央配置（ここだけ修正） */
+  /* 🔥 完全中央配置 */
   .badge::after {
     content: attr(data-label);
     position: absolute;
@@ -88,18 +88,18 @@
     text-align: center;
   }
 
-  /* ===== 色 ===== */
+  /* ===== 色（ここだけ修正） ===== */
 
   .badge.no1::before {
-    border-top-color: #d4af37 !important;
+    border-top: 90px solid #d4af37;
   }
 
   .badge.limited::before {
-    border-top-color: #7c3aed !important;
+    border-top: 90px solid #7c3aed;
   }
 
   .badge.new::before {
-    border-top-color: #ef4444 !important;
+    border-top: 90px solid #ef4444;
   }
 
   .relative:hover .badge {
@@ -119,7 +119,7 @@
   }
 
 </style>
-  <body class="bg-stone-50 text-slate-800">
+<body class="bg-stone-50 text-slate-800">
 
 <!-- Header -->
 <div id="header"></div>
