@@ -62,19 +62,28 @@
     border-right: 90px solid transparent;
   }
 
-  .badge::after {
-    content: attr(data-label);
-    position: absolute;
-    top: 18px;
-    left: -35px;
-    width: 140px;
-    text-align: center;
-    transform: rotate(-45deg);
-    font-size: 12px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 0.05em;
-  }
+.badge::after {
+  content: attr(data-label);
+  position: absolute;
+
+  top: 22px;
+  left: 0;
+
+  width: 90px;              /* 三角と同じ幅 */
+  text-align: center;
+
+  transform: rotate(-45deg);
+  transform-origin: center;
+
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
   .badge.recommend::before {
     border-top-color: #2563eb;
