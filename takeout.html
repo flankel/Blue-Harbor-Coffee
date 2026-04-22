@@ -66,52 +66,40 @@
   }
 
   /* 文字（完全中央固定） */
-  .badge::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 90px;
-    height: 90px;
+.badge::after {
+  position: absolute;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  top: 33%;
+  left: 33%;
 
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-align: center;
-    white-space: nowrap;
+  transform: translate(-50%, -50%) rotate(-45deg);
 
-    transform: rotate(-45deg);
-  }
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  text-align: center;
+
+  max-width: 70px;
+}
 
   /* ===== 色とテキスト統一 ===== */
 
-  /* No.1（金） */
-  .badge.no1::before {
-    border-top-color: #d4af37;
-  }
-  .badge.no1::after {
-    content: "No.1";
-  }
+/* No.1（金） */
+.badge.no1::before {
+  border-top-color: #d4af37 !important;
+}
 
-  /* Limited（紫） */
-  .badge.limited::before {
-    border-top-color: #7c3aed;
-  }
-  .badge.limited::after {
-    content: "Limited";
-  }
+/* Limited（紫） */
+.badge.limited::before {
+  border-top-color: #7c3aed !important;
+}
 
-  /* NEW（赤） */
-  .badge.new::before {
-    border-top-color: #ef4444;
-  }
-  .badge.new::after {
-    content: "NEW";
-  }
+/* NEW（赤） */
+.badge.new::before {
+  border-top-color: #ef4444 !important;
+}
 
   /* ホバー */
   .relative:hover .badge {
