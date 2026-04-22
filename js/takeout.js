@@ -589,17 +589,16 @@ return items;
 // tag
 function mapTagClass(tag){
 
-  const t = tag.toLowerCase();
+  if(!tag) return "";
 
-  if(t.includes("no.1")) return "no1";
-  if(t.includes("人気")) return "popular";
-  if(t.includes("おすすめ")) return "recommend";
-  if(t.includes("限定")) return "limited";
-  if(t.includes("new") || t.includes("新")) return "new";
+  const t = tag.trim();
+
+  if(t === "No.1") return "no1";
+  if(t === "Limited") return "limited";
+  if(t === "NEW") return "new";
 
   return "";
 }
-
 
 /* =========================
    次ページへ
