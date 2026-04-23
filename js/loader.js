@@ -41,6 +41,16 @@ async function init() {
     loader.style.display = "flex";
 
     // =========================
+    // 🧪 判定ログ開始（重要）
+    // =========================
+    const debugInterval = setInterval(() => {
+      const el = document.getElementById("loader");
+      if (el) {
+        console.log("opacity:", getComputedStyle(el).opacity);
+      }
+    }, 100);
+
+    // =========================
     // 最低表示時間（調整OK）
     // =========================
     const MIN_TIME = 1200;
@@ -63,6 +73,11 @@ async function init() {
         // 本体表示
         // =========================
         body.classList.remove("opacity-0");
+
+        // =========================
+        // 🧪 判定ログ停止
+        // =========================
+        clearInterval(debugInterval);
 
       }, 700);
 
