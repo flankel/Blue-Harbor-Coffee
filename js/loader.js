@@ -27,11 +27,12 @@ async function init() {
     root.innerHTML = html;
 
     // =========================
-    // DOM反映を確実に待つ
+    // DOM反映待ち（安定化）
     // =========================
     setTimeout(() => {
 
-      const loader = document.getElementById("loader");
+      // 🔥 ここを修正（id → class）
+      const loader = document.querySelector(".loader");
 
       if (!loader) {
         body.classList.remove("opacity-0");
@@ -71,7 +72,6 @@ async function init() {
 
     console.error("Loader Error:", error);
 
-    // エラー時は強制表示
     body.classList.remove("opacity-0");
   }
 }
