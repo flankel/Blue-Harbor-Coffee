@@ -39,23 +39,22 @@ export function initLoader() {
           percentEl.textContent = p;
 
           // =========================
-          // ☕ コーヒー（液体）
+          // ☕ コーヒー（安定版）
           // =========================
           coffeeFill.style.transform = `scaleY(${percent / 100})`;
           coffeeFill.style.transformOrigin = "bottom";
 
-          // ほんの少し質感変化（リアル化）
-          coffeeFill.style.filter = `brightness(${0.75 + percent / 300})`;
+          // 少しだけ質感変化（自然）
+          coffeeFill.style.filter = `brightness(${0.8 + percent / 350})`;
 
           // =========================
-          // 🌊 波（CSS主体・JSは補助のみ）
+          // 🌊 波（CSS主体なのでJSは触らない）
           // =========================
-          waveLayer.forEach(wave => {
-            wave.style.opacity = 0.5 + percent / 300;
-          });
+          // → ここ削除（重要）
+          // wave opacity操作しない
 
           // =========================
-          // 背景（海の雰囲気）
+          // 背景（海の深さ演出）
           // =========================
           root.style.background = `linear-gradient(
             to bottom,
@@ -69,15 +68,15 @@ export function initLoader() {
           if (percent >= 100) {
             clearInterval(interval);
 
-            // 🌊 波を左右に開く
+            // 🌊 波を左右に開く（ここだけ操作）
             waveLayer.forEach((wave, i) => {
 
               wave.style.transition = "transform 1s ease, opacity 0.8s ease";
 
               if (i % 2 === 0) {
-                wave.style.transform = "translateX(-150%)";
+                wave.style.transform = "translateX(-180%)";
               } else {
-                wave.style.transform = "translateX(150%)";
+                wave.style.transform = "translateX(180%)";
               }
 
               wave.style.opacity = "0";
@@ -95,7 +94,7 @@ export function initLoader() {
 
               setTimeout(() => {
                 root.remove();
-                // 👉 ここで index.html 完全表示状態
+                // 👉 index.html完全表示
               }, 600);
 
             }, 900);
