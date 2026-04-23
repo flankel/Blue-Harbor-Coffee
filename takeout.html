@@ -39,7 +39,7 @@
   }
 
   /* =========================
-     🔺 三角リボン（最終完成版）
+     🔺 三角リボン（中央完全補正）
   ========================= */
 
   .badge {
@@ -65,30 +65,31 @@
     border-right: 90px solid transparent;
   }
 
-  /* 🔥 完全中央配置 */
+  /* 🔥 三角のど真ん中に調整 */
   .badge::after {
     content: attr(data-label);
     position: absolute;
 
-    top: 0;
-    left: 0;
-    width: 90px;
-    height: 90px;
+    top: 50%;
+    left: 50%;
+
+    width: 120px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    transform: rotate(-45deg);
+    transform: translate(-30%, -30%) rotate(-45deg);
 
     font-size: 12px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: 0.05em;
     text-align: center;
+    white-space: nowrap;
   }
 
-  /* ===== 色（ここだけ修正） ===== */
+  /* ===== 色 ===== */
 
   .badge.no1::before {
     border-top: 90px solid #d4af37;
@@ -119,6 +120,7 @@
   }
 
 </style>
+
 <body class="bg-stone-50 text-slate-800">
 
 <!-- Header -->
