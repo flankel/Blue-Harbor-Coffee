@@ -114,7 +114,22 @@
     transform: translateX(10px);
     transition: all 0.3s ease;
   }
+  
+@keyframes glow {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 0px rgba(255,255,255,0);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(255,255,255,0.9);
+  }
+}
 
+.badge::after {
+  animation: glow 1.5s ease-in-out infinite;
+}
+  
 </style>
 
 <body class="bg-stone-50 text-slate-800">
