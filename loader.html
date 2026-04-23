@@ -6,23 +6,24 @@
   </div>
 
   <!-- カップ -->
-  <div class="relative w-28 h-32 mb-6">
+<div class="relative w-28 h-32 mb-6 overflow-hidden rounded-b-3xl rounded-t-lg border-2 border-gray-800">
 
-    <!-- カップ本体 -->
-    <div class="absolute inset-0 border-2 border-gray-800 rounded-b-3xl rounded-t-lg"></div>
+  <!-- ハンドル -->
+  <div class="absolute -right-6 top-6 w-6 h-12 border-2 border-gray-800 rounded-r-full"></div>
 
-    <!-- ハンドル -->
-    <div class="absolute -right-6 top-6 w-6 h-12 border-2 border-gray-800 rounded-r-full"></div>
+  <!-- コーヒー液 -->
+  <div id="coffee-fill"
+    class="absolute bottom-0 left-0 w-full h-0 transition-all duration-200 overflow-hidden">
 
-    <!-- コーヒー液 -->
-    <div id="coffee-fill"
-      class="absolute bottom-0 left-0 w-full h-0 overflow-hidden transition-all duration-200">
+    <!-- 波 -->
+    <div class="wave absolute inset-0"></div>
 
-      <!-- 波（コーヒー液面） -->
-      <div class="wave absolute inset-0"></div>
+  </div>
 
-    </div>
+  <!-- 内側シャドウ（立体感） -->
+  <div class="absolute inset-0 pointer-events-none shadow-inner"></div>
 
+</div>
     <!-- 内側の影（立体感） -->
     <div class="absolute inset-0 rounded-b-3xl rounded-t-lg shadow-inner pointer-events-none"></div>
 
