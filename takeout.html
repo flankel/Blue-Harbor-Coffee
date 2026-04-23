@@ -43,45 +43,48 @@
   ========================= */
 
   .badge {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 90px;
-    height: 90px;
-    overflow: hidden;
-    z-index: 20;
-    pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 90px;
+  height: 90px;
+  overflow: hidden;
+  z-index: 20;
+  pointer-events: none;
 
-    /* 🔥 三角領域でクリップ */
-    clip-path: polygon(0 0, 100% 0, 0 100%);
-  }
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
 
-  /* 三角 */
-  .badge::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: transparent;
-  }
+/* 背景（三角） */
+.badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+}
 
-  /* 🔥 文字（安全配置） */
-  .badge::after {
-    content: attr(data-label);
-    position: absolute;
+/* 🔥 文字 */
+.badge::after {
+  content: attr(data-label);
+  position: absolute;
 
-    top: 50%;
-    left: 50%;
+  /* 🔥 三角の“視覚中央”に調整 */
+  top: 35%;
+  left: 35%;
 
-    transform: translate(-50%, -50%) rotate(-45deg);
+  transform: translate(-50%, -50%) rotate(-45deg);
 
-    font-size: 12px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 0.05em;
-    text-align: center;
-    white-space: nowrap;
-  }
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.05em;
 
+  /* 🔥 はみ出し防止 */
+  max-width: 70px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
   /* ===== 色 ===== */
 
   .badge.no1 {
