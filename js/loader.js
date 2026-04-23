@@ -6,35 +6,35 @@ async function init() {
 
   if (!root || !body) return;
 
-  try {
-    // loader読み込み
-    const res = await fetch("loader.html");
-    const html = await res.text();
-    root.innerHTML = html;
+  const startTime = Date.now(); // ← 開始時間
 
-    const loader = document.getElementById("loader");
+  const res = await fetch("loader.html");
+  const html = await res.text();
+  root.innerHTML = html;
 
-    if (!loader) {
-      body.classList.remove("opacity-0");
-      return;
-    }
+  const loader = document.getElementById("loader");
 
-    // 👇 load待たない
-    setTimeout(() => {
-
-      loader.style.opacity = "0";
-
-      setTimeout(() => {
-        loader.style.display = "none";
-        body.classList.remove("opacity-0");
-      }, 700);
-
-    }, 800); // 少し長めにして視認できるように
-
-  } catch (e) {
-    console.error(e);
+  if (!loader) {
     body.classList.remove("opacity-0");
+    return;
   }
+
+  // 👇 最低表示時間（ここ調整）
+  const MIN_TIME = 1200;
+
+  const elapsed = Date.now() - startTime;
+  const wait = Math.max(0, MIN_TIME - elapsed);
+
+  setTimeout(() => {
+
+    loader.style.opacity = "0";
+
+    setTimeout(() => {
+      loader.style.display = "none";
+      body.classList.remove("opacity-0");
+    }, 700);
+
+  }, wait);
 }
 
 init();
