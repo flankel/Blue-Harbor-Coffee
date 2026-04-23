@@ -5,7 +5,7 @@ export function initLoader() {
 
   if (!isHome) return;
 
-  fetch("loader.html")
+  fetch("/loader.html")
     .then(res => res.text())
     .then(html => {
       document.body.insertAdjacentHTML("afterbegin", html);
