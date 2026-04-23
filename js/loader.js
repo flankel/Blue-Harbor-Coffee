@@ -17,9 +17,10 @@ export function initLoader() {
 
         const percentEl = document.getElementById("percent");
         const coffeeFill = document.getElementById("coffee-fill");
+        const cup = coffeeFill?.parentElement; // ←重要（カップ全体制御用）
         const waveLayer = document.querySelectorAll(".wave");
 
-        if (!percentEl || !coffeeFill) {
+        if (!percentEl || !coffeeFill || !cup) {
           console.error("loader elements missing");
           return;
         }
@@ -39,22 +40,19 @@ export function initLoader() {
           percentEl.textContent = p;
 
           // =========================
-          // ☕ コーヒー（安定版）
+          // ☕ コーヒー（はみ出し防止前提）
           // =========================
           coffeeFill.style.transform = `scaleY(${percent / 100})`;
           coffeeFill.style.transformOrigin = "bottom";
 
-          // 少しだけ質感変化（自然）
           coffeeFill.style.filter = `brightness(${0.8 + percent / 350})`;
 
           // =========================
-          // 🌊 波（CSS主体なのでJSは触らない）
+          // 🌊 波（触らない）
           // =========================
-          // → ここ削除（重要）
-          // wave opacity操作しない
 
           // =========================
-          // 背景（海の深さ演出）
+          // 背景
           // =========================
           root.style.background = `linear-gradient(
             to bottom,
@@ -63,14 +61,13 @@ export function initLoader() {
           )`;
 
           // =========================
-          // 完了演出（海が開く）
+          // 完了演出
           // =========================
           if (percent >= 100) {
             clearInterval(interval);
 
-            // 🌊 波を左右に開く（ここだけ操作）
+            // 🌊 波を開く
             waveLayer.forEach((wave, i) => {
-
               wave.style.transition = "transform 1s ease, opacity 0.8s ease";
 
               if (i % 2 === 0) {
@@ -82,19 +79,23 @@ export function initLoader() {
               wave.style.opacity = "0";
             });
 
-            // ☕ コーヒー消える
-            coffeeFill.style.transition = "opacity 0.8s ease";
-            coffeeFill.style.opacity = "0";
-
-            // フェードアウト → 本体表示
+            // ☕ コーヒーは即消さない（ここ重要修正）
             setTimeout(() => {
+              coffeeFill.style.transition = "opacity 0.8s ease";
+              coffeeFill.style.opacity = "0";
+            }, 300); // ←遅延
+
+            // カップ全体をフェードアウト
+            setTimeout(() => {
+
+              cup.style.transition = "opacity 0.8s ease";
+              cup.style.opacity = "0";
 
               root.style.transition = "opacity 0.6s ease";
               root.style.opacity = "0";
 
               setTimeout(() => {
                 root.remove();
-                // 👉 index.html完全表示
               }, 600);
 
             }, 900);
