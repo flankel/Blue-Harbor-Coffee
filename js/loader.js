@@ -1,31 +1,82 @@
-root.innerHTML = html;
+async function init() {
 
-// DOM確実待ち（requestAnimationFrameより安全）
-setTimeout(() => {
+  // =========================
+  // 必要な要素取得
+  // =========================
+  const root = document.getElementById("loader-root");
+  const body = document.getElementById("body");
 
-  const loader = document.getElementById("loader");
+  if (!root || !body) return;
 
-  if (!loader) {
-    body.classList.remove("opacity-0");
-    return;
-  }
+  // =========================
+  // 開始時間（最低表示時間制御）
+  // =========================
+  const startTime = Date.now();
 
-  loader.style.opacity = "1";
-  loader.style.display = "flex";
+  try {
 
-  const MIN_TIME = 1200;
-  const elapsed = Date.now() - startTime;
-  const wait = Math.max(0, MIN_TIME - elapsed);
+    // =========================
+    // loader.html 読み込み
+    // =========================
+    const res = await fetch("./loader.html");
+    const html = await res.text();
 
-  setTimeout(() => {
+    // =========================
+    // DOMに挿入
+    // =========================
+    root.innerHTML = html;
 
-    loader.style.opacity = "0";
-
+    // =========================
+    // DOM反映を確実に待つ
+    // =========================
     setTimeout(() => {
-      loader.style.display = "none";
-      body.classList.remove("opacity-0");
-    }, 700);
 
-  }, wait);
+      const loader = document.getElementById("loader");
 
-}, 0);
+      if (!loader) {
+        body.classList.remove("opacity-0");
+        return;
+      }
+
+      // =========================
+      // 強制表示
+      // =========================
+      loader.style.opacity = "1";
+      loader.style.display = "flex";
+
+      // =========================
+      // 最低表示時間制御
+      // =========================
+      const MIN_TIME = 1200;
+      const elapsed = Date.now() - startTime;
+      const wait = Math.max(0, MIN_TIME - elapsed);
+
+      // =========================
+      // フェードアウト
+      // =========================
+      setTimeout(() => {
+
+        loader.style.opacity = "0";
+
+        setTimeout(() => {
+          loader.style.display = "none";
+          body.classList.remove("opacity-0");
+        }, 700);
+
+      }, wait);
+
+    }, 0);
+
+  } catch (error) {
+
+    console.error("Loader Error:", error);
+
+    // エラー時は強制表示
+    body.classList.remove("opacity-0");
+  }
+}
+
+// =========================
+// 実行
+// =========================
+init();
