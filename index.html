@@ -50,6 +50,15 @@
   }
 
   /* =========================
+     loader（🔥ここが重要）
+  ========================= */
+  #loader-root {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+  }
+
+  /* =========================
      スマホ用：孤立ワード防止
   ========================= */
   @media (max-width: 768px) {
@@ -62,16 +71,8 @@
       line-break: strict;
       text-wrap: balance;
     }
-
-  #loader-root {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-}
-
   }
 </style>
-
 </head>
 
 <body id="body" class="bg-white flex flex-col min-h-screen opacity-0 transition-opacity duration-700">
