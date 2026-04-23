@@ -11,15 +11,14 @@
     <!-- カップ本体 -->
     <div class="absolute inset-0 bg-white border-2 border-gray-800 rounded-[2rem] overflow-hidden">
 
-      <!-- コーヒー液（ここが液体本体） -->
+      <!-- コーヒー液（本体） -->
       <div id="coffee-fill"
         class="absolute bottom-0 left-0 w-full h-0 transition-all duration-200">
-
-        <!-- 🌊 波（液面） -->
-        <div class="wave wave1"></div>
-        <div class="wave wave2"></div>
-
       </div>
+
+      <!-- 🌊 波（液面・外に出す） -->
+      <div class="wave wave1"></div>
+      <div class="wave wave2"></div>
 
     </div>
 
@@ -41,14 +40,13 @@
 <style>
 
 /* =========================
-   波（液面）
+   波（液面表現）
 ========================= */
 .wave {
   position: absolute;
-  bottom: 0;
   left: 0;
   width: 200%;
-  height: 18px;
+  height: 20px;
 
   background: linear-gradient(
     90deg,
@@ -58,19 +56,21 @@
   );
 
   border-radius: 50%;
+  transform-origin: center bottom;
 }
 
 /* 波1 */
 .wave1 {
+  bottom: 0;
   animation: waveMove 2.5s linear infinite;
   opacity: 0.6;
 }
 
 /* 波2（ズレてリアル感） */
 .wave2 {
+  bottom: 2px;
   animation: waveMove 3.5s linear infinite reverse;
   opacity: 0.3;
-  bottom: 2px;
 }
 
 /* 横移動 */
