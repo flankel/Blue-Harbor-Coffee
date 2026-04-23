@@ -1,4 +1,4 @@
-<div id="loader-root" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]">
+<div class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]">
 
   <!-- カップ -->
   <div class="relative w-24 h-24 mb-6">
@@ -8,15 +8,20 @@
 
     <!-- コーヒー液（満ち欠け） -->
     <div id="coffee-fill"
-      class="absolute bottom-0 left-0 w-full bg-amber-700 transition-all duration-300"
-      style="height: 0%;">
+      class="absolute bottom-0 left-0 w-full bg-amber-700 transition-all duration-200"
+      style="height: 0%; opacity: 0.9;">
     </div>
+
+    <!-- カップ内の白抜き（見やすくするため） -->
+    <div class="absolute inset-0 rounded-b-2xl rounded-t-lg overflow-hidden"></div>
 
   </div>
 
-  <!-- 波（簡易アニメ） -->
+  <!-- 波 -->
   <div class="relative w-40 h-6 overflow-hidden mb-4">
-    <div class="wave"></div>
+
+    <div class="wave absolute inset-0"></div>
+
   </div>
 
   <!-- パーセンテージ -->
@@ -28,16 +33,28 @@
 
 <style>
 .wave {
-  position: absolute;
   width: 200%;
   height: 100%;
-  background: linear-gradient(to right, rgba(59,130,246,0.3), rgba(59,130,246,0.1));
+  background: linear-gradient(
+    to right,
+    rgba(59,130,246,0.25),
+    rgba(59,130,246,0.1)
+  );
   animation: waveMove 2s linear infinite;
   border-radius: 999px;
 }
 
 @keyframes waveMove {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ちょい視認性アップ */
+#coffee-fill {
+  transition: height 0.2s linear;
 }
 </style>
