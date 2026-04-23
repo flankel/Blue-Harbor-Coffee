@@ -43,48 +43,48 @@
   ========================= */
 
   .badge {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 90px;
-  height: 90px;
-  overflow: hidden;
-  z-index: 20;
-  pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    z-index: 20;
+    pointer-events: none;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
 
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-}
+  /* 背景（三角） */
+  .badge::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit;
+  }
 
-/* 背景（三角） */
-.badge::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: inherit;
-}
+  /* 🔥 文字 */
+  .badge::after {
+    content: attr(data-label);
+    position: absolute;
 
-/* 🔥 文字 */
-.badge::after {
-  content: attr(data-label);
-  position: absolute;
+    /* 三角の視覚中央 */
+    top: 35%;
+    left: 35%;
 
-  /* 🔥 三角の“視覚中央”に調整 */
-  top: 35%;
-  left: 35%;
+    transform: translate(-50%, -50%) rotate(-45deg);
 
-  transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.05em;
 
-  font-size: 11px;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.05em;
+    /* はみ出し防止 */
+    max-width: 70px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 
-  /* 🔥 はみ出し防止 */
-  max-width: 70px;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-}
   /* ===== 色 ===== */
 
   .badge.no1 {
@@ -114,22 +114,30 @@
     transform: translateX(10px);
     transition: all 0.3s ease;
   }
-  
-@keyframes glow {
-  0%, 100% {
-    opacity: 1;
-    text-shadow: 0 0 0px rgba(255,255,255,0);
-  }
-  50% {
-    opacity: 1;
-    text-shadow: 0 0 8px rgba(255,255,255,0.9);
-  }
-}
 
-.badge::after {
-  animation: glow 1.5s ease-in-out infinite;
-}
-  
+  /* =========================
+     ✨ NEWだけ光る（おすすめ）
+  ========================= */
+
+  @keyframes glow {
+    0%, 100% {
+      opacity: 1;
+      text-shadow: 0 0 0px rgba(255,255,255,0);
+    }
+    50% {
+      opacity: 1;
+      text-shadow:
+        0 0 6px rgba(255,255,255,0.9),
+        0 0 12px rgba(59,130,246,0.8),
+        0 0 20px rgba(59,130,246,0.6);
+    }
+  }
+
+  /* 🔥 NEWだけ適用（重要） */
+  .badge.new::after {
+    animation: glow 1.2s ease-in-out infinite;
+  }
+
 </style>
 
 <body class="bg-stone-50 text-slate-800">
