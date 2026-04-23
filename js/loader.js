@@ -16,7 +16,7 @@ export function initLoader() {
         width: 160px;
         height: 140px;
         background-color: #ffffff;
-        border: 6px solid #1e3a8a;
+        border: 6px solid #1e3a8a; /* border-blue-900 */
         border-bottom-left-radius: 80px 140px;
         border-bottom-right-radius: 80px 140px;
         overflow: hidden;
@@ -29,7 +29,7 @@ export function initLoader() {
         right: -45px;
         width: 60px;
         height: 80px;
-        border: 6px solid #1e3a8a;
+        border: 6px solid #1e3a8a; /* border-blue-900 */
         border-radius: 0 40px 40px 0;
         z-index: 5;
       }
@@ -42,23 +42,46 @@ export function initLoader() {
       .wave-base {
         position: absolute;
         left: 50%;
-        width: 400%; /* さらに巨大化させて回転を緩やかに */
+        width: 400%;
         height: 400%;
         border-radius: 43%;
-        transition: bottom 0.5s ease-linear; /* 上昇をよりねっとりと */
+        transition: bottom 0.5s ease-linear;
         z-index: 15;
       }
 
       .wave-primary {
-        background-color: #6F4E37;
+        background-color: #6F4E37; /* コーヒー色 */
         opacity: 0.9;
         animation: wave-move 8s infinite linear;
       }
 
       .wave-secondary {
-        background-color: #C6A664;
+        background-color: #C6A664; /* タンカラー */
         opacity: 0.4;
         animation: wave-move 12s infinite linear;
+      }
+
+      /* 【追加】コーヒー豆のCSS描画 */
+      .coffee-bean {
+        position: relative;
+        width: 18px;
+        height: 12px;
+        background-color: #6F4E37; /* コーヒー色 */
+        border-radius: 50% / 50%; /* 楕円形 */
+        display: inline-block;
+        vertical-align: middle;
+      }
+      /* 豆の割れ目 */
+      .coffee-bean::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        width: 80%;
+        height: 1.5px;
+        background-color: #f3f4f6; /* bg-gray-100（割れ目の色） */
+        transform: translateY(-50%) rotate(-5deg);
+        border-radius: 2px;
       }
 
       #loader-root.fade-out {
@@ -69,13 +92,19 @@ export function initLoader() {
     </style>
     
     <div class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]" id="loader-bg">
-      <div class="relative mb-12">
-        <div class="cup-shape">
+      <div class="relative mb-8"> <div class="cup-shape">
           <div id="wave-secondary" class="wave-base wave-secondary" style="bottom: -420%;"></div>
           <div id="wave-primary" class="wave-base wave-primary" style="bottom: -420%;"></div>
         </div>
         <div class="cup-handle"></div>
       </div>
+
+      <div class="flex items-center gap-3 mb-12">
+        <span class="coffee-bean opacity-80"></span>
+        <span class="font-eng text-xl font-medium text-blue-900 tracking-[0.2em]">Now Brewing...</span>
+        <span class="coffee-bean opacity-80"></span>
+      </div>
+
       <div class="font-eng text-6xl font-bold text-blue-900 tracking-tighter" id="percent-text">0%</div>
     </div>
   `;
@@ -88,26 +117,14 @@ export function initLoader() {
   const updateProgress = () => {
     if (progress <= 100) {
       text.innerText = `${progress}%`;
-      
-      /**
-       * 【同期計算の最終調整】
-       * 開始: -420% (深めに設定)
-       * 100%到達時: -210% (縁ギリギリに到達)
-       * これにより、上昇速度の見た目がかなり緩やかになります。
-       */
       const currentBottom = -420 + (progress * 2.1); 
-      
       wavePrimary.style.bottom = `${currentBottom}%`;
       waveSecondary.style.bottom = `${currentBottom + 0.5}%`;
 
       progress++;
-      
-      // 【速度を半分に】
-      // 通常時 40ms → 100ms
-      // 仕上げ 100ms → 200ms 
+      // 速度は前回のまま、ゆっくりに設定
       let speed = progress > 85 ? 200 : 100; 
       setTimeout(updateProgress, speed);
-      
     } else {
       finishLoading();
     }
