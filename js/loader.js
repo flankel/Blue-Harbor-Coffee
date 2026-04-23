@@ -17,10 +17,9 @@ export function initLoader() {
 
         const percentEl = document.getElementById("percent");
         const coffeeFill = document.getElementById("coffee-fill");
-        const cup = coffeeFill?.parentElement; // ←重要（カップ全体制御用）
         const waveLayer = document.querySelectorAll(".wave");
 
-        if (!percentEl || !coffeeFill || !cup) {
+        if (!percentEl || !coffeeFill) {
           console.error("loader elements missing");
           return;
         }
@@ -40,7 +39,7 @@ export function initLoader() {
           percentEl.textContent = p;
 
           // =========================
-          // ☕ コーヒー（はみ出し防止前提）
+          // ☕ コーヒー（安定満ちる）
           // =========================
           coffeeFill.style.transform = `scaleY(${percent / 100})`;
           coffeeFill.style.transformOrigin = "bottom";
@@ -48,11 +47,11 @@ export function initLoader() {
           coffeeFill.style.filter = `brightness(${0.8 + percent / 350})`;
 
           // =========================
-          // 🌊 波（触らない）
+          // 🌊 波（CSS主体・補助のみ）
           // =========================
 
           // =========================
-          // 背景
+          // 背景（海の深さ）
           // =========================
           root.style.background = `linear-gradient(
             to bottom,
@@ -61,42 +60,37 @@ export function initLoader() {
           )`;
 
           // =========================
-          // 完了演出
+          // 完了演出（海が開く）
           // =========================
           if (percent >= 100) {
             clearInterval(interval);
 
-            // 🌊 波を開く
+            // 🌊 波を左右に開く
             waveLayer.forEach((wave, i) => {
+
               wave.style.transition = "transform 1s ease, opacity 0.8s ease";
 
               if (i % 2 === 0) {
-                wave.style.transform = "translateX(-180%)";
+                wave.style.transform = "translateX(-200%)";
               } else {
-                wave.style.transform = "translateX(180%)";
+                wave.style.transform = "translateX(200%)";
               }
 
               wave.style.opacity = "0";
             });
 
-            // ☕ コーヒーは即消さない（ここ重要修正）
-            setTimeout(() => {
-              coffeeFill.style.transition = "opacity 0.8s ease";
-              coffeeFill.style.opacity = "0";
-            }, 300); // ←遅延
+            // ☕ コーヒーは“消さない”（重要修正）
+            // → 空に見えるバグの原因なので削除
 
-            // カップ全体をフェードアウト
+            // 全体フェードアウト（ここで初めて消す）
             setTimeout(() => {
 
-              cup.style.transition = "opacity 0.8s ease";
-              cup.style.opacity = "0";
-
-              root.style.transition = "opacity 0.6s ease";
+              root.style.transition = "opacity 0.8s ease";
               root.style.opacity = "0";
 
               setTimeout(() => {
                 root.remove();
-              }, 600);
+              }, 800);
 
             }, 900);
           }
