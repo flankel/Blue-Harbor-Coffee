@@ -2,20 +2,44 @@ export function initLoader() {
   const root = document.getElementById('loader-root');
   if (!root) return;
 
-  // 1. デザインの流し込み（波のサイズと位置を最適化）
+  // 1. デザインの流し込み（コーヒー色に変更、2重の波、同期計算修正）
   root.innerHTML = `
     <style>
       .mug-clip {
         clip-path: circle(50% at 50% 50%);
       }
-      .wave-animation {
-        animation: wave-move 6s infinite linear;
-      }
-      @keyframes wave-move {
+      /* 波のアニメーションを2つ定義 */
+      @keyframes wave-move-fast {
         0% { transform: translateX(-50%) rotate(0deg); }
         100% { transform: translateX(-50%) rotate(360deg); }
       }
-      /* ローダー自体をフェードアウトさせるためのスタイル */
+      @keyframes wave-move-slow {
+        0% { transform: translateX(-50%) rotate(0deg); }
+        100% { transform: translateX(-50%) rotate(360deg); }
+      }
+      
+      .wave-base {
+        position: absolute;
+        left: 50%;
+        width: 250%; /* カップより大きくして横移動させる */
+        height: 250%;
+        border-radius: 42%; /* 角を丸めて波っぽく */
+        transition: all duration-200 ease-linear;
+      }
+      /* メインのコーヒー（少し濃い） */
+      .wave-primary {
+        background-color: #6F4E37; /* リッチなコーヒーブラウン */
+        opacity: 0.6;
+        animation: wave-move-fast 5s infinite linear;
+      }
+      /* セカンダリのコーヒー（少し薄い、レイヤー効果） */
+      .wave-secondary {
+        background-color: #C6A664; /* ライトなタンカラー */
+        opacity: 0.4;
+        animation: wave-move-slow 7s infinite linear;
+      }
+
+      /* ローダーフェードアウト */
       #loader-root.fade-out {
         opacity: 0;
         pointer-events: none;
@@ -28,9 +52,12 @@ export function initLoader() {
         <div class="absolute inset-0 border-[6px] border-blue-900 rounded-full z-20"></div>
         
         <div class="absolute inset-[6px] bg-gray-50 rounded-full overflow-hidden mug-clip z-10">
-          <div id="wave-element" 
-               class="absolute left-1/2 w-[250%] h-[250%] bg-blue-400 opacity-60 rounded-[42%] wave-animation transition-all duration-200 ease-linear"
-               style="bottom: -220%;"></div>
+          <div id="wave-secondary" 
+               class="wave-base wave-secondary"
+               style="bottom: -250%;"></div>
+          <div id="wave-primary" 
+               class="wave-base wave-primary"
+               style="bottom: -250%;"></div>
         </div>
       </div>
 
@@ -38,7 +65,8 @@ export function initLoader() {
     </div>
   `;
 
-  const wave = document.getElementById('wave-element');
+  const wavePrimary = document.getElementById('wave-primary');
+  const waveSecondary = document.getElementById('wave-secondary');
   const text = document.getElementById('percent-text');
   let progress = 0;
 
@@ -47,12 +75,13 @@ export function initLoader() {
     if (progress <= 100) {
       text.innerText = `${progress}%`;
       
-      // 波の高さ調整
-      // 0%のとき bottom: -220% (ほぼ空)
-      // 100%のとき bottom: -120% (満杯) 
-      // ※回転する四角形なので、-100%付近がちょうど満杯に見える境界です
-      const currentBottom = -220 + (progress); 
-      wave.style.bottom = `${currentBottom}%`;
+      // 波の高さを同期（正確な計算：-250%から-75%の範囲）
+      // 0%のとき bottom: -250% (完全に空)
+      // 100%のとき bottom: -75% (満杯。回転する四角形の中心がカップの中心に来る)
+      const currentBottom = -250 + (progress * 1.75); 
+      // 両方の波を同じ平均高さにする（レイヤー効果は横移動とopacityで出す）
+      wavePrimary.style.bottom = `${currentBottom}%`;
+      waveSecondary.style.bottom = `${currentBottom}%`;
 
       progress++;
       
