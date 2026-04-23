@@ -14,31 +14,26 @@ async function init() {
 
     const loader = document.getElementById("loader");
 
-    // loaderが無かったら即表示（保険）
     if (!loader) {
       body.classList.remove("opacity-0");
       return;
     }
 
-    // ページロード後に処理
-    window.addEventListener("load", () => {
+    // 👇 load待たない
+    setTimeout(() => {
+
+      loader.style.opacity = "0";
 
       setTimeout(() => {
+        loader.style.display = "none";
+        body.classList.remove("opacity-0");
+      }, 700);
 
-        loader.style.opacity = "0";
-
-        setTimeout(() => {
-          loader.style.display = "none";
-          body.classList.remove("opacity-0");
-        }, 700);
-
-      }, 600);
-
-    });
+    }, 800); // 少し長めにして視認できるように
 
   } catch (e) {
-    console.error("Loader error:", e);
-    body.classList.remove("opacity-0"); // エラー時も表示
+    console.error(e);
+    body.classList.remove("opacity-0");
   }
 }
 
