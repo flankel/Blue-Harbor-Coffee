@@ -6,7 +6,7 @@ async function init() {
 
   if (!root || !body) return;
 
-  const startTime = Date.now(); // ← 開始時間
+  const startTime = Date.now();
 
   const res = await fetch("loader.html");
   const html = await res.text();
@@ -19,9 +19,10 @@ async function init() {
     return;
   }
 
-  // 👇 最低表示時間（ここ調整）
-  const MIN_TIME = 1200;
+  // 👇 これ追加（超重要）
+  loader.style.opacity = "1";
 
+  const MIN_TIME = 1200;
   const elapsed = Date.now() - startTime;
   const wait = Math.max(0, MIN_TIME - elapsed);
 
