@@ -134,6 +134,49 @@
 .badge::after {
   animation: blinkText 1s infinite;
 }
+/* =========================
+   🟦 カード枠ベース
+========================= */
+
+.product-card {
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+/* =========================
+   🎨 色連動
+========================= */
+
+.product-card.has-badge:has(.badge.new) {
+  border-color: #ef4444;
+}
+
+.product-card.has-badge:has(.badge.limited) {
+  border-color: #7c3aed;
+}
+
+.product-card.has-badge:has(.badge.no1) {
+  border-color: #d4af37;
+}
+
+/* =========================
+   ✨ 動き（脈打ち）
+========================= */
+
+@keyframes pulseBorder {
+  0%, 100% {
+    box-shadow: 0 0 0px rgba(0,0,0,0);
+  }
+  50% {
+    box-shadow: 0 0 12px currentColor;
+  }
+}
+
+/* 🔥 バッジ付きだけ動く */
+.product-card.has-badge {
+  animation: pulseBorder 1.5s ease-in-out infinite;
+}
 
 </style>
 
