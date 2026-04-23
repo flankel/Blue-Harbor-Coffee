@@ -1,26 +1,30 @@
 <div class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]">
 
-  <!-- カップ -->
-  <div class="relative w-24 h-24 mb-6">
-
-    <!-- カップ本体 -->
-    <div class="absolute inset-0 border-2 border-gray-800 rounded-b-2xl rounded-t-lg"></div>
-
-    <!-- コーヒー液（満ち欠け） -->
-    <div id="coffee-fill"
-      class="absolute bottom-0 left-0 w-full bg-amber-700 transition-all duration-200"
-      style="height: 0%; opacity: 0.9;">
-    </div>
-
-    <!-- カップ内の白抜き（見やすくするため） -->
-    <div class="absolute inset-0 rounded-b-2xl rounded-t-lg overflow-hidden"></div>
-
+  <!-- タイトル -->
+  <div class="font-eng text-xs tracking-[0.3em] text-gray-500 mb-6">
+    BREWING COFFEE
   </div>
 
-  <!-- 波 -->
-  <div class="relative w-40 h-6 overflow-hidden mb-4">
+  <!-- カップ -->
+  <div class="relative w-28 h-32 mb-6">
 
-    <div class="wave absolute inset-0"></div>
+    <!-- カップ本体 -->
+    <div class="absolute inset-0 border-2 border-gray-800 rounded-b-3xl rounded-t-lg"></div>
+
+    <!-- ハンドル -->
+    <div class="absolute -right-6 top-6 w-6 h-12 border-2 border-gray-800 rounded-r-full"></div>
+
+    <!-- コーヒー液 -->
+    <div id="coffee-fill"
+      class="absolute bottom-0 left-0 w-full h-0 overflow-hidden transition-all duration-200">
+
+      <!-- 波（コーヒー液面） -->
+      <div class="wave absolute inset-0"></div>
+
+    </div>
+
+    <!-- 内側の影（立体感） -->
+    <div class="absolute inset-0 rounded-b-3xl rounded-t-lg shadow-inner pointer-events-none"></div>
 
   </div>
 
@@ -32,29 +36,50 @@
 </div>
 
 <style>
+
+/* =========================
+   波（コーヒー液面）
+========================= */
 .wave {
   width: 200%;
   height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
   background: linear-gradient(
-    to right,
-    rgba(59,130,246,0.25),
-    rgba(59,130,246,0.1)
+    90deg,
+    rgba(92, 51, 23, 0.7),
+    rgba(160, 110, 60, 0.5),
+    rgba(92, 51, 23, 0.7)
   );
-  animation: waveMove 2s linear infinite;
-  border-radius: 999px;
+
+  border-radius: 50%;
+  animation: waveMove 2.5s linear infinite;
 }
 
 @keyframes waveMove {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* ちょい視認性アップ */
+/* =========================
+   コーヒーの深さ変化
+========================= */
 #coffee-fill {
-  transition: height 0.2s linear;
+  background: linear-gradient(
+    to top,
+    #4b2a14,
+    #6b3a1d,
+    #8b5a2b
+  );
 }
+
+/* =========================
+   カップ内の影（立体感）
+========================= */
+.shadow-inner {
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.08);
+}
+
 </style>
