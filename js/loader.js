@@ -40,7 +40,8 @@ export function initLoader() {
           percentEl.textContent = p;
 
           // コーヒー満ちる（海の深さ）
-          coffeeFill.style.height = percent + "%";
+          coffeeFill.style.transform = `scaleY(${percent / 100})`;
+          coffeeFill.style.transformOrigin = "bottom";
 
           // 波の強さ（揺れ）
           waveLayer.forEach(wave => {
