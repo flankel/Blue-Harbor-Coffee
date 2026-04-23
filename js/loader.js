@@ -18,7 +18,6 @@ export function initLoader() {
         const percentEl = document.getElementById("percent");
         const coffeeFill = document.getElementById("coffee-fill");
         const waveLayer = document.querySelectorAll(".wave");
-        const cup = document.querySelector(".cup"); // あれば
 
         if (!percentEl || !coffeeFill) {
           console.error("loader elements missing");
@@ -39,17 +38,25 @@ export function initLoader() {
           const p = Math.floor(percent);
           percentEl.textContent = p;
 
-          // コーヒー満ちる（海の深さ）
+          // =========================
+          // ☕ コーヒー（液体）
+          // =========================
           coffeeFill.style.transform = `scaleY(${percent / 100})`;
           coffeeFill.style.transformOrigin = "bottom";
 
-          // 波の強さ（揺れ）
+          // ほんの少し質感変化（リアル化）
+          coffeeFill.style.filter = `brightness(${0.75 + percent / 300})`;
+
+          // =========================
+          // 🌊 波（CSS主体・JSは補助のみ）
+          // =========================
           waveLayer.forEach(wave => {
-            wave.style.transform = `translateX(${-percent / 3}px)`;
-            wave.style.opacity = 0.4 + percent / 250;
+            wave.style.opacity = 0.5 + percent / 300;
           });
 
-          // 完了前は「海の中にいる感じ」
+          // =========================
+          // 背景（海の雰囲気）
+          // =========================
           root.style.background = `linear-gradient(
             to bottom,
             rgba(255,255,255,1),
@@ -57,44 +64,41 @@ export function initLoader() {
           )`;
 
           // =========================
-          // 完了 → 海が開く演出
+          // 完了演出（海が開く）
           // =========================
           if (percent >= 100) {
             clearInterval(interval);
 
             // 🌊 波を左右に開く
-            if (waveLayer.length) {
-              waveLayer.forEach((wave, i) => {
-                wave.style.transition = "all 0.8s ease";
+            waveLayer.forEach((wave, i) => {
 
-                if (i % 2 === 0) {
-                  wave.style.transform = "translateX(-120%)";
-                } else {
-                  wave.style.transform = "translateX(120%)";
-                }
+              wave.style.transition = "transform 1s ease, opacity 0.8s ease";
 
-                wave.style.opacity = "0";
-              });
-            }
+              if (i % 2 === 0) {
+                wave.style.transform = "translateX(-150%)";
+              } else {
+                wave.style.transform = "translateX(150%)";
+              }
 
-            // カップも沈む or 消える
-            if (coffeeFill) {
-              coffeeFill.style.transition = "all 0.8s ease";
-              coffeeFill.style.opacity = "0";
-            }
+              wave.style.opacity = "0";
+            });
 
-            // フェードアウト
+            // ☕ コーヒー消える
+            coffeeFill.style.transition = "opacity 0.8s ease";
+            coffeeFill.style.opacity = "0";
+
+            // フェードアウト → 本体表示
             setTimeout(() => {
+
               root.style.transition = "opacity 0.6s ease";
               root.style.opacity = "0";
 
               setTimeout(() => {
                 root.remove();
-
-                // 👉 ここで「完全にページ表示完了」
+                // 👉 ここで index.html 完全表示状態
               }, 600);
 
-            }, 800);
+            }, 900);
           }
 
         }, stepTime);
