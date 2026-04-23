@@ -6,7 +6,7 @@ if (!root) {
   console.log("loader-root not found");
 }
 
-fetch("/loader.html")
+fetch("./loader.html")
   .then(res => {
     if (!res.ok) throw new Error("loader.html not found");
     return res.text();
