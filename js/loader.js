@@ -9,26 +9,37 @@ async function init() {
 
   try {
 
-    const res = await fetch("./loader.html");
+    // =========================
+    // 🔥 パス修正（GitHub Pages安定版）
+    // =========================
+    const res = await fetch("/Blue-Harbor-Coffee/loader.html");
     const html = await res.text();
 
     root.innerHTML = html;
 
-    // 🔥 DOM確実反映待ち
-    setTimeout(() => {
+    // =========================
+    // DOM反映を確実に待つ
+    // =========================
+    requestAnimationFrame(() => {
 
       const loader = document.querySelector(".loader");
 
-      // ❗ loaderが取れない場合は即表示解除
+      // loaderが存在しない場合は即表示
       if (!loader) {
         body.style.opacity = "1";
         body.classList.remove("opacity-0");
         return;
       }
 
-      loader.style.opacity = "1";
+      // =========================
+      // 表示開始
+      // =========================
       loader.style.display = "flex";
+      loader.style.opacity = "1";
 
+      // =========================
+      // 最低表示時間制御
+      // =========================
       const MIN_TIME = 1200;
       const elapsed = Date.now() - startTime;
       const wait = Math.max(0, MIN_TIME - elapsed);
@@ -41,21 +52,23 @@ async function init() {
 
           loader.style.display = "none";
 
-          // 🔥 ここが最重要（強制表示）
+          // =========================
+          // 本体表示（ここが最重要）
+          // =========================
           body.style.opacity = "1";
           body.classList.remove("opacity-0");
 
-        }, 700);
+        }, 600);
 
       }, wait);
 
-    }, 50);
+    });
 
   } catch (err) {
 
     console.error("Loader Error:", err);
 
-    // 🔥 エラーでも必ず表示
+    // エラー時は強制表示
     body.style.opacity = "1";
     body.classList.remove("opacity-0");
   }
