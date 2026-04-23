@@ -2,29 +2,23 @@ export function initLoader() {
   console.log("loader start");
 
   const root = document.getElementById("loader-root");
-  if (!root) {
-    console.error("loader-root not found");
-    return;
-  }
+  if (!root) return;
 
   fetch("./loader.html")
     .then(res => {
-      if (!res.ok) {
-        throw new Error("loader.html not found: " + res.status);
-      }
+      if (!res.ok) throw new Error("loader.html not found");
       return res.text();
     })
     .then(html => {
 
-      // DOM注入
       root.innerHTML = html;
 
-      // ⭐DOM確定待ち（スマホ対策）
       requestAnimationFrame(() => {
 
         const percentEl = document.getElementById("percent");
         const coffeeFill = document.getElementById("coffee-fill");
-        const drip = document.getElementById("drip"); // ←追加（ドリップ対応）
+        const waveLayer = document.querySelectorAll(".wave");
+        const cup = document.querySelector(".cup"); // あれば
 
         if (!percentEl || !coffeeFill) {
           console.error("loader elements missing");
@@ -34,8 +28,8 @@ export function initLoader() {
         let percent = 0;
 
         const duration = 5000;
-        const intervalTime = 50;
-        const step = 100 / (duration / intervalTime);
+        const stepTime = 50;
+        const step = 100 / (duration / stepTime);
 
         const interval = setInterval(() => {
 
@@ -43,60 +37,69 @@ export function initLoader() {
           if (percent > 100) percent = 100;
 
           const p = Math.floor(percent);
-
-          // 数値更新
           percentEl.textContent = p;
 
-          // コーヒー満ちる
+          // コーヒー満ちる（海の深さ）
           coffeeFill.style.height = percent + "%";
 
-          // 濃さ変化（リアルな抽出感）
-          coffeeFill.style.filter = `brightness(${0.75 + percent / 300})`;
+          // 波の強さ（揺れ）
+          waveLayer.forEach(wave => {
+            wave.style.transform = `translateX(${-percent / 3}px)`;
+            wave.style.opacity = 0.4 + percent / 250;
+          });
 
-          // 🌊 波の強さ変化（あれば効く）
-          coffeeFill.style.opacity = 0.85 + percent / 1000;
+          // 完了前は「海の中にいる感じ」
+          root.style.background = `linear-gradient(
+            to bottom,
+            rgba(255,255,255,1),
+            rgba(59,130,246,${percent / 300})
+          )`;
 
-          // 💧 ドリップ演出（あれば動く）
-          if (drip) {
-            const dripY = Math.sin(percent / 8) * 2;
-            drip.style.transform = `translate(-50%, ${dripY}px)`;
-
-            // 途中でポタッ演出
-            if (p % 15 === 0) {
-              drip.animate([
-                { transform: "translate(-50%, 0px) scale(1)" },
-                { transform: "translate(-50%, 8px) scale(0.8)" },
-                { transform: "translate(-50%, 0px) scale(1)" }
-              ], {
-                duration: 180,
-                easing: "ease-out"
-              });
-            }
-
-            // 完了で消える
-            if (percent >= 98) {
-              drip.style.opacity = "0";
-            }
-          }
-
-          // 完了処理
+          // =========================
+          // 完了 → 海が開く演出
+          // =========================
           if (percent >= 100) {
             clearInterval(interval);
 
+            // 🌊 波を左右に開く
+            if (waveLayer.length) {
+              waveLayer.forEach((wave, i) => {
+                wave.style.transition = "all 0.8s ease";
+
+                if (i % 2 === 0) {
+                  wave.style.transform = "translateX(-120%)";
+                } else {
+                  wave.style.transform = "translateX(120%)";
+                }
+
+                wave.style.opacity = "0";
+              });
+            }
+
+            // カップも沈む or 消える
+            if (coffeeFill) {
+              coffeeFill.style.transition = "all 0.8s ease";
+              coffeeFill.style.opacity = "0";
+            }
+
+            // フェードアウト
             setTimeout(() => {
               root.style.transition = "opacity 0.6s ease";
               root.style.opacity = "0";
 
-              setTimeout(() => root.remove(), 600);
-            }, 300);
+              setTimeout(() => {
+                root.remove();
+
+                // 👉 ここで「完全にページ表示完了」
+              }, 600);
+
+            }, 800);
           }
 
-        }, intervalTime);
+        }, stepTime);
 
       });
 
     })
-    .catch(err => {
-      console.error("loader error:", err);
-    });
+    .catch(err => console.error("loader error:", err));
 }
