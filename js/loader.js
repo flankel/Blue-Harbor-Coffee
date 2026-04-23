@@ -1,7 +1,7 @@
 root.innerHTML = html;
 
-// 🔥 これを入れる（DOM反映待ち）
-requestAnimationFrame(() => {
+// DOM確実待ち（requestAnimationFrameより安全）
+setTimeout(() => {
 
   const loader = document.getElementById("loader");
 
@@ -28,4 +28,4 @@ requestAnimationFrame(() => {
 
   }, wait);
 
-});
+}, 0);
