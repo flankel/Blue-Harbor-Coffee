@@ -1,37 +1,36 @@
-<div class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]">
+<div class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999] overflow-hidden">
 
   <!-- タイトル -->
-  <div class="font-eng text-xs tracking-[0.3em] text-gray-500 mb-6">
+  <div class="font-eng text-xs tracking-[0.3em] text-gray-500 mb-6 z-10">
     BREWING COFFEE
   </div>
 
-  <!-- カップ全体 -->
-  <div class="relative w-28 h-32 mb-6">
+  <!-- カップ -->
+  <div class="relative w-28 h-32 mb-10 z-10">
 
     <!-- カップ本体 -->
-    <div class="absolute inset-0 bg-white border-2 border-gray-800 rounded-[2rem] overflow-hidden">
-
-      <!-- コーヒー液（本体） -->
-      <div id="coffee-fill"
-        class="absolute bottom-0 left-0 w-full h-0 transition-all duration-200">
-      </div>
-
-      <!-- 🌊 波（液面・外に出す） -->
-      <div class="wave wave1"></div>
-      <div class="wave wave2"></div>
-
-    </div>
+    <div class="absolute inset-0 bg-white border-2 border-gray-800 rounded-[2rem] shadow-inner"></div>
 
     <!-- 取っ手 -->
     <div class="absolute -right-8 top-6 w-10 h-14 border-2 border-gray-800 rounded-full"></div>
 
-    <!-- 内側影 -->
-    <div class="absolute inset-0 rounded-[2rem] pointer-events-none shadow-inner"></div>
+    <!-- コーヒー（シンプルに上昇） -->
+    <div id="coffee-fill"
+      class="absolute bottom-0 left-0 w-full h-0 bg-gradient-to-t from-[#3f2412] via-[#6b3a1d] to-[#8b5a2b] transition-all duration-200 rounded-b-[2rem]">
+    </div>
+
+  </div>
+
+  <!-- 🌊 海（カップの下に広がる） -->
+  <div class="absolute bottom-0 left-0 w-full h-40 overflow-hidden">
+
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
 
   </div>
 
   <!-- パーセンテージ -->
-  <div class="font-eng text-sm tracking-[0.3em] text-gray-600">
+  <div class="font-eng text-sm tracking-[0.3em] text-gray-600 z-10">
     <span id="percent">0</span>%
   </div>
 
@@ -40,55 +39,42 @@
 <style>
 
 /* =========================
-   波（液面表現）
+   🌊 海の波（下レイヤー）
 ========================= */
 .wave {
   position: absolute;
+  bottom: 0;
   left: 0;
   width: 200%;
-  height: 20px;
+  height: 100px;
 
   background: linear-gradient(
     90deg,
-    rgba(92, 51, 23, 0.7),
-    rgba(160, 110, 60, 0.5),
-    rgba(92, 51, 23, 0.7)
+    rgba(59,130,246,0.25),
+    rgba(59,130,246,0.1),
+    rgba(59,130,246,0.25)
   );
 
   border-radius: 50%;
-  transform-origin: center bottom;
 }
 
 /* 波1 */
 .wave1 {
-  bottom: 0;
-  animation: waveMove 2.5s linear infinite;
-  opacity: 0.6;
+  animation: waveMove 3s linear infinite;
+  opacity: 0.5;
 }
 
-/* 波2（ズレてリアル感） */
+/* 波2 */
 .wave2 {
-  bottom: 2px;
-  animation: waveMove 3.5s linear infinite reverse;
+  bottom: 10px;
+  animation: waveMove 4s linear infinite reverse;
   opacity: 0.3;
 }
 
-/* 横移動 */
+/* 横流れ */
 @keyframes waveMove {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
-}
-
-/* =========================
-   コーヒー色グラデーション
-========================= */
-#coffee-fill {
-  background: linear-gradient(
-    to top,
-    #3f2412,
-    #6b3a1d,
-    #8b5a2b
-  );
 }
 
 /* =========================
