@@ -1,98 +1,111 @@
-<div class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999] overflow-hidden">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Coffee Shop Loader</title>
+    <style>
+        :root {
+            --bg-color: #f9f7f2;
+            --line-color: #2c5a85;
+            --wave-color: #4facfe;
+        }
 
-  <!-- タイトル -->
-  <div class="font-eng text-xs tracking-[0.3em] text-gray-500 mb-6 z-10">
-    BREWING COFFEE
-  </div>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
 
-  <!-- マグ -->
-  <div class="relative w-28 h-32 mb-4 z-10">
+        .loader-container {
+            text-align: center;
+            position: relative;
+        }
 
-    <!-- 本体（完全な丸マグ） -->
-    <div class="absolute inset-0 bg-white border-2 border-gray-800 rounded-full overflow-hidden shadow-inner">
+        /* マグカップの外枠 */
+        .mug-outline {
+            width: 200px;
+            height: 200px;
+            border: 6px solid var(--line-color);
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden; /* 波をカップ内に収める */
+            background: white;
+        }
 
-      <!-- コーヒー -->
-      <div id="coffee-fill"
-        class="absolute bottom-0 left-0 w-full h-0 bg-gradient-to-t from-[#3f2412] via-[#6b3a1d] to-[#8b5a2b] transition-transform duration-200 origin-bottom">
-      </div>
+        /* 波のアニメーション */
+        .wave {
+            position: absolute;
+            width: 400px; /* カップより広くして横に流す */
+            height: 400px;
+            background-color: var(--wave-color);
+            opacity: 0.6;
+            left: -100px;
+            bottom: -380px; /* 最初は下の方に隠す (JSで制御) */
+            border-radius: 40%; /* 角を丸めて波っぽく見せる */
+            animation: drift 4s infinite linear;
+            transition: bottom 0.1s ease-out;
+        }
 
+        /* 波を2重にして奥行きを出す */
+        .wave:nth-child(2) {
+            opacity: 0.3;
+            animation: drift 7s infinite linear;
+            border-radius: 35%;
+        }
+
+        @keyframes drift {
+            from { transform: rotate(0deg); }
+            from { transform: rotate(360deg); }
+        }
+
+        /* パーセンテージ表示 */
+        .percentage {
+            margin-top: 20px;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--line-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="loader-container">
+    <div class="mug-outline">
+        <div class="wave" id="wave1"></div>
+        <div class="wave" id="wave2"></div>
     </div>
-
-    <!-- ☕ 取っ手（右・独立・非干渉） -->
-    <div class="absolute right-[-18px] top-1/2 -translate-y-1/2 w-10 h-14">
-
-      <div class="w-full h-full border-2 border-gray-800 rounded-full"></div>
-
-    </div>
-
-  </div>
-
-  <!-- 🌊 波（シンプル線3本） -->
-  <div class="relative w-40 h-6 mb-6 overflow-hidden z-10">
-
-    <div class="wave wave1"></div>
-    <div class="wave wave2"></div>
-    <div class="wave wave3"></div>
-
-  </div>
-
-  <!-- パーセンテージ -->
-  <div class="font-eng text-sm tracking-[0.3em] text-gray-600 z-10">
-    <span id="percent">0</span>%
-  </div>
-
+    <div class="percentage" id="percent-text">0%</div>
 </div>
 
-<style>
+<script>
+    const wave1 = document.getElementById('wave1');
+    const wave2 = document.getElementById('wave2');
+    const text = document.getElementById('percent-text');
 
-/* =========================
-   ☕ 影
-========================= */
-.shadow-inner {
-  box-shadow: inset 0 0 18px rgba(0,0,0,0.12);
-}
+    let progress = 0;
 
-/* =========================
-   🌊 波（完全に線）
-========================= */
-.wave {
-  position: absolute;
-  left: 0;
-  width: 200%;
-  height: 2px;
+    // ローディングのシミュレーション
+    const interval = setInterval(() => {
+        progress += 1;
+        
+        // テキスト更新
+        text.innerText = progress + "%";
 
-  background: rgba(59,130,246,0.35);
-}
+        // 波の高さを上げる計算 (-380px から最大 -180px くらいまで)
+        const waveBottom = -380 + (progress * 2); 
+        wave1.style.bottom = waveBottom + "px";
+        wave2.style.bottom = (waveBottom + 10) + "px";
 
-.wave1 {
-  top: 6px;
-  animation: waveMove 2.5s linear infinite;
-  opacity: 0.7;
-}
+        if (progress >= 100) {
+            clearInterval(interval);
+            // 100%になった後の処理（フェードアウトなど）をここに書く
+        }
+    }, 50); // 速度調整
+</script>
 
-.wave2 {
-  top: 10px;
-  animation: waveMove 3.2s linear infinite reverse;
-  opacity: 0.4;
-}
-
-.wave3 {
-  top: 14px;
-  animation: waveMove 4s linear infinite;
-  opacity: 0.25;
-}
-
-@keyframes waveMove {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* =========================
-   ☕ コーヒー
-========================= */
-#coffee-fill {
-  transform-origin: bottom;
-  will-change: transform;
-}
-
-</style>
+</body>
+</html>
