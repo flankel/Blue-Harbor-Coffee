@@ -67,7 +67,10 @@
 
 </head>
 
-<body class="bg-white flex flex-col min-h-screen">
+<body id="body" class="bg-white flex flex-col min-h-screen opacity-0 transition-opacity duration-700">
+
+  <!-- Loader Root -->
+  <div id="loader-root"></div>
 
   <!-- Header -->
 
@@ -75,7 +78,6 @@
 
   <main class="flex-grow">
 
-```
 <!-- HERO -->
 <section class="relative h-[80vh] md:h-[600px] w-full bg-gray-900 overflow-hidden page-enter">
   <img src="images/Home/hero.png" class="absolute inset-0 w-full h-full object-cover opacity-70">
@@ -101,7 +103,6 @@
   <div id="sections"></div>
 
 </section>
-```
 
   </main>
 
