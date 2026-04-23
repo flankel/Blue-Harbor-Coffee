@@ -1,7 +1,7 @@
 // /js/loader.js
 
 async function loadLoader() {
-  const res = await fetch("/components/loader.html");
+  const res = await fetch("loader.html");
   const html = await res.text();
   document.getElementById("loader-root").innerHTML = html;
 }
