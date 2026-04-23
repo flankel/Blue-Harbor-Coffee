@@ -22,8 +22,24 @@
   .nav-link.active { border-bottom: 2px solid #3b82f6; color: #1d4ed8; }
   .nav-link.active svg { color: #1d4ed8; }
 
+  .tag-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #2563eb;
+    color: white;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+
+  .tag-no1 {
+    background: #ef4444;
+  }
+
   /* =========================
-     🔺 三角リボン（はみ出し完全防止・最終版）
+     🔺 三角リボン（はみ出し完全防止）
   ========================= */
 
   .badge {
@@ -32,65 +48,170 @@
     left: 0;
     width: 90px;
     height: 90px;
+    overflow: hidden;
     z-index: 20;
     pointer-events: none;
+
+    /* 🔥 三角領域でクリップ */
+    clip-path: polygon(0 0, 100% 0, 0 100%);
   }
 
-  /* 三角本体 */
+  /* 三角 */
   .badge::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: inherit;
-    clip-path: polygon(0 0, 100% 0, 0 100%);
+    background: transparent;
   }
 
-  /* 🔥 テキストレイヤー（ここが重要） */
-  .badge span {
+  /* 🔥 文字（安全配置） */
+  .badge::after {
+    content: attr(data-label);
     position: absolute;
-    inset: 0;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* テキスト自体も三角で切る */
-    clip-path: polygon(0 0, 100% 0, 0 100%);
-  }
-
-  /* テキスト */
-  .badge span p {
-    transform: translate(-50%, -50%) rotate(-45deg);
-    position: absolute;
     top: 50%;
     left: 50%;
 
+    transform: translate(-50%, -50%) rotate(-45deg);
+
     font-size: 12px;
     font-weight: 700;
-    color: #fff;
+    color: #ffffff;
     letter-spacing: 0.05em;
+    text-align: center;
     white-space: nowrap;
   }
 
-  /* 色 */
-  .badge.no1 { background: #d4af37; }
-  .badge.limited { background: #7c3aed; }
-  .badge.new { background: #ef4444; }
+  /* ===== 色 ===== */
+
+  .badge.no1 {
+    background: #d4af37;
+  }
+
+  .badge.limited {
+    background: #7c3aed;
+  }
+
+  .badge.new {
+    background: #ef4444;
+  }
+
+  .relative:hover .badge {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+  }
+
+  .scale-pop {
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+  }
+
+  .fade-out {
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+  }
 
 </style>
 
 <body class="bg-stone-50 text-slate-800">
 
-<!-- 使用例（ここ重要） -->
-<div class="relative w-64 h-40 bg-gray-200">
+<!-- Header -->
+<div id="header"></div>
 
-  <div class="badge new">
-    <span>
-      <p>NEW</p>
-    </span>
+<!-- HERO -->
+<section class="relative h-[80vh] md:h-[600px] w-full bg-gray-900 overflow-hidden page-enter">
+
+  <img
+    src="images/TakeOut/hero.png"
+    alt="Takeout hero"
+    class="hidden md:block absolute inset-0 w-full h-full object-cover opacity-70"
+  >
+
+  <img
+    src="images/TakeOut/hero-sm.png"
+    alt="Takeout hero mobile"
+    class="md:hidden w-full h-auto object-contain"
+  >
+
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <div class="absolute inset-0 flex items-center md:items-center justify-center md:justify-start text-white px-6 md:px-16">
+
+    <div class="text-center md:text-left max-w-xl">
+
+      <h2 class="font-eng text-5xl md:text-7xl font-bold tracking-wide text-white mb-3">
+        TAKE OUT
+      </h2>
+
+      <p class="font-eng text-sm md:text-lg tracking-[0.3em] text-blue-200 opacity-80 mt-6 md:mt-8">
+        ONLINE RESERVATION
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<!-- Main Area -->
+<div class="max-w-7xl mx-auto px-6 py-16">
+
+  <div class="grid lg:grid-cols-[2fr_1fr] gap-16">
+
+    <div id="productArea" class="space-y-24"></div>
+
+    <div class="sticky top-28 h-fit">
+
+      <div class="bg-white p-8 rounded-2xl shadow-lg">
+
+        <h3 class="text-xl mb-6 tracking-wide">
+          Your Order
+        </h3>
+
+        <div id="orderSummary" class="space-y-2 text-sm text-slate-700"></div>
+
+        <div class="border-t mt-6 pt-4 flex justify-between font-semibold text-lg">
+          <span>Total</span>
+          <span id="totalPrice">¥0</span>
+        </div>
+
+        <button
+          onclick="goCustomer()"
+          class="mt-8 w-full bg-amber-900 text-white py-4 rounded-full hover:bg-amber-800 transition shadow-md"
+        >
+          お客様情報入力へ
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
 
 </div>
+
+<div
+class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-xl p-4 md:hidden flex justify-between items-center z-50"
+>
+
+<span id="mobileTotal" class="font-semibold text-lg">
+¥0
+</span>
+
+<button
+onclick="goCustomer()"
+class="bg-amber-900 text-white px-6 py-3 rounded-full hover:bg-amber-800 transition"
+>
+お客様情報入力へ
+</button>
+
+</div>
+
+<footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400">
+© 2024 Blue Harbor Coffee Roasters.
+</footer>
+
+<script src="js/loadHeader.js"></script>
+<script src="js/takeout.js"></script>
 
 </body>
 </html>
