@@ -39,7 +39,7 @@
   }
 
   /* =========================
-     🔺 三角リボン（正解版）
+     🔺 三角リボン（はみ出し完全防止）
   ========================= */
 
   .badge {
@@ -51,21 +51,20 @@
     overflow: hidden;
     z-index: 20;
     pointer-events: none;
+
+    /* 🔥 三角領域でクリップ */
+    clip-path: polygon(0 0, 100% 0, 0 100%);
   }
 
   /* 三角 */
   .badge::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-top: 90px solid transparent;
-    border-right: 90px solid transparent;
+    inset: 0;
+    background: transparent;
   }
 
-  /* 🔥 中央ど真ん中（ズレなし） */
+  /* 🔥 文字（安全配置） */
   .badge::after {
     content: attr(data-label);
     position: absolute;
@@ -74,10 +73,6 @@
     left: 50%;
 
     transform: translate(-50%, -50%) rotate(-45deg);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     font-size: 12px;
     font-weight: 700;
@@ -89,16 +84,16 @@
 
   /* ===== 色 ===== */
 
-  .badge.no1::before {
-    border-top: 90px solid #d4af37;
+  .badge.no1 {
+    background: #d4af37;
   }
 
-  .badge.limited::before {
-    border-top: 90px solid #7c3aed;
+  .badge.limited {
+    background: #7c3aed;
   }
 
-  .badge.new::before {
-    border-top: 90px solid #ef4444;
+  .badge.new {
+    background: #ef4444;
   }
 
   .relative:hover .badge {
