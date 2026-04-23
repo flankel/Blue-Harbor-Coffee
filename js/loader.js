@@ -2,6 +2,16 @@ export function initLoader() {
   const root = document.getElementById('loader-root');
   if (!root) return;
 
+  // --- 【追加】初回アクセスチェック ---
+  // すでに 'loaded' というフラグがあれば、ローダーを表示せずに終了
+  if (sessionStorage.getItem('hasLoaded')) {
+    root.style.display = 'none';
+    return;
+  }
+  // 初回表示時にフラグをセット
+  sessionStorage.setItem('hasLoaded', 'true');
+  // ----------------------------------
+
   root.innerHTML = `
     <style>
       .cup-shape {
@@ -35,10 +45,10 @@ export function initLoader() {
       .wave-base {
         position: absolute;
         left: 50%;
-        width: 350%; /* さらに大きくして回転の角を目立たなくする */
+        width: 350%;
         height: 350%;
         border-radius: 40%;
-        transition: bottom 0.3s ease-linear; /* 動きをより滑らかに */
+        transition: bottom 0.3s ease-linear;
         z-index: 15;
       }
 
@@ -81,24 +91,13 @@ export function initLoader() {
   const updateProgress = () => {
     if (progress <= 100) {
       text.innerText = `${progress}%`;
-      
-      /**
-       * 【同期計算の修正】
-       * 開始値: -360% (カップの底より完全に下)
-       * 終了値: -175% (100%の時にちょうど縁に来る位置)
-       * 185%の幅を100分割して進める
-       */
       const currentBottom = -360 + (progress * 1.85); 
-      
       wavePrimary.style.bottom = `${currentBottom}%`;
       waveSecondary.style.bottom = `${currentBottom + 1}%`;
 
       progress++;
-      
-      // 読み込み速度を少し落として、じっくりコーヒーが溜まる演出に
       let speed = progress > 90 ? 100 : 40; 
       setTimeout(updateProgress, speed);
-      
     } else {
       finishLoading();
     }
