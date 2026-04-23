@@ -87,11 +87,14 @@ Coffee Beans
 
 products.beans.forEach(bean => {
 
+const badgeClass = mapTagClass(bean.tag);
+const hasBadge = badgeClass ? "has-badge" : "";
+
 html += `
-<div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
+<div class="relative product-card ${hasBadge} ${badgeClass} bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${bean.tag ? `
-<div class="badge ${mapTagClass(bean.tag)}" data-label="${bean.tag}"></div>
+<div class="badge ${badgeClass}" data-label="${bean.tag}"></div>
 ` : ""}
 
 <div class="aspect-[4/3] overflow-hidden">
@@ -174,11 +177,14 @@ Sweets
 
 products.sweets.forEach(item => {
 
+const badgeClass = mapTagClass(item.tag);
+const hasBadge = badgeClass ? "has-badge" : "";
+
 html += `
-<div class="relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
+<div class="relative product-card ${hasBadge} ${badgeClass} bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${item.tag ? `
-<div class="badge ${mapTagClass(item.tag)}" data-label="${item.tag}"></div>
+<div class="badge ${badgeClass}" data-label="${item.tag}"></div>
 ` : ""}
 
 <div class="aspect-[4/3] overflow-hidden">
@@ -236,7 +242,6 @@ html += `</div></div>`;
 area.innerHTML = html;
 
 }
-
 /* =========================
    イベント設定
 ========================= */
