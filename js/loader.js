@@ -1,23 +1,35 @@
-export function initLoader() {
-  const isHome =
-    location.pathname === "/" ||
-    location.pathname.endsWith("index.html");
+console.log("loader start");
 
-  if (!isHome) return;
+const root = document.getElementById("loader-root");
 
-  fetch("/loader.html")
-    .then(res => res.text())
-    .then(html => {
-      document.body.insertAdjacentHTML("afterbegin", html);
-
-      window.addEventListener("load", () => {
-        const loader = document.getElementById("loader-root");
-        if (!loader) return;
-
-        loader.style.transition = "opacity 0.5s ease";
-        loader.style.opacity = "0";
-
-        setTimeout(() => loader.remove(), 500);
-      });
-    });
+if (!root) {
+  console.log("loader-root not found");
 }
+
+fetch("/loader.html")
+  .then(res => {
+    if (!res.ok) throw new Error("loader.html not found");
+    return res.text();
+  })
+  .then(html => {
+    console.log("loader loaded");
+
+    root.innerHTML = html;
+
+    window.addEventListener("load", () => {
+      console.log("window loaded");
+
+      const el = document.getElementById("loader-root");
+
+      if (!el) return;
+
+      el.style.transition = "opacity 0.5s";
+      el.style.opacity = "0";
+
+      setTimeout(() => el.remove(), 500);
+    });
+  })
+  .catch(err => {
+    console.error("LOADER ERROR:", err);
+    root.remove(); // ← 保険で強制解除
+  });
