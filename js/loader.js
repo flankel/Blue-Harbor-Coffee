@@ -2,15 +2,12 @@ export function initLoader() {
   const root = document.getElementById('loader-root');
   if (!root) return;
 
-  // --- 【追加】初回アクセスチェック ---
-  // すでに 'loaded' というフラグがあれば、ローダーを表示せずに終了
+  // 初回アクセスチェック
   if (sessionStorage.getItem('hasLoaded')) {
     root.style.display = 'none';
     return;
   }
-  // 初回表示時にフラグをセット
   sessionStorage.setItem('hasLoaded', 'true');
-  // ----------------------------------
 
   root.innerHTML = `
     <style>
@@ -45,37 +42,37 @@ export function initLoader() {
       .wave-base {
         position: absolute;
         left: 50%;
-        width: 350%;
-        height: 350%;
-        border-radius: 40%;
-        transition: bottom 0.3s ease-linear;
+        width: 400%; /* さらに巨大化させて回転を緩やかに */
+        height: 400%;
+        border-radius: 43%;
+        transition: bottom 0.5s ease-linear; /* 上昇をよりねっとりと */
         z-index: 15;
       }
 
       .wave-primary {
         background-color: #6F4E37;
         opacity: 0.9;
-        animation: wave-move 6s infinite linear;
+        animation: wave-move 8s infinite linear;
       }
 
       .wave-secondary {
         background-color: #C6A664;
         opacity: 0.4;
-        animation: wave-move 10s infinite linear;
+        animation: wave-move 12s infinite linear;
       }
 
       #loader-root.fade-out {
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.8s ease-in-out;
+        transition: opacity 1.2s ease-in-out;
       }
     </style>
     
     <div class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]" id="loader-bg">
       <div class="relative mb-12">
         <div class="cup-shape">
-          <div id="wave-secondary" class="wave-base wave-secondary" style="bottom: -360%;"></div>
-          <div id="wave-primary" class="wave-base wave-primary" style="bottom: -360%;"></div>
+          <div id="wave-secondary" class="wave-base wave-secondary" style="bottom: -420%;"></div>
+          <div id="wave-primary" class="wave-base wave-primary" style="bottom: -420%;"></div>
         </div>
         <div class="cup-handle"></div>
       </div>
@@ -91,13 +88,26 @@ export function initLoader() {
   const updateProgress = () => {
     if (progress <= 100) {
       text.innerText = `${progress}%`;
-      const currentBottom = -360 + (progress * 1.85); 
+      
+      /**
+       * 【同期計算の最終調整】
+       * 開始: -420% (深めに設定)
+       * 100%到達時: -210% (縁ギリギリに到達)
+       * これにより、上昇速度の見た目がかなり緩やかになります。
+       */
+      const currentBottom = -420 + (progress * 2.1); 
+      
       wavePrimary.style.bottom = `${currentBottom}%`;
-      waveSecondary.style.bottom = `${currentBottom + 1}%`;
+      waveSecondary.style.bottom = `${currentBottom + 0.5}%`;
 
       progress++;
-      let speed = progress > 90 ? 100 : 40; 
+      
+      // 【速度を半分に】
+      // 通常時 40ms → 100ms
+      // 仕上げ 100ms → 200ms 
+      let speed = progress > 85 ? 200 : 100; 
       setTimeout(updateProgress, speed);
+      
     } else {
       finishLoading();
     }
@@ -107,7 +117,7 @@ export function initLoader() {
     root.classList.add('fade-out');
     setTimeout(() => {
       root.style.display = 'none';
-    }, 800);
+    }, 1200);
   };
 
   updateProgress();
