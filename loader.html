@@ -9,20 +9,20 @@
   <div class="relative w-28 h-32 mb-4 z-10">
 
     <!-- カップ本体 -->
-    <div class="absolute inset-0 bg-white border-2 border-gray-800 rounded-[2rem] shadow-inner"></div>
+    <div class="absolute inset-0 bg-white border-2 border-gray-800 rounded-[2rem] shadow-inner overflow-hidden"></div>
 
     <!-- 取っ手 -->
     <div class="absolute -right-8 top-6 w-10 h-14 border-2 border-gray-800 rounded-full"></div>
 
-    <!-- コーヒー -->
+    <!-- コーヒー（★ここ修正：初期見え保証） -->
     <div id="coffee-fill"
-      class="absolute bottom-0 left-0 w-full h-0 bg-gradient-to-t from-[#3f2412] via-[#6b3a1d] to-[#8b5a2b] transition-all duration-200 rounded-b-[2rem]">
+      class="absolute bottom-0 left-0 w-full h-full scale-y-0 origin-bottom bg-gradient-to-t from-[#3f2412] via-[#6b3a1d] to-[#8b5a2b] transition-transform duration-200 rounded-b-[2rem]">
     </div>
 
   </div>
 
-  <!-- 🌊 波（カップのすぐ下・3本） -->
-  <div class="relative w-40 h-6 mb-6">
+  <!-- 🌊 波（カップのすぐ下・安定版） -->
+  <div class="relative w-40 h-10 mb-6">
 
     <div class="wave wave1"></div>
     <div class="wave wave2"></div>
@@ -30,8 +30,8 @@
 
   </div>
 
-  <!-- パーセンテージ -->
-  <div class="font-eng text-sm tracking-[0.3em] text-gray-600 z-10">
+  <!-- パーセンテージ（★消え防止） -->
+  <div class="font-eng text-sm tracking-[0.3em] text-gray-600 z-10 min-h-[20px]">
     <span id="percent">0</span>%
   </div>
 
@@ -40,7 +40,7 @@
 <style>
 
 /* =========================
-   🌊 波（3レイヤー）
+   🌊 波（安定版）
 ========================= */
 .wave {
   position: absolute;
@@ -72,7 +72,7 @@
   opacity: 0.4;
 }
 
-/* 3本目（ゆっくり） */
+/* 3本目 */
 .wave3 {
   top: 12px;
   animation: waveMove 4s linear infinite;
@@ -90,6 +90,7 @@
 ========================= */
 #coffee-fill {
   transform-origin: bottom;
+  will-change: transform;
 }
 
 /* =========================
