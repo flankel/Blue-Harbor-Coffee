@@ -1,27 +1,42 @@
 export function initLoader() {
-  console.log("1. initLoader start");
+  console.log("loader start");
 
   const root = document.getElementById("loader-root");
-  console.log("2. root =", root);
 
   fetch("./loader.html")
-    .then(res => {
-      console.log("3. fetch status =", res.status);
-      return res.text();
-    })
+    .then(res => res.text())
     .then(html => {
-      console.log("4. html loaded");
-
-      console.log("5. html =", html);
 
       root.innerHTML = html;
 
-      console.log("6. injected");
+      // ⭐ここで必ずDOM取得（重要）
+      const percentEl = document.getElementById("percent");
+      const coffeeFill = document.getElementById("coffee-fill");
 
-      const percent = document.getElementById("percent");
-      console.log("7. percent =", percent);
+      let percent = 0;
+
+      const interval = setInterval(() => {
+        percent += 1;
+
+        if (percentEl) {
+          percentEl.textContent = percent;
+        }
+
+        if (coffeeFill) {
+          coffeeFill.style.height = percent + "%";
+        }
+
+        if (percent >= 100) {
+          clearInterval(interval);
+
+          setTimeout(() => {
+            root.style.transition = "opacity 0.6s";
+            root.style.opacity = "0";
+
+            setTimeout(() => root.remove(), 600);
+          }, 200);
+        }
+      }, 50);
     })
-    .catch(err => {
-      console.error("❌ ERROR:", err);
-    });
+    .catch(err => console.error(err));
 }
