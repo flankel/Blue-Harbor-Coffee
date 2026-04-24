@@ -1,205 +1,202 @@
-// loader.js
-(function () {
+export function initLoader() {
 
-  function initLoader(options = {}) {
+  // =========================
+  // HTML生成
+  // =========================
+  document.body.innerHTML = `
+  <div id="loader">
+    <span class="corner tl" id="c-tl">Oslo · Norway</span>
+    <span class="corner tr" id="c-tr">57°N</span>
+    <span class="corner bl" id="c-bl">Fjordside</span>
+    <span class="corner br" id="c-br">Since 1937</span>
 
-    const duration = options.duration || 3500;
-    const root = document.getElementById("loader-root");
-    if (!root) return;
-
-    // =========================
-    // HTML生成
-    // =========================
-    root.innerHTML = `
-      <div id="loader" style="
-        position:fixed;
-        inset:0;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
-        background:#f7f4ef;
-        font-family:sans-serif;
-      ">
-
-        <div style="margin-bottom:30px; position:relative; width:160px; height:160px;">
-          <div id="ringOuter" style="
-            position:absolute;
-            inset:0;
-            border:1px solid rgba(0,0,0,0.2);
-            border-radius:50%;
-          "></div>
-
-          <div style="
-            position:absolute;
-            inset:25px;
-            border:1px solid rgba(0,0,0,0.1);
-            border-radius:50%;
-          "></div>
-
-          <div style="
-            position:absolute;
-            inset:0;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-          ">
-            ${cupSVG()}
-          </div>
-        </div>
-
-        <h1 style="font-size:40px; margin-bottom:10px;">Havsbris</h1>
-
-        <div style="
-          display:flex;
-          align-items:center;
-          gap:15px;
-          margin-top:20px;
-        ">
-          <div id="barL" style="
-            width:60px;
-            height:2px;
-            background:#c2a87a;
-            transform-origin:left;
-            transform:scaleX(0);
-          "></div>
-
-          <span id="loadLabel" style="font-size:14px;">0%</span>
-
-          <div id="barR" style="
-            width:60px;
-            height:2px;
-            background:#c2a87a;
-            transform-origin:right;
-            transform:scaleX(0);
-          "></div>
-        </div>
-
+    <div class="ring-wrap" id="ring">
+      <div class="ring-outer" id="ringOuter"></div>
+      <div class="ring-inner"></div>
+      <div class="cup-center">
+        ${cupSVG()}
       </div>
-    `;
+    </div>
 
-    // =========================
-    // Tick生成
-    // =========================
-    const ring = document.getElementById("ringOuter");
+    <div class="brand" id="brand">
+      <h1 class="brand-name">Havsbris</h1>
+      <p class="brand-sub">Kaffehus · Fjordside</p>
+    </div>
 
-    for (let i = 0; i < 24; i++) {
-      const tick = document.createElement("div");
+    <div class="load-row" id="loadRow">
+      <div class="bar" id="barL"></div>
+      <span class="load-label" id="loadLabel">Loading</span>
+      <div class="bar right" id="barR"></div>
+    </div>
 
-      tick.style.position = "absolute";
-      tick.style.top = "50%";
-      tick.style.left = "50%";
-      tick.style.width = "1px";
-      tick.style.height = "8px";
-      tick.style.background = "rgba(0,0,0,0.3)";
-      tick.style.transformOrigin = "0 -75px";
-      tick.style.transform =
-        `translateX(-50%) rotate(${i * 15}deg)`;
+    <div class="morse" id="morse">
+      <div class="m-dash"></div>
+      <div class="m-dot"></div>
+      <div class="m-dot"></div>
+      <div class="m-dash"></div>
+      <div class="m-dot"></div>
+    </div>
+  </div>
 
-      ring.appendChild(tick);
-    }
+  <div id="page">
+    <p>Welcome to Havsbris ☕</p>
+  </div>
+  `;
 
-    // =========================
-    // DOM取得
-    // =========================
-    const labelEl = document.getElementById("loadLabel");
-    const barL = document.getElementById("barL");
-    const barR = document.getElementById("barR");
+  injectStyle();
 
-    let progress = 0;
+  // =========================
+  // Helper
+  // =========================
+  const el = id => document.getElementById(id);
 
-    // =========================
-    // パーセンテージ進行
-    // =========================
-    const progressInterval = setInterval(() => {
+  const animate = (element, props, delay = 0) => {
+    setTimeout(() => Object.assign(element.style, props), delay);
+  };
 
-      // 減速カーブ（自然な進み）
-      progress += (100 - progress) * 0.08;
+  // =========================
+  // Tick生成
+  // =========================
+  const ringOuter = el('ringOuter');
+  const TICKS = 24;
 
-      if (progress >= 99.5) {
-        progress = 100;
-      }
+  for (let i = 0; i < TICKS; i++) {
+    const tick = document.createElement('div');
+    tick.className = 'tick';
+    tick.style.transform =
+      `translateX(-50%) rotate(${i * (360 / TICKS)}deg) translateY(-82px)`;
+    ringOuter.appendChild(tick);
+  }
 
-      const value = Math.floor(progress);
+  // =========================
+  // Morse
+  // =========================
+  document.querySelectorAll('.m-dash, .m-dot').forEach((p, i) => {
+    p.style.animation = `morseFlash 2s ease-in-out ${i * 0.28}s infinite`;
+  });
 
-      labelEl.textContent = value + "%";
+  // =========================
+  // Entrance animation
+  // =========================
+  ['c-tl','c-tr','c-bl','c-br'].forEach((id,i)=>{
+    animate(el(id), {
+      animation: `fadeUp 0.8s ease ${i*0.12}s forwards`
+    });
+  });
 
-      barL.style.transform = `scaleX(${progress / 100})`;
-      barR.style.transform = `scaleX(${progress / 100})`;
+  animate(el('ring'), { animation: 'fadeUp 1s 0.3s forwards' });
+  animate(el('brand'), { animation: 'fadeUp 1s 0.7s forwards' });
+  animate(el('loadRow'), { animation: 'fadeUp 0.8s 1.1s forwards' });
 
-      if (progress === 100) {
-        clearInterval(progressInterval);
-      }
+  setTimeout(()=>{
+    el('barL').style.animation = 'scaleBar 1.2s forwards';
+    el('barR').style.animation = 'scaleBar 1.2s forwards';
+  },1300);
 
-    }, 50);
+  animate(el('morse'), { animation: 'fadeUp 0.6s 1.5s forwards' });
+
+  // =========================
+  // Loading表示
+  // =========================
+  const labels = ['Loading','Brewing','Almost there'];
+  let idx = 0;
+
+  setTimeout(()=>{
+    const interval = setInterval(()=>{
+      idx = (idx+1)%labels.length;
+      const label = el('loadLabel');
+
+      label.style.opacity = '0';
+      setTimeout(()=>{
+        label.textContent = labels[idx];
+        label.style.opacity = '1';
+      },300);
+    },1400);
 
     // =========================
     // 終了処理
     // =========================
-    setTimeout(() => {
+    setTimeout(()=>{
+      clearInterval(interval);
 
-      progress = 100;
-      labelEl.textContent = "100%";
+      const loader = el('loader');
+      const page = el('page');
 
-      clearInterval(progressInterval);
+      loader.style.opacity = '0';
+      loader.style.transition = '0.8s';
 
-      const loader = document.getElementById("loader");
-      const page   = document.getElementById("page");
+      page.style.opacity = '1';
+      page.style.transition = '0.8s 0.4s';
+      page.style.pointerEvents = 'auto';
 
-      loader.style.transition = "opacity 0.8s ease";
-      loader.style.opacity = "0";
+      setTimeout(()=> loader.remove(), 1200);
+    },3800);
 
-      if (page) {
-        page.style.transition = "opacity 0.8s ease 0.4s";
-        page.style.opacity = "1";
-        page.style.pointerEvents = "auto";
-      }
+  },1200);
+}
 
-      setTimeout(() => {
-        loader.remove();
-      }, 1200);
 
-    }, duration);
+// =========================
+// SVG
+// =========================
+function cupSVG() {
+  return `
+  <svg width="38" height="46" viewBox="0 0 38 46">
+    <path d="M14 7 Q16 3 18 7" stroke="#7a8c82"/>
+    <path d="M20 5 Q22 1 24 5" stroke="#7a8c82"/>
+    <rect x="6" y="12" width="26" height="27" rx="2" stroke="#2c3330"/>
+    <path d="M32 19 Q43 19 43 26 Q43 33 32 31" stroke="#2c3330"/>
+    <line x1="4" y1="39" x2="34" y2="39" stroke="#2c3330"/>
+    <circle cx="19" cy="26" r="4" stroke="#c2a87a"/>
+  </svg>
+  `;
+}
 
+
+// =========================
+// CSS注入
+// =========================
+function injectStyle() {
+  const style = document.createElement('style');
+
+  style.textContent = `
+  body { margin:0; background:#f7f4ef; }
+
+  #loader {
+    position:fixed; inset:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    background:#f7f4ef;
   }
 
-  // =========================
-  // カップSVG
-  // =========================
-  function cupSVG() {
-    return `
-      <svg width="40" height="45" viewBox="0 0 38 46" fill="none">
-        <rect x="6" y="12" width="26" height="27" rx="2" stroke="#2c3330"/>
-        <path d="M32 19 Q43 19 43 26 Q43 33 32 31" stroke="#2c3330"/>
-        <line x1="4" y1="39" x2="34" y2="39" stroke="#2c3330"/>
-      </svg>
-    `;
+  .corner { position:absolute; font-size:10px; opacity:0; }
+  .tl{top:28px;left:28px;}
+  .tr{top:28px;right:28px;}
+  .bl{bottom:28px;left:28px;}
+  .br{bottom:28px;right:28px;}
+
+  .ring-wrap { width:172px;height:172px;opacity:0; }
+  .ring-outer { position:absolute; inset:0; border:1px solid #aaa; border-radius:50%; animation:rotateCW 22s linear infinite;}
+  .ring-inner { position:absolute; inset:24px; border:1px solid #ccc; border-radius:50%; animation:rotateCCW 14s linear infinite;}
+
+  .tick { position:absolute; top:50%; left:50%; width:1px; height:8px; background:#999; }
+
+  .brand, .load-row, .morse { opacity:0; }
+
+  .bar { height:1px; width:52px; background:#c2a87a; transform:scaleX(0); }
+
+  #page {
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0;
   }
 
-  // =========================
-  // 自動起動
-  // =========================
-  document.addEventListener("DOMContentLoaded", () => {
+  @keyframes rotateCW { to{transform:rotate(360deg);} }
+  @keyframes rotateCCW { to{transform:rotate(-360deg);} }
+  @keyframes fadeUp { from{opacity:0; transform:translateY(14px);} to{opacity:1;} }
+  @keyframes scaleBar { to{transform:scaleX(1);} }
+  @keyframes morseFlash { 0%,100%{opacity:.2;} 50%{opacity:1;} }
+  `;
 
-    if (!sessionStorage.getItem("visited")) {
-
-      sessionStorage.setItem("visited", "true");
-
-      initLoader({
-        duration: 3500
-      });
-
-    } else {
-
-      const page = document.getElementById("page");
-
-      if (page) {
-        page.style.opacity = "1";
-        page.style.pointerEvents = "auto";
-      }
-
-    }
-
-  });
-
-})();
+  document.head.appendChild(style);
+}
