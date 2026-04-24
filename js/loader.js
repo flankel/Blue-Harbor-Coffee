@@ -1,124 +1,205 @@
-export function initLoader() {
-  const root = document.getElementById('loader-root');
-  if (!root) return;
+// loader.js
+(function () {
 
-  // 初回アクセスチェック
-  if (sessionStorage.getItem('hasLoaded')) {
-    root.style.display = 'none';
-    return;
-  }
-  sessionStorage.setItem('hasLoaded', 'true');
+  function initLoader(options = {}) {
 
-  root.innerHTML = `
-    <style>
-      /* カップ本体の形状 */
-      .cup-shape {
-        position: relative;
-        width: 160px;
-        height: 140px;
-        background-color: #ffffff;
-        border: 6px solid #1e3a8a; /* Blue Harborのネイビー */
-        border-bottom-left-radius: 80px 140px;
-        border-bottom-right-radius: 80px 140px;
-        overflow: hidden;
-        z-index: 10;
-      }
+    const duration = options.duration || 3500;
+    const root = document.getElementById("loader-root");
+    if (!root) return;
 
-      /* 取っ手 */
-      .cup-handle {
-        position: absolute;
-        top: 30px;
-        right: -45px;
-        width: 60px;
-        height: 80px;
-        border: 6px solid #1e3a8a;
-        border-radius: 0 40px 40px 0;
-        z-index: 5;
-      }
+    // =========================
+    // HTML生成
+    // =========================
+    root.innerHTML = `
+      <div id="loader" style="
+        position:fixed;
+        inset:0;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        background:#f7f4ef;
+        font-family:sans-serif;
+      ">
 
-      @keyframes wave-move {
-        0% { transform: translateX(-50%) rotate(0deg); }
-        100% { transform: translateX(-50%) rotate(360deg); }
-      }
+        <div style="margin-bottom:30px; position:relative; width:160px; height:160px;">
+          <div id="ringOuter" style="
+            position:absolute;
+            inset:0;
+            border:1px solid rgba(0,0,0,0.2);
+            border-radius:50%;
+          "></div>
 
-      .wave-base {
-        position: absolute;
-        left: 50%;
-        width: 400%;
-        height: 400%;
-        border-radius: 43%;
-        transition: bottom 0.25s ease-linear;
-        z-index: 15;
-      }
+          <div style="
+            position:absolute;
+            inset:25px;
+            border:1px solid rgba(0,0,0,0.1);
+            border-radius:50%;
+          "></div>
 
-      /* メインのコーヒー（豆の色） */
-      .wave-primary {
-        background-color: #6F4E37;
-        opacity: 0.9;
-        animation: wave-move 8s infinite linear;
-      }
-
-      /* セカンダリの波 */
-      .wave-secondary {
-        background-color: #C6A664;
-        opacity: 0.4;
-        animation: wave-move 12s infinite linear;
-      }
-
-      /* ローダーフェードアウト */
-      #loader-root.fade-out {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.8s ease-in-out;
-      }
-    </style>
-    
-    <div class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]" id="loader-bg">
-      <div class="relative mb-10">
-        <div class="cup-shape">
-          <div id="wave-secondary" class="wave-base wave-secondary" style="bottom: -420%;"></div>
-          <div id="wave-primary" class="wave-base wave-primary" style="bottom: -420%;"></div>
+          <div style="
+            position:absolute;
+            inset:0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+          ">
+            ${cupSVG()}
+          </div>
         </div>
-        <div class="cup-handle"></div>
+
+        <h1 style="font-size:40px; margin-bottom:10px;">Havsbris</h1>
+
+        <div style="
+          display:flex;
+          align-items:center;
+          gap:15px;
+          margin-top:20px;
+        ">
+          <div id="barL" style="
+            width:60px;
+            height:2px;
+            background:#c2a87a;
+            transform-origin:left;
+            transform:scaleX(0);
+          "></div>
+
+          <span id="loadLabel" style="font-size:14px;">0%</span>
+
+          <div id="barR" style="
+            width:60px;
+            height:2px;
+            background:#c2a87a;
+            transform-origin:right;
+            transform:scaleX(0);
+          "></div>
+        </div>
+
       </div>
+    `;
 
-      <div class="mb-12">
-        <p class="font-eng text-2xl font-semibold tracking-[0.2em]" style="color: #6F4E37;">
-          Now Brewing...
-        </p>
-      </div>
+    // =========================
+    // Tick生成
+    // =========================
+    const ring = document.getElementById("ringOuter");
 
-      <div class="font-eng text-6xl font-bold text-blue-900 tracking-tighter" id="percent-text">0%</div>
-    </div>
-  `;
+    for (let i = 0; i < 24; i++) {
+      const tick = document.createElement("div");
 
-  const wavePrimary = document.getElementById('wave-primary');
-  const waveSecondary = document.getElementById('wave-secondary');
-  const text = document.getElementById('percent-text');
-  let progress = 0;
+      tick.style.position = "absolute";
+      tick.style.top = "50%";
+      tick.style.left = "50%";
+      tick.style.width = "1px";
+      tick.style.height = "8px";
+      tick.style.background = "rgba(0,0,0,0.3)";
+      tick.style.transformOrigin = "0 -75px";
+      tick.style.transform =
+        `translateX(-50%) rotate(${i * 15}deg)`;
 
-  const updateProgress = () => {
-    if (progress <= 100) {
-      text.innerText = `${progress}%`;
-      const currentBottom = -420 + (progress * 2.1); 
-      wavePrimary.style.bottom = `${currentBottom}%`;
-      waveSecondary.style.bottom = `${currentBottom + 0.5}%`;
-
-      progress++;
-      // 読み込み速度：高速設定（50ms / 100ms）
-      let speed = progress > 85 ? 100 : 50; 
-      setTimeout(updateProgress, speed);
-    } else {
-      finishLoading();
+      ring.appendChild(tick);
     }
-  };
 
-  const finishLoading = () => {
-    root.classList.add('fade-out');
+    // =========================
+    // DOM取得
+    // =========================
+    const labelEl = document.getElementById("loadLabel");
+    const barL = document.getElementById("barL");
+    const barR = document.getElementById("barR");
+
+    let progress = 0;
+
+    // =========================
+    // パーセンテージ進行
+    // =========================
+    const progressInterval = setInterval(() => {
+
+      // 減速カーブ（自然な進み）
+      progress += (100 - progress) * 0.08;
+
+      if (progress >= 99.5) {
+        progress = 100;
+      }
+
+      const value = Math.floor(progress);
+
+      labelEl.textContent = value + "%";
+
+      barL.style.transform = `scaleX(${progress / 100})`;
+      barR.style.transform = `scaleX(${progress / 100})`;
+
+      if (progress === 100) {
+        clearInterval(progressInterval);
+      }
+
+    }, 50);
+
+    // =========================
+    // 終了処理
+    // =========================
     setTimeout(() => {
-      root.style.display = 'none';
-    }, 800);
-  };
 
-  updateProgress();
-}
+      progress = 100;
+      labelEl.textContent = "100%";
+
+      clearInterval(progressInterval);
+
+      const loader = document.getElementById("loader");
+      const page   = document.getElementById("page");
+
+      loader.style.transition = "opacity 0.8s ease";
+      loader.style.opacity = "0";
+
+      if (page) {
+        page.style.transition = "opacity 0.8s ease 0.4s";
+        page.style.opacity = "1";
+        page.style.pointerEvents = "auto";
+      }
+
+      setTimeout(() => {
+        loader.remove();
+      }, 1200);
+
+    }, duration);
+
+  }
+
+  // =========================
+  // カップSVG
+  // =========================
+  function cupSVG() {
+    return `
+      <svg width="40" height="45" viewBox="0 0 38 46" fill="none">
+        <rect x="6" y="12" width="26" height="27" rx="2" stroke="#2c3330"/>
+        <path d="M32 19 Q43 19 43 26 Q43 33 32 31" stroke="#2c3330"/>
+        <line x1="4" y1="39" x2="34" y2="39" stroke="#2c3330"/>
+      </svg>
+    `;
+  }
+
+  // =========================
+  // 自動起動
+  // =========================
+  document.addEventListener("DOMContentLoaded", () => {
+
+    if (!sessionStorage.getItem("visited")) {
+
+      sessionStorage.setItem("visited", "true");
+
+      initLoader({
+        duration: 3500
+      });
+
+    } else {
+
+      const page = document.getElementById("page");
+
+      if (page) {
+        page.style.opacity = "1";
+        page.style.pointerEvents = "auto";
+      }
+
+    }
+
+  });
+
+})();
