@@ -1,9 +1,15 @@
 export function initLoader() {
 
   // =========================
-  // HTML生成
+  // root取得（🔥ここが最重要）
   // =========================
-  document.body.innerHTML = `
+  const root = document.getElementById("loader-root");
+  if (!root) return;
+
+  // =========================
+  // HTML生成（body上書きしない）
+  // =========================
+  root.innerHTML = `
   <div id="loader">
     <span class="corner tl" id="c-tl">Oslo · Norway</span>
     <span class="corner tr" id="c-tr">57°N</span>
@@ -37,10 +43,6 @@ export function initLoader() {
       <div class="m-dot"></div>
     </div>
   </div>
-
-  <div id="page">
-    <p>Welcome to Havsbris ☕</p>
-  </div>
   `;
 
   injectStyle();
@@ -51,7 +53,9 @@ export function initLoader() {
   const el = id => document.getElementById(id);
 
   const animate = (element, props, delay = 0) => {
-    setTimeout(() => Object.assign(element.style, props), delay);
+    setTimeout(() => {
+      if (element) Object.assign(element.style, props);
+    }, delay);
   };
 
   // =========================
@@ -106,6 +110,8 @@ export function initLoader() {
       idx = (idx+1)%labels.length;
       const label = el('loadLabel');
 
+      if (!label) return;
+
       label.style.opacity = '0';
       setTimeout(()=>{
         label.textContent = labels[idx];
@@ -114,22 +120,18 @@ export function initLoader() {
     },1400);
 
     // =========================
-    // 終了処理
+    // 終了処理（🔥ここも重要）
     // =========================
     setTimeout(()=>{
       clearInterval(interval);
 
-      const loader = el('loader');
-      const page = el('page');
+      root.style.opacity = '0';
+      root.style.transition = '0.8s';
 
-      loader.style.opacity = '0';
-      loader.style.transition = '0.8s';
+      setTimeout(()=>{
+        root.remove(); // ← loader-rootごと削除
+      },800);
 
-      page.style.opacity = '1';
-      page.style.transition = '0.8s 0.4s';
-      page.style.pointerEvents = 'auto';
-
-      setTimeout(()=> loader.remove(), 1200);
     },3800);
 
   },1200);
@@ -184,12 +186,6 @@ function injectStyle() {
   .brand, .load-row, .morse { opacity:0; }
 
   .bar { height:1px; width:52px; background:#c2a87a; transform:scaleX(0); }
-
-  #page {
-    position:fixed; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    opacity:0;
-  }
 
   @keyframes rotateCW { to{transform:rotate(360deg);} }
   @keyframes rotateCCW { to{transform:rotate(-360deg);} }
