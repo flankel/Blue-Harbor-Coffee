@@ -133,3 +133,16 @@ function injectStyle() {
 
   document.head.appendChild(style);
 }
+
+function cupSVG() {
+  return `
+  <svg width="40" height="48" viewBox="0 0 38 46" fill="none">
+    <path d="M14 7 Q16 3 18 7" stroke="#c2a87a" stroke-width="1.2"/>
+    <path d="M20 5 Q22 1 24 5" stroke="#c2a87a" stroke-width="1.2"/>
+    <rect x="6" y="12" width="26" height="27" rx="3" stroke="#eae7df" stroke-width="1.5"/>
+    <path d="M32 19 Q43 19 43 26 Q43 33 32 31" stroke="#eae7df" stroke-width="1.5"/>
+    <line x1="4" y1="39" x2="34" y2="39" stroke="#eae7df" stroke-width="1.5"/>
+    <circle cx="19" cy="26" r="4" stroke="#c2a87a" stroke-width="1.2"/>
+  </svg>
+  `;
+}
