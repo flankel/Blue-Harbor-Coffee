@@ -6,10 +6,8 @@ export function initLoader() {
   root.innerHTML = `
   <div id="door-wrapper">
 
-    <!-- 中央ライン -->
     <div id="center-line"></div>
 
-    <!-- 扉 -->
     <div class="door door-a">
       <div class="door-inner">
         <span class="door-text">Blue Harbor Coffee</span>
@@ -22,7 +20,6 @@ export function initLoader() {
       </div>
     </div>
 
-    <!-- ローディング -->
     <div id="loader-center">
       <div class="drip">${dripSVG()}</div>
       <p id="loading-text">0%</p>
@@ -36,20 +33,30 @@ export function initLoader() {
   const text = document.getElementById("loading-text");
   const liquid = document.getElementById("coffee-liquid");
 
+  // カップ内部サイズ（SVG基準）
+  const CUP_BOTTOM = 74;
+  const CUP_TOP = 52;
+  const CUP_HEIGHT = CUP_BOTTOM - CUP_TOP;
+
   let percent = 0;
 
   const interval = setInterval(() => {
-    percent++;
 
+    percent++;
     text.textContent = percent + "%";
 
-    // コーヒー上昇
-    liquid.setAttribute("height", percent * 0.25 + 2);
-    liquid.setAttribute("y", 65 - percent * 0.25);
+    // ★ 下から上に溜まる
+    const h = (percent / 100) * CUP_HEIGHT;
+    const y = CUP_BOTTOM - h;
+
+    liquid.setAttribute("height", h);
+    liquid.setAttribute("y", y);
 
     if (percent >= 100) {
       clearInterval(interval);
-      openDoors();
+
+      // ★ ちゃんと満タンになってから開く
+      setTimeout(openDoors, 300);
     }
 
   }, 28);
@@ -59,10 +66,8 @@ export function initLoader() {
 
     const a = document.querySelector(".door-a");
     const b = document.querySelector(".door-b");
-
     const isMobile = window.innerWidth <= 768;
 
-    // ★ わずかにズラす（プロっぽさ）
     setTimeout(() => {
       if (isMobile) {
         a.style.transform = "translateY(-100%)";
@@ -87,7 +92,7 @@ export function initLoader() {
 
 
 // =========================
-// スタイル（プロ仕様）
+// CSS
 // =========================
 function injectStyle() {
   const style = document.createElement("style");
@@ -101,53 +106,37 @@ function injectStyle() {
     background: #2c3330;
   }
 
-  /* 中央ライン */
   #center-line {
     position: absolute;
-    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.25), transparent);
-    z-index: 20;
-  }
-
-  /* PC：縦ライン */
-  #center-line {
     width: 1px;
     height: 100%;
     left: 50%;
     top: 0;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.25), transparent);
+    z-index: 20;
   }
 
-  /* 扉 */
   .door {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1);
-    background: linear-gradient(
-      to right,
-      #232826 0%,
-      #2c3330 40%,
-      #2c3330 60%,
-      #1f2523 100%
-    );
+    background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
   }
 
-  /* 影（奥行き） */
   .door::after {
     content: "";
     position: absolute;
     inset: 0;
     box-shadow: inset 0 0 40px rgba(0,0,0,0.4);
-    opacity: 0.6;
   }
 
-  /* PC左右 */
   .door-a {
     width: 50%;
     height: 100%;
     left: 0;
     top: 0;
-    transform-origin: right center;
   }
 
   .door-b {
@@ -155,10 +144,8 @@ function injectStyle() {
     height: 100%;
     right: 0;
     top: 0;
-    transform-origin: left center;
   }
 
-  /* テキスト */
   .door-inner {
     color: #eae7df;
     font-family: 'Jost', sans-serif;
@@ -167,7 +154,6 @@ function injectStyle() {
     opacity: 0.75;
   }
 
-  /* ローディング中央 */
   #loader-center {
     position: absolute;
     inset: 0;
@@ -189,9 +175,6 @@ function injectStyle() {
     width: 64px;
   }
 
-  /* =========================
-     スマホ
-  ========================= */
   @media (max-width: 768px) {
 
     #center-line {
@@ -203,13 +186,7 @@ function injectStyle() {
     }
 
     .door {
-      background: linear-gradient(
-        to bottom,
-        #232826 0%,
-        #2c3330 40%,
-        #2c3330 60%,
-        #1f2523 100%
-      );
+      background: linear-gradient(to bottom, #232826, #2c3330 50%, #1f2523);
     }
 
     .door-a {
@@ -217,7 +194,6 @@ function injectStyle() {
       height: 50%;
       top: 0;
       left: 0;
-      transform-origin: center bottom;
     }
 
     .door-b {
@@ -225,20 +201,17 @@ function injectStyle() {
       height: 50%;
       bottom: 0;
       left: 0;
-      transform-origin: center top;
     }
   }
 
-  /* 蒸気アニメーション */
   .steam {
     opacity: 0.4;
     animation: steam 2.5s ease-in-out infinite;
   }
 
   @keyframes steam {
-    0% { transform: translateY(0) scale(1); opacity: 0.3; }
-    50% { transform: translateY(-8px) scale(1.2); opacity: 0.6; }
-    100% { transform: translateY(-16px) scale(1.4); opacity: 0; }
+    0% { transform: translateY(0); opacity: 0.3; }
+    100% { transform: translateY(-14px); opacity: 0; }
   }
   `;
 
@@ -247,7 +220,7 @@ function injectStyle() {
 
 
 // =========================
-// ドリップ（プロ版）
+// SVG（クリッピング付き）
 // =========================
 function dripSVG() {
   return `
@@ -255,7 +228,6 @@ function dripSVG() {
 
     <!-- 蒸気 -->
     <path class="steam" d="M28 5 Q30 0 32 5" stroke="#c2a87a" stroke-width="1"/>
-    <path class="steam" d="M24 8 Q26 3 28 8" stroke="#c2a87a" stroke-width="1"/>
 
     <!-- ドリッパー -->
     <path d="M18 15 L42 15 L36 32 L24 32 Z"
@@ -266,17 +238,25 @@ function dripSVG() {
       <animate attributeName="cy" values="38;52;38" dur="0.9s" repeatCount="indefinite"/>
     </circle>
 
-    <!-- カップ -->
+    <!-- カップ枠 -->
     <rect x="15" y="52" width="30" height="22" rx="4"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <!-- コーヒー -->
+    <!-- ★ クリッピング領域 -->
+    <defs>
+      <clipPath id="cup-clip">
+        <rect x="15" y="52" width="30" height="22" rx="4"/>
+      </clipPath>
+    </defs>
+
+    <!-- ★ コーヒー（クリップ適用） -->
     <rect id="coffee-liquid"
       x="15"
-      y="72"
+      y="74"
       width="30"
-      height="2"
-      fill="#c2a87a"/>
+      height="0"
+      fill="#c2a87a"
+      clip-path="url(#cup-clip)" />
 
     <!-- ソーサー -->
     <line x1="12" y1="76" x2="48" y2="76"
