@@ -121,7 +121,7 @@ function injectStyle() {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1);
+    transition: transform 1.8s cubic-bezier(0.77, 0, 0.18, 1);
     background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
   }
 
