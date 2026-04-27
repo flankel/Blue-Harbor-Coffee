@@ -20,7 +20,6 @@ export function initLoader() {
       </div>
     </div>
 
-    <!-- ★ ID付与 -->
     <div id="loader-center">
       <div class="drip">${dripSVG()}</div>
       <p id="loading-text">0%</p>
@@ -55,12 +54,8 @@ export function initLoader() {
     if (percent >= 100) {
       clearInterval(interval);
 
-      // =========================
-      // ★ ドリップを消す
-      // =========================
       loaderCenter.classList.add("fade-out");
 
-      // フェードアウト完了後に扉OPEN
       setTimeout(openDoors, 400);
     }
 
@@ -169,11 +164,9 @@ function injectStyle() {
     z-index: 10;
     pointer-events: none;
 
-    /* ★ フェード用 */
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
-  /* ★ 消えるアニメーション */
   #loader-center.fade-out {
     opacity: 0;
     transform: translateY(10px) scale(0.98);
@@ -190,6 +183,9 @@ function injectStyle() {
     width: 64px;
   }
 
+  /* =========================
+     ★ 修正はここだけ
+  ========================= */
   @media (max-width: 768px) {
 
     #center-line {
@@ -208,13 +204,15 @@ function injectStyle() {
       height: 50%;
       top: 0;
       left: 0;
+      z-index: 2;
     }
 
     .door-b {
       width: 100%;
       height: 50%;
-      bottom: 0;
+      top: 50%; /* ← ここが修正ポイント */
       left: 0;
+      z-index: 1;
     }
   }
 
