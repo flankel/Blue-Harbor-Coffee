@@ -245,24 +245,46 @@ function dripSVG() {
   return `
   <svg viewBox="0 0 60 90" fill="none">
 
-    <path class="steam" d="M28 5 Q30 0 32 5" stroke="#c2a87a" stroke-width="1"/>
+    <!-- スチーム -->
+    <path class="steam" d="M26 4 Q30 -2 34 4" stroke="#c2a87a" stroke-width="1"/>
+    <path class="steam" d="M28 6 Q30 0 32 6" stroke="#c2a87a" stroke-width="1"/>
 
-    <path d="M18 15 L42 15 L36 32 L24 32 Z"
+    <!-- 上：コーヒーマシーン（強化） -->
+    <rect x="16" y="10" width="28" height="10" rx="2"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <circle cx="30" cy="38" r="2" fill="#c2a87a">
-      <animate attributeName="cy" values="38;52;38" dur="0.9s" repeatCount="indefinite"/>
+    <!-- マシーン上部パネル -->
+    <line x1="18" y1="13" x2="42" y2="13"
+      stroke="#eae7df" stroke-width="1"/>
+
+    <!-- ノズル -->
+    <rect x="28.5" y="20" width="3" height="6"
+      fill="#eae7df"/>
+
+    <!-- 抽出口（細部） -->
+    <circle cx="30" cy="28" r="1.2" fill="#eae7df"/>
+
+    <!-- ドリップ -->
+    <circle cx="30" cy="34" r="2" fill="#c2a87a">
+      <animate attributeName="cy" values="34;52;34" dur="0.9s" repeatCount="indefinite"/>
     </circle>
 
+    <!-- 下：マグカップ本体 -->
     <rect x="15" y="52" width="30" height="22" rx="4"
       stroke="#eae7df" stroke-width="1.5"/>
 
+    <!-- ★ 取っ手（右側に追加） -->
+    <path d="M45 56 Q52 58 52 63 Q52 68 45 70"
+      stroke="#eae7df" stroke-width="1.5" fill="none"/>
+
+    <!-- クリップ -->
     <defs>
       <clipPath id="cup-clip">
         <rect x="15" y="52" width="30" height="22" rx="4"/>
       </clipPath>
     </defs>
 
+    <!-- コーヒー液体 -->
     <rect id="coffee-liquid"
       x="15"
       y="74"
@@ -271,6 +293,7 @@ function dripSVG() {
       fill="#c2a87a"
       clip-path="url(#cup-clip)" />
 
+    <!-- カップ上ライン -->
     <line x1="12" y1="76" x2="48" y2="76"
       stroke="#eae7df" stroke-width="1.5"/>
 
