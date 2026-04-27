@@ -54,26 +54,14 @@ export function initLoader() {
     if (percent >= 100) {
       clearInterval(interval);
 
-      // ① 100%の余韻
-      setTimeout(() => {
-        text.textContent = "Loading Completed";
-      }, 900);
+      text.textContent = "Loading Completed";
 
-      // ② Completed表示後フェード
       setTimeout(() => {
         loaderCenter.classList.add("fade-out");
-      }, 1800);
+      }, 600);
 
-      // ③ ドア開く前にページ表示準備（ここ重要）
-      setTimeout(() => {
-        document.body.classList.remove("preload");
-        document.body.classList.add("loaded");
-      }, 2000);
-
-      // ④ ドア開く
-      setTimeout(openDoors, 2300);
+      setTimeout(openDoors, 1200);
     }
-
   }, 28);
 
   function openDoors() {
@@ -175,7 +163,7 @@ function injectStyle() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 30;
+    z-index: 30; /* ← ここだけ修正（最重要） */
     pointer-events: none;
 
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -196,8 +184,6 @@ function injectStyle() {
   .drip svg {
     width: 64px;
   }
-
-  /* ❌ body操作は削除（これが原因だった） */
 
   @media (max-width: 768px) {
 
