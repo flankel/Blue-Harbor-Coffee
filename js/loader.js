@@ -91,34 +91,52 @@ export function initLoader() {
     }
   }, 28);
 
-  function openDoors() {
+function openDoors() {
 
-    const a = document.querySelector(".door-a");
-    const b = document.querySelector(".door-b");
-    const isMobile = window.innerWidth <= 768;
+  const a = document.querySelector(".door-a");
+  const b = document.querySelector(".door-b");
+  const isMobile = window.innerWidth <= 768;
 
-    setTimeout(() => {
-      if (isMobile) {
-        a.style.transform = "translateY(-100%)";
-      } else {
-        a.style.transform = "translateX(-100%)";
-      }
-    }, 80);
+  setTimeout(() => {
+    if (isMobile) {
+      a.style.transform = "translateY(-100%)";
+    } else {
+      a.style.transform = "translateX(-100%)";
+    }
+  }, 80);
 
-    setTimeout(() => {
-      if (isMobile) {
-        b.style.transform = "translateY(100%)";
-      } else {
-        b.style.transform = "translateX(100%)";
-      }
-    }, 180);
+  setTimeout(() => {
+    if (isMobile) {
+      b.style.transform = "translateY(100%)";
+    } else {
+      b.style.transform = "translateX(100%)";
+    }
+  }, 180);
 
-    setTimeout(() => {
-      root.remove();
-    }, 1400);
-  }
+  // 👇 扉が開ききった後にページを出す
+  setTimeout(() => {
+
+    const page = document.getElementById("page-content");
+
+    if (page) {
+      page.style.opacity = "0";
+      page.style.transform = "translateY(40px) scale(0.96)";
+      page.style.transition = "none";
+
+      requestAnimationFrame(() => {
+        page.style.transition =
+          "opacity 1.2s cubic-bezier(0.22,1,0.36,1), transform 1.2s cubic-bezier(0.22,1,0.36,1)";
+        page.style.opacity = "1";
+        page.style.transform = "translateY(0) scale(1)";
+      });
+    }
+
+  }, 700); // ← 扉がほぼ開いたタイミング
+
+  setTimeout(() => {
+    root.remove();
+  }, 1400);
 }
-
 
 // =========================
 // CSS
