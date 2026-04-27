@@ -3,13 +3,6 @@ export function initLoader() {
   const root = document.getElementById("loader-root");
   if (!root) return;
 
-  // ★ ここ削除（ページは最初から見える状態にする）
-  // const targets = document.querySelectorAll("#page-content *");
-  // targets.forEach(el => {
-  //   el.style.opacity = "0";
-  //   el.style.transform = "translateY(30px)";
-  // });
-
   root.innerHTML = `
   <div id="door-wrapper">
 
@@ -70,13 +63,17 @@ export function initLoader() {
       setTimeout(openDoors, 1200);
     }
   }, 28);
+}
 
-  
-  function openDoors() {
+
+/* =========================
+   DOOR OPEN
+========================= */
+function openDoors() {
 
   const a = document.querySelector(".door-a");
   const b = document.querySelector(".door-b");
-  const root = document.getElementById("loader-root"); // ★追加（重要）
+  const root = document.getElementById("loader-root");
   const isMobile = window.innerWidth <= 768;
 
   setTimeout(() => {
@@ -95,20 +92,20 @@ export function initLoader() {
     }
   }, 260);
 
-  // ★完全に消す処理（線残り対策込み）
   setTimeout(() => {
 
     const line = document.getElementById("center-line");
-    if (line) line.remove(); // ★これが本体
+    if (line) line.remove();
 
     if (root) root.remove();
 
   }, 1500);
 }
 
-// =========================
-// CSS
-// =========================
+
+/* =========================
+   STYLE
+========================= */
 function injectStyle() {
   const style = document.createElement("style");
 
@@ -243,18 +240,16 @@ function injectStyle() {
 }
 
 
-// =========================
-// SVG
-// =========================
+/* =========================
+   SVG
+========================= */
 function dripSVG() {
   return `
   <svg viewBox="0 0 60 90" fill="none">
 
-    <!-- スチーム -->
     <path class="steam" d="M26 4 Q30 -2 34 4" stroke="#c2a87a" stroke-width="1"/>
     <path class="steam" d="M28 6 Q30 0 32 6" stroke="#c2a87a" stroke-width="1"/>
 
-    <!-- 上：コーヒーマシーン -->
     <rect x="16" y="10" width="28" height="10" rx="2"
       stroke="#eae7df" stroke-width="1.5"/>
 
@@ -266,7 +261,6 @@ function dripSVG() {
 
     <circle cx="30" cy="28" r="1.2" fill="#eae7df"/>
 
-    <!-- 🔥 ドリップ（複数化） -->
     <circle cx="29" cy="34" r="1.6" fill="#c2a87a">
       <animate attributeName="cy" values="34;52;34" dur="0.75s" repeatCount="indefinite"/>
     </circle>
@@ -287,11 +281,9 @@ function dripSVG() {
       <animate attributeName="cy" values="34;56;34" dur="0.7s" repeatCount="indefinite"/>
     </circle>
 
-    <!-- 下：マグ -->
     <rect x="15" y="52" width="30" height="22" rx="4"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <!-- 取っ手 -->
     <path d="M45 56 Q53 58 53 63 Q53 68 45 70"
       stroke="#eae7df" stroke-width="1.5" fill="none"/>
 
@@ -301,7 +293,6 @@ function dripSVG() {
       </clipPath>
     </defs>
 
-    <!-- 液体 -->
     <rect id="coffee-liquid"
       x="15"
       y="74"
@@ -310,7 +301,6 @@ function dripSVG() {
       fill="#c2a87a"
       clip-path="url(#cup-clip)" />
 
-    <!-- 表面ライン -->
     <line x1="12" y1="76" x2="48" y2="76"
       stroke="#eae7df" stroke-width="1.5"/>
 
