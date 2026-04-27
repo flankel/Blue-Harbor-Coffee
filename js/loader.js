@@ -9,14 +9,13 @@ export function initLoader() {
     <!-- 中央ライン -->
     <div id="center-line"></div>
 
-    <!-- 扉A -->
+    <!-- 扉 -->
     <div class="door door-a">
       <div class="door-inner">
         <span class="door-text">Blue Harbor Coffee</span>
       </div>
     </div>
 
-    <!-- 扉B -->
     <div class="door door-b">
       <div class="door-inner">
         <span class="door-text">Since 2024</span>
@@ -41,40 +40,54 @@ export function initLoader() {
 
   const interval = setInterval(() => {
     percent++;
+
     text.textContent = percent + "%";
+
+    // コーヒー上昇
     liquid.setAttribute("height", percent * 0.25 + 2);
+    liquid.setAttribute("y", 65 - percent * 0.25);
 
     if (percent >= 100) {
       clearInterval(interval);
       openDoors();
     }
-  }, 30);
+
+  }, 28);
 
 
   function openDoors() {
+
     const a = document.querySelector(".door-a");
     const b = document.querySelector(".door-b");
+
     const isMobile = window.innerWidth <= 768;
 
-    if (isMobile) {
-      // 中央から上下に開く
-      a.style.transform = "translateY(-100%)";
-      b.style.transform = "translateY(100%)";
-    } else {
-      // 中央から左右に開く
-      a.style.transform = "translateX(-100%)";
-      b.style.transform = "translateX(100%)";
-    }
+    // ★ わずかにズラす（プロっぽさ）
+    setTimeout(() => {
+      if (isMobile) {
+        a.style.transform = "translateY(-100%)";
+      } else {
+        a.style.transform = "translateX(-100%)";
+      }
+    }, 0);
+
+    setTimeout(() => {
+      if (isMobile) {
+        b.style.transform = "translateY(100%)";
+      } else {
+        b.style.transform = "translateX(100%)";
+      }
+    }, 60);
 
     setTimeout(() => {
       root.remove();
-    }, 1200);
+    }, 1400);
   }
 }
 
 
 // =========================
-// CSS
+// スタイル（プロ仕様）
 // =========================
 function injectStyle() {
   const style = document.createElement("style");
@@ -91,11 +104,11 @@ function injectStyle() {
   /* 中央ライン */
   #center-line {
     position: absolute;
-    background: rgba(255,255,255,0.15);
-    z-index: 10;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.25), transparent);
+    z-index: 20;
   }
 
-  /* PC：縦線 */
+  /* PC：縦ライン */
   #center-line {
     width: 1px;
     height: 100%;
@@ -103,18 +116,32 @@ function injectStyle() {
     top: 0;
   }
 
+  /* 扉 */
   .door {
     position: absolute;
-    background: #2c3330;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 1.2s ease;
+    transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1);
+    background: linear-gradient(
+      to right,
+      #232826 0%,
+      #2c3330 40%,
+      #2c3330 60%,
+      #1f2523 100%
+    );
   }
 
-  /* =========================
-     PC（左右に開く）
-  ========================= */
+  /* 影（奥行き） */
+  .door::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.4);
+    opacity: 0.6;
+  }
+
+  /* PC左右 */
   .door-a {
     width: 50%;
     height: 100%;
@@ -135,12 +162,12 @@ function injectStyle() {
   .door-inner {
     color: #eae7df;
     font-family: 'Jost', sans-serif;
-    letter-spacing: 0.2em;
-    font-size: 14px;
-    opacity: 0.8;
+    letter-spacing: 0.25em;
+    font-size: 13px;
+    opacity: 0.75;
   }
 
-  /* ローディング */
+  /* ローディング中央 */
   #loader-center {
     position: absolute;
     inset: 0;
@@ -148,23 +175,22 @@ function injectStyle() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
-    z-index: 5;
+    z-index: 10;
   }
 
   #loading-text {
-    margin-top: 16px;
-    font-size: 14px;
-    letter-spacing: 0.2em;
+    margin-top: 14px;
+    font-size: 13px;
+    letter-spacing: 0.25em;
     color: #c2a87a;
   }
 
   .drip svg {
-    width: 60px;
+    width: 64px;
   }
 
   /* =========================
-     スマホ（上下に開く）
+     スマホ
   ========================= */
   @media (max-width: 768px) {
 
@@ -173,6 +199,17 @@ function injectStyle() {
       height: 1px;
       top: 50%;
       left: 0;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.25), transparent);
+    }
+
+    .door {
+      background: linear-gradient(
+        to bottom,
+        #232826 0%,
+        #2c3330 40%,
+        #2c3330 60%,
+        #1f2523 100%
+      );
     }
 
     .door-a {
@@ -191,6 +228,18 @@ function injectStyle() {
       transform-origin: center top;
     }
   }
+
+  /* 蒸気アニメーション */
+  .steam {
+    opacity: 0.4;
+    animation: steam 2.5s ease-in-out infinite;
+  }
+
+  @keyframes steam {
+    0% { transform: translateY(0) scale(1); opacity: 0.3; }
+    50% { transform: translateY(-8px) scale(1.2); opacity: 0.6; }
+    100% { transform: translateY(-16px) scale(1.4); opacity: 0; }
+  }
   `;
 
   document.head.appendChild(style);
@@ -198,29 +247,39 @@ function injectStyle() {
 
 
 // =========================
-// ドリップSVG
+// ドリップ（プロ版）
 // =========================
 function dripSVG() {
   return `
-  <svg viewBox="0 0 60 80" fill="none">
+  <svg viewBox="0 0 60 90" fill="none">
 
-    <path d="M20 10 L40 10 L35 25 L25 25 Z"
+    <!-- 蒸気 -->
+    <path class="steam" d="M28 5 Q30 0 32 5" stroke="#c2a87a" stroke-width="1"/>
+    <path class="steam" d="M24 8 Q26 3 28 8" stroke="#c2a87a" stroke-width="1"/>
+
+    <!-- ドリッパー -->
+    <path d="M18 15 L42 15 L36 32 L24 32 Z"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <circle cx="30" cy="32" r="2" fill="#c2a87a">
-      <animate attributeName="cy" values="32;45;32" dur="1s" repeatCount="indefinite"/>
+    <!-- 雫 -->
+    <circle cx="30" cy="38" r="2" fill="#c2a87a">
+      <animate attributeName="cy" values="38;52;38" dur="0.9s" repeatCount="indefinite"/>
     </circle>
 
-    <rect x="15" y="45" width="30" height="20" rx="3"
+    <!-- カップ -->
+    <rect x="15" y="52" width="30" height="22" rx="4"
       stroke="#eae7df" stroke-width="1.5"/>
 
+    <!-- コーヒー -->
     <rect id="coffee-liquid"
-      x="15" y="65"
+      x="15"
+      y="72"
       width="30"
       height="2"
-      fill="#c2a87a" />
+      fill="#c2a87a"/>
 
-    <line x1="12" y1="67" x2="48" y2="67"
+    <!-- ソーサー -->
+    <line x1="12" y1="76" x2="48" y2="76"
       stroke="#eae7df" stroke-width="1.5"/>
 
   </svg>
