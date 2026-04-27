@@ -54,18 +54,17 @@ export function initLoader() {
     if (percent >= 100) {
       clearInterval(interval);
 
-      // ✅ 完了メッセージ表示
       text.textContent = "Loading Completed";
 
-      // ドリップごとフェードアウト
-      loaderCenter.classList.add("fade-out");
+      // ✅ 先にしっかり見せる（ここ重要）
+      setTimeout(() => {
+        loaderCenter.classList.add("fade-out");
+      }, 600);
 
-      // ✅ 少し余韻を持たせてからドア
-      setTimeout(openDoors, 900);
+      // ドアはさらに後
+      setTimeout(openDoors, 1200);
     }
-
   }, 28);
-
 
   function openDoors() {
 
