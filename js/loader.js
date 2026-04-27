@@ -3,6 +3,13 @@ export function initLoader() {
   const root = document.getElementById("loader-root");
   if (!root) return;
 
+  // ★ 最初からページを沈めておく（ここが重要）
+  const page = document.getElementById("page-content");
+  if (page) {
+    page.style.opacity = "0";
+    page.style.transform = "translateY(50px) scale(0.95)";
+  }
+
   root.innerHTML = `
   <div id="door-wrapper">
 
@@ -56,27 +63,6 @@ export function initLoader() {
 
       text.textContent = "Loading Completed";
 
-      // 👇 ここから追加（Completed後のみ）
-      setTimeout(() => {
-
-        const page = document.getElementById("page-content");
-
-        if (page) {
-          page.style.opacity = "0";
-          page.style.transform = "translateY(50px) scale(0.95)";
-          page.style.transition = "none";
-
-          requestAnimationFrame(() => {
-            page.style.transition =
-              "opacity 1.3s cubic-bezier(0.22,1,0.36,1), transform 1.3s cubic-bezier(0.22,1,0.36,1)";
-            page.style.opacity = "1";
-            page.style.transform = "translateY(0) scale(1)";
-          });
-        }
-
-      }, 1200);
-      // 👆 ここまで追加
-
       setTimeout(() => {
         loaderCenter.classList.add("fade-out");
       }, 600);
@@ -107,8 +93,21 @@ export function initLoader() {
       }
     }, 260);
 
+    // ★ 扉が開いた後にだけ浮き上がり発動（ここが核）
     setTimeout(() => {
+
+      if (page) {
+        page.style.transition =
+          "opacity 1.2s cubic-bezier(0.22,1,0.36,1), transform 1.2s cubic-bezier(0.22,1,0.36,1)";
+
+        requestAnimationFrame(() => {
+          page.style.opacity = "1";
+          page.style.transform = "translateY(0) scale(1)";
+        });
+      }
+
       root.remove();
+
     }, 1500);
   }
 }
