@@ -16,6 +16,14 @@
   body {
     font-family: 'Zen Kaku Gothic New', sans-serif;
     color: #333;
+
+    /* ★追加：初期非表示（チラつき防止） */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  body.loaded {
+    opacity: 1;
   }
 
   .font-eng {
@@ -53,17 +61,17 @@
   }
 
   /* =========================
-     loader（🔥ここだけ修正）
+     loader（変更なし）
   ========================= */
   #loader-root {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: transparent; /* ← white を削除 */
+    background: transparent;
   }
 
   /* =========================
-     スマホ用：孤立ワード防止
+     スマホ用
   ========================= */
   @media (max-width: 768px) {
     #hero-title,
@@ -81,12 +89,10 @@
 <body id="body" class="bg-white flex flex-col min-h-screen">
 
   <!-- Loader Root -->
-  <div id="loader-root">
-  </div>
+  <div id="loader-root"></div>
 
   <!-- Header -->
-  <div id="header">
-  </div>
+  <div id="header"></div>
 
   <main class="flex-grow">
 
@@ -97,8 +103,7 @@
       <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
         <p id="hero-subtitle" class="font-eng tracking-[0.3em] text-sm md:text-base mb-4 text-blue-200"></p>
 
-        <h2 id="hero-title" class="text-4xl md:text-6xl font-eng font-bold mb-8">
-        </h2>
+        <h2 id="hero-title" class="text-4xl md:text-6xl font-eng font-bold mb-8"></h2>
 
         <a href="menu.html" id="hero-btn"
           class="bg-white text-gray-900 font-bold px-8 py-3 text-sm hover:bg-blue-600 hover:text-white transition duration-300"></a>
@@ -110,15 +115,13 @@
       <div class="text-center mb-20">
         <p id="concept-label" class="font-eng text-xs tracking-[0.3em] text-blue-600 mb-4"></p>
 
-        <h2 id="concept-title" class="text-3xl md:text-4xl font-bold mb-6">
-        </h2>
+        <h2 id="concept-title" class="text-3xl md:text-4xl font-bold mb-6"></h2>
 
         <p id="concept-desc" class="text-gray-600 leading-loose max-w-2xl mx-auto"></p>
       </div>
 
       <!-- JS描画エリア -->
-      <div id="sections">
-      </div>
+      <div id="sections"></div>
     </section>
 
   </main>
@@ -138,5 +141,4 @@
   </script>
 
 </body>
-
 </html>
