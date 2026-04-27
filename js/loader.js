@@ -9,15 +9,15 @@ export function initLoader() {
   root.innerHTML = `
   <div id="door-wrapper">
 
-    <!-- 左扉 -->
-    <div class="door left">
+    <!-- 上扉（モバイル） / 左扉（PC） -->
+    <div class="door door-a">
       <div class="door-inner">
         <span class="door-text">Blue Harbor Coffee</span>
       </div>
     </div>
 
-    <!-- 右扉 -->
-    <div class="door right">
+    <!-- 下扉（モバイル） / 右扉（PC） -->
+    <div class="door door-b">
       <div class="door-inner">
         <span class="door-text">Since 2024</span>
       </div>
@@ -25,8 +25,8 @@ export function initLoader() {
 
     <!-- 中央ローディング -->
     <div id="loader-center">
-      <div class="cup">${cupSVG()}</div>
-      <p id="loading-text">Brewing...</p>
+      <div class="drip">${dripSVG()}</div>
+      <p id="loading-text">0%</p>
     </div>
 
   </div>
@@ -35,37 +35,60 @@ export function initLoader() {
   injectStyle();
 
   // =========================
-  // ローディング演出
+  // パーセンテージ制御
   // =========================
   const text = document.getElementById("loading-text");
-  const words = ["Brewing...", "Pouring...", "Almost Ready..."];
-  let i = 0;
+  const liquid = document.getElementById("coffee-liquid");
+
+  let percent = 0;
 
   const interval = setInterval(() => {
-    i = (i + 1) % words.length;
-    text.textContent = words[i];
-  }, 1200);
+    percent++;
+
+    // テキスト更新
+    text.textContent = percent + "%";
+
+    // コーヒーの高さ（%に応じて上昇）
+    liquid.setAttribute("height", percent * 0.25 + 2);
+
+    if (percent >= 100) {
+      clearInterval(interval);
+      openDoors();
+    }
+
+  }, 30);
+
 
   // =========================
-  // 終了 → 扉OPEN
+  // 扉OPEN
   // =========================
-  setTimeout(() => {
-    clearInterval(interval);
+  function openDoors() {
 
-    const left = document.querySelector(".door.left");
-    const right = document.querySelector(".door.right");
+    const a = document.querySelector(".door-a");
+    const b = document.querySelector(".door-b");
 
-    left.style.transform = "translateX(-100%)";
-    right.style.transform = "translateX(100%)";
+    const isMobile = window.innerWidth <= 768;
 
-    // 少し遅れて削除
+    if (isMobile) {
+      // 上下に開く
+      a.style.transform = "translateY(-100%)";
+      b.style.transform = "translateY(100%)";
+    } else {
+      // 左右に開く
+      a.style.transform = "translateX(-100%)";
+      b.style.transform = "translateX(100%)";
+    }
+
     setTimeout(() => {
       root.remove();
     }, 1200);
-
-  }, 3500);
+  }
 }
 
+
+// =========================
+// スタイル
+// =========================
 function injectStyle() {
   const style = document.createElement("style");
 
@@ -76,7 +99,7 @@ function injectStyle() {
     display: flex;
     z-index: 9999;
     overflow: hidden;
-    background: #f7f4ef;
+    background: #2c3330; /* ← 白画面排除 */
   }
 
   .door {
@@ -98,14 +121,6 @@ function injectStyle() {
     opacity: 0.8;
   }
 
-  .door.left {
-    border-right: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .door.right {
-    border-left: 1px solid rgba(255,255,255,0.1);
-  }
-
   /* 中央ローディング */
   #loader-center {
     position: absolute;
@@ -119,30 +134,67 @@ function injectStyle() {
 
   #loading-text {
     margin-top: 16px;
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.2em;
     color: #c2a87a;
     font-family: 'Jost', sans-serif;
   }
 
-  .cup svg {
-    width: 40px;
+  .drip svg {
+    width: 60px;
     height: auto;
+  }
+
+  /* =========================
+     モバイル対応（上下扉）
+  ========================= */
+  @media (max-width: 768px) {
+    #door-wrapper {
+      flex-direction: column;
+    }
+
+    .door {
+      width: 100%;
+      height: 50%;
+    }
   }
   `;
 
   document.head.appendChild(style);
 }
 
-function cupSVG() {
+
+// =========================
+// ドリップSVG
+// =========================
+function dripSVG() {
   return `
-  <svg width="40" height="48" viewBox="0 0 38 46" fill="none">
-    <path d="M14 7 Q16 3 18 7" stroke="#c2a87a" stroke-width="1.2"/>
-    <path d="M20 5 Q22 1 24 5" stroke="#c2a87a" stroke-width="1.2"/>
-    <rect x="6" y="12" width="26" height="27" rx="3" stroke="#eae7df" stroke-width="1.5"/>
-    <path d="M32 19 Q43 19 43 26 Q43 33 32 31" stroke="#eae7df" stroke-width="1.5"/>
-    <line x1="4" y1="39" x2="34" y2="39" stroke="#eae7df" stroke-width="1.5"/>
-    <circle cx="19" cy="26" r="4" stroke="#c2a87a" stroke-width="1.2"/>
+  <svg viewBox="0 0 60 80" fill="none">
+
+    <!-- ドリッパー -->
+    <path d="M20 10 L40 10 L35 25 L25 25 Z"
+      stroke="#eae7df" stroke-width="1.5"/>
+
+    <!-- 落ちる雫 -->
+    <circle cx="30" cy="32" r="2" fill="#c2a87a">
+      <animate attributeName="cy" values="32;45;32" dur="1s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- カップ枠 -->
+    <rect x="15" y="45" width="30" height="20" rx="3"
+      stroke="#eae7df" stroke-width="1.5"/>
+
+    <!-- コーヒー液体 -->
+    <rect id="coffee-liquid"
+      x="15" y="65"
+      width="30"
+      height="2"
+      fill="#c2a87a" />
+
+    <!-- ソーサー -->
+    <line x1="12" y1="67" x2="48" y2="67"
+      stroke="#eae7df" stroke-width="1.5"/>
+
   </svg>
   `;
 }
