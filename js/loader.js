@@ -54,9 +54,14 @@ export function initLoader() {
     if (percent >= 100) {
       clearInterval(interval);
 
+      // ✅ 完了メッセージ表示
+      text.textContent = "Loading Completed";
+
+      // ドリップごとフェードアウト
       loaderCenter.classList.add("fade-out");
 
-      setTimeout(openDoors, 400);
+      // ✅ 少し余韻を持たせてからドア
+      setTimeout(openDoors, 900);
     }
 
   }, 28);
@@ -183,9 +188,6 @@ function injectStyle() {
     width: 64px;
   }
 
-  /* =========================
-     ★ 修正はここだけ
-  ========================= */
   @media (max-width: 768px) {
 
     #center-line {
@@ -210,7 +212,7 @@ function injectStyle() {
     .door-b {
       width: 100%;
       height: 50%;
-      top: 50%; /* ← ここが修正ポイント */
+      top: 50%;
       left: 0;
       z-index: 1;
     }
