@@ -3,12 +3,12 @@ export function initLoader() {
   const root = document.getElementById("loader-root");
   if (!root) return;
 
-  // ★ 各要素を最初から沈める（ここだけ変更）
-  const targets = document.querySelectorAll("#page-content *");
-  targets.forEach(el => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-  });
+  // ★ ここ削除（ページは最初から見える状態にする）
+  // const targets = document.querySelectorAll("#page-content *");
+  // targets.forEach(el => {
+  //   el.style.opacity = "0";
+  //   el.style.transform = "translateY(30px)";
+  // });
 
   root.innerHTML = `
   <div id="door-wrapper">
@@ -93,23 +93,9 @@ export function initLoader() {
       }
     }, 260);
 
-    // ★ 扉が開いた後に要素ごとに浮き上がる（ここだけ変更）
+    // ★ 浮き上がり処理削除 → 扉開いたら即見える
     setTimeout(() => {
-
-      const targets = document.querySelectorAll("#page-content *");
-
-      targets.forEach((el, i) => {
-        el.style.transition =
-          "opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1)";
-
-        setTimeout(() => {
-          el.style.opacity = "1";
-          el.style.transform = "translateY(0)";
-        }, i * 40);
-      });
-
       root.remove();
-
     }, 1500);
   }
 }
