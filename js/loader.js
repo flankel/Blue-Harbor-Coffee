@@ -52,21 +52,27 @@ export function initLoader() {
     liquid.setAttribute("y", y);
 
     if (percent >= 100) {
-  clearInterval(interval);
+      clearInterval(interval);
 
-  // ✅ まず100%をしっかり見せる
-  setTimeout(() => {
-    text.textContent = "Loading Completed";
-  }, 500);
+      // ✅ 100%をしっかり見せる（ここを長めに）
+      setTimeout(() => {
+        text.textContent = "Loading Completed";
+      }, 900); // ← ここ伸ばした
 
-  // Completed表示後にフェード
-  setTimeout(() => {
-    loaderCenter.classList.add("fade-out");
-  }, 1100);
+      // ✅ Completedをちゃんと見せる時間
+      setTimeout(() => {
+        loaderCenter.classList.add("fade-out");
+      }, 1800); // ← 間をしっかり確保
 
-  // ドア
-  setTimeout(openDoors, 1700);
-}
+      // ✅ ページ側をふわっと表示開始
+      setTimeout(() => {
+        document.body.classList.add("page-visible");
+      }, 2000);
+
+      // ✅ ドア開く
+      setTimeout(openDoors, 2300);
+    }
+
   }, 28);
 
   function openDoors() {
@@ -168,7 +174,7 @@ function injectStyle() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 30; /* ← ここだけ修正（最重要） */
+    z-index: 30;
     pointer-events: none;
 
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -188,6 +194,20 @@ function injectStyle() {
 
   .drip svg {
     width: 64px;
+  }
+
+  /* =========================
+     ページふわっと表示
+  ========================= */
+  body {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  body.page-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   @media (max-width: 768px) {
