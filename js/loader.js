@@ -56,6 +56,27 @@ export function initLoader() {
 
       text.textContent = "Loading Completed";
 
+      // 👇 ここから追加（Completed後のみ）
+      setTimeout(() => {
+
+        const page = document.getElementById("page-content");
+
+        if (page) {
+          page.style.opacity = "0";
+          page.style.transform = "translateY(50px) scale(0.95)";
+          page.style.transition = "none";
+
+          requestAnimationFrame(() => {
+            page.style.transition =
+              "opacity 1.3s cubic-bezier(0.22,1,0.36,1), transform 1.3s cubic-bezier(0.22,1,0.36,1)";
+            page.style.opacity = "1";
+            page.style.transform = "translateY(0) scale(1)";
+          });
+        }
+
+      }, 1200);
+      // 👆 ここまで追加
+
       setTimeout(() => {
         loaderCenter.classList.add("fade-out");
       }, 600);
@@ -163,7 +184,7 @@ function injectStyle() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 30; /* ← ここだけ修正（最重要） */
+    z-index: 30;
     pointer-events: none;
 
     transition: opacity 0.4s ease, transform 0.4s ease;
