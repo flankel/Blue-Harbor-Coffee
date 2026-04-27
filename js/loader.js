@@ -74,7 +74,7 @@ export function initLoader() {
       } else {
         a.style.transform = "translateX(-100%)";
       }
-    }, 0);
+    }, 120);
 
     setTimeout(() => {
       if (isMobile) {
@@ -82,7 +82,7 @@ export function initLoader() {
       } else {
         b.style.transform = "translateX(100%)";
       }
-    }, 60);
+    }, 260);
 
     setTimeout(() => {
       root.remove();
