@@ -69,8 +69,15 @@ export function initLoader() {
 
     const a = document.querySelector(".door-a");
     const b = document.querySelector(".door-b");
+    const line = document.getElementById("center-line");
     const wrapper = document.getElementById("door-wrapper");
     const isMobile = window.innerWidth <= 768;
+
+    // ★重要：扉と同時に中央線を即消し（見え残り防止）
+    if (line) {
+      line.style.transition = "opacity 0.2s ease";
+      line.style.opacity = "0";
+    }
 
     setTimeout(() => {
       if (isMobile) {
@@ -88,17 +95,11 @@ export function initLoader() {
       }
     }, 160);
 
-    // ★重要：全部まとめて消す（center-line単体操作禁止）
     setTimeout(() => {
 
-      if (wrapper) {
-        wrapper.style.transition = "opacity 0.2s ease";
-        wrapper.style.opacity = "0";
+      if (line) line.remove();
 
-        setTimeout(() => {
-          wrapper.remove();
-        }, 200);
-      }
+      if (wrapper) wrapper.remove();
 
     }, 1000);
   }
@@ -106,7 +107,7 @@ export function initLoader() {
 
 
 // =========================
-// CSS（変更なし）
+// CSS
 // =========================
 function injectStyle() {
   const style = document.createElement("style");
@@ -128,6 +129,7 @@ function injectStyle() {
     top: 0;
     background: rgba(255,255,255,0.2);
     z-index: 20;
+    transition: opacity 0.2s ease;
   }
 
   .door {
@@ -220,7 +222,7 @@ function injectStyle() {
 
 
 // =========================
-// SVG（変更なし）
+// SVG
 // =========================
 function dripSVG() {
   return `
