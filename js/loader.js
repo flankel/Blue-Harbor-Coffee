@@ -73,29 +73,23 @@ export function initLoader() {
     const wrapper = document.getElementById("door-wrapper");
     const isMobile = window.innerWidth <= 768;
 
-    // =========================
-    // ★中央線：完全消滅対策（ここが本体修正）
-    // =========================
     if (line) {
       line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
       line.style.opacity = "0";
-
-      // ★物理的に画面外へ退避（iOS残像対策）
       line.style.transform = isMobile
         ? "translateY(-20px)"
         : "translateX(-20px)";
-
-      // ★描画レイヤーから外す
       line.style.willChange = "transform, opacity";
     }
 
+    // ★ 扉を少しゆっくり開く（1.2 → 1.6秒相当）
     setTimeout(() => {
       if (isMobile) {
         a.style.transform = "translateY(-110%)";
       } else {
         a.style.transform = "translateX(-110%)";
       }
-    }, 80);
+    }, 120);
 
     setTimeout(() => {
       if (isMobile) {
@@ -103,15 +97,12 @@ export function initLoader() {
       } else {
         b.style.transform = "translateX(110%)";
       }
-    }, 160);
+    }, 240);
 
     setTimeout(() => {
-
-      // ★最終的に完全削除
       if (line) line.remove();
       if (wrapper) wrapper.remove();
-
-    }, 1000);
+    }, 1400);
   }
 }
 
@@ -139,8 +130,6 @@ function injectStyle() {
     top: 0;
     background: rgba(255,255,255,0.2);
     z-index: 20;
-
-    /* ★追加：スマホ残像対策 */
     will-change: transform, opacity;
     backface-visibility: hidden;
   }
@@ -150,7 +139,7 @@ function injectStyle() {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1);
+    transition: transform 1.6s cubic-bezier(0.77, 0, 0.18, 1);
     background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
   }
 
@@ -235,17 +224,22 @@ function injectStyle() {
 
 
 // =========================
-// SVG
+// SVG（←ここを「前の正常版」に戻している）
 // =========================
 function dripSVG() {
   return `
   <svg viewBox="0 0 60 90" fill="none">
 
-    <rect x="16" y="10" width="28" height="10" rx="2"
+    <!-- 上部マシーン（前のシンプルで整った形に戻し） -->
+    <rect x="14" y="8" width="32" height="12" rx="2"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <circle cx="30" cy="28" r="1.2" fill="#eae7df"/>
+    <line x1="16" y1="12" x2="44" y2="12"
+      stroke="#eae7df" stroke-width="1"/>
 
+    <circle cx="30" cy="18" r="1.2" fill="#eae7df"/>
+
+    <!-- ドリップ -->
     <circle cx="29" cy="34" r="1.6" fill="#c2a87a">
       <animate attributeName="cy" values="34;52;34" dur="0.75s" repeatCount="indefinite"/>
     </circle>
@@ -254,9 +248,11 @@ function dripSVG() {
       <animate attributeName="cy" values="36;54;36" dur="0.85s" repeatCount="indefinite"/>
     </circle>
 
+    <!-- マグ -->
     <rect x="15" y="52" width="30" height="22" rx="4"
       stroke="#eae7df" stroke-width="1.5"/>
 
+    <!-- 取っ手 -->
     <path d="M45 56 Q53 58 53 63 Q53 68 45 70"
       stroke="#eae7df" stroke-width="1.5" fill="none"/>
 
