@@ -33,7 +33,6 @@ export function initLoader() {
   const text = document.getElementById("loading-text");
   const liquid = document.getElementById("coffee-liquid");
 
-  // カップ内部サイズ（SVG基準）
   const CUP_BOTTOM = 74;
   const CUP_TOP = 52;
   const CUP_HEIGHT = CUP_BOTTOM - CUP_TOP;
@@ -45,7 +44,6 @@ export function initLoader() {
     percent++;
     text.textContent = percent + "%";
 
-    // ★ 下から上に溜まる
     const h = (percent / 100) * CUP_HEIGHT;
     const y = CUP_BOTTOM - h;
 
@@ -55,8 +53,8 @@ export function initLoader() {
     if (percent >= 100) {
       clearInterval(interval);
 
-      // ★ ちゃんと満タンになってから開く
-      setTimeout(openDoors, 300);
+      // ★ 満タン後すぐ開く（無駄な待ちなし）
+      openDoors();
     }
 
   }, 28);
@@ -68,6 +66,7 @@ export function initLoader() {
     const b = document.querySelector(".door-b");
     const isMobile = window.innerWidth <= 768;
 
+    // 少しズラして高級感
     setTimeout(() => {
       if (isMobile) {
         a.style.transform = "translateY(-100%)";
@@ -84,9 +83,10 @@ export function initLoader() {
       }
     }, 60);
 
+    // ★ 扉が開き切る前に削除して“繋がり”を自然にする
     setTimeout(() => {
       root.remove();
-    }, 1400);
+    }, 900);
   }
 }
 
@@ -106,6 +106,7 @@ function injectStyle() {
     background: #2c3330;
   }
 
+  /* 中央ライン */
   #center-line {
     position: absolute;
     width: 1px;
@@ -220,36 +221,30 @@ function injectStyle() {
 
 
 // =========================
-// SVG（クリッピング付き）
+// SVG
 // =========================
 function dripSVG() {
   return `
   <svg viewBox="0 0 60 90" fill="none">
 
-    <!-- 蒸気 -->
     <path class="steam" d="M28 5 Q30 0 32 5" stroke="#c2a87a" stroke-width="1"/>
 
-    <!-- ドリッパー -->
     <path d="M18 15 L42 15 L36 32 L24 32 Z"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <!-- 雫 -->
     <circle cx="30" cy="38" r="2" fill="#c2a87a">
       <animate attributeName="cy" values="38;52;38" dur="0.9s" repeatCount="indefinite"/>
     </circle>
 
-    <!-- カップ枠 -->
     <rect x="15" y="52" width="30" height="22" rx="4"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <!-- ★ クリッピング領域 -->
     <defs>
       <clipPath id="cup-clip">
         <rect x="15" y="52" width="30" height="22" rx="4"/>
       </clipPath>
     </defs>
 
-    <!-- ★ コーヒー（クリップ適用） -->
     <rect id="coffee-liquid"
       x="15"
       y="74"
@@ -258,7 +253,6 @@ function dripSVG() {
       fill="#c2a87a"
       clip-path="url(#cup-clip)" />
 
-    <!-- ソーサー -->
     <line x1="12" y1="76" x2="48" y2="76"
       stroke="#eae7df" stroke-width="1.5"/>
 
