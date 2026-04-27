@@ -56,14 +56,38 @@ export function initLoader() {
 
       text.textContent = "Loading Completed";
 
-      // 👇 ここだけ調整（短く＋ふわっと強化）
+      // 👇 ここからのみ変更（Completed後限定）
       setTimeout(() => {
+
+        // =========================
+        // ページをふわっと浮かせる
+        // =========================
+        const page = document.getElementById("page-content");
+
+        if (page) {
+          page.style.opacity = "0";
+          page.style.transform = "translateY(40px) scale(0.96)";
+          page.style.transition = "none";
+
+          requestAnimationFrame(() => {
+            page.style.transition =
+              "opacity 1.3s cubic-bezier(0.22,1,0.36,1), transform 1.3s cubic-bezier(0.22,1,0.36,1)";
+            page.style.opacity = "1";
+            page.style.transform = "translateY(0) scale(1)";
+          });
+        }
+
+        // =========================
+        // ローダーフェード
+        // =========================
         const wrapper = document.getElementById("door-wrapper");
         if (wrapper) wrapper.classList.add("fade-out");
-        loaderCenter.classList.add("fade-out");
-      }, 50); // ← かなり短縮
 
-      setTimeout(openDoors, 900); // ← 少し早めに扉開始
+        loaderCenter.classList.add("fade-out");
+
+      }, 60);
+
+      setTimeout(openDoors, 900);
     }
   }, 28);
 
@@ -111,8 +135,6 @@ function injectStyle() {
     background: transparent;
 
     opacity: 1;
-
-    /* 👇 ふわっと強化 */
     transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
@@ -178,7 +200,6 @@ function injectStyle() {
     z-index: 30;
     pointer-events: none;
 
-    /* 👇 ここも強化 */
     transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
                 transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   }
