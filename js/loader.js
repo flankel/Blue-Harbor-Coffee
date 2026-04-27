@@ -20,6 +20,7 @@ export function initLoader() {
       </div>
     </div>
 
+    <!-- ★ ID付与 -->
     <div id="loader-center">
       <div class="drip">${dripSVG()}</div>
       <p id="loading-text">0%</p>
@@ -32,6 +33,7 @@ export function initLoader() {
 
   const text = document.getElementById("loading-text");
   const liquid = document.getElementById("coffee-liquid");
+  const loaderCenter = document.getElementById("loader-center");
 
   const CUP_BOTTOM = 74;
   const CUP_TOP = 52;
@@ -52,7 +54,14 @@ export function initLoader() {
 
     if (percent >= 100) {
       clearInterval(interval);
-      openDoors();
+
+      // =========================
+      // ★ ドリップを消す
+      // =========================
+      loaderCenter.classList.add("fade-out");
+
+      // フェードアウト完了後に扉OPEN
+      setTimeout(openDoors, 400);
     }
 
   }, 28);
@@ -88,7 +97,7 @@ export function initLoader() {
 
 
 // =========================
-// CSS（ここが重要）
+// CSS
 // =========================
 function injectStyle() {
   const style = document.createElement("style");
@@ -99,12 +108,9 @@ function injectStyle() {
     inset: 0;
     z-index: 9999;
     overflow: hidden;
-
-    /* ★ 背景を完全削除 */
     background: transparent;
   }
 
-  /* 中央ライン */
   #center-line {
     position: absolute;
     width: 1px;
@@ -115,16 +121,12 @@ function injectStyle() {
     z-index: 20;
   }
 
-  /* 扉だけ色を持つ */
   .door {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-
     transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1);
-
-    /* ★ ここだけ色 */
     background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
   }
 
@@ -157,7 +159,6 @@ function injectStyle() {
     opacity: 0.75;
   }
 
-  /* ローダー中央 */
   #loader-center {
     position: absolute;
     inset: 0;
@@ -167,6 +168,15 @@ function injectStyle() {
     justify-content: center;
     z-index: 10;
     pointer-events: none;
+
+    /* ★ フェード用 */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  /* ★ 消えるアニメーション */
+  #loader-center.fade-out {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
   }
 
   #loading-text {
