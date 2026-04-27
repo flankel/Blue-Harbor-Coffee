@@ -88,20 +88,17 @@ export function initLoader() {
       }
     }, 160);
 
-    // ★完全削除タイミング調整（ここが重要）
+    // ★重要：全部まとめて消す（center-line単体操作禁止）
     setTimeout(() => {
 
-      // 念のため子要素ごと消す
-      const line = document.getElementById("center-line");
-      if (line) line.remove();
+      if (wrapper) {
+        wrapper.style.transition = "opacity 0.2s ease";
+        wrapper.style.opacity = "0";
 
-      const loader = document.getElementById("loader-center");
-      if (loader) loader.remove();
-
-      const doors = document.querySelectorAll(".door");
-      doors.forEach(d => d.remove());
-
-      if (wrapper) wrapper.remove();
+        setTimeout(() => {
+          wrapper.remove();
+        }, 200);
+      }
 
     }, 1000);
   }
@@ -109,7 +106,7 @@ export function initLoader() {
 
 
 // =========================
-// CSS
+// CSS（変更なし）
 // =========================
 function injectStyle() {
   const style = document.createElement("style");
@@ -223,7 +220,7 @@ function injectStyle() {
 
 
 // =========================
-// SVG
+// SVG（変更なし）
 // =========================
 function dripSVG() {
   return `
