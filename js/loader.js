@@ -54,22 +54,23 @@ export function initLoader() {
     if (percent >= 100) {
       clearInterval(interval);
 
-      // ✅ 100%をしっかり見せる（ここを長めに）
+      // ① 100%の余韻
       setTimeout(() => {
         text.textContent = "Loading Completed";
-      }, 900); // ← ここ伸ばした
+      }, 900);
 
-      // ✅ Completedをちゃんと見せる時間
+      // ② Completed表示後フェード
       setTimeout(() => {
         loaderCenter.classList.add("fade-out");
-      }, 1800); // ← 間をしっかり確保
+      }, 1800);
 
-      // ✅ ページ側をふわっと表示開始
+      // ③ ドア開く前にページ表示準備（ここ重要）
       setTimeout(() => {
-        document.body.classList.add("page-visible");
+        document.body.classList.remove("preload");
+        document.body.classList.add("loaded");
       }, 2000);
 
-      // ✅ ドア開く
+      // ④ ドア開く
       setTimeout(openDoors, 2300);
     }
 
@@ -196,19 +197,7 @@ function injectStyle() {
     width: 64px;
   }
 
-  /* =========================
-     ページふわっと表示
-  ========================= */
-  body {
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  body.page-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* ❌ body操作は削除（これが原因だった） */
 
   @media (max-width: 768px) {
 
