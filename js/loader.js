@@ -56,12 +56,10 @@ export function initLoader() {
 
       text.textContent = "Loading Completed";
 
-      // ✅ 先にしっかり見せる（ここ重要）
       setTimeout(() => {
         loaderCenter.classList.add("fade-out");
       }, 600);
 
-      // ドアはさらに後
       setTimeout(openDoors, 1200);
     }
   }, 28);
@@ -165,7 +163,7 @@ function injectStyle() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    z-index: 30; /* ← ここだけ修正（最重要） */
     pointer-events: none;
 
     transition: opacity 0.4s ease, transform 0.4s ease;
