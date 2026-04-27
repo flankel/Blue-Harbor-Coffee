@@ -71,35 +71,40 @@ export function initLoader() {
     }
   }, 28);
 
+  
   function openDoors() {
 
-    const a = document.querySelector(".door-a");
-    const b = document.querySelector(".door-b");
-    const isMobile = window.innerWidth <= 768;
+  const a = document.querySelector(".door-a");
+  const b = document.querySelector(".door-b");
+  const root = document.getElementById("loader-root"); // ★追加（重要）
+  const isMobile = window.innerWidth <= 768;
 
-    setTimeout(() => {
-      if (isMobile) {
-        a.style.transform = "translateY(-100%)";
-      } else {
-        a.style.transform = "translateX(-100%)";
-      }
-    }, 120);
+  setTimeout(() => {
+    if (isMobile) {
+      a.style.transform = "translateY(-100%)";
+    } else {
+      a.style.transform = "translateX(-100%)";
+    }
+  }, 120);
 
-    setTimeout(() => {
-      if (isMobile) {
-        b.style.transform = "translateY(100%)";
-      } else {
-        b.style.transform = "translateX(100%)";
-      }
-    }, 260);
+  setTimeout(() => {
+    if (isMobile) {
+      b.style.transform = "translateY(100%)";
+    } else {
+      b.style.transform = "translateX(100%)";
+    }
+  }, 260);
 
-    // ★ 浮き上がり処理削除 → 扉開いたら即見える
-    setTimeout(() => {
-      root.remove();
-    }, 1500);
-  }
+  // ★完全に消す処理（線残り対策込み）
+  setTimeout(() => {
+
+    const line = document.getElementById("center-line");
+    if (line) line.remove(); // ★これが本体
+
+    if (root) root.remove();
+
+  }, 1500);
 }
-
 
 // =========================
 // CSS
