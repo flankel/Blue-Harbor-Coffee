@@ -16,14 +16,6 @@
   body {
     font-family: 'Zen Kaku Gothic New', sans-serif;
     color: #333;
-
-    /* ★追加：初期非表示（チラつき防止） */
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  body.loaded {
-    opacity: 1;
   }
 
   .font-eng {
@@ -61,13 +53,16 @@
   }
 
   /* =========================
-     loader（変更なし）
+     loader（重要修正ここだけ）
+     → 白チラつき防止
   ========================= */
   #loader-root {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: transparent;
+
+    /* ★これが本体修正 */
+    background: #232826;
   }
 
   /* =========================
