@@ -48,7 +48,7 @@
   }
 
   /* =========================
-     🔥 追加：ページふわっと表示
+     🔥 ページふわっと表示
   ========================= */
   body.preload {
     opacity: 0;
@@ -72,7 +72,7 @@
   }
 
   /* =========================
-     🔥 NIGHT文字対策（白に固定）
+     NIGHT文字対策（白に固定）
   ========================= */
   .night-mode,
   .night-mode * {
@@ -96,7 +96,7 @@
 </style>
 </head>
 
-<!-- 🔥 preload追加 -->
+<!-- preloadついたままでOK -->
 <body id="body" class="bg-white flex flex-col min-h-screen preload">
 
   <!-- Loader Root -->
@@ -143,9 +143,17 @@
   <!-- Scripts -->
   <script src="js/loadHeader.js"></script>
   <script src="js/renderHome.js"></script>
+
   <script type="module">
-  import { initLoader } from "./js/loader.js";
-  initLoader();
+    import { initLoader } from "./js/loader.js";
+    initLoader();
+
+    // ✅ これ追加（超重要）
+    // loaderがコケても3秒後に強制表示
+    setTimeout(() => {
+      document.body.classList.remove("preload");
+      document.body.classList.add("loaded");
+    }, 3000);
   </script>
 
 </body>
