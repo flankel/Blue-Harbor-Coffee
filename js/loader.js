@@ -52,8 +52,6 @@ export function initLoader() {
 
     if (percent >= 100) {
       clearInterval(interval);
-
-      // ★ 満タン後すぐ開く（無駄な待ちなし）
       openDoors();
     }
 
@@ -66,7 +64,6 @@ export function initLoader() {
     const b = document.querySelector(".door-b");
     const isMobile = window.innerWidth <= 768;
 
-    // 少しズラして高級感
     setTimeout(() => {
       if (isMobile) {
         a.style.transform = "translateY(-100%)";
@@ -83,7 +80,6 @@ export function initLoader() {
       }
     }, 60);
 
-    // ★ 扉が開き切る前に削除して“繋がり”を自然にする
     setTimeout(() => {
       root.remove();
     }, 900);
@@ -92,7 +88,7 @@ export function initLoader() {
 
 
 // =========================
-// CSS
+// CSS（ここが重要）
 // =========================
 function injectStyle() {
   const style = document.createElement("style");
@@ -103,7 +99,9 @@ function injectStyle() {
     inset: 0;
     z-index: 9999;
     overflow: hidden;
-    background: #2c3330;
+
+    /* ★ 背景を完全削除 */
+    background: transparent;
   }
 
   /* 中央ライン */
@@ -113,16 +111,20 @@ function injectStyle() {
     height: 100%;
     left: 50%;
     top: 0;
-    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.25), transparent);
+    background: rgba(255,255,255,0.2);
     z-index: 20;
   }
 
+  /* 扉だけ色を持つ */
   .door {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
+
     transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1);
+
+    /* ★ ここだけ色 */
     background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
   }
 
@@ -155,6 +157,7 @@ function injectStyle() {
     opacity: 0.75;
   }
 
+  /* ローダー中央 */
   #loader-center {
     position: absolute;
     inset: 0;
@@ -163,6 +166,7 @@ function injectStyle() {
     align-items: center;
     justify-content: center;
     z-index: 10;
+    pointer-events: none;
   }
 
   #loading-text {
@@ -183,7 +187,6 @@ function injectStyle() {
       height: 1px;
       top: 50%;
       left: 0;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.25), transparent);
     }
 
     .door {
