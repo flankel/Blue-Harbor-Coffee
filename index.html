@@ -17,10 +17,7 @@
     font-family: 'Zen Kaku Gothic New', sans-serif;
     color: #333;
 
-    /* ★重要：ローディングと同じ色にする */
-    background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
-
-    /* チラつき防止 */
+    /* ★追加：初期非表示（チラつき防止） */
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -64,19 +61,17 @@
   }
 
   /* =========================
-     loader
+     loader（変更なし）
   ========================= */
   #loader-root {
     position: fixed;
     inset: 0;
     z-index: 9999;
-
-    /* ★ここも統一（超重要） */
-    background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
+    background: transparent;
   }
 
   /* =========================
-     スマホ
+     スマホ用
   ========================= */
   @media (max-width: 768px) {
     #hero-title,
@@ -91,7 +86,7 @@
   </style>
 </head>
 
-<body id="body" class="flex flex-col min-h-screen">
+<body id="body" class="bg-white flex flex-col min-h-screen">
 
   <!-- Loader Root -->
   <div id="loader-root"></div>
@@ -125,6 +120,7 @@
         <p id="concept-desc" class="text-gray-600 leading-loose max-w-2xl mx-auto"></p>
       </div>
 
+      <!-- JS描画エリア -->
       <div id="sections"></div>
     </section>
 
@@ -142,11 +138,6 @@
   <script type="module">
     import { initLoader } from "./js/loader.js";
     initLoader();
-
-    // ★これ忘れるとずっと黒いまま
-    window.addEventListener("load", () => {
-      document.body.classList.add("loaded");
-    });
   </script>
 
 </body>
