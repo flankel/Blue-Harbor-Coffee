@@ -56,87 +56,42 @@ export function initLoader() {
 
       text.textContent = "Loading Completed";
 
-      // 👇 ここからのみ変更（Completed後限定）
       setTimeout(() => {
-
-        // =========================
-        // ページをふわっと浮かせる
-        // =========================
-        const page = document.getElementById("page-content");
-
-        if (page) {
-          page.style.opacity = "0";
-          page.style.transform = "translateY(40px) scale(0.96)";
-          page.style.transition = "none";
-
-          requestAnimationFrame(() => {
-            page.style.transition =
-              "opacity 1.3s cubic-bezier(0.22,1,0.36,1), transform 1.3s cubic-bezier(0.22,1,0.36,1)";
-            page.style.opacity = "1";
-            page.style.transform = "translateY(0) scale(1)";
-          });
-        }
-
-        // =========================
-        // ローダーフェード
-        // =========================
-        const wrapper = document.getElementById("door-wrapper");
-        if (wrapper) wrapper.classList.add("fade-out");
-
         loaderCenter.classList.add("fade-out");
+      }, 600);
 
-      }, 60);
-
-      setTimeout(openDoors, 900);
+      setTimeout(openDoors, 1200);
     }
   }, 28);
 
-function openDoors() {
+  function openDoors() {
 
-  const a = document.querySelector(".door-a");
-  const b = document.querySelector(".door-b");
-  const isMobile = window.innerWidth <= 768;
+    const a = document.querySelector(".door-a");
+    const b = document.querySelector(".door-b");
+    const isMobile = window.innerWidth <= 768;
 
-  setTimeout(() => {
-    if (isMobile) {
-      a.style.transform = "translateY(-100%)";
-    } else {
-      a.style.transform = "translateX(-100%)";
-    }
-  }, 80);
+    setTimeout(() => {
+      if (isMobile) {
+        a.style.transform = "translateY(-100%)";
+      } else {
+        a.style.transform = "translateX(-100%)";
+      }
+    }, 120);
 
-  setTimeout(() => {
-    if (isMobile) {
-      b.style.transform = "translateY(100%)";
-    } else {
-      b.style.transform = "translateX(100%)";
-    }
-  }, 180);
+    setTimeout(() => {
+      if (isMobile) {
+        b.style.transform = "translateY(100%)";
+      } else {
+        b.style.transform = "translateX(100%)";
+      }
+    }, 260);
 
-  // 👇 扉が開ききった後にページを出す
-  setTimeout(() => {
-
-    const page = document.getElementById("page-content");
-
-    if (page) {
-      page.style.opacity = "0";
-      page.style.transform = "translateY(40px) scale(0.96)";
-      page.style.transition = "none";
-
-      requestAnimationFrame(() => {
-        page.style.transition =
-          "opacity 1.2s cubic-bezier(0.22,1,0.36,1), transform 1.2s cubic-bezier(0.22,1,0.36,1)";
-        page.style.opacity = "1";
-        page.style.transform = "translateY(0) scale(1)";
-      });
-    }
-
-  }, 700); // ← 扉がほぼ開いたタイミング
-
-  setTimeout(() => {
-    root.remove();
-  }, 1400);
+    setTimeout(() => {
+      root.remove();
+    }, 1500);
+  }
 }
+
 
 // =========================
 // CSS
@@ -151,13 +106,6 @@ function injectStyle() {
     z-index: 9999;
     overflow: hidden;
     background: transparent;
-
-    opacity: 1;
-    transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  #door-wrapper.fade-out {
-    opacity: 0;
   }
 
   #center-line {
@@ -175,7 +123,7 @@ function injectStyle() {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 1.6s cubic-bezier(0.77, 0, 0.18, 1);
+    transition: transform 1.8s cubic-bezier(0.77, 0, 0.18, 1);
     background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
   }
 
@@ -215,16 +163,15 @@ function injectStyle() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 30;
+    z-index: 30; /* ← ここだけ修正（最重要） */
     pointer-events: none;
 
-    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
   #loader-center.fade-out {
     opacity: 0;
-    transform: translateY(16px) scale(0.96);
+    transform: translateY(10px) scale(0.98);
   }
 
   #loading-text {
