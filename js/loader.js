@@ -56,6 +56,12 @@ export function initLoader() {
 
       text.textContent = "Loading Completed";
 
+      // 👇 ここからのみ変更（Completed後）
+      setTimeout(() => {
+        const wrapper = document.getElementById("door-wrapper");
+        if (wrapper) wrapper.classList.add("fade-out");
+      }, 100);
+
       setTimeout(() => {
         loaderCenter.classList.add("fade-out");
       }, 600);
@@ -106,6 +112,15 @@ function injectStyle() {
     z-index: 9999;
     overflow: hidden;
     background: transparent;
+
+    /* 👇 追加（Completed後のための準備） */
+    opacity: 1;
+    transition: opacity 0.8s ease;
+  }
+
+  /* 👇 追加 */
+  #door-wrapper.fade-out {
+    opacity: 0;
   }
 
   #center-line {
@@ -163,7 +178,7 @@ function injectStyle() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 30; /* ← ここだけ修正（最重要） */
+    z-index: 30;
     pointer-events: none;
 
     transition: opacity 0.4s ease, transform 0.4s ease;
