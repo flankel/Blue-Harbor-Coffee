@@ -73,10 +73,20 @@ export function initLoader() {
     const wrapper = document.getElementById("door-wrapper");
     const isMobile = window.innerWidth <= 768;
 
-    // ★重要：扉と同時に中央線を即消し（見え残り防止）
+    // =========================
+    // ★中央線：完全消滅対策（ここが本体修正）
+    // =========================
     if (line) {
-      line.style.transition = "opacity 0.2s ease";
+      line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
       line.style.opacity = "0";
+
+      // ★物理的に画面外へ退避（iOS残像対策）
+      line.style.transform = isMobile
+        ? "translateY(-20px)"
+        : "translateX(-20px)";
+
+      // ★描画レイヤーから外す
+      line.style.willChange = "transform, opacity";
     }
 
     setTimeout(() => {
@@ -97,8 +107,8 @@ export function initLoader() {
 
     setTimeout(() => {
 
+      // ★最終的に完全削除
       if (line) line.remove();
-
       if (wrapper) wrapper.remove();
 
     }, 1000);
@@ -129,7 +139,10 @@ function injectStyle() {
     top: 0;
     background: rgba(255,255,255,0.2);
     z-index: 20;
-    transition: opacity 0.2s ease;
+
+    /* ★追加：スマホ残像対策 */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
   }
 
   .door {
