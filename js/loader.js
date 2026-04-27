@@ -249,42 +249,54 @@ function dripSVG() {
     <path class="steam" d="M26 4 Q30 -2 34 4" stroke="#c2a87a" stroke-width="1"/>
     <path class="steam" d="M28 6 Q30 0 32 6" stroke="#c2a87a" stroke-width="1"/>
 
-    <!-- 上：コーヒーマシーン（強化） -->
+    <!-- 上：コーヒーマシーン -->
     <rect x="16" y="10" width="28" height="10" rx="2"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <!-- マシーン上部パネル -->
     <line x1="18" y1="13" x2="42" y2="13"
       stroke="#eae7df" stroke-width="1"/>
 
-    <!-- ノズル -->
     <rect x="28.5" y="20" width="3" height="6"
       fill="#eae7df"/>
 
-    <!-- 抽出口（細部） -->
     <circle cx="30" cy="28" r="1.2" fill="#eae7df"/>
 
-    <!-- ドリップ -->
-    <circle cx="30" cy="34" r="2" fill="#c2a87a">
-      <animate attributeName="cy" values="34;52;34" dur="0.9s" repeatCount="indefinite"/>
+    <!-- 🔥 ドリップ（複数化） -->
+    <circle cx="29" cy="34" r="1.6" fill="#c2a87a">
+      <animate attributeName="cy" values="34;52;34" dur="0.75s" repeatCount="indefinite"/>
     </circle>
 
-    <!-- 下：マグカップ本体 -->
+    <circle cx="31" cy="36" r="1.2" fill="#c2a87a">
+      <animate attributeName="cy" values="36;54;36" dur="0.85s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle cx="30" cy="33" r="1.0" fill="#c2a87a">
+      <animate attributeName="cy" values="33;53;33" dur="0.65s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle cx="28.5" cy="35" r="0.9" fill="#c2a87a">
+      <animate attributeName="cy" values="35;55;35" dur="0.9s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle cx="31.5" cy="34" r="0.8" fill="#c2a87a">
+      <animate attributeName="cy" values="34;56;34" dur="0.7s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- 下：マグ -->
     <rect x="15" y="52" width="30" height="22" rx="4"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <!-- ★ 取っ手（右側に追加） -->
-    <path d="M45 56 Q52 58 52 63 Q52 68 45 70"
+    <!-- 取っ手 -->
+    <path d="M45 56 Q53 58 53 63 Q53 68 45 70"
       stroke="#eae7df" stroke-width="1.5" fill="none"/>
 
-    <!-- クリップ -->
     <defs>
       <clipPath id="cup-clip">
         <rect x="15" y="52" width="30" height="22" rx="4"/>
       </clipPath>
     </defs>
 
-    <!-- コーヒー液体 -->
+    <!-- 液体 -->
     <rect id="coffee-liquid"
       x="15"
       y="74"
@@ -293,7 +305,7 @@ function dripSVG() {
       fill="#c2a87a"
       clip-path="url(#cup-clip)" />
 
-    <!-- カップ上ライン -->
+    <!-- 表面ライン -->
     <line x1="12" y1="76" x2="48" y2="76"
       stroke="#eae7df" stroke-width="1.5"/>
 
