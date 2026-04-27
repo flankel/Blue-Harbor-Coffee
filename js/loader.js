@@ -58,54 +58,59 @@ export function initLoader() {
 
       setTimeout(() => {
         loaderCenter.classList.add("fade-out");
-      }, 600);
+      }, 400);
 
-      setTimeout(openDoors, 1200);
+      setTimeout(openDoors, 900);
     }
   }, 28);
+
+
+  function openDoors() {
+
+    const a = document.querySelector(".door-a");
+    const b = document.querySelector(".door-b");
+    const wrapper = document.getElementById("door-wrapper");
+    const isMobile = window.innerWidth <= 768;
+
+    setTimeout(() => {
+      if (isMobile) {
+        a.style.transform = "translateY(-110%)";
+      } else {
+        a.style.transform = "translateX(-110%)";
+      }
+    }, 80);
+
+    setTimeout(() => {
+      if (isMobile) {
+        b.style.transform = "translateY(110%)";
+      } else {
+        b.style.transform = "translateX(110%)";
+      }
+    }, 160);
+
+    // ★完全削除タイミング調整（ここが重要）
+    setTimeout(() => {
+
+      // 念のため子要素ごと消す
+      const line = document.getElementById("center-line");
+      if (line) line.remove();
+
+      const loader = document.getElementById("loader-center");
+      if (loader) loader.remove();
+
+      const doors = document.querySelectorAll(".door");
+      doors.forEach(d => d.remove());
+
+      if (wrapper) wrapper.remove();
+
+    }, 1000);
+  }
 }
 
 
-/* =========================
-   DOOR OPEN
-========================= */
-function openDoors() {
-
-  const a = document.querySelector(".door-a");
-  const b = document.querySelector(".door-b");
-  const root = document.getElementById("loader-root");
-  const isMobile = window.innerWidth <= 768;
-
-  setTimeout(() => {
-    if (isMobile) {
-      a.style.transform = "translateY(-100%)";
-    } else {
-      a.style.transform = "translateX(-100%)";
-    }
-  }, 120);
-
-  setTimeout(() => {
-    if (isMobile) {
-      b.style.transform = "translateY(100%)";
-    } else {
-      b.style.transform = "translateX(100%)";
-    }
-  }, 260);
-
-  setTimeout(() => {
-
-    const line = document.getElementById("center-line");
-    if (line) line.remove();
-
-    if (root) root.remove();
-
-  }, 1500);
-}
-
-
-/* =========================
-   STYLE
-========================= */
+// =========================
+// CSS
+// =========================
 function injectStyle() {
   const style = document.createElement("style");
 
@@ -113,7 +118,7 @@ function injectStyle() {
   #door-wrapper {
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: 999999;
     overflow: hidden;
     background: transparent;
   }
@@ -133,7 +138,7 @@ function injectStyle() {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 1.8s cubic-bezier(0.77, 0, 0.18, 1);
+    transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1);
     background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
   }
 
@@ -175,7 +180,6 @@ function injectStyle() {
     justify-content: center;
     z-index: 30;
     pointer-events: none;
-
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
@@ -204,35 +208,13 @@ function injectStyle() {
       left: 0;
     }
 
-    .door {
-      background: linear-gradient(to bottom, #232826, #2c3330 50%, #1f2523);
-    }
-
-    .door-a {
+    .door-a, .door-b {
       width: 100%;
       height: 50%;
-      top: 0;
-      left: 0;
-      z-index: 2;
     }
 
-    .door-b {
-      width: 100%;
-      height: 50%;
-      top: 50%;
-      left: 0;
-      z-index: 1;
-    }
-  }
-
-  .steam {
-    opacity: 0.4;
-    animation: steam 2.5s ease-in-out infinite;
-  }
-
-  @keyframes steam {
-    0% { transform: translateY(0); opacity: 0.3; }
-    100% { transform: translateY(-14px); opacity: 0; }
+    .door-a { top: 0; }
+    .door-b { top: 50%; }
   }
   `;
 
@@ -240,24 +222,15 @@ function injectStyle() {
 }
 
 
-/* =========================
-   SVG
-========================= */
+// =========================
+// SVG
+// =========================
 function dripSVG() {
   return `
   <svg viewBox="0 0 60 90" fill="none">
 
-    <path class="steam" d="M26 4 Q30 -2 34 4" stroke="#c2a87a" stroke-width="1"/>
-    <path class="steam" d="M28 6 Q30 0 32 6" stroke="#c2a87a" stroke-width="1"/>
-
     <rect x="16" y="10" width="28" height="10" rx="2"
       stroke="#eae7df" stroke-width="1.5"/>
-
-    <line x1="18" y1="13" x2="42" y2="13"
-      stroke="#eae7df" stroke-width="1"/>
-
-    <rect x="28.5" y="20" width="3" height="6"
-      fill="#eae7df"/>
 
     <circle cx="30" cy="28" r="1.2" fill="#eae7df"/>
 
@@ -267,18 +240,6 @@ function dripSVG() {
 
     <circle cx="31" cy="36" r="1.2" fill="#c2a87a">
       <animate attributeName="cy" values="36;54;36" dur="0.85s" repeatCount="indefinite"/>
-    </circle>
-
-    <circle cx="30" cy="33" r="1.0" fill="#c2a87a">
-      <animate attributeName="cy" values="33;53;33" dur="0.65s" repeatCount="indefinite"/>
-    </circle>
-
-    <circle cx="28.5" cy="35" r="0.9" fill="#c2a87a">
-      <animate attributeName="cy" values="35;55;35" dur="0.9s" repeatCount="indefinite"/>
-    </circle>
-
-    <circle cx="31.5" cy="34" r="0.8" fill="#c2a87a">
-      <animate attributeName="cy" values="34;56;34" dur="0.7s" repeatCount="indefinite"/>
     </circle>
 
     <rect x="15" y="52" width="30" height="22" rx="4"
@@ -300,9 +261,6 @@ function dripSVG() {
       height="0"
       fill="#c2a87a"
       clip-path="url(#cup-clip)" />
-
-    <line x1="12" y1="76" x2="48" y2="76"
-      stroke="#eae7df" stroke-width="1.5"/>
 
   </svg>
   `;
