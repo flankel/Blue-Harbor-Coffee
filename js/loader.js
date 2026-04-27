@@ -273,3 +273,4 @@ function dripSVG() {
   </svg>
   `;
 }
+document.body.classList.add("loaded");
