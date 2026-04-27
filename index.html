@@ -8,11 +8,9 @@
   <title>Blue Harbor Coffee | Specialty Coffee Roaster</title>
 
   <!-- Tailwind -->
-
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Fonts -->
-
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -50,13 +48,35 @@
   }
 
   /* =========================
-     loader（🔥修正ここだけ）
+     🔥 追加：ページふわっと表示
+  ========================= */
+  body.preload {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  body.loaded {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  /* =========================
+     loader
   ========================= */
   #loader-root {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: white; /* ← これ追加（重要） */
+    background: white;
+  }
+
+  /* =========================
+     🔥 NIGHT文字対策（白に固定）
+  ========================= */
+  .night-mode,
+  .night-mode * {
+    color: #ffffff !important;
   }
 
   /* =========================
@@ -76,13 +96,13 @@
 </style>
 </head>
 
-<body id="body" class="bg-white flex flex-col min-h-screen">
+<!-- 🔥 preload追加 -->
+<body id="body" class="bg-white flex flex-col min-h-screen preload">
 
   <!-- Loader Root -->
   <div id="loader-root"></div>
 
   <!-- Header -->
-
   <div id="header"></div>
 
   <main class="flex-grow">
@@ -116,7 +136,6 @@
   </main>
 
   <!-- Footer -->
-
   <footer class="bg-gray-50 border-t border-gray-200 py-12 text-center text-xs text-gray-400 font-eng">
     © 2024 Blue Harbor Coffee Roasters.
   </footer>
