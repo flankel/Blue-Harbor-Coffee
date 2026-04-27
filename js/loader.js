@@ -86,7 +86,7 @@ export function initLoader() {
 
     setTimeout(() => {
       root.remove();
-    }, 900);
+    }, 1500);
   }
 }
 
