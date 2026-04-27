@@ -52,16 +52,21 @@ export function initLoader() {
     liquid.setAttribute("y", y);
 
     if (percent >= 100) {
-      clearInterval(interval);
+  clearInterval(interval);
 
-      text.textContent = "Loading Completed";
+  // ✅ まず100%をしっかり見せる
+  setTimeout(() => {
+    text.textContent = "Loading Completed";
+  }, 500);
 
-      setTimeout(() => {
-        loaderCenter.classList.add("fade-out");
-      }, 600);
+  // Completed表示後にフェード
+  setTimeout(() => {
+    loaderCenter.classList.add("fade-out");
+  }, 1100);
 
-      setTimeout(openDoors, 1200);
-    }
+  // ドア
+  setTimeout(openDoors, 1700);
+}
   }, 28);
 
   function openDoors() {
