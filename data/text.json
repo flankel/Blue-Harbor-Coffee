@@ -47,7 +47,7 @@
       ],
       "image": "images/Home/night.png",
       "bg": "bg-slate-900",
-      "text": "text-white-200",
+      "text": "text-white",
       "titleColor": "text-white"
     }
   ]
