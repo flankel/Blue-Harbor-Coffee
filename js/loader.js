@@ -83,30 +83,6 @@ export function initLoader() {
     line.style.willChange = "transform, opacity";
   }
 
-  // ★背景を即透明化（全デバイス共通）
-  if (root) {
-    root.style.transition = "background 0.3s ease";
-    root.style.background = "transparent";
-  }
-
-  // ★スマホ対策：扉自体もフェードさせる（ここが本質）
-  if (isMobile) {
-    if (a) {
-      a.style.transition += ", opacity 0.3s ease";
-      a.style.opacity = "1";
-    }
-    if (b) {
-      b.style.transition += ", opacity 0.3s ease";
-      b.style.opacity = "1";
-    }
-
-    // 少し遅らせて透過開始
-    setTimeout(() => {
-      if (a) a.style.opacity = "0";
-      if (b) b.style.opacity = "0";
-    }, 200);
-  }
-
   setTimeout(() => {
     if (isMobile) {
       a.style.transform = "translateY(-110%)";
@@ -123,11 +99,17 @@ export function initLoader() {
     }
   }, 240);
 
+  // ★モバイル限定：途中で背面へ
+  if (isMobile) {
+    setTimeout(() => {
+      if (root) root.style.zIndex = "0";
+    }, 300);
+  }
+
   setTimeout(() => {
     if (line) line.remove();
     if (wrapper) wrapper.remove();
 
-    // 最後に完全削除
     if (root) root.remove();
 
     document.body.classList.add("loaded");
