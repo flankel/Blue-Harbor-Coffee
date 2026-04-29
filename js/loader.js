@@ -82,7 +82,6 @@ export function initLoader() {
       line.style.willChange = "transform, opacity";
     }
 
-    // ★ 扉を少しゆっくり開く（1.2 → 1.6秒相当）
     setTimeout(() => {
       if (isMobile) {
         a.style.transform = "translateY(-110%)";
@@ -102,6 +101,10 @@ export function initLoader() {
     setTimeout(() => {
       if (line) line.remove();
       if (wrapper) wrapper.remove();
+
+      // ★ 修正ポイント：ここで初めて表示
+      document.body.classList.add("loaded");
+
     }, 1400);
   }
 }
@@ -224,38 +227,28 @@ function injectStyle() {
 
 
 // =========================
-// SVG（←ここを「前の正常版」に戻している）
+// SVG
 // =========================
 function dripSVG() {
   return `
   <svg viewBox="0 0 60 90" fill="none">
 
-    <!-- スチーム -->
     <path d="M26 4 Q30 -2 34 4" stroke="#c2a87a" stroke-width="1"/>
     <path d="M28 6 Q30 0 32 6" stroke="#c2a87a" stroke-width="1"/>
 
-    <!-- =========================
-         上部：エスプレッソマシン（強化版）
-    ========================= -->
-
-    <!-- 本体 -->
     <rect x="14" y="6" width="32" height="14" rx="2"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <!-- ダイヤル -->
     <circle cx="22" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
     <circle cx="30" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
     <circle cx="38" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
 
-    <!-- ノズル（土台から出っ張り） -->
     <rect x="28.5" y="20" width="3" height="8"
       fill="#eae7df"/>
 
-    <!-- 吐出口（強化ポイント） -->
     <path d="M27 28 Q30 32 33 28"
       stroke="#eae7df" stroke-width="1.5" fill="none"/>
 
-    <!-- コーヒー滴（上→下固定で落下のみ） -->
     <circle cx="30" cy="34" r="1.6" fill="#c2a87a">
       <animate attributeName="cy"
         values="34;70"
@@ -277,14 +270,9 @@ function dripSVG() {
         repeatCount="indefinite"/>
     </circle>
 
-    <!-- =========================
-         カップ
-    ========================= -->
-
     <rect x="15" y="52" width="30" height="22" rx="4"
       stroke="#eae7df" stroke-width="1.5"/>
 
-    <!-- 取っ手 -->
     <path d="M45 56 Q53 58 53 63 Q53 68 45 70"
       stroke="#eae7df" stroke-width="1.5" fill="none"/>
 
@@ -294,9 +282,6 @@ function dripSVG() {
       </clipPath>
     </defs>
 
-    <!-- =========================
-         液体（戻らない仕様）
-    ========================= -->
     <rect id="coffee-liquid"
       x="15"
       y="74"
@@ -308,5 +293,3 @@ function dripSVG() {
   </svg>
   `;
 }
-document.body.classList.add("loaded");
-
