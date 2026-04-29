@@ -67,55 +67,55 @@ export function initLoader() {
 
   function openDoors() {
 
-  const a = document.querySelector(".door-a");
-  const b = document.querySelector(".door-b");
-  const line = document.getElementById("center-line");
-  const wrapper = document.getElementById("door-wrapper");
-  const root = document.getElementById("loader-root");
-  const isMobile = window.innerWidth <= 768;
+    const a = document.querySelector(".door-a");
+    const b = document.querySelector(".door-b");
+    const line = document.getElementById("center-line");
+    const wrapper = document.getElementById("door-wrapper");
+    const root = document.getElementById("loader-root");
+    const isMobile = window.innerWidth <= 768;
 
-  if (line) {
-    line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
-    line.style.opacity = "0";
-    line.style.transform = isMobile
-      ? "translateY(-20px)"
-      : "translateX(-20px)";
-    line.style.willChange = "transform, opacity";
-  }
-
-  setTimeout(() => {
-    if (isMobile) {
-      a.style.transform = "translateY(-110%)";
-    } else {
-      a.style.transform = "translateX(-110%)";
+    if (line) {
+      line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
+      line.style.opacity = "0";
+      line.style.transform = isMobile
+        ? "translateY(-20px)"
+        : "translateX(-20px)";
+      line.style.willChange = "transform, opacity";
     }
-  }, 120);
 
-  setTimeout(() => {
-    if (isMobile) {
-      b.style.transform = "translateY(110%)";
-    } else {
-      b.style.transform = "translateX(110%)";
-    }
-  }, 240);
-
-  // ★モバイル限定：途中で背面へ
-  if (isMobile) {
+    // ★最重要：黒背景だけ即消す（ここが本質）
     setTimeout(() => {
-      if (root) root.style.zIndex = "0";
-    }, 300);
+      if (root) {
+        root.style.background = "transparent";
+      }
+    }, 100);
+
+    setTimeout(() => {
+      if (isMobile) {
+        a.style.transform = "translateY(-110%)";
+      } else {
+        a.style.transform = "translateX(-110%)";
+      }
+    }, 120);
+
+    setTimeout(() => {
+      if (isMobile) {
+        b.style.transform = "translateY(110%)";
+      } else {
+        b.style.transform = "translateX(110%)";
+      }
+    }, 240);
+
+    setTimeout(() => {
+      if (line) line.remove();
+      if (wrapper) wrapper.remove();
+
+      if (root) root.remove();
+
+      document.body.classList.add("loaded");
+
+    }, 1400);
   }
-
-  setTimeout(() => {
-    if (line) line.remove();
-    if (wrapper) wrapper.remove();
-
-    if (root) root.remove();
-
-    document.body.classList.add("loaded");
-
-  }, 1400);
-}
 }
 
 
