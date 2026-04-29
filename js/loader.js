@@ -101,10 +101,13 @@ export function initLoader() {
     setTimeout(() => {
       if (line) line.remove();
       if (wrapper) wrapper.remove();
-
-      // ★ 修正ポイント：ここで初めて表示
+    
+      // ★これ追加（本質）
+      const root = document.getElementById("loader-root");
+      if (root) root.remove();
+    
       document.body.classList.add("loaded");
-
+    
     }, 1400);
   }
 }
