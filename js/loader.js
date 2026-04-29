@@ -83,10 +83,28 @@ export function initLoader() {
     line.style.willChange = "transform, opacity";
   }
 
-  // ★ここ追加：扉が開く前に背景を透明化
+  // ★背景を即透明化（全デバイス共通）
   if (root) {
     root.style.transition = "background 0.3s ease";
     root.style.background = "transparent";
+  }
+
+  // ★スマホ対策：扉自体もフェードさせる（ここが本質）
+  if (isMobile) {
+    if (a) {
+      a.style.transition += ", opacity 0.3s ease";
+      a.style.opacity = "1";
+    }
+    if (b) {
+      b.style.transition += ", opacity 0.3s ease";
+      b.style.opacity = "1";
+    }
+
+    // 少し遅らせて透過開始
+    setTimeout(() => {
+      if (a) a.style.opacity = "0";
+      if (b) b.style.opacity = "0";
+    }, 200);
   }
 
   setTimeout(() => {
