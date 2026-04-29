@@ -67,49 +67,55 @@ export function initLoader() {
 
   function openDoors() {
 
-    const a = document.querySelector(".door-a");
-    const b = document.querySelector(".door-b");
-    const line = document.getElementById("center-line");
-    const wrapper = document.getElementById("door-wrapper");
-    const isMobile = window.innerWidth <= 768;
+  const a = document.querySelector(".door-a");
+  const b = document.querySelector(".door-b");
+  const line = document.getElementById("center-line");
+  const wrapper = document.getElementById("door-wrapper");
+  const root = document.getElementById("loader-root");
+  const isMobile = window.innerWidth <= 768;
 
-    if (line) {
-      line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
-      line.style.opacity = "0";
-      line.style.transform = isMobile
-        ? "translateY(-20px)"
-        : "translateX(-20px)";
-      line.style.willChange = "transform, opacity";
-    }
-
-    setTimeout(() => {
-      if (isMobile) {
-        a.style.transform = "translateY(-110%)";
-      } else {
-        a.style.transform = "translateX(-110%)";
-      }
-    }, 120);
-
-    setTimeout(() => {
-      if (isMobile) {
-        b.style.transform = "translateY(110%)";
-      } else {
-        b.style.transform = "translateX(110%)";
-      }
-    }, 240);
-
-    setTimeout(() => {
-      if (line) line.remove();
-      if (wrapper) wrapper.remove();
-    
-      // ★これ追加（本質）
-      const root = document.getElementById("loader-root");
-      if (root) root.remove();
-    
-      document.body.classList.add("loaded");
-    
-    }, 1400);
+  if (line) {
+    line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
+    line.style.opacity = "0";
+    line.style.transform = isMobile
+      ? "translateY(-20px)"
+      : "translateX(-20px)";
+    line.style.willChange = "transform, opacity";
   }
+
+  // ★ここ追加：扉が開く前に背景を透明化
+  if (root) {
+    root.style.transition = "background 0.3s ease";
+    root.style.background = "transparent";
+  }
+
+  setTimeout(() => {
+    if (isMobile) {
+      a.style.transform = "translateY(-110%)";
+    } else {
+      a.style.transform = "translateX(-110%)";
+    }
+  }, 120);
+
+  setTimeout(() => {
+    if (isMobile) {
+      b.style.transform = "translateY(110%)";
+    } else {
+      b.style.transform = "translateX(110%)";
+    }
+  }, 240);
+
+  setTimeout(() => {
+    if (line) line.remove();
+    if (wrapper) wrapper.remove();
+
+    // 最後に完全削除
+    if (root) root.remove();
+
+    document.body.classList.add("loaded");
+
+  }, 1400);
+}
 }
 
 
