@@ -59,6 +59,10 @@ function renderSections(sections) {
       ? "flex flex-col md:flex-row-reverse"
       : "flex flex-col md:flex-row";
 
+    // 🔥 追加（ここだけ）
+    const textClass = sec.text || "text-gray-600";
+    const titleClass = sec.titleColor || "text-black";
+
     const html = `
       <div class="mb-24 ${layout} gap-10 items-stretch ${sec.bg || ""} p-8 rounded-xl">
 
@@ -67,7 +71,7 @@ function renderSections(sections) {
 
         <div class="w-full md:w-1/2 flex flex-col justify-center">
 
-          <h3 class="text-2xl font-bold mb-2">
+          <h3 class="text-2xl font-bold mb-2 ${titleClass}">
             ${sec.title || ""}
           </h3>
 
@@ -75,7 +79,7 @@ function renderSections(sections) {
             ${sec.subtitle || ""}
           </p>
 
-          <p class="text-gray-600 leading-loose">
+          <p class="${textClass} leading-loose">
             ${bodyHTML}
           </p>
 
