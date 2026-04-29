@@ -53,7 +53,7 @@ function renderSections(sections) {
 
   if (!container || !Array.isArray(sections)) return;
 
-  container.innerHTML = ""; // 🔥 二重防止
+  container.innerHTML = "";
 
   sections.forEach(sec => {
 
@@ -63,14 +63,30 @@ function renderSections(sections) {
       ? "flex flex-col md:flex-row-reverse"
       : "flex flex-col md:flex-row";
 
+    // 🔥 デフォルト色（night以外）
+    const subtitleColor = sec.text ? sec.text : "text-blue-600";
+    const bodyColor = sec.text ? sec.text : "text-gray-600";
+
     const html = `
-      <div class="mb-24 ${layout} gap-10 items-stretch ${sec.bg || ""} p-8 rounded-xl">
+      <div class="mb-24 ${layout} gap-10 items-stretch ${sec.bg || ""} ${sec.text || ""} p-8 rounded-xl">
+        
         <img src="${sec.image || ""}" 
              class="w-full md:w-1/2 aspect-[4/3] object-cover rounded">
+
         <div class="w-full md:w-1/2 flex flex-col justify-center">
-          <h3 class="text-2xl font-bold mb-2">${sec.title || ""}</h3>
-          <p class="text-sm text-blue-600 font-eng mb-4">${sec.subtitle || ""}</p>
-          <p class="text-gray-600 leading-loose">${bodyHTML}</p>
+          
+          <h3 class="text-2xl font-bold mb-2 ${sec.titleColor || ""}">
+            ${sec.title || ""}
+          </h3>
+
+          <p class="text-sm font-eng mb-4 ${subtitleColor}">
+            ${sec.subtitle || ""}
+          </p>
+
+          <p class="leading-loose ${bodyColor}">
+            ${bodyHTML}
+          </p>
+
         </div>
       </div>
     `;
@@ -78,5 +94,3 @@ function renderSections(sections) {
     container.insertAdjacentHTML("beforeend", html);
   });
 }
-
-loadHome();
