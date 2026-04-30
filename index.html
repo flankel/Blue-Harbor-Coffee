@@ -56,15 +56,14 @@
      loader（重要修正ここだけ）
      → 白チラつき防止
   ========================= */
+    /* デフォルトで画面を覆っておく（新規タブ対策） */
   #loader-root {
     position: fixed;
     inset: 0;
-    z-index: 9999;
-
-    /* ★これが本体修正 */
-    background: #232826;
+    z-index: 999999;
+    background: #232826; /* ローディング画面の背景色と同じにする */
+    display: block;
   }
-
   /* =========================
      スマホ用
   ========================= */
@@ -77,14 +76,6 @@
       line-break: strict;
       text-wrap: balance;
     }
-  }
-  /* デフォルトで画面を覆っておく（新規タブ対策） */
-  #loader-root {
-    position: fixed;
-    inset: 0;
-    z-index: 999999;
-    background: #232826; /* ローディング画面の背景色と同じにする */
-    display: block;
   }
 </style>
 
