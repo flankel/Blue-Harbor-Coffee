@@ -29,7 +29,7 @@
   @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(10px );
     }
     to {
       opacity: 1;
@@ -52,22 +52,18 @@
     box-sizing: border-box;
   }
 
-  /* =========================
-     loader（重要修正ここだけ）
-     → 白チラつき防止
-  ========================= */
-    /* デフォルトは非表示にしておく（チラつき防止） */
-    #loader-root {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 999999;
-      background: #232826;
-    }
-    /* 初回訪問時のみ、このクラスをJSで付与して即座に表示する */
-    .is-first-visit #loader-root {
-      display: block;
-    }
+  /* 
+     【修正ポイント】
+     以前ここに記述されていた #loader-root 関連のスタイルと、
+     先行判定用の <script> をすべて削除しました。
+     
+     チラつきの根本原因は、JSが動く前にブラウザがこれらの「土台」を
+     描画しようとすることにあります。
+     
+     新しいJavaScriptコードが「初回訪問時のみ」必要な要素とスタイルを
+     一瞬で生成するため、HTML側には何も書かないのが最もチラつきません。
+  */
+
   /* =========================
      スマホ用
   ========================= */
@@ -82,22 +78,9 @@
     }
   }
 </style>
-  <script>
-    // 【最速判定】HTMLの描画が始まる前に実行
-    (function() {
-      const hasLoaded = sessionStorage.getItem("hasLoadedInSession");
-      if (!hasLoaded) {
-        // 初回訪問ならhtml要素にクラスを付与し、CSSで即座に表示させる
-        document.documentElement.classList.add('is-first-visit');
-      }
-    })();
-  </script>
 </head>
 
 <body id="body" class="bg-white flex flex-col min-h-screen">
-
-  <!-- Loader Root（初期非表示） -->
-<div id="loader-root"></div>
 
   <!-- Header -->
   <div id="header"></div>
