@@ -67,7 +67,7 @@
       .mug-row {
         display: flex;
         justify-content: center;
-        align-items: center; /* ★まっすぐ並ぶようにcenterに変更 */
+        align-items: center; /* ★まっすぐ並ぶようにcenter */
         gap: 12px;
         width: 100%;
       }
@@ -209,30 +209,32 @@
       </svg>
     </template>
 
-    <!-- ★ コーヒーマグSVGテンプレート（2番：洗練されたエスプレッソカップ） -->
+    <!-- ★ Hand-Drip Kettle SVGテンプレート（coffee-mug IDを維持） -->
     <template id="coffee-mug">
-      <svg width="40" height="48" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
-        <!-- 湯気（繊細な2本：アニメーション付き） -->
-        <g stroke="#3b82f6" stroke-width="1.2" fill="none" stroke-linecap="round">
-          <path d="M25 22 C23 18, 27 18, 25 14">
-            <animateTransform attributeName="transform" type="translate" values="0 0; 0 -1.5; 0 0" dur="2.2s" repeatCount="indefinite" />
-          </path>
-          <path d="M35 22 C33 18, 37 18, 35 14">
-            <animateTransform attributeName="transform" type="translate" values="0 0; 0 -1.5; 0 0" dur="2.5s" repeatCount="indefinite" />
-          </path>
-        </g>
+      <svg width="48" height="52" viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg">
+        <!-- 湯気（グースネック先から立ち上る：アニメーション付き） -->
+        <path d="M62 25 C60 20, 64 20, 62 15" stroke="#3b82f6" stroke-width="1.5" fill="none" stroke-linecap="round">
+          <animateTransform attributeName="transform" type="translate" values="0 0; 0 -3; 0 0" dur="2s" repeatCount="indefinite" />
+        </path>
         
-        <!-- カップ（エスプレッソスタイル） -->
-        <path d="M15 35 A15 15 0 0 0 30 65 A15 15 0 0 0 45 35 Z" fill="#FFF" stroke="#1d4ed8" stroke-width="1.2"/>
+        <!-- ケトル本体 -->
+        <path d="M22 75 L25 42 L49 42 L52 75 Z" fill="#FFF" stroke="#1d4ed8" stroke-width="1.5"/>
+        
+        <!-- 底部アクセントカラー -->
+        <path d="M22 75 L52 75 L51 80 L23 80 Z" fill="#1d4ed8"/>
+        
+        <!-- 注ぎ口（グースネック） -->
+        <path d="M49 55 C70 55 72 45 62 33" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round"/>
         
         <!-- 持ち手 -->
-        <path d="M45 42 C52 42, 52 50, 45 50" fill="none" stroke="#1d4ed8" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M25 48 L12 48 C8 48 8 70 12 70 L22 70" fill="none" stroke="#1d4ed8" stroke-width="2.5" stroke-linecap="round"/>
         
-        <!-- ソーサー -->
-        <ellipse cx="30" cy="65" rx="20" ry="3" fill="#FFF" stroke="#1d4ed8" stroke-width="1"/>
+        <!-- 蓋とノブ -->
+        <rect x="30" y="37" width="14" height="5" rx="1" fill="#3b82f6"/>
+        <circle cx="37" cy="35" r="2.5" fill="#1d4ed8"/>
         
-        <!-- 影 -->
-        <ellipse cx="30" cy="70" rx="16" ry="2" fill="#000" opacity="0.05"/>
+        <!-- 接地影 -->
+        <ellipse cx="37" cy="85" rx="18" ry="2" fill="#000" opacity="0.05"/>
       </svg>
     </template>
 
