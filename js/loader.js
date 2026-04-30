@@ -1,14 +1,16 @@
 export function initLoader() {
 
+  const root = document.getElementById("loader-root");
+
   if (sessionStorage.getItem("loaderShown")) {
-    const root = document.getElementById("loader-root");
-    if (root) root.remove();
+    if (root) {
+      root.style.display = "none";
+    }
     document.body.classList.add("loaded");
     return;
   }
   sessionStorage.setItem("loaderShown", "true");
 
-  const root = document.getElementById("loader-root");
   if (!root) return;
 
   root.innerHTML = `
@@ -91,7 +93,6 @@ export function initLoader() {
       line.style.willChange = "transform, opacity";
     }
 
-    // ★これが全て（背景だけ先に消す）
     if (root) {
       root.style.background = "transparent";
     }
@@ -133,7 +134,7 @@ function injectStyle() {
     position: fixed;
     inset: 0;
     z-index: 999999;
-    background: #1f2523; /* 初期だけ黒 */
+    background: #1f2523;
   }
 
   #door-wrapper {
