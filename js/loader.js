@@ -1,11 +1,24 @@
 export function initLoader() {
 
     const STORAGE_KEY = "bh_loader_shown_once";
+    const TAB_KEY = "bh_tab_id";
 
     const root = document.getElementById("loader-root");
 
     // =========================
-    // ★追加：BFCache（戻る/進む）チラつき完全防止
+    // ★タブ識別ID（これが本体修正）
+    // =========================
+    let tabId = sessionStorage.getItem(TAB_KEY);
+
+    if (!tabId) {
+        tabId = crypto.randomUUID();
+        sessionStorage.setItem(TAB_KEY, tabId);
+        // 新規タブ扱い
+        sessionStorage.removeItem(STORAGE_KEY);
+    }
+
+    // =========================
+    // ★BFCache対策
     // =========================
     window.addEventListener("pageshow", (event) => {
         const alreadyShown = sessionStorage.getItem(STORAGE_KEY);
@@ -16,43 +29,12 @@ export function initLoader() {
     });
 
     // =========================
-    // ★追加：スマホ判定（ここだけ追加・PCは完全維持）
+    // 表示制御
     // =========================
-    const isMobile = window.innerWidth <= 768;
-
-    // =========================
-    // 表示制御（スマホだけロジック分岐）
-    // =========================
-
     const alreadyShown = sessionStorage.getItem(STORAGE_KEY);
 
-    // =========================
-    // ★スマホ専用ロジック
-    // =========================
-    if (isMobile) {
-
-        // スマホは「新タブ判定が不安定」なので別キーで制御
-        const MOBILE_KEY = "bh_loader_mobile_session";
-
-        const mobileShown = sessionStorage.getItem(MOBILE_KEY);
-
-        if (mobileShown) {
-            if (root) {
-                root.remove();
-            }
-            return;
-        }
-
-        sessionStorage.setItem(MOBILE_KEY, "1");
-    }
-
-    // =========================
-    // ★PCは従来通り（ここは一切変更しない）
-    // =========================
-    if (!isMobile && alreadyShown) {
-        if (root) {
-            root.remove();
-        }
+    if (alreadyShown) {
+        if (root) root.remove();
         return;
     }
 
@@ -61,12 +43,11 @@ export function initLoader() {
     if (!root) return;
 
     // =========================
-    // ★完全フラッシュ防止
+    // ★フラッシュ完全防止
     // =========================
     document.documentElement.style.background = "#232826";
     document.body.style.background = "#232826";
 
-    // ★重要：display制御（visibility廃止）
     root.style.display = "block";
 
     root.innerHTML = `
@@ -144,29 +125,18 @@ export function initLoader() {
             line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
             line.style.opacity = "0";
             line.style.transform = isMobile ? "translateY(-20px)" : "translateX(-20px)";
-            line.style.willChange = "transform, opacity";
         }
 
         setTimeout(() => {
-            if (root) {
-                root.style.background = "transparent";
-            }
+            if (root) root.style.background = "transparent";
         }, 100);
 
         setTimeout(() => {
-            if (isMobile) {
-                a.style.transform = "translateY(-110%)";
-            } else {
-                a.style.transform = "translateX(-110%)";
-            }
+            a.style.transform = isMobile ? "translateY(-110%)" : "translateX(-110%)";
         }, 120);
 
         setTimeout(() => {
-            if (isMobile) {
-                b.style.transform = "translateY(110%)";
-            } else {
-                b.style.transform = "translateX(110%)";
-            }
+            b.style.transform = isMobile ? "translateY(110%)" : "translateX(110%)";
         }, 240);
 
         setTimeout(() => {
