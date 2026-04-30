@@ -6,22 +6,17 @@ export function initLoader() {
     const hasLoaded = sessionStorage.getItem("hasLoadedInSession");
 
     if (hasLoaded) {
-        // 【重要】リロード・遷移時：HTML側で隠されているので、そのまま削除して終了（チラつきゼロ）
+        // 【最優先】リロード・遷移時：描画が始まる前に要素を物理的に削除
+        // これにより、一瞬でも黒い画面が出るのを完全に防ぎます
         root.remove();
         document.body.classList.add("loaded");
         return;
     }
 
-    // 【重要】新規タブ訪問時：コンテンツが描画される前に、最速で表示状態にする
-    root.style.display = "block";
-    root.style.position = "fixed";
-    root.style.inset = "0";
-    root.style.zIndex = "999999";
-    root.style.background = "#232826"; // ドアが開く前の背景色で画面を覆う
-
     // 初回表示フラグをセット
     sessionStorage.setItem("hasLoadedInSession", "true");
 
+    // 初回訪問時のみ、ローディングのHTMLを構築してアニメーションを開始
     root.innerHTML = `
   <div id="door-wrapper">
 
@@ -206,19 +201,16 @@ function injectStyle() {
   }
 
   @media (max-width: 768px) {
-
     #center-line {
       width: 100%;
       height: 1px;
       top: 50%;
       left: 0;
     }
-
     .door-a, .door-b {
       width: 100%;
       height: 50%;
     }
-
     .door-a { top: 0; }
     .door-b { top: 50%; }
   }
