@@ -7,7 +7,7 @@ export function initLoader() {
   // =========================
   if (sessionStorage.getItem("loaderShown")) {
     if (root) {
-      root.style.display = "none"; // ★完全に消す（チラつき防止）
+      root.style.display = "none";
     }
     document.body.classList.add("loaded");
     return;
@@ -18,10 +18,13 @@ export function initLoader() {
 
   if (!root) return;
 
+  // ★先にCSSを適用（ここが修正点）
+  injectStyle();
+
   // =========================
-  // 初回だけ表示（ここ重要）
+  // 初回だけ表示
   // =========================
-  root.style.display = "block";        // ★確実に表示
+  root.style.display = "block";
   root.style.opacity = "1";
   root.style.background = "#1f2523";
 
@@ -49,8 +52,6 @@ export function initLoader() {
 
   </div>
   `;
-
-  injectStyle();
 
   const text = document.getElementById("loading-text");
   const liquid = document.getElementById("coffee-liquid");
@@ -147,7 +148,7 @@ function injectStyle() {
     inset: 0;
     z-index: 999999;
     opacity: 0;
-    display: none; /* ★追加：初期は完全非表示（チラつき防止） */
+    display: none;
     background: transparent;
   }
 
