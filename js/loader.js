@@ -2,19 +2,26 @@ export function initLoader() {
 
   const root = document.getElementById("loader-root");
 
+  // =========================
+  // 2回目以降（完全スキップ）
+  // =========================
   if (sessionStorage.getItem("loaderShown")) {
     if (root) {
-      root.style.opacity = "0";
-      root.style.pointerEvents = "none";
+      root.style.display = "none"; // ★完全に消す（チラつき防止）
     }
     document.body.classList.add("loaded");
     return;
   }
+
+  // 初回フラグ
   sessionStorage.setItem("loaderShown", "true");
 
   if (!root) return;
 
-  // ★ 初回だけ表示
+  // =========================
+  // 初回だけ表示（ここ重要）
+  // =========================
+  root.style.display = "block";        // ★確実に表示
   root.style.opacity = "1";
   root.style.background = "#1f2523";
 
@@ -139,7 +146,8 @@ function injectStyle() {
     position: fixed;
     inset: 0;
     z-index: 999999;
-    opacity: 0; /* ★ここだけ変更 */
+    opacity: 0;
+    display: none; /* ★追加：初期は完全非表示（チラつき防止） */
     background: transparent;
   }
 
