@@ -2,18 +2,24 @@ export function initLoader() {
     const root = document.getElementById("loader-root");
     if (!root) return;
 
-    // セッションストレージを確認
+    // セッションストレージを確認（現在のタブで表示済みか）
     const hasLoaded = sessionStorage.getItem("hasLoadedInSession");
 
     if (hasLoaded) {
-        // すでに表示済みの場合は、HTML側で隠されているのでそのまま削除するだけ
+        // 【重要】リロード・遷移時：HTML側で隠されているので、そのまま削除して終了（チラつきゼロ）
         root.remove();
         document.body.classList.add("loaded");
         return;
     }
 
-    // 初回表示の場合のみ、ここで初めて表示状態にする
+    // 【重要】新規タブ訪問時：コンテンツが描画される前に、最速で表示状態にする
     root.style.display = "block";
+    root.style.position = "fixed";
+    root.style.inset = "0";
+    root.style.zIndex = "999999";
+    root.style.background = "#232826"; // ドアが開く前の背景色で画面を覆う
+
+    // 初回表示フラグをセット
     sessionStorage.setItem("hasLoadedInSession", "true");
 
     root.innerHTML = `
@@ -107,7 +113,9 @@ export function initLoader() {
     }
 }
 
+// =========================
 // CSS
+// =========================
 function injectStyle() {
     const style = document.createElement("style");
     style.textContent = `
@@ -218,7 +226,9 @@ function injectStyle() {
     document.head.appendChild(style);
 }
 
+// =========================
 // SVG
+// =========================
 function dripSVG() {
     return `
   <svg viewBox="0 0 60 90" fill="none">
