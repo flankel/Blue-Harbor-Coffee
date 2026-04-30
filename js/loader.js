@@ -2,12 +2,12 @@ export function initLoader() {
     const root = document.getElementById("loader-root");
     if (!root) return;
 
-    // セッションストレージを確認
+    // セッションストレージを確認（現在のタブで表示済みか）
     const hasLoaded = sessionStorage.getItem("hasLoadedInSession");
 
     if (hasLoaded) {
-        // 【重要】チラつき防止のため、何よりも先に非表示にする
-        root.style.display = "none";
+        // 【最優先】黒い画面のチラつきを物理的に不可能にするため、即座に非表示化して削除
+        root.style.setProperty("display", "none", "important");
         root.remove();
         document.body.classList.add("loaded");
         return;
