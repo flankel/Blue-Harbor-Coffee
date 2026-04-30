@@ -4,12 +4,16 @@ export function initLoader() {
   if (!root) return;
 
   // =========================
-  // ★修正：タブ内初回のみ実行制御（真っ黒防止版）
+  // ★修正：フラグは使うがreturnしない
   // =========================
-  if (window.__bh_loader_initialized) {
+  const alreadyPlayed = sessionStorage.getItem("bh_loader_done");
+
+  if (alreadyPlayed) {
+    root.style.display = "none";
     return;
   }
-  window.__bh_loader_initialized = true;
+
+  sessionStorage.setItem("bh_loader_done", "1");
 
   root.innerHTML = `
   <div id="door-wrapper">
@@ -79,7 +83,6 @@ export function initLoader() {
     const b = document.querySelector(".door-b");
     const line = document.getElementById("center-line");
     const wrapper = document.getElementById("door-wrapper");
-    const root = document.getElementById("loader-root");
     const isMobile = window.innerWidth <= 768;
 
     if (line) {
@@ -88,30 +91,22 @@ export function initLoader() {
       line.style.transform = isMobile
         ? "translateY(-20px)"
         : "translateX(-20px)";
-      line.style.willChange = "transform, opacity";
     }
 
-    // ★背景即クリア（変更なし）
     setTimeout(() => {
-      if (root) {
-        root.style.background = "transparent";
-      }
+      root.style.background = "transparent";
     }, 100);
 
     setTimeout(() => {
-      if (isMobile) {
-        a.style.transform = "translateY(-110%)";
-      } else {
-        a.style.transform = "translateX(-110%)";
-      }
+      a.style.transform = isMobile
+        ? "translateY(-110%)"
+        : "translateX(-110%)";
     }, 120);
 
     setTimeout(() => {
-      if (isMobile) {
-        b.style.transform = "translateY(110%)";
-      } else {
-        b.style.transform = "translateX(110%)";
-      }
+      b.style.transform = isMobile
+        ? "translateY(110%)"
+        : "translateX(110%)";
     }, 240);
 
     setTimeout(() => {
@@ -119,20 +114,15 @@ export function initLoader() {
       if (line) line.remove();
       if (wrapper) wrapper.remove();
 
-      // ❌ root.removeは禁止（真っ黒原因）
-      // root.remove();
-
-      if (root) {
-        root.style.opacity = "0";
-        root.style.pointerEvents = "none";
-      }
+      // ★重要：完全削除しない（真っ黒防止）
+      root.style.opacity = "0";
+      root.style.pointerEvents = "none";
 
       document.body.classList.add("loaded");
 
     }, 1400);
   }
 }
-
 
 // =========================
 // CSS（完全そのまま）
