@@ -2,27 +2,15 @@ export function initLoader() {
 
   const root = document.getElementById("loader-root");
 
-  // =========================
-  // 2回目以降（完全スキップ）
-  // =========================
-
-  // ★修正：navigation API削除（不安定のため）
-  const hasShown = sessionStorage.getItem("loaderShown");
-
-  if (hasShown) {
-    if (root) {
-      root.style.display = "none";
-    }
-    document.body.classList.add("loaded");
-    return;
-  }
-
-  sessionStorage.setItem("loaderShown", "true");
-
   if (!root) return;
 
   // ★CSS注入（必須）
   injectStyle();
+
+  // ★毎回必ず初期表示（チラつき防止）
+  root.style.display = "block";
+  root.style.opacity = "1";
+  root.style.background = "#1f2523";
 
   // ★HTML生成
   root.innerHTML = `
@@ -49,10 +37,6 @@ export function initLoader() {
 
   </div>
   `;
-
-  root.style.display = "block";
-  root.style.opacity = "1";
-  root.style.background = "#1f2523";
 
   const text = document.getElementById("loading-text");
   const liquid = document.getElementById("coffee-liquid");
@@ -142,7 +126,7 @@ export function initLoader() {
 
 
 // =========================
-// CSS（これが injectStyle）
+// CSS（そのまま）
 // =========================
 function injectStyle() {
   const style = document.createElement("style");
