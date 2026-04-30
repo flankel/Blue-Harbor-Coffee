@@ -23,97 +23,223 @@
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
       }
-      /* ========================= Decoration Row (修正版) ========================= */
+      .nav-link.active {
+        color: #1d4ed8 !important;
+        border-bottom: 2px solid #3b82f6;
+      }
+      .nav-link.active svg {
+        color: #1d4ed8 !important;
+      }
+      ul, ul.list-disc {
+        list-style: none !important;
+        padding-left: 0 !important;
+      }
+      /* ========================= Bean List ========================= */
+      .bean-list li {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 18px;
+        line-height: 1.4;
+      }
+      .bean-list svg {
+        width: 28px;
+        height: auto;
+        flex-shrink: 0;
+      }
+      .bean-list li .name-en {
+        font-family: 'Jost', sans-serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #1d4ed8;
+      }
+      .bean-list li .name-jp {
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: #333;
+      }
+      .bean-list li .desc {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 2px;
+      }
+      /* ========================= Decoration Row ========================= */
       .mug-row {
         display: flex;
         justify-content: center;
-        align-items: flex-end; /* ★「中央」ではなく「下」で揃えることで地面を一直線にします */
-        gap: 16px;
+        align-items: center; /* 中央揃えで一直線に */
+        gap: 12px;
         width: 100%;
-        height: 60px; /* 高さを固定して安定させます */
+        line-height: 0; /* 余計な隙間を排除 */
       }
+      /* SVG自体の余白をリセット */
       .mug-row svg {
         display: block;
-        flex-shrink: 0;
       }
-      
-      /* 既存の他スタイルは維持 */
-      .nav-link.active { color: #1d4ed8 !important; border-bottom: 2px solid #3b82f6; }
-      ul, ul.list-disc { list-style: none !important; padding-left: 0 !important; }
-      .bean-list li { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; line-height: 1.4; }
-      .bean-list svg { width: 28px; height: auto; flex-shrink: 0; }
     </style>
   </head>
   <body class="bg-white flex flex-col min-h-screen">
     <div id="header"></div>
 
     <main class="flex-grow">
+      <!-- HERO -->
+      <section class="relative h-[80vh] md:h-[620px] w-full overflow-hidden page-enter">
+        <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=2000&q=80" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative h-full flex items-center justify-center text-white text-center">
+          <h1 class="text-5xl md:text-7xl font-eng font-bold tracking-widest">ABOUT US</h1>
+        </div>
+      </section>
+
       <!-- PHILOSOPHY -->
-      <section class="bg-white py-24 px-6 mt-20">
+      <section class="bg-white py-24 px-6">
         <h2 class="text-center mb-20">
-          <div class="bean-decoration mb-8">
+          <div class="bean-decoration mb-6">
             <div class="mug-row"></div>
           </div>
           <span class="block text-xs tracking-[0.5em] text-gray-400 font-eng mb-2">BLUE HARBOR COFFEE</span>
           <span class="text-4xl md:text-5xl font-light tracking-widest text-gray-900">PHILOSOPHY</span>
-          <div class="bean-decoration mt-8">
+          <div class="bean-decoration mt-6">
             <div class="mug-row"></div>
           </div>
         </h2>
         <div class="max-w-3xl mx-auto text-center">
           <p id="philosophy-lead" class="text-xl md:text-2xl text-gray-700 mb-8"></p>
+          <p id="philosophy-text1" class="text-gray-600 mb-6"></p>
+          <p id="philosophy-text2" class="text-gray-600"></p>
         </div>
       </section>
 
-      <!-- 他のセクション（構造維持） -->
+      <!-- OWNER -->
       <section class="bg-slate-50 py-24 px-6">
         <h2 class="text-center mb-16">
-          <div class="bean-decoration mb-8">
+          <div class="bean-decoration mb-6">
             <div class="mug-row"></div>
           </div>
           <span class="text-4xl md:text-5xl font-light tracking-widest text-gray-900">OWNER</span>
-          <div class="bean-decoration mt-8">
+          <div class="bean-decoration mt-6">
             <div class="mug-row"></div>
           </div>
         </h2>
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200" class="w-full rounded-xl shadow-lg object-cover">
+          <div>
+            <h3 id="owner-name" class="text-2xl font-medium mb-6"></h3>
+            <p id="owner-text1" class="mb-4"></p>
+            <p id="owner-text2"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- BEANS -->
+      <section class="bg-white py-24 px-6">
+        <h2 class="text-center mb-16">
+          <div class="bean-decoration mb-6">
+            <div class="mug-row"></div>
+          </div>
+          <span class="text-4xl md:text-5xl font-light tracking-widest text-gray-900">SIGNATURE BEANS</span>
+          <div class="bean-decoration mt-6">
+            <div class="mug-row"></div>
+          </div>
+        </h2>
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <img src="images/AboutUs/farmer.png" class="w-full rounded-xl shadow-lg object-cover">
+          <div>
+            <h3 id="beans-title" class="text-2xl font-medium mb-6"></h3>
+            <p id="beans-text" class="mb-4"></p>
+            <ul id="beans-list" class="bean-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- FRUITS -->
+      <section class="bg-amber-50 py-24 px-6">
+        <h2 class="text-center mb-16">
+          <div class="bean-decoration mb-6">
+            <div class="mug-row"></div>
+          </div>
+          <span class="text-4xl md:text-5xl font-light tracking-widest text-gray-900">FRUITS</span>
+          <div class="bean-decoration mt-6">
+            <div class="mug-row"></div>
+          </div>
+        </h2>
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <img src="images/AboutUs/blueberry_lemon.png" class="w-full rounded-xl shadow-lg object-cover">
+          <div>
+            <p id="fruits-text" class="mb-4"></p>
+            <ul id="fruits-list" class="bean-list"></ul>
+          </div>
+        </div>
       </section>
     </main>
 
-    <!-- ★ 一直線に並ぶための完全水平ケトルテンプレート -->
-    <template id="coffee-mug">
-      <svg width="50" height="55" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
-        <!-- 湯気：位置を固定 -->
-        <path d="M72 30 C70 25, 74 25, 72 20" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round">
-          <animate attributeName="d" values="M72 30 C70 25, 74 25, 72 20; M72 28 C70 23, 74 23, 72 18; M72 30 C70 25, 74 25, 72 20" dur="2s" repeatCount="indefinite" />
-        </path>
-        
-        <!-- ケトル本体：底辺を y=100 に完全固定 -->
-        <path d="M25 100 L28 65 L52 65 L55 100 Z" fill="#FFF" stroke="#1d4ed8" stroke-width="2.5"/>
-        
-        <!-- 底部の青いライン：y=100 で一直線 -->
-        <path d="M25 100 L55 100 L54 105 L26 105 Z" fill="#1d4ed8"/>
-        
-        <!-- 注ぎ口：y=100 の底辺から計算された配置 -->
-        <path d="M52 75 C80 75 82 60 72 40" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
-        
-        <!-- 持ち手 -->
-        <path d="M28 72 L15 72 C11 72 11 95 15 95 L25 95" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
-        
-        <!-- 蓋 -->
-        <path d="M34 65 L46 65 L45 60 L35 60 Z" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1"/>
-        <circle cx="40" cy="58" r="2.5" fill="#1d4ed8"/>
-        
-        <!-- 接地線（影ではなくラインにすることで水平を強調） -->
-        <line x1="20" y1="110" x2="60" y2="110" stroke="#000" stroke-width="1" opacity="0.05" />
+    <footer class="bg-gray-50 border-t py-12 text-center text-xs text-gray-400 font-eng">© 2024 Blue Harbor Coffee Roasters.</footer>
+
+    <!-- コーヒー豆テンプレート（変更なし） -->
+    <template id="coffee-beans">
+      <svg width="44" height="70" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="beanMain" cx="35%" cy="25%" r="75%">
+            <stop offset="0%" stop-color="#e6b67f"></stop>
+            <stop offset="40%" stop-color="#c48744"></stop>
+            <stop offset="80%" stop-color="#8a5528"></stop>
+            <stop offset="100%" stop-color="#4d2c14"></stop>
+          </radialGradient>
+          <radialGradient id="beanHighlight" cx="25%" cy="20%" r="45%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.7)"></stop>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+          </radialGradient>
+          <radialGradient id="beanShadow" cx="75%" cy="80%" r="55%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0.35)"></stop>
+            <stop offset="100%" stop-color="rgba(0,0,0,0)"></stop>
+          </radialGradient>
+          <radialGradient id="grooveCore" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stop-color="#1a0d05"></stop>
+            <stop offset="60%" stop-color="#2b160a"></stop>
+            <stop offset="100%" stop-color="#5a3416"></stop>
+          </radialGradient>
+          <linearGradient id="grooveEdge" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.25)"></stop>
+            <stop offset="50%" stop-color="rgba(255,255,255,0)"></stop>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.2)"></stop>
+          </linearGradient>
+        </defs>
+        <g transform="rotate(28 30 45)">
+          <ellipse cx="30" cy="45" rx="22" ry="30" fill="url(#beanMain)"></ellipse>
+          <ellipse cx="20" cy="28" rx="10" ry="12" fill="url(#beanHighlight)"></ellipse>
+          <ellipse cx="40" cy="62" rx="14" ry="16" fill="url(#beanShadow)"></ellipse>
+          <ellipse cx="30" cy="45" rx="5.5" ry="26" fill="url(#grooveCore)"></ellipse>
+          <ellipse cx="29.5" cy="45" rx="6.5" ry="27" fill="none" stroke="url(#grooveEdge)" stroke-width="1.2" opacity="0.6"></ellipse>
+        </g>
       </svg>
     </template>
 
-    <!-- コーヒー豆（変更なし） -->
-    <template id="coffee-beans">
-      <svg width="44" height="70" viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
-        <g transform="rotate(28 30 45)">
-          <ellipse cx="30" cy="45" rx="22" ry="30" fill="#8a5528"></ellipse>
-          <ellipse cx="30" cy="45" rx="5.5" ry="26" fill="#2b160a"></ellipse>
+    <!-- ★ 改良版 Hand-Drip Kettle テンプレート（上下センター・サイズ調整済み） -->
+    <template id="coffee-mug">
+      <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- 垂直方向の中央：湯気の先端(15)〜影(85) で計算 -->
+        <g transform="translate(0, 0)">
+          <!-- 湯気 -->
+          <path d="M75 25 C73 20, 77 20, 75 15" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="translate" values="0 0; 0 -3; 0 0" dur="2s" repeatCount="indefinite" />
+          </path>
+          
+          <!-- 本体（中心をx=45付近に。持ち手と注ぎ口のバランス調整） -->
+          <path d="M28 75 L31 45 L53 45 L56 75 Z" fill="#FFF" stroke="#1d4ed8" stroke-width="2"/>
+          <path d="M28 75 L56 75 L55 80 L29 80 Z" fill="#1d4ed8"/>
+          
+          <!-- 注ぎ口（グースネック） -->
+          <path d="M53 55 C78 55 80 45 75 30" fill="none" stroke="#1d4ed8" stroke-width="2.5" stroke-linecap="round"/>
+          
+          <!-- 持ち手 -->
+          <path d="M31 52 L18 52 C14 52 14 72 18 72 L28 72" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
+          
+          <!-- 蓋 -->
+          <rect x="36" y="40" width="12" height="5" rx="1" fill="#3b82f6"/>
+          <circle cx="42" cy="38" r="2.5" fill="#1d4ed8"/>
+          
+          <!-- 接地影（全アイコン共通のy=85に配置） -->
+          <ellipse cx="42" cy="85" rx="20" ry="2" fill="#000" opacity="0.05"/>
         </g>
       </svg>
     </template>
