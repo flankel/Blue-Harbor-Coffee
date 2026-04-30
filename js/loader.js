@@ -13,15 +13,14 @@ export function initLoader() {
     return;
   }
 
-  // 初回フラグ
   sessionStorage.setItem("loaderShown", "true");
 
   if (!root) return;
 
-  // ★先にCSS
+  // ★CSS注入（必須）
   injectStyle();
 
-  // ★先に中身を入れる（ここが修正ポイント）
+  // ★HTML生成
   root.innerHTML = `
   <div id="door-wrapper">
 
@@ -47,7 +46,6 @@ export function initLoader() {
   </div>
   `;
 
-  // ★そのあと表示（黒画面防止）
   root.style.display = "block";
   root.style.opacity = "1";
   root.style.background = "#1f2523";
@@ -65,22 +63,27 @@ export function initLoader() {
   const interval = setInterval(() => {
 
     percent++;
-    text.textContent = percent + "%";
+    if (text) text.textContent = percent + "%";
 
-    const h = (percent / 100) * CUP_HEIGHT;
-    const y = CUP_BOTTOM - h;
+    // ★安全処理（SVG未生成でも落とさない）
+    if (liquid) {
+      const h = (percent / 100) * CUP_HEIGHT;
+      const y = CUP_BOTTOM - h;
 
-    liquid.setAttribute("height", h);
-    liquid.setAttribute("y", y);
+      liquid.setAttribute("height", h);
+      liquid.setAttribute("y", y);
+    }
 
     if (percent >= 100) {
       clearInterval(interval);
 
-      text.textContent = "Loading Completed";
+      if (text) text.textContent = "Loading Completed";
 
-      setTimeout(() => {
-        loaderCenter.classList.add("fade-out");
-      }, 400);
+      if (loaderCenter) {
+        setTimeout(() => {
+          loaderCenter.classList.add("fade-out");
+        }, 400);
+      }
 
       setTimeout(openDoors, 900);
     }
@@ -110,18 +113,18 @@ export function initLoader() {
     }
 
     setTimeout(() => {
-      if (isMobile) {
-        a.style.transform = "translateY(-110%)";
-      } else {
-        a.style.transform = "translateX(-110%)";
+      if (a) {
+        a.style.transform = isMobile
+          ? "translateY(-110%)"
+          : "translateX(-110%)";
       }
     }, 120);
 
     setTimeout(() => {
-      if (isMobile) {
-        b.style.transform = "translateY(110%)";
-      } else {
-        b.style.transform = "translateX(110%)";
+      if (b) {
+        b.style.transform = isMobile
+          ? "translateY(110%)"
+          : "translateX(110%)";
       }
     }, 240);
 
@@ -132,4 +135,107 @@ export function initLoader() {
       document.body.classList.add("loaded");
     }, 1400);
   }
+}
+
+
+// =========================
+// CSS（これが injectStyle）
+// =========================
+function injectStyle() {
+  const style = document.createElement("style");
+
+  style.textContent = `
+  #loader-root {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    opacity: 0;
+    background: transparent;
+  }
+
+  #door-wrapper {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  #center-line {
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    left: 50%;
+    top: 0;
+    background: rgba(255,255,255,0.2);
+    z-index: 20;
+  }
+
+  .door {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 1.6s cubic-bezier(0.77, 0, 0.18, 1);
+    background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
+  }
+
+  .door-a { width: 50%; height: 100%; left: 0; top: 0; }
+  .door-b { width: 50%; height: 100%; right: 0; top: 0; }
+
+  .door-inner {
+    color: #eae7df;
+    font-family: sans-serif;
+    letter-spacing: 0.25em;
+    font-size: 13px;
+    opacity: 0.75;
+  }
+
+  #loader-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  #loader-center.fade-out {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  #loading-text {
+    margin-top: 14px;
+    font-size: 13px;
+    letter-spacing: 0.25em;
+    color: #c2a87a;
+  }
+
+  .drip svg {
+    width: 64px;
+  }
+
+  @media (max-width: 768px) {
+
+    #center-line {
+      width: 100%;
+      height: 1px;
+      top: 50%;
+      left: 0;
+    }
+
+    .door-a, .door-b {
+      width: 100%;
+      height: 50%;
+    }
+
+    .door-a { top: 0; }
+    .door-b { top: 50%; }
+  }
+  `;
+
+  document.head.appendChild(style);
 }
