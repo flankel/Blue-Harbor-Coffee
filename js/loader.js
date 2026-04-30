@@ -1,6 +1,5 @@
 export function initLoader() {
 
-  // ★同一セッション内では再表示しない
   if (sessionStorage.getItem("loaderShown")) {
     const root = document.getElementById("loader-root");
     if (root) root.remove();
@@ -8,7 +7,6 @@ export function initLoader() {
     return;
   }
   sessionStorage.setItem("loaderShown", "true");
-
 
   const root = document.getElementById("loader-root");
   if (!root) return;
@@ -93,7 +91,10 @@ export function initLoader() {
       line.style.willChange = "transform, opacity";
     }
 
-    // ★重要：背景はそのまま維持（透明にしない・bodyも触らない）
+    // ★これが全て（背景だけ先に消す）
+    if (root) {
+      root.style.background = "transparent";
+    }
 
     setTimeout(() => {
       if (isMobile) {
@@ -114,11 +115,8 @@ export function initLoader() {
     setTimeout(() => {
       if (line) line.remove();
       if (wrapper) wrapper.remove();
-
       if (root) root.remove();
-
       document.body.classList.add("loaded");
-
     }, 1400);
   }
 }
@@ -135,7 +133,7 @@ function injectStyle() {
     position: fixed;
     inset: 0;
     z-index: 999999;
-    background: #1f2523; /* ★ここで背景を持たせる */
+    background: #1f2523; /* 初期だけ黒 */
   }
 
   #door-wrapper {
@@ -252,64 +250,31 @@ function injectStyle() {
 function dripSVG() {
   return `
   <svg viewBox="0 0 60 90" fill="none">
-
     <path d="M26 4 Q30 -2 34 4" stroke="#c2a87a" stroke-width="1"/>
     <path d="M28 6 Q30 0 32 6" stroke="#c2a87a" stroke-width="1"/>
-
-    <rect x="14" y="6" width="32" height="14" rx="2"
-      stroke="#eae7df" stroke-width="1.5"/>
-
+    <rect x="14" y="6" width="32" height="14" rx="2" stroke="#eae7df" stroke-width="1.5"/>
     <circle cx="22" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
     <circle cx="30" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
     <circle cx="38" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
-
-    <rect x="28.5" y="20" width="3" height="8"
-      fill="#eae7df"/>
-
-    <path d="M27 28 Q30 32 33 28"
-      stroke="#eae7df" stroke-width="1.5" fill="none"/>
-
+    <rect x="28.5" y="20" width="3" height="8" fill="#eae7df"/>
+    <path d="M27 28 Q30 32 33 28" stroke="#eae7df" stroke-width="1.5" fill="none"/>
     <circle cx="30" cy="34" r="1.6" fill="#c2a87a">
-      <animate attributeName="cy"
-        values="34;70"
-        dur="0.9s"
-        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="34;70" dur="0.9s" repeatCount="indefinite"/>
     </circle>
-
     <circle cx="31.5" cy="36" r="1.2" fill="#c2a87a">
-      <animate attributeName="cy"
-        values="36;72"
-        dur="1.1s"
-        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="36;72" dur="1.1s" repeatCount="indefinite"/>
     </circle>
-
     <circle cx="28.5" cy="35" r="1.0" fill="#c2a87a">
-      <animate attributeName="cy"
-        values="35;71"
-        dur="0.85s"
-        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="35;71" dur="0.85s" repeatCount="indefinite"/>
     </circle>
-
-    <rect x="15" y="52" width="30" height="22" rx="4"
-      stroke="#eae7df" stroke-width="1.5"/>
-
-    <path d="M45 56 Q53 58 53 63 Q53 68 45 70"
-      stroke="#eae7df" stroke-width="1.5" fill="none"/>
-
+    <rect x="15" y="52" width="30" height="22" rx="4" stroke="#eae7df" stroke-width="1.5"/>
+    <path d="M45 56 Q53 58 53 63 Q53 68 45 70" stroke="#eae7df" stroke-width="1.5" fill="none"/>
     <defs>
       <clipPath id="cup-clip">
         <rect x="15" y="52" width="30" height="22" rx="4"/>
       </clipPath>
     </defs>
-
-    <rect id="coffee-liquid"
-      x="15"
-      y="74"
-      width="30"
-      height="0"
-      fill="#c2a87a"
-      clip-path="url(#cup-clip)" />
-
+    <rect id="coffee-liquid" x="15" y="74" width="30" height="0" fill="#c2a87a" clip-path="url(#cup-clip)" />
   </svg>
   `;
 }
