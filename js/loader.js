@@ -5,7 +5,13 @@ export function initLoader() {
   // =========================
   // 2回目以降（完全スキップ）
   // =========================
-  if (sessionStorage.getItem("loaderShown")) {
+
+  // ★修正ポイント：navigation type を追加して新規ウィンドウでも必ず初回扱いにする
+  const navType = performance.getEntriesByType("navigation")[0]?.type;
+  const isReload = navType === "reload";
+  const hasShown = sessionStorage.getItem("loaderShown");
+
+  if (hasShown && isReload) {
     if (root) {
       root.style.display = "none";
     }
@@ -65,7 +71,6 @@ export function initLoader() {
     percent++;
     if (text) text.textContent = percent + "%";
 
-    // ★安全処理（SVG未生成でも落とさない）
     if (liquid) {
       const h = (percent / 100) * CUP_HEIGHT;
       const y = CUP_BOTTOM - h;
