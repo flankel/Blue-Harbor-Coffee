@@ -1,46 +1,21 @@
 export function initLoader() {
-    // 1. セッションストレージを確認（現在のタブで表示済みか）
-    const hasLoaded = sessionStorage.getItem("hasLoadedInSession");
-
-    // 2. リロード・ページ遷移時：
-    // HTML側に要素を置いていないため、ここで即座に終了すれば、
-    // 黒い画面も空白も一切発生せず、トップページが直接表示されます。
-    if (hasLoaded) {
+    const root = document.getElementById("loader-root");
+    
+    // HTML側のスクリプトで既に削除されている（リロード時）場合は終了
+    if (!root) {
         document.body.classList.add("loaded");
         return;
     }
 
-    // 3. 新規タブ訪問時：
-    // 描画が進行する前に、最速でローディング画面を生成して画面をロックします。
+    // 初回訪問フラグをセット
     sessionStorage.setItem("hasLoadedInSession", "true");
 
-    const root = document.createElement("div");
-    root.id = "loader-root";
-    // ブラウザのペイントが走る前に、画面全体をドアの背景色で覆い隠します。
-    Object.assign(root.style, {
-        position: "fixed",
-        inset: "0",
-        zIndex: "999999",
-        background: "#232826",
-        display: "block"
-    });
-    // bodyの先頭に挿入し、コンテンツよりも優先して描画させます。
-    document.body.prepend(root);
-
-    // 4. ローディングアニメーションの構築
+    // アニメーション用HTMLの注入
     root.innerHTML = `
   <div id="door-wrapper">
     <div id="center-line"></div>
-    <div class="door door-a">
-      <div class="door-inner">
-        <span class="door-text">Blue Harbor Coffee</span>
-      </div>
-    </div>
-    <div class="door door-b">
-      <div class="door-inner">
-        <span class="door-text">Since 2024</span>
-      </div>
-    </div>
+    <div class="door door-a"><div class="door-inner"><span class="door-text">Blue Harbor Coffee</span></div></div>
+    <div class="door door-b"><div class="door-inner"><span class="door-text">Since 2024</span></div></div>
     <div id="loader-center">
       <div class="drip">${dripSVG()}</div>
       <p id="loading-text">0%</p>
@@ -90,19 +65,13 @@ export function initLoader() {
             line.style.transform = isMobile ? "translateY(-20px)" : "translateX(-20px)";
         }
         
-        // 背景を透過させ、背後のコンテンツを徐々に見せる
-        setTimeout(() => {
-            if (root) root.style.background = "transparent";
-        }, 100);
-
+        setTimeout(() => { if (root) root.style.background = "transparent"; }, 100);
         setTimeout(() => {
             if (a) a.style.transform = isMobile ? "translateY(-110%)" : "translateX(-110%)";
         }, 120);
-
         setTimeout(() => {
             if (b) b.style.transform = isMobile ? "translateY(110%)" : "translateX(110%)";
         }, 240);
-
         setTimeout(() => {
             if (line) line.remove();
             if (wrapper) wrapper.remove();
@@ -112,70 +81,19 @@ export function initLoader() {
     }
 }
 
+// injectStyle と dripSVG は以前と同じものを省略せずに記述してください
 function injectStyle() {
     const style = document.createElement("style");
     style.textContent = `
-  #door-wrapper {
-    position: fixed;
-    inset: 0;
-    z-index: 999999;
-    overflow: hidden;
-    background: transparent;
-  }
-  #center-line {
-    position: absolute;
-    width: 1px;
-    height: 100%;
-    left: 50%;
-    top: 0;
-    background: rgba(255,255,255,0.2);
-    z-index: 20;
-    will-change: transform, opacity;
-  }
-  .door {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 1.6s cubic-bezier(0.77, 0, 0.18, 1);
-    background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
-  }
-  .door::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    box-shadow: inset 0 0 40px rgba(0,0,0,0.4);
-  }
+  #door-wrapper { position: fixed; inset: 0; z-index: 999999; overflow: hidden; background: transparent; }
+  #center-line { position: absolute; width: 1px; height: 100%; left: 50%; top: 0; background: rgba(255,255,255,0.2); z-index: 20; }
+  .door { position: absolute; display: flex; align-items: center; justify-content: center; transition: transform 1.6s cubic-bezier(0.77, 0, 0.18, 1); background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523); }
   .door-a { width: 50%; height: 100%; left: 0; top: 0; }
   .door-b { width: 50%; height: 100%; right: 0; top: 0; }
-  .door-inner {
-    color: #eae7df;
-    font-family: 'Jost', sans-serif;
-    letter-spacing: 0.25em;
-    font-size: 13px;
-    opacity: 0.75;
-  }
-  #loader-center {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 30;
-    pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  #loader-center.fade-out {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
-  }
-  #loading-text {
-    margin-top: 14px;
-    font-size: 13px;
-    letter-spacing: 0.25em;
-    color: #c2a87a;
-  }
+  .door-inner { color: #eae7df; font-family: 'Jost', sans-serif; letter-spacing: 0.25em; font-size: 13px; opacity: 0.75; }
+  #loader-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 30; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease; }
+  #loader-center.fade-out { opacity: 0; transform: translateY(10px) scale(0.98); }
+  #loading-text { margin-top: 14px; font-size: 13px; letter-spacing: 0.25em; color: #c2a87a; }
   .drip svg { width: 64px; }
   @media (max-width: 768px) {
     #center-line { width: 100%; height: 1px; top: 50%; left: 0; }
@@ -198,22 +116,12 @@ function dripSVG() {
     <circle cx="38" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
     <rect x="28.5" y="20" width="3" height="8" fill="#eae7df"/>
     <path d="M27 28 Q30 32 33 28" stroke="#eae7df" stroke-width="1.5" fill="none"/>
-    <circle cx="30" cy="34" r="1.6" fill="#c2a87a">
-      <animate attributeName="cy" values="34;70" dur="0.9s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="31.5" cy="36" r="1.2" fill="#c2a87a">
-      <animate attributeName="cy" values="36;72" dur="1.1s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="28.5" cy="35" r="1.0" fill="#c2a87a">
-      <animate attributeName="cy" values="35;71" dur="0.85s" repeatCount="indefinite"/>
-    </circle>
+    <circle cx="30" cy="34" r="1.6" fill="#c2a87a"><animate attributeName="cy" values="34;70" dur="0.9s" repeatCount="indefinite"/></circle>
+    <circle cx="31.5" cy="36" r="1.2" fill="#c2a87a"><animate attributeName="cy" values="36;72" dur="1.1s" repeatCount="indefinite"/></circle>
+    <circle cx="28.5" cy="35" r="1.0" fill="#c2a87a"><animate attributeName="cy" values="35;71" dur="0.85s" repeatCount="indefinite"/></circle>
     <rect x="15" y="52" width="30" height="22" rx="4" stroke="#eae7df" stroke-width="1.5"/>
     <path d="M45 56 Q53 58 53 63 Q53 68 45 70" stroke="#eae7df" stroke-width="1.5" fill="none"/>
-    <defs>
-      <clipPath id="cup-clip">
-        <rect x="15" y="52" width="30" height="22" rx="4"/>
-      </clipPath>
-    </defs>
+    <defs><clipPath id="cup-clip"><rect x="15" y="52" width="30" height="22" rx="4"/></clipPath></defs>
     <rect id="coffee-liquid" x="15" y="74" width="30" height="0" fill="#c2a87a" clip-path="url(#cup-clip)" />
   </svg>
   `;
