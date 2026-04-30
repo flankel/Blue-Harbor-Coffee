@@ -1,23 +1,7 @@
 export function initLoader() {
-
-  const root = document.getElementById("loader-root");
-
-  if (!root) return;
-
-  // ★CSS注入（必須）
-  injectStyle();
-
-  // ★毎回必ず初期表示（チラつき防止）
-  root.style.display = "block";
-  root.style.background = "#1f2523";
-
-  // ★強制リフロー（黒画面対策）
-  root.getBoundingClientRect();
-
-  root.style.opacity = "1";
-
-  // ★HTML生成
-  root.innerHTML = `
+    const root = document.getElementById("loader-root");
+    if (!root) return;
+    root.innerHTML = `
   <div id="door-wrapper">
 
     <div id="center-line"></div>
@@ -41,117 +25,82 @@ export function initLoader() {
 
   </div>
   `;
+    injectStyle();
+    const text = document.getElementById("loading-text");
+    const liquid = document.getElementById("coffee-liquid");
+    const loaderCenter = document.getElementById("loader-center");
+    const CUP_BOTTOM = 74;
+    const CUP_TOP = 52;
+    const CUP_HEIGHT = CUP_BOTTOM - CUP_TOP;
+    let percent = 0;
+    const interval = setInterval(() => {
+        percent++;
+        text.textContent = percent + "%";
+        const h = (percent / 100) * CUP_HEIGHT;
+        const y = CUP_BOTTOM - h;
+        liquid.setAttribute("height", h);
+        liquid.setAttribute("y", y);
+        if (percent >= 100) {
+            clearInterval(interval);
+            text.textContent = "Loading Completed";
+            setTimeout(() => {
+                loaderCenter.classList.add("fade-out");
+            }, 400);
+            setTimeout(openDoors, 900);
+        }
+    }, 28);
 
-  const text = document.getElementById("loading-text");
-  const liquid = document.getElementById("coffee-liquid");
-  const loaderCenter = document.getElementById("loader-center");
-
-  const CUP_BOTTOM = 74;
-  const CUP_TOP = 52;
-  const CUP_HEIGHT = CUP_BOTTOM - CUP_TOP;
-
-  let percent = 0;
-
-  const interval = setInterval(() => {
-
-    percent++;
-    if (text) text.textContent = percent + "%";
-
-    if (liquid) {
-      const h = (percent / 100) * CUP_HEIGHT;
-      const y = CUP_BOTTOM - h;
-
-      liquid.setAttribute("height", h);
-      liquid.setAttribute("y", y);
-    }
-
-    if (percent >= 100) {
-      clearInterval(interval);
-
-      if (text) text.textContent = "Loading Completed";
-
-      if (loaderCenter) {
+    function openDoors() {
+        const a = document.querySelector(".door-a");
+        const b = document.querySelector(".door-b");
+        const line = document.getElementById("center-line");
+        const wrapper = document.getElementById("door-wrapper");
+        const root = document.getElementById("loader-root");
+        const isMobile = window.innerWidth <= 768;
+        if (line) {
+            line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
+            line.style.opacity = "0";
+            line.style.transform = isMobile ? "translateY(-20px)" : "translateX(-20px)";
+            line.style.willChange = "transform, opacity";
+        }
+        // ★最重要：黒背景だけ即消す（ここが本質）
         setTimeout(() => {
-          loaderCenter.classList.add("fade-out");
-        }, 400);
-      }
-
-      setTimeout(openDoors, 900);
+            if (root) {
+                root.style.background = "transparent";
+            }
+        }, 100);
+        setTimeout(() => {
+            if (isMobile) {
+                a.style.transform = "translateY(-110%)";
+            } else {
+                a.style.transform = "translateX(-110%)";
+            }
+        }, 120);
+        setTimeout(() => {
+            if (isMobile) {
+                b.style.transform = "translateY(110%)";
+            } else {
+                b.style.transform = "translateX(110%)";
+            }
+        }, 240);
+        setTimeout(() => {
+            if (line) line.remove();
+            if (wrapper) wrapper.remove();
+            if (root) root.remove();
+            document.body.classList.add("loaded");
+        }, 1400);
     }
-  }, 28);
-
-
-  function openDoors() {
-
-    const a = document.querySelector(".door-a");
-    const b = document.querySelector(".door-b");
-    const line = document.getElementById("center-line");
-    const wrapper = document.getElementById("door-wrapper");
-    const root = document.getElementById("loader-root");
-    const isMobile = window.innerWidth <= 768;
-
-    if (line) {
-      line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
-      line.style.opacity = "0";
-      line.style.transform = isMobile
-        ? "translateY(-20px)"
-        : "translateX(-20px)";
-      line.style.willChange = "transform, opacity";
-    }
-
-    if (root) {
-      root.style.background = "transparent";
-    }
-
-    setTimeout(() => {
-      if (a) {
-        a.style.transform = isMobile
-          ? "translateY(-110%)"
-          : "translateX(-110%)";
-      }
-    }, 120);
-
-    setTimeout(() => {
-      if (b) {
-        b.style.transform = isMobile
-          ? "translateY(110%)"
-          : "translateX(110%)";
-      }
-    }, 240);
-
-    setTimeout(() => {
-      if (line) line.remove();
-      if (wrapper) wrapper.remove();
-      if (root) root.remove();
-      document.body.classList.add("loaded");
-    }, 1400);
-  }
 }
-
-
 // =========================
-// CSS（修正：重複防止のみ追加）
+// CSS
 // =========================
 function injectStyle() {
-
-  // ★追加：二重注入防止（ここだけ変更）
-  if (document.getElementById("loader-style")) return;
-
-  const style = document.createElement("style");
-  style.id = "loader-style";
-
-  style.textContent = `
-  #loader-root {
+    const style = document.createElement("style");
+    style.textContent = `
+  #door-wrapper {
     position: fixed;
     inset: 0;
     z-index: 999999;
-    opacity: 0;
-    background: transparent;
-  }
-
-  #door-wrapper {
-    position: absolute;
-    inset: 0;
     overflow: hidden;
     background: transparent;
   }
@@ -164,6 +113,8 @@ function injectStyle() {
     top: 0;
     background: rgba(255,255,255,0.2);
     z-index: 20;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
   }
 
   .door {
@@ -175,12 +126,30 @@ function injectStyle() {
     background: linear-gradient(to right, #232826, #2c3330 50%, #1f2523);
   }
 
-  .door-a { width: 50%; height: 100%; left: 0; top: 0; }
-  .door-b { width: 50%; height: 100%; right: 0; top: 0; }
+  .door::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.4);
+  }
+
+  .door-a {
+    width: 50%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .door-b {
+    width: 50%;
+    height: 100%;
+    right: 0;
+    top: 0;
+  }
 
   .door-inner {
     color: #eae7df;
-    font-family: sans-serif;
+    font-family: 'Jost', sans-serif;
     letter-spacing: 0.25em;
     font-size: 13px;
     opacity: 0.75;
@@ -232,6 +201,72 @@ function injectStyle() {
     .door-b { top: 50%; }
   }
   `;
+    document.head.appendChild(style);
+}
+// =========================
+// SVG
+// =========================
+function dripSVG() {
+    return `
+  <svg viewBox="0 0 60 90" fill="none">
 
-  document.head.appendChild(style);
+    <path d="M26 4 Q30 -2 34 4" stroke="#c2a87a" stroke-width="1"/>
+    <path d="M28 6 Q30 0 32 6" stroke="#c2a87a" stroke-width="1"/>
+
+    <rect x="14" y="6" width="32" height="14" rx="2"
+      stroke="#eae7df" stroke-width="1.5"/>
+
+    <circle cx="22" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
+    <circle cx="30" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
+    <circle cx="38" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
+
+    <rect x="28.5" y="20" width="3" height="8"
+      fill="#eae7df"/>
+
+    <path d="M27 28 Q30 32 33 28"
+      stroke="#eae7df" stroke-width="1.5" fill="none"/>
+
+    <circle cx="30" cy="34" r="1.6" fill="#c2a87a">
+      <animate attributeName="cy"
+        values="34;70"
+        dur="0.9s"
+        repeatCount="indefinite"/>
+    </circle>
+
+    <circle cx="31.5" cy="36" r="1.2" fill="#c2a87a">
+      <animate attributeName="cy"
+        values="36;72"
+        dur="1.1s"
+        repeatCount="indefinite"/>
+    </circle>
+
+    <circle cx="28.5" cy="35" r="1.0" fill="#c2a87a">
+      <animate attributeName="cy"
+        values="35;71"
+        dur="0.85s"
+        repeatCount="indefinite"/>
+    </circle>
+
+    <rect x="15" y="52" width="30" height="22" rx="4"
+      stroke="#eae7df" stroke-width="1.5"/>
+
+    <path d="M45 56 Q53 58 53 63 Q53 68 45 70"
+      stroke="#eae7df" stroke-width="1.5" fill="none"/>
+
+    <defs>
+      <clipPath id="cup-clip">
+        <rect x="15" y="52" width="30" height="22" rx="4"/>
+      </clipPath>
+    </defs>
+
+    <rect id="coffee-liquid"
+      x="15"
+      y="74"
+      width="30"
+      height="0"
+      fill="#c2a87a"
+      clip-path="url(#cup-clip)" />
+
+  </svg>
+  `;
 }
