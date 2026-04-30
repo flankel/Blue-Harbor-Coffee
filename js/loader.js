@@ -1,19 +1,15 @@
 export function initLoader() {
 
-  const STORAGE_KEY = "bh_loader_tab_once";
-
-  // =========================
-  // ★追加：このタブで既に表示済みなら何も出さない
-  // =========================
-  if (sessionStorage.getItem(STORAGE_KEY)) {
-    return;
-  }
-
-  // ★このタブで初回だけ実行
-  sessionStorage.setItem(STORAGE_KEY, "1");
-
   const root = document.getElementById("loader-root");
   if (!root) return;
+
+  // =========================
+  // ★修正：タブ内初回のみ実行制御（真っ黒防止版）
+  // =========================
+  if (window.__bh_loader_initialized) {
+    return;
+  }
+  window.__bh_loader_initialized = true;
 
   root.innerHTML = `
   <div id="door-wrapper">
@@ -95,7 +91,7 @@ export function initLoader() {
       line.style.willChange = "transform, opacity";
     }
 
-    // ★最重要：黒背景だけ即消す（ここが本質）
+    // ★背景即クリア（変更なし）
     setTimeout(() => {
       if (root) {
         root.style.background = "transparent";
@@ -119,10 +115,17 @@ export function initLoader() {
     }, 240);
 
     setTimeout(() => {
+
       if (line) line.remove();
       if (wrapper) wrapper.remove();
 
-      if (root) root.remove();
+      // ❌ root.removeは禁止（真っ黒原因）
+      // root.remove();
+
+      if (root) {
+        root.style.opacity = "0";
+        root.style.pointerEvents = "none";
+      }
 
       document.body.classList.add("loaded");
 
@@ -132,8 +135,8 @@ export function initLoader() {
 
 
 // =========================
-// CSS
-// =========================
+// CSS（完全そのまま）
+/ / =========================
 function injectStyle() {
   const style = document.createElement("style");
 
@@ -248,8 +251,8 @@ function injectStyle() {
 
 
 // =========================
-// SVG
-// =========================
+// SVG（完全そのまま）
+/ / =========================
 function dripSVG() {
   return `
   <svg viewBox="0 0 60 90" fill="none">
