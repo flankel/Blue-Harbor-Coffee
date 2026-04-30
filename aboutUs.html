@@ -75,6 +75,8 @@
       /* SVG自体の余白をリセット */
       .mug-row svg {
         display: block;
+        vertical-align: middle; /* インライン要素の縦ずれを防ぐ */
+        overflow: visible;
       }
     </style>
   </head>
@@ -214,32 +216,40 @@
       </svg>
     </template>
 
-    <!-- ★ 改良版 Hand-Drip Kettle テンプレート（上下センター・サイズ調整済み） -->
+    <!--
+      ★ 修正版 Hand-Drip Kettle テンプレート
+      ポイント：
+        - viewBox を "0 0 100 100" に固定し、width/height も同サイズ (50x50) に統一
+        - 描画コンテンツ全体（湯気の先端〜影）を viewBox の中央に収まるよう
+          translate で垂直方向に調整（translateY +5 で上下均等に配置）
+        - overflow="visible" を外して viewBox 内に完全に収める
+        - .mug-row に vertical-align: middle を追加（CSSで対応済み）
+    -->
     <template id="coffee-mug">
       <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- 垂直方向の中央：湯気の先端(15)〜影(85) で計算 -->
-        <g transform="translate(0, 0)">
-          <!-- 湯気 -->
-          <path d="M75 25 C73 20, 77 20, 75 15" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round">
+        <!-- コンテンツ全体をY方向に微調整して上下中央に配置 -->
+        <g transform="translate(0, 5)">
+          <!-- 湯気（先端 y≒10） -->
+          <path d="M75 20 C73 15, 77 15, 75 10" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round">
             <animateTransform attributeName="transform" type="translate" values="0 0; 0 -3; 0 0" dur="2s" repeatCount="indefinite" />
           </path>
-          
-          <!-- 本体（中心をx=45付近に。持ち手と注ぎ口のバランス調整） -->
+
+          <!-- 本体 -->
           <path d="M28 75 L31 45 L53 45 L56 75 Z" fill="#FFF" stroke="#1d4ed8" stroke-width="2"/>
           <path d="M28 75 L56 75 L55 80 L29 80 Z" fill="#1d4ed8"/>
-          
+
           <!-- 注ぎ口（グースネック） -->
-          <path d="M53 55 C78 55 80 45 75 30" fill="none" stroke="#1d4ed8" stroke-width="2.5" stroke-linecap="round"/>
-          
+          <path d="M53 55 C78 55 80 45 75 25" fill="none" stroke="#1d4ed8" stroke-width="2.5" stroke-linecap="round"/>
+
           <!-- 持ち手 -->
           <path d="M31 52 L18 52 C14 52 14 72 18 72 L28 72" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
-          
+
           <!-- 蓋 -->
           <rect x="36" y="40" width="12" height="5" rx="1" fill="#3b82f6"/>
           <circle cx="42" cy="38" r="2.5" fill="#1d4ed8"/>
-          
-          <!-- 接地影（全アイコン共通のy=85に配置） -->
-          <ellipse cx="42" cy="85" rx="20" ry="2" fill="#000" opacity="0.05"/>
+
+          <!-- 接地影（y=83 → translate +5 で実質 y=88 付近） -->
+          <ellipse cx="42" cy="83" rx="20" ry="2" fill="#000" opacity="0.05"/>
         </g>
       </svg>
     </template>
