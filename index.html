@@ -13,15 +13,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    /* 
-       【重要】新規タブ時のチラ見え防止 
-       JSでの判定が終わるまで、あるいは初回訪問時に、
-       トップページの内容が一瞬でも見えないように制御します 。
-    */
-    .is-loading #app {
-      opacity: 0;
-    }
-
     body {
       font-family: 'Zen Kaku Gothic New', sans-serif;
       color: #333;
@@ -74,28 +65,32 @@
         text-wrap: balance;
       }
     }
+    
+    #loader-root {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: #232826;
+      display: block; /* 最初から表示 */
+    }
   </style>
-
-  <script>
-    /**
-     * 【最速判定スクリプト】
-     * ブラウザが<body>を描画する前に実行し、
-     * リロード時か新規タブ時かを判断して表示を制御します。
-     */
-    (function() {
-      const hasLoaded = sessionStorage.getItem("hasLoadedInSession");
-      if (!hasLoaded) {
-        // 新規タブ訪問時：ページ内容を隠すクラスを付与
-        document.documentElement.classList.add('is-loading');
-      }
-    })();
-  </script>
-
   <!-- JS Module -->
   <script type="module" src="./src/main.js"></script>
 </head>
 
 <body id="body" class="bg-white flex flex-col min-h-screen">
+
+  <div id="loader-root"></div>
+  <script>
+    // 【最速判定】<body>が読み込まれた瞬間に実行
+    (function() {
+      if (sessionStorage.getItem("hasLoadedInSession")) {
+        // リロード・遷移時：描画が始まる前に要素を物理的に削除（チラつきを完全に防ぐ）
+        const loader = document.getElementById('loader-root');
+        if (loader) loader.remove();
+      }
+    })();
+  </script>
 
   <!-- Header -->
   <div id="header"></div>
