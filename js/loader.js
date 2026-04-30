@@ -1,7 +1,3 @@
-引き続き、hpの微調整を行っていく。
-
-loading pageを、新しくブラウザを立ち上げたときのみ表示させるよう変更したい。以下にコードを示すから、ほかの部分は一切変更せずに、修正後のコードを略さずに示してくれ。
-
 export function initLoader() {
 
   const root = document.getElementById("loader-root");
