@@ -4,7 +4,6 @@ export function initLoader() {
 
   if (sessionStorage.getItem("loaderShown")) {
     if (root) {
-      root.style.background = "transparent";
       root.style.pointerEvents = "none";
     }
     document.body.classList.add("loaded");
@@ -14,7 +13,8 @@ export function initLoader() {
 
   if (!root) return;
 
-  // ★ 初回だけここで背景を付与
+  // ★ 初回だけ表示させる（これ追加）
+  root.style.display = "block";
   root.style.background = "#1f2523";
 
   root.innerHTML = `
@@ -138,7 +138,8 @@ function injectStyle() {
     position: fixed;
     inset: 0;
     z-index: 999999;
-    background: transparent; /* ★ここだけ変更（黒削除） */
+    display: none; /* ★ここ追加（最重要） */
+    background: transparent;
   }
 
   #door-wrapper {
