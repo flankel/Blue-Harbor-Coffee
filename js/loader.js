@@ -5,17 +5,34 @@ export function initLoader() {
     const root = document.getElementById("loader-root");
 
     // =========================
-    // 追加：表示制御（タブ単位 + 再読み込み防止）
+    // ★追加：BFCache（戻る/進む）チラつき完全防止
     // =========================
-    if (sessionStorage.getItem(STORAGE_KEY)) {
+    window.addEventListener("pageshow", (event) => {
+        const alreadyShown = sessionStorage.getItem(STORAGE_KEY);
+        if (event.persisted && alreadyShown && root) {
+            root.remove();
+            document.body.classList.add("loaded");
+        }
+    });
+
+    // =========================
+    // 表示制御
+    // =========================
+    const alreadyShown = sessionStorage.getItem(STORAGE_KEY);
+
+    if (alreadyShown) {
         if (root) {
-            root.remove(); // チラつき防止（即削除）
+            root.remove(); // ★一切描画させない
         }
         return;
     }
+
     sessionStorage.setItem(STORAGE_KEY, "1");
 
     if (!root) return;
+
+    // ★ここで初めて表示（それまではCSSで非表示）
+    root.style.visibility = "visible";
 
     root.innerHTML = `
   <div id="door-wrapper">
@@ -95,7 +112,6 @@ export function initLoader() {
             line.style.willChange = "transform, opacity";
         }
 
-        // ★最重要：黒背景だけ即消す
         setTimeout(() => {
             if (root) {
                 root.style.background = "transparent";
@@ -133,6 +149,19 @@ export function initLoader() {
 function injectStyle() {
     const style = document.createElement("style");
     style.textContent = `
+
+  /* =========================
+     ★超重要：初期フラッシュ完全防止
+  ========================= */
+
+  html, body {
+    background: #232826;
+  }
+
+  #loader-root {
+    visibility: hidden; /* ★これで一瞬表示を完全防止 */
+  }
+
   #door-wrapper {
     position: fixed;
     inset: 0;
