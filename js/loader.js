@@ -2,20 +2,21 @@ export function initLoader() {
     // 1. セッションストレージを確認（現在のタブで表示済みか）
     const hasLoaded = sessionStorage.getItem("hasLoadedInSession");
 
-    // 2. すでに表示済みの場合は、何もせず即座に終了
-    // HTML側には要素を置かないため、削除処理すら不要になり、チラつきは100%発生しません
+    // 2. リロード・ページ遷移時：
+    // HTML側に要素を置いていないため、ここで即座に終了すれば、
+    // 黒い画面も空白も一切発生せず、トップページが直接表示されます。
     if (hasLoaded) {
         document.body.classList.add("loaded");
         return;
     }
 
-    // 3. 初回表示フラグをセット
+    // 3. 新規タブ訪問時：
+    // 描画が進行する前に、最速でローディング画面を生成して画面をロックします。
     sessionStorage.setItem("hasLoadedInSession", "true");
 
-    // 4. 初回訪問時のみ、ローディング用のルート要素を動的に作成してBodyの直下に挿入
     const root = document.createElement("div");
     root.id = "loader-root";
-    // JS実行の瞬間に画面を覆うための最小限のスタイル
+    // ブラウザのペイントが走る前に、画面全体をドアの背景色で覆い隠します。
     Object.assign(root.style, {
         position: "fixed",
         inset: "0",
@@ -23,9 +24,10 @@ export function initLoader() {
         background: "#232826",
         display: "block"
     });
+    // bodyの先頭に挿入し、コンテンツよりも優先して描画させます。
     document.body.prepend(root);
 
-    // 5. 内部コンテンツを注入
+    // 4. ローディングアニメーションの構築
     root.innerHTML = `
   <div id="door-wrapper">
     <div id="center-line"></div>
@@ -86,23 +88,19 @@ export function initLoader() {
             line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
             line.style.opacity = "0";
             line.style.transform = isMobile ? "translateY(-20px)" : "translateX(-20px)";
-            line.style.willChange = "transform, opacity";
         }
         
+        // 背景を透過させ、背後のコンテンツを徐々に見せる
         setTimeout(() => {
             if (root) root.style.background = "transparent";
         }, 100);
 
         setTimeout(() => {
-            if (a) {
-                a.style.transform = isMobile ? "translateY(-110%)" : "translateX(-110%)";
-            }
+            if (a) a.style.transform = isMobile ? "translateY(-110%)" : "translateX(-110%)";
         }, 120);
 
         setTimeout(() => {
-            if (b) {
-                b.style.transform = isMobile ? "translateY(110%)" : "translateX(110%)";
-            }
+            if (b) b.style.transform = isMobile ? "translateY(110%)" : "translateX(110%)";
         }, 240);
 
         setTimeout(() => {
@@ -114,7 +112,6 @@ export function initLoader() {
     }
 }
 
-// CSS
 function injectStyle() {
     const style = document.createElement("style");
     style.textContent = `
@@ -134,7 +131,6 @@ function injectStyle() {
     background: rgba(255,255,255,0.2);
     z-index: 20;
     will-change: transform, opacity;
-    backface-visibility: hidden;
   }
   .door {
     position: absolute;
@@ -191,7 +187,6 @@ function injectStyle() {
     document.head.appendChild(style);
 }
 
-// SVG
 function dripSVG() {
     return `
   <svg viewBox="0 0 60 90" fill="none">
