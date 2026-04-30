@@ -6,12 +6,10 @@ export function initLoader() {
   // 2回目以降（完全スキップ）
   // =========================
 
-  // ★修正ポイント：navigation type を追加して新規ウィンドウでも必ず初回扱いにする
-  const navType = performance.getEntriesByType("navigation")[0]?.type;
-  const isReload = navType === "reload";
+  // ★修正：navigation API削除（不安定のため）
   const hasShown = sessionStorage.getItem("loaderShown");
 
-  if (hasShown && isReload) {
+  if (hasShown) {
     if (root) {
       root.style.display = "none";
     }
