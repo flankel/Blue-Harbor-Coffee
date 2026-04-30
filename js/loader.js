@@ -1,6 +1,22 @@
 export function initLoader() {
+
+    const STORAGE_KEY = "bh_loader_shown_once";
+
     const root = document.getElementById("loader-root");
+
+    // =========================
+    // 追加：表示制御（タブ単位 + 再読み込み防止）
+    // =========================
+    if (sessionStorage.getItem(STORAGE_KEY)) {
+        if (root) {
+            root.remove(); // チラつき防止（即削除）
+        }
+        return;
+    }
+    sessionStorage.setItem(STORAGE_KEY, "1");
+
     if (!root) return;
+
     root.innerHTML = `
   <div id="door-wrapper">
 
@@ -25,50 +41,67 @@ export function initLoader() {
 
   </div>
   `;
+
     injectStyle();
+
     const text = document.getElementById("loading-text");
     const liquid = document.getElementById("coffee-liquid");
     const loaderCenter = document.getElementById("loader-center");
+
     const CUP_BOTTOM = 74;
     const CUP_TOP = 52;
     const CUP_HEIGHT = CUP_BOTTOM - CUP_TOP;
+
     let percent = 0;
+
     const interval = setInterval(() => {
         percent++;
+
         text.textContent = percent + "%";
+
         const h = (percent / 100) * CUP_HEIGHT;
         const y = CUP_BOTTOM - h;
+
         liquid.setAttribute("height", h);
         liquid.setAttribute("y", y);
+
         if (percent >= 100) {
             clearInterval(interval);
+
             text.textContent = "Loading Completed";
+
             setTimeout(() => {
                 loaderCenter.classList.add("fade-out");
             }, 400);
+
             setTimeout(openDoors, 900);
         }
     }, 28);
 
     function openDoors() {
+
         const a = document.querySelector(".door-a");
         const b = document.querySelector(".door-b");
         const line = document.getElementById("center-line");
         const wrapper = document.getElementById("door-wrapper");
         const root = document.getElementById("loader-root");
+
         const isMobile = window.innerWidth <= 768;
+
         if (line) {
             line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
             line.style.opacity = "0";
             line.style.transform = isMobile ? "translateY(-20px)" : "translateX(-20px)";
             line.style.willChange = "transform, opacity";
         }
-        // ★最重要：黒背景だけ即消す（ここが本質）
+
+        // ★最重要：黒背景だけ即消す
         setTimeout(() => {
             if (root) {
                 root.style.background = "transparent";
             }
         }, 100);
+
         setTimeout(() => {
             if (isMobile) {
                 a.style.transform = "translateY(-110%)";
@@ -76,6 +109,7 @@ export function initLoader() {
                 a.style.transform = "translateX(-110%)";
             }
         }, 120);
+
         setTimeout(() => {
             if (isMobile) {
                 b.style.transform = "translateY(110%)";
@@ -83,6 +117,7 @@ export function initLoader() {
                 b.style.transform = "translateX(110%)";
             }
         }, 240);
+
         setTimeout(() => {
             if (line) line.remove();
             if (wrapper) wrapper.remove();
@@ -91,6 +126,7 @@ export function initLoader() {
         }, 1400);
     }
 }
+
 // =========================
 // CSS
 // =========================
@@ -203,6 +239,7 @@ function injectStyle() {
   `;
     document.head.appendChild(style);
 }
+
 // =========================
 // SVG
 // =========================
