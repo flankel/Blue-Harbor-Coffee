@@ -78,9 +78,13 @@
       text-wrap: balance;
     }
   }
-  /* JSが実行されるまで、ローディングの土台を完全に隠しておく */
+  /* デフォルトで画面を覆っておく（新規タブ対策） */
   #loader-root {
-    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: #232826; /* ローディング画面の背景色と同じにする */
+    display: block;
   }
 </style>
 
