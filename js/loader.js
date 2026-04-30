@@ -9,8 +9,12 @@ export function initLoader() {
 
   // ★毎回必ず初期表示（チラつき防止）
   root.style.display = "block";
-  root.style.opacity = "1";
   root.style.background = "#1f2523";
+
+  // ★強制リフロー（黒画面対策）
+  root.getBoundingClientRect();
+
+  root.style.opacity = "1";
 
   // ★HTML生成
   root.innerHTML = `
@@ -126,10 +130,15 @@ export function initLoader() {
 
 
 // =========================
-// CSS（そのまま）
+// CSS（修正：重複防止のみ追加）
 // =========================
 function injectStyle() {
+
+  // ★追加：二重注入防止（ここだけ変更）
+  if (document.getElementById("loader-style")) return;
+
   const style = document.createElement("style");
+  style.id = "loader-style";
 
   style.textContent = `
   #loader-root {
