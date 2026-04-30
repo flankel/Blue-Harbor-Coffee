@@ -1,55 +1,6 @@
 export function initLoader() {
-
-    const STORAGE_KEY = "bh_loader_shown_once";
-    const TAB_KEY = "bh_tab_id";
-
     const root = document.getElementById("loader-root");
-
-    // =========================
-    // ★タブ識別ID（これが本体修正）
-    // =========================
-    let tabId = sessionStorage.getItem(TAB_KEY);
-
-    if (!tabId) {
-        tabId = crypto.randomUUID();
-        sessionStorage.setItem(TAB_KEY, tabId);
-        // 新規タブ扱い
-        sessionStorage.removeItem(STORAGE_KEY);
-    }
-
-    // =========================
-    // ★BFCache対策
-    // =========================
-    window.addEventListener("pageshow", (event) => {
-        const alreadyShown = sessionStorage.getItem(STORAGE_KEY);
-        if (event.persisted && alreadyShown && root) {
-            root.remove();
-            document.body.classList.add("loaded");
-        }
-    });
-
-    // =========================
-    // 表示制御
-    // =========================
-    const alreadyShown = sessionStorage.getItem(STORAGE_KEY);
-
-    if (alreadyShown) {
-        if (root) root.remove();
-        return;
-    }
-
-    sessionStorage.setItem(STORAGE_KEY, "1");
-
     if (!root) return;
-
-    // =========================
-    // ★フラッシュ完全防止
-    // =========================
-    document.documentElement.style.background = "#232826";
-    document.body.style.background = "#232826";
-
-    root.style.display = "block";
-
     root.innerHTML = `
   <div id="door-wrapper">
 
@@ -74,71 +25,64 @@ export function initLoader() {
 
   </div>
   `;
-
     injectStyle();
-
     const text = document.getElementById("loading-text");
     const liquid = document.getElementById("coffee-liquid");
     const loaderCenter = document.getElementById("loader-center");
-
     const CUP_BOTTOM = 74;
     const CUP_TOP = 52;
     const CUP_HEIGHT = CUP_BOTTOM - CUP_TOP;
-
     let percent = 0;
-
     const interval = setInterval(() => {
         percent++;
-
         text.textContent = percent + "%";
-
         const h = (percent / 100) * CUP_HEIGHT;
         const y = CUP_BOTTOM - h;
-
         liquid.setAttribute("height", h);
         liquid.setAttribute("y", y);
-
         if (percent >= 100) {
             clearInterval(interval);
-
             text.textContent = "Loading Completed";
-
             setTimeout(() => {
                 loaderCenter.classList.add("fade-out");
             }, 400);
-
             setTimeout(openDoors, 900);
         }
     }, 28);
 
     function openDoors() {
-
         const a = document.querySelector(".door-a");
         const b = document.querySelector(".door-b");
         const line = document.getElementById("center-line");
         const wrapper = document.getElementById("door-wrapper");
         const root = document.getElementById("loader-root");
-
         const isMobile = window.innerWidth <= 768;
-
         if (line) {
             line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
             line.style.opacity = "0";
             line.style.transform = isMobile ? "translateY(-20px)" : "translateX(-20px)";
+            line.style.willChange = "transform, opacity";
         }
-
+        // ★最重要：黒背景だけ即消す（ここが本質）
         setTimeout(() => {
-            if (root) root.style.background = "transparent";
+            if (root) {
+                root.style.background = "transparent";
+            }
         }, 100);
-
         setTimeout(() => {
-            a.style.transform = isMobile ? "translateY(-110%)" : "translateX(-110%)";
+            if (isMobile) {
+                a.style.transform = "translateY(-110%)";
+            } else {
+                a.style.transform = "translateX(-110%)";
+            }
         }, 120);
-
         setTimeout(() => {
-            b.style.transform = isMobile ? "translateY(110%)" : "translateX(110%)";
+            if (isMobile) {
+                b.style.transform = "translateY(110%)";
+            } else {
+                b.style.transform = "translateX(110%)";
+            }
         }, 240);
-
         setTimeout(() => {
             if (line) line.remove();
             if (wrapper) wrapper.remove();
@@ -147,21 +91,12 @@ export function initLoader() {
         }, 1400);
     }
 }
-
 // =========================
-// CSS（変更なし）
+// CSS
 // =========================
 function injectStyle() {
     const style = document.createElement("style");
     style.textContent = `
-  html, body {
-    background: #232826;
-  }
-
-  #loader-root {
-    visibility: hidden;
-  }
-
   #door-wrapper {
     position: fixed;
     inset: 0;
@@ -268,13 +203,13 @@ function injectStyle() {
   `;
     document.head.appendChild(style);
 }
-
 // =========================
-// SVG（変更なし）
+// SVG
 // =========================
 function dripSVG() {
     return `
   <svg viewBox="0 0 60 90" fill="none">
+
     <path d="M26 4 Q30 -2 34 4" stroke="#c2a87a" stroke-width="1"/>
     <path d="M28 6 Q30 0 32 6" stroke="#c2a87a" stroke-width="1"/>
 
@@ -285,20 +220,31 @@ function dripSVG() {
     <circle cx="30" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
     <circle cx="38" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
 
-    <rect x="28.5" y="20" width="3" height="8" fill="#eae7df"/>
+    <rect x="28.5" y="20" width="3" height="8"
+      fill="#eae7df"/>
 
-    <path d="M27 28 Q30 32 33 28" stroke="#eae7df" stroke-width="1.5" fill="none"/>
+    <path d="M27 28 Q30 32 33 28"
+      stroke="#eae7df" stroke-width="1.5" fill="none"/>
 
     <circle cx="30" cy="34" r="1.6" fill="#c2a87a">
-      <animate attributeName="cy" values="34;70" dur="0.9s" repeatCount="indefinite"/>
+      <animate attributeName="cy"
+        values="34;70"
+        dur="0.9s"
+        repeatCount="indefinite"/>
     </circle>
 
     <circle cx="31.5" cy="36" r="1.2" fill="#c2a87a">
-      <animate attributeName="cy" values="36;72" dur="1.1s" repeatCount="indefinite"/>
+      <animate attributeName="cy"
+        values="36;72"
+        dur="1.1s"
+        repeatCount="indefinite"/>
     </circle>
 
     <circle cx="28.5" cy="35" r="1.0" fill="#c2a87a">
-      <animate attributeName="cy" values="35;71" dur="0.85s" repeatCount="indefinite"/>
+      <animate attributeName="cy"
+        values="35;71"
+        dur="0.85s"
+        repeatCount="indefinite"/>
     </circle>
 
     <rect x="15" y="52" width="30" height="22" rx="4"
@@ -314,9 +260,13 @@ function dripSVG() {
     </defs>
 
     <rect id="coffee-liquid"
-      x="15" y="74" width="30" height="0"
+      x="15"
+      y="74"
+      width="30"
+      height="0"
       fill="#c2a87a"
       clip-path="url(#cup-clip)" />
+
   </svg>
   `;
 }
