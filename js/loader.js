@@ -4,6 +4,7 @@ export function initLoader() {
 
   if (sessionStorage.getItem("loaderShown")) {
     if (root) {
+      root.style.opacity = "0";
       root.style.pointerEvents = "none";
     }
     document.body.classList.add("loaded");
@@ -13,8 +14,8 @@ export function initLoader() {
 
   if (!root) return;
 
-  // ★ 初回だけ表示させる（これ追加）
-  root.style.display = "block";
+  // ★ 初回だけ表示
+  root.style.opacity = "1";
   root.style.background = "#1f2523";
 
   root.innerHTML = `
@@ -138,7 +139,7 @@ function injectStyle() {
     position: fixed;
     inset: 0;
     z-index: 999999;
-    display: none; /* ★ここ追加（最重要） */
+    opacity: 0; /* ★ここだけ変更 */
     background: transparent;
   }
 
