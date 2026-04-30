@@ -1,5 +1,15 @@
 export function initLoader() {
 
+  // ★追加：同一セッション内では再表示しない
+  if (sessionStorage.getItem("loaderShown")) {
+    const root = document.getElementById("loader-root");
+    if (root) root.remove();
+    document.body.classList.add("loaded");
+    return;
+  }
+  sessionStorage.setItem("loaderShown", "true");
+
+
   const root = document.getElementById("loader-root");
   if (!root) return;
 
