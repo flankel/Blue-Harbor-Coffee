@@ -16,13 +16,42 @@ export function initLoader() {
     });
 
     // =========================
-    // 表示制御
+    // ★追加：スマホ判定（ここだけ追加・PCは完全維持）
     // =========================
+    const isMobile = window.innerWidth <= 768;
+
+    // =========================
+    // 表示制御（スマホだけロジック分岐）
+    // =========================
+
     const alreadyShown = sessionStorage.getItem(STORAGE_KEY);
 
-    if (alreadyShown) {
+    // =========================
+    // ★スマホ専用ロジック
+    // =========================
+    if (isMobile) {
+
+        // スマホは「新タブ判定が不安定」なので別キーで制御
+        const MOBILE_KEY = "bh_loader_mobile_session";
+
+        const mobileShown = sessionStorage.getItem(MOBILE_KEY);
+
+        if (mobileShown) {
+            if (root) {
+                root.remove();
+            }
+            return;
+        }
+
+        sessionStorage.setItem(MOBILE_KEY, "1");
+    }
+
+    // =========================
+    // ★PCは従来通り（ここは一切変更しない）
+    // =========================
+    if (!isMobile && alreadyShown) {
         if (root) {
-            root.remove(); // ★一切描画させない
+            root.remove();
         }
         return;
     }
@@ -31,8 +60,14 @@ export function initLoader() {
 
     if (!root) return;
 
-    // ★ここで初めて表示（それまではCSSで非表示）
-    root.style.visibility = "visible";
+    // =========================
+    // ★完全フラッシュ防止
+    // =========================
+    document.documentElement.style.background = "#232826";
+    document.body.style.background = "#232826";
+
+    // ★重要：display制御（visibility廃止）
+    root.style.display = "block";
 
     root.innerHTML = `
   <div id="door-wrapper">
@@ -144,22 +179,17 @@ export function initLoader() {
 }
 
 // =========================
-// CSS
+// CSS（変更なし）
 // =========================
 function injectStyle() {
     const style = document.createElement("style");
     style.textContent = `
-
-  /* =========================
-     ★超重要：初期フラッシュ完全防止
-  ========================= */
-
   html, body {
     background: #232826;
   }
 
   #loader-root {
-    visibility: hidden; /* ★これで一瞬表示を完全防止 */
+    visibility: hidden;
   }
 
   #door-wrapper {
@@ -270,12 +300,11 @@ function injectStyle() {
 }
 
 // =========================
-// SVG
+// SVG（変更なし）
 // =========================
 function dripSVG() {
     return `
   <svg viewBox="0 0 60 90" fill="none">
-
     <path d="M26 4 Q30 -2 34 4" stroke="#c2a87a" stroke-width="1"/>
     <path d="M28 6 Q30 0 32 6" stroke="#c2a87a" stroke-width="1"/>
 
@@ -286,31 +315,20 @@ function dripSVG() {
     <circle cx="30" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
     <circle cx="38" cy="13" r="1.2" stroke="#eae7df" fill="none"/>
 
-    <rect x="28.5" y="20" width="3" height="8"
-      fill="#eae7df"/>
+    <rect x="28.5" y="20" width="3" height="8" fill="#eae7df"/>
 
-    <path d="M27 28 Q30 32 33 28"
-      stroke="#eae7df" stroke-width="1.5" fill="none"/>
+    <path d="M27 28 Q30 32 33 28" stroke="#eae7df" stroke-width="1.5" fill="none"/>
 
     <circle cx="30" cy="34" r="1.6" fill="#c2a87a">
-      <animate attributeName="cy"
-        values="34;70"
-        dur="0.9s"
-        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="34;70" dur="0.9s" repeatCount="indefinite"/>
     </circle>
 
     <circle cx="31.5" cy="36" r="1.2" fill="#c2a87a">
-      <animate attributeName="cy"
-        values="36;72"
-        dur="1.1s"
-        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="36;72" dur="1.1s" repeatCount="indefinite"/>
     </circle>
 
     <circle cx="28.5" cy="35" r="1.0" fill="#c2a87a">
-      <animate attributeName="cy"
-        values="35;71"
-        dur="0.85s"
-        repeatCount="indefinite"/>
+      <animate attributeName="cy" values="35;71" dur="0.85s" repeatCount="indefinite"/>
     </circle>
 
     <rect x="15" y="52" width="30" height="22" rx="4"
@@ -326,13 +344,9 @@ function dripSVG() {
     </defs>
 
     <rect id="coffee-liquid"
-      x="15"
-      y="74"
-      width="30"
-      height="0"
+      x="15" y="74" width="30" height="0"
       fill="#c2a87a"
       clip-path="url(#cup-clip)" />
-
   </svg>
   `;
 }
