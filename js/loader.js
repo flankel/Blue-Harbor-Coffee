@@ -1,5 +1,17 @@
 export function initLoader() {
 
+  const STORAGE_KEY = "bh_loader_tab_once";
+
+  // =========================
+  // ★追加：このタブで既に表示済みなら何も出さない
+  // =========================
+  if (sessionStorage.getItem(STORAGE_KEY)) {
+    return;
+  }
+
+  // ★このタブで初回だけ実行
+  sessionStorage.setItem(STORAGE_KEY, "1");
+
   const root = document.getElementById("loader-root");
   if (!root) return;
 
