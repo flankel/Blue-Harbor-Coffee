@@ -1,6 +1,20 @@
 export function initLoader() {
     const root = document.getElementById("loader-root");
     if (!root) return;
+
+    // セッションストレージを確認し、このタブですでに表示済みかチェック
+    const hasLoaded = sessionStorage.getItem("hasLoadedInSession");
+
+    if (hasLoaded) {
+        // すでに表示済みの場合は、一切の処理を行わず即座に要素を削除
+        root.remove();
+        document.body.classList.add("loaded");
+        return;
+    }
+
+    // 初回表示フラグをセット
+    sessionStorage.setItem("hasLoadedInSession", "true");
+
     root.innerHTML = `
   <div id="door-wrapper">
 
@@ -63,7 +77,7 @@ export function initLoader() {
             line.style.transform = isMobile ? "translateY(-20px)" : "translateX(-20px)";
             line.style.willChange = "transform, opacity";
         }
-        // ★最重要：黒背景だけ即消す（ここが本質）
+        // ★最重要：黒背景だけ即消す
         setTimeout(() => {
             if (root) {
                 root.style.background = "transparent";
