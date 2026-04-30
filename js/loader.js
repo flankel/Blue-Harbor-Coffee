@@ -1,6 +1,6 @@
 export function initLoader() {
 
-  // ★追加：同一セッション内では再表示しない
+  // ★同一セッション内では再表示しない
   if (sessionStorage.getItem("loaderShown")) {
     const root = document.getElementById("loader-root");
     if (root) root.remove();
@@ -77,58 +77,50 @@ export function initLoader() {
 
   function openDoors() {
 
-  const a = document.querySelector(".door-a");
-  const b = document.querySelector(".door-b");
-  const line = document.getElementById("center-line");
-  const wrapper = document.getElementById("door-wrapper");
-  const root = document.getElementById("loader-root");
-  const isMobile = window.innerWidth <= 768;
+    const a = document.querySelector(".door-a");
+    const b = document.querySelector(".door-b");
+    const line = document.getElementById("center-line");
+    const wrapper = document.getElementById("door-wrapper");
+    const root = document.getElementById("loader-root");
+    const isMobile = window.innerWidth <= 768;
 
-  if (line) {
-    line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
-    line.style.opacity = "0";
-    line.style.transform = isMobile
-      ? "translateY(-20px)"
-      : "translateX(-20px)";
-    line.style.willChange = "transform, opacity";
+    if (line) {
+      line.style.transition = "opacity 0.15s ease, transform 0.2s ease";
+      line.style.opacity = "0";
+      line.style.transform = isMobile
+        ? "translateY(-20px)"
+        : "translateX(-20px)";
+      line.style.willChange = "transform, opacity";
+    }
+
+    // ★重要：背景はそのまま維持（透明にしない・bodyも触らない）
+
+    setTimeout(() => {
+      if (isMobile) {
+        a.style.transform = "translateY(-110%)";
+      } else {
+        a.style.transform = "translateX(-110%)";
+      }
+    }, 120);
+
+    setTimeout(() => {
+      if (isMobile) {
+        b.style.transform = "translateY(110%)";
+      } else {
+        b.style.transform = "translateX(110%)";
+      }
+    }, 240);
+
+    setTimeout(() => {
+      if (line) line.remove();
+      if (wrapper) wrapper.remove();
+
+      if (root) root.remove();
+
+      document.body.classList.add("loaded");
+
+    }, 1400);
   }
-
-  // ★追加：ここが本質（下のページの背景を先に固定）
-  document.body.style.background = "#1f2523";
-
-  // ★最重要：黒背景だけ即消す（ここが本質）
-  setTimeout(() => {
-    if (root) {
-      root.style.background = "transparent";
-    }
-  }, 100);
-
-  setTimeout(() => {
-    if (isMobile) {
-      a.style.transform = "translateY(-110%)";
-    } else {
-      a.style.transform = "translateX(-110%)";
-    }
-  }, 120);
-
-  setTimeout(() => {
-    if (isMobile) {
-      b.style.transform = "translateY(110%)";
-    } else {
-      b.style.transform = "translateX(110%)";
-    }
-  }, 240);
-
-  setTimeout(() => {
-    if (line) line.remove();
-    if (wrapper) wrapper.remove();
-
-    if (root) root.remove();
-
-    document.body.classList.add("loaded");
-
-  }, 1400);
-}
 }
 
 
@@ -139,10 +131,16 @@ function injectStyle() {
   const style = document.createElement("style");
 
   style.textContent = `
-  #door-wrapper {
+  #loader-root {
     position: fixed;
     inset: 0;
     z-index: 999999;
+    background: #1f2523; /* ★ここで背景を持たせる */
+  }
+
+  #door-wrapper {
+    position: absolute;
+    inset: 0;
     overflow: hidden;
     background: transparent;
   }
