@@ -56,14 +56,18 @@
      loader（重要修正ここだけ）
      → 白チラつき防止
   ========================= */
-    /* デフォルトで画面を覆っておく（新規タブ対策） */
-  #loader-root {
-    position: fixed;
-    inset: 0;
-    z-index: 999999;
-    background: #232826; /* ローディング画面の背景色と同じにする */
-    display: block;
-  }
+    /* デフォルトは非表示にしておく（チラつき防止） */
+    #loader-root {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: #232826;
+    }
+    /* 初回訪問時のみ、このクラスをJSで付与して即座に表示する */
+    .is-first-visit #loader-root {
+      display: block;
+    }
   /* =========================
      スマホ用
   ========================= */
@@ -78,8 +82,16 @@
     }
   }
 </style>
-
-  </style>
+  <script>
+    // 【最速判定】HTMLの描画が始まる前に実行
+    (function() {
+      const hasLoaded = sessionStorage.getItem("hasLoadedInSession");
+      if (!hasLoaded) {
+        // 初回訪問ならhtml要素にクラスを付与し、CSSで即座に表示させる
+        document.documentElement.classList.add('is-first-visit');
+      }
+    })();
+  </script>
 </head>
 
 <body id="body" class="bg-white flex flex-col min-h-screen">
