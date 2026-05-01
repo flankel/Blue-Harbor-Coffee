@@ -159,99 +159,128 @@ function renderHours(hours) {
   return `
     <div class="max-w-md mx-auto">
 
-      <!-- 木枠 -->
-      <div class="bg-amber-900 p-3 rounded-2xl shadow-xl">
-        <div class="bg-amber-800 p-2 rounded-xl">
+      <!-- 木枠（立体） -->
+      <div class="p-3 rounded-2xl"
+           style="
+             background: linear-gradient(145deg, #8b5a2b, #5c3b1e);
+             box-shadow:
+               0 10px 25px rgba(0,0,0,0.4),
+               inset 2px 2px 4px rgba(255,255,255,0.2),
+               inset -2px -2px 4px rgba(0,0,0,0.4);
+           ">
+
+        <!-- 内側木 -->
+        <div class="p-2 rounded-xl"
+             style="
+               background: linear-gradient(145deg, #6f4522, #3e2615);
+               box-shadow:
+                 inset 1px 1px 2px rgba(255,255,255,0.1),
+                 inset -1px -1px 2px rgba(0,0,0,0.6);
+             ">
 
           <!-- 黒板 -->
-          <div class="bg-neutral-900 text-white p-6 font-mono relative rounded-lg overflow-hidden">
+          <div class="p-6 rounded-lg relative overflow-hidden"
+               style="
+                 background:
+                   radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05), transparent 40%),
+                   radial-gradient(circle at 80% 80%, rgba(255,255,255,0.04), transparent 40%),
+                   #1c1c1c;
+                 box-shadow:
+                   inset 0 0 10px rgba(0,0,0,0.8);
+                 color: #f1f1f1;
+               ">
 
-            <!-- チョーク粉エフェクト -->
-            <div class="absolute inset-0 pointer-events-none opacity-10"
-                 style="background-image: radial-gradient(#fff 1px, transparent 1px);
-                        background-size: 20px 20px;">
+            <!-- チョーク粉 -->
+            <div class="absolute inset-0 pointer-events-none opacity-20"
+                 style="
+                   background-image:
+                     radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+                   background-size: 18px 18px;
+                 ">
             </div>
 
-            <!-- ☕ コーヒーマグ -->
-            <div class="absolute top-4 right-4 opacity-70">
-              <svg width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="white" stroke-width="2">
-                <path d="M10 30 h30 a10 10 0 0 1 0 20 h-30 z"/>
-                <path d="M40 32 h8 a6 6 0 0 1 0 12 h-8"/>
-                <path d="M20 20 c0 -8 8 -8 8 0"/>
-                <path d="M30 20 c0 -8 8 -8 8 0"/>
+            <!-- ☕ マグ（線ゆらぎ風） -->
+            <div class="absolute top-4 right-5 opacity-80">
+              <svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="#f5f5f5" stroke-width="2.2" stroke-linecap="round">
+                <path d="M12 34 h30 q10 0 10 10 q0 10 -10 10 h-30 z"/>
+                <path d="M42 36 h8 q6 0 6 6 q0 6 -6 6 h-8"/>
+                <path d="M22 22 q2 -8 6 0"/>
+                <path d="M30 22 q2 -8 6 0"/>
               </svg>
             </div>
 
-            <!-- 🌿 葉っぱ -->
-            <div class="absolute bottom-4 right-4 opacity-50">
-              <svg width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="white" stroke-width="2">
-                <path d="M10 50 C20 20, 40 20, 50 50"/>
-                <path d="M25 40 C30 30, 40 30, 45 40"/>
+            <!-- 🌿 葉 -->
+            <div class="absolute bottom-4 right-5 opacity-60">
+              <svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="#f5f5f5" stroke-width="2" stroke-linecap="round">
+                <path d="M12 52 C24 20, 44 20, 56 52"/>
+                <path d="M28 40 C32 30, 44 30, 48 40"/>
               </svg>
             </div>
 
             <!-- タイトル -->
             <div class="text-center mb-4">
-              <div class="text-xl tracking-widest">
+              <div class="tracking-widest text-lg" style="letter-spacing: 0.15em;">
                 OPENING HOURS
               </div>
-              <div class="text-xs text-gray-400 mt-1">
+              <div class="text-xs mt-1" style="color:#bbbbbb;">
                 営業時間
               </div>
             </div>
 
-            <!-- 手書きライン -->
-            <div class="border-t border-dashed border-gray-500 mb-4"></div>
+            <!-- 点線 -->
+            <div style="border-top:1px dashed rgba(255,255,255,0.4); margin-bottom:16px;"></div>
 
-            <!-- 各行 -->
-            <div class="space-y-2">
+            <!-- 本体 -->
+            <div style="display:flex; flex-direction:column; gap:8px;">
 
               ${hours.map(h => {
 
                 if (h.closed) {
                   return `
-                    <div class="flex justify-between items-center border-b border-white/20 pb-1">
-                      <span class="tracking-widest">${h.day}</span>
-                      <span class="text-red-400 font-bold">CLOSED</span>
+                    <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:4px;">
+                      <span>${h.day}</span>
+                      <span style="color:#ff6b6b; font-weight:bold;">CLOSED</span>
                     </div>
                   `;
                 }
 
                 const isSunday = h.day === "日";
 
-                let textClass = "text-white";
+                let color = "#f1f1f1";
 
                 if (h.highlight === "blue") {
-                  textClass = "text-blue-300 font-bold";
+                  color = "#7dd3fc";
                 }
 
                 if (h.highlight === "red" || isSunday) {
-                  textClass = "text-red-400 font-bold";
+                  color = "#ff6b6b";
                 }
 
-                let noteClass = "text-gray-400 text-xs mt-1";
+                let noteColor = "#bbbbbb";
 
                 if (h.highlight === "red" || isSunday) {
-                  noteClass = "text-red-300 text-xs mt-1";
+                  noteColor = "#ff8a8a";
                 }
 
                 return `
-                  <div class="border-b border-white/20 pb-1">
+                  <div style="border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:4px;">
 
-                    <div class="flex justify-between items-center">
-                      <span class="tracking-widest ${textClass}">
+                    <div style="display:flex; justify-content:space-between;">
+
+                      <span style="color:${color}; letter-spacing:0.1em;">
                         ${h.day}
                       </span>
 
-                      <span class="${textClass}">
+                      <span style="color:${color}; font-weight:bold;">
                         ${h.open} - ${h.close}
                       </span>
+
                     </div>
 
                     ${
                       h.note
                         ? `
-                          <div class="${noteClass}">
+                          <div style="color:${noteColor}; font-size:12px; margin-top:4px;">
                             ${
                               (isMobile && h.day === "日")
                                 ? h.note.replace("場合 ", "場合<br>")
@@ -268,8 +297,11 @@ function renderHours(hours) {
 
             </div>
 
-            <!-- フッター -->
-            <div class="mt-5 pt-3 border-t border-dashed border-gray-500 text-center text-xs text-gray-400 tracking-widest">
+            <!-- 下線 -->
+            <div style="margin-top:16px; border-top:1px dashed rgba(255,255,255,0.4);"></div>
+
+            <!-- 店名 -->
+            <div style="text-align:center; margin-top:8px; font-size:12px; letter-spacing:0.2em; color:#bbbbbb;">
               BLUE HARBOR COFFEE
             </div>
 
@@ -280,8 +312,7 @@ function renderHours(hours) {
 
     </div>
   `;
-}
-/* =========================
+}/* =========================
    FACILITIES
 ========================= */
 function renderFacilities(facilities) {
