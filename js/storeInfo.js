@@ -157,100 +157,130 @@ function renderHours(hours) {
   const isMobile = window.innerWidth < 768;
 
   return `
-    <div class="max-w-md mx-auto rounded-xl shadow-lg overflow-hidden border border-gray-700">
+    <div class="max-w-md mx-auto">
 
-      <!-- 黒板本体 -->
-      <div class="bg-neutral-900 text-white p-6 font-mono relative">
+      <!-- 木枠 -->
+      <div class="bg-amber-900 p-3 rounded-2xl shadow-xl">
+        <div class="bg-amber-800 p-2 rounded-xl">
 
-        <!-- タイトル -->
-        <div class="text-center mb-4">
-          <div class="text-xl tracking-widest">
-            OPENING HOURS
-          </div>
-          <div class="text-xs text-gray-400 mt-1">
-            営業時間
-          </div>
-        </div>
+          <!-- 黒板 -->
+          <div class="bg-neutral-900 text-white p-6 font-mono relative rounded-lg overflow-hidden">
 
-        <!-- 区切り線 -->
-        <div class="border-t border-dashed border-gray-500 mb-4"></div>
+            <!-- チョーク粉エフェクト -->
+            <div class="absolute inset-0 pointer-events-none opacity-10"
+                 style="background-image: radial-gradient(#fff 1px, transparent 1px);
+                        background-size: 20px 20px;">
+            </div>
 
-        <!-- 各行 -->
-        <div class="space-y-2">
+            <!-- ☕ コーヒーマグ -->
+            <div class="absolute top-4 right-4 opacity-70">
+              <svg width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="white" stroke-width="2">
+                <path d="M10 30 h30 a10 10 0 0 1 0 20 h-30 z"/>
+                <path d="M40 32 h8 a6 6 0 0 1 0 12 h-8"/>
+                <path d="M20 20 c0 -8 8 -8 8 0"/>
+                <path d="M30 20 c0 -8 8 -8 8 0"/>
+              </svg>
+            </div>
 
-          ${hours.map(h => {
+            <!-- 🌿 葉っぱ -->
+            <div class="absolute bottom-4 right-4 opacity-50">
+              <svg width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="white" stroke-width="2">
+                <path d="M10 50 C20 20, 40 20, 50 50"/>
+                <path d="M25 40 C30 30, 40 30, 45 40"/>
+              </svg>
+            </div>
 
-            if (h.closed) {
-              return `
-                <div class="flex justify-between items-center border-b border-white/20 pb-1">
-                  <span class="tracking-widest">${h.day}</span>
-                  <span class="text-red-400 font-bold">CLOSED</span>
-                </div>
-              `;
-            }
+            <!-- タイトル -->
+            <div class="text-center mb-4">
+              <div class="text-xl tracking-widest">
+                OPENING HOURS
+              </div>
+              <div class="text-xs text-gray-400 mt-1">
+                営業時間
+              </div>
+            </div>
 
-            const isSunday = h.day === "日";
+            <!-- 手書きライン -->
+            <div class="border-t border-dashed border-gray-500 mb-4"></div>
 
-            let textClass = "text-white";
+            <!-- 各行 -->
+            <div class="space-y-2">
 
-            if (h.highlight === "blue") {
-              textClass = "text-blue-300 font-bold";
-            }
+              ${hours.map(h => {
 
-            if (h.highlight === "red" || isSunday) {
-              textClass = "text-red-400 font-bold";
-            }
-
-            let noteClass = "text-gray-400 text-xs mt-1";
-
-            if (h.highlight === "red" || isSunday) {
-              noteClass = "text-red-300 text-xs mt-1";
-            }
-
-            return `
-              <div class="border-b border-white/20 pb-1">
-
-                <div class="flex justify-between items-center">
-                  <span class="tracking-widest ${textClass}">
-                    ${h.day}
-                  </span>
-
-                  <span class="${textClass}">
-                    ${h.open} - ${h.close}
-                  </span>
-                </div>
-
-                ${
-                  h.note
-                    ? `
-                      <div class="${noteClass}">
-                        ${
-                          (isMobile && h.day === "日")
-                            ? h.note.replace("場合 ", "場合<br>")
-                            : h.note
-                        }
-                      </div>
-                    `
-                    : ""
+                if (h.closed) {
+                  return `
+                    <div class="flex justify-between items-center border-b border-white/20 pb-1">
+                      <span class="tracking-widest">${h.day}</span>
+                      <span class="text-red-400 font-bold">CLOSED</span>
+                    </div>
+                  `;
                 }
 
-              </div>
-            `;
-          }).join("")}
+                const isSunday = h.day === "日";
+
+                let textClass = "text-white";
+
+                if (h.highlight === "blue") {
+                  textClass = "text-blue-300 font-bold";
+                }
+
+                if (h.highlight === "red" || isSunday) {
+                  textClass = "text-red-400 font-bold";
+                }
+
+                let noteClass = "text-gray-400 text-xs mt-1";
+
+                if (h.highlight === "red" || isSunday) {
+                  noteClass = "text-red-300 text-xs mt-1";
+                }
+
+                return `
+                  <div class="border-b border-white/20 pb-1">
+
+                    <div class="flex justify-between items-center">
+                      <span class="tracking-widest ${textClass}">
+                        ${h.day}
+                      </span>
+
+                      <span class="${textClass}">
+                        ${h.open} - ${h.close}
+                      </span>
+                    </div>
+
+                    ${
+                      h.note
+                        ? `
+                          <div class="${noteClass}">
+                            ${
+                              (isMobile && h.day === "日")
+                                ? h.note.replace("場合 ", "場合<br>")
+                                : h.note
+                            }
+                          </div>
+                        `
+                        : ""
+                    }
+
+                  </div>
+                `;
+              }).join("")}
+
+            </div>
+
+            <!-- フッター -->
+            <div class="mt-5 pt-3 border-t border-dashed border-gray-500 text-center text-xs text-gray-400 tracking-widest">
+              BLUE HARBOR COFFEE
+            </div>
+
+          </div>
 
         </div>
-
-        <!-- フッター -->
-        <div class="mt-5 pt-3 border-t border-dashed border-gray-500 text-center text-xs text-gray-400 tracking-widest">
-          BLUE HARBOR COFFEE
-        </div>
-
       </div>
 
     </div>
   `;
 }
-
 /* =========================
    FACILITIES
 ========================= */
