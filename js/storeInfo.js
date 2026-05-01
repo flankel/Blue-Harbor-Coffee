@@ -148,7 +148,7 @@ function renderAccess(data) {
 }
 
 /* =========================
-   HOURS (修正済み黒板デザイン)
+   HOURS (ご要望反映版)
 ========================= */
 function renderHours(hours) {
   const isMobile = window.innerWidth < 768;
@@ -162,15 +162,16 @@ function renderHours(hours) {
     document.head.appendChild(link);
   }
 
-  // スマホとPCでサイズを微調整
+  // スマホとPCでサイズ・余白を調整
   const fontSizeDay = isMobile ? '16px' : '20px';
   const fontSizeTime = isMobile ? '15px' : '20px';
-  const boardPadding = isMobile ? '15px 12px' : '25px 24px';
+  const boardPadding = isMobile ? '20px 12px' : '25px 24px';
+  const titleAlignment = isMobile ? 'center' : 'center'; // スマホ版の真ん中揃え対応
 
   return `
     <style>
       .chalk-text { font-family: 'Klee One', 'Itim', cursive; }
-      .chalk-title { font-family: 'Caveat', cursive; }
+      .chalk-title { font-family: 'Klee One', cursive; font-weight: 600; }
       .no-wrap { white-space: nowrap; }
     </style>
 
@@ -191,7 +192,7 @@ function renderHours(hours) {
                min-height: 420px;
              ">
 
-          <!-- チョーク粉 -->
+          <!-- チョーク粉テクスチャ -->
           <div class="absolute inset-0 pointer-events-none opacity-20"
                style="
                  background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px);
@@ -199,13 +200,15 @@ function renderHours(hours) {
                ">
           </div>
 
-          <!-- ヘッダー -->
-          <div class="flex justify-between items-center relative z-10 mb-2">
-            <div style="color: #f5f5f5; font-size: 20px; transform: rotate(-10deg);">≛</div>
-            <div class="chalk-title ${isMobile ? 'text-3xl' : 'text-4xl'} text-white tracking-wide">
-              Opening Hours
+          <!-- ヘッダー (スマホ版真ん中揃え) -->
+          <div class="relative z-10 mb-4 flex items-center justify-center" style="min-height: 40px;">
+            <div class="absolute left-0" style="color: #f5f5f5; font-size: 20px; transform: rotate(-10deg);">≛</div>
+            
+            <div class="chalk-title ${isMobile ? 'text-2xl' : 'text-3xl'} text-white tracking-widest text-center">
+              営業時間
             </div>
-            <div class="opacity-80">
+            
+            <div class="absolute right-0 opacity-80">
               <svg width="34" height="34" viewBox="0 0 64 64" fill="none" stroke="#f5f5f5" stroke-width="2.5">
                 <path d="M15 32c0-8 4-12 15-12s15 4 15 12c0 10-5 15-15 15s-15-5-15-15z" />
                 <path d="M45 28c4 0 7 2 7 6s-3 6-7 6" />
@@ -216,13 +219,17 @@ function renderHours(hours) {
 
           <div style="border-top: 1px dotted rgba(255,255,255,0.3); margin-bottom: 16px;"></div>
 
-          <!-- リスト -->
+          <!-- 営業時間リスト -->
           <div class="relative z-10" style="display:flex; flex-direction:column; gap:4px;">
             ${hours.map((h) => {
               const isSunday = h.day === "日";
-              const isHighlight = h.highlight === "red" || isSunday;
-              const textColor = h.highlight === "blue" ? "#a5f3fc" : (isHighlight ? "#ff9a9a" : "#f1f1f1");
-              const dotColor = isHighlight ? "rgba(255,154,154,0.2)" : "rgba(255,255,255,0.15)";
+              const isWednesday = h.day === "水";
+              // 水曜日または日曜日は赤色、それ以外でhighlightがblueなら水色
+              let textColor = "#f1f1f1";
+              if (h.highlight === "blue") textColor = "#a5f3fc";
+              if (h.highlight === "red" || isSunday || (isWednesday && h.closed)) textColor = "#ff9a9a";
+
+              const dotColor = (isSunday || (isWednesday && h.closed)) ? "rgba(255,154,154,0.2)" : "rgba(255,255,255,0.15)";
 
               return `
                 <div style="
@@ -247,7 +254,7 @@ function renderHours(hours) {
             }).join("")}
           </div>
 
-          <!-- 装飾植物 -->
+          <!-- 右下の装飾 -->
           <div class="absolute bottom-12 right-2 opacity-30 pointer-events-none">
              <svg width="50" height="50" viewBox="0 0 64 64" fill="none" stroke="#f1f1f1" stroke-width="1.5">
                <path d="M10 55 Q25 45 35 15" />
