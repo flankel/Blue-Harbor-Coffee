@@ -150,91 +150,103 @@ function renderAccess(data) {
 }
 
 /* =========================
-   HOURS（🔥ここ修正）
+   HOURS（🔥黒板デザインに変更）
 ========================= */
 function renderHours(hours) {
 
-  // 🔥 ここで判定（これが必要）
   const isMobile = window.innerWidth < 768;
 
   return `
-    <div class="text-sm max-w-xs mx-auto">
-      <table class="w-full border border-gray-300 rounded-lg overflow-hidden table-fixed">
-        <tbody class="divide-y divide-gray-200">
+    <div class="max-w-md mx-auto rounded-xl shadow-lg overflow-hidden border border-gray-700">
+
+      <!-- 黒板本体 -->
+      <div class="bg-neutral-900 text-white p-6 font-mono relative">
+
+        <!-- タイトル -->
+        <div class="text-center mb-4">
+          <div class="text-xl tracking-widest">
+            OPENING HOURS
+          </div>
+          <div class="text-xs text-gray-400 mt-1">
+            営業時間
+          </div>
+        </div>
+
+        <!-- 区切り線 -->
+        <div class="border-t border-dashed border-gray-500 mb-4"></div>
+
+        <!-- 各行 -->
+        <div class="space-y-2">
 
           ${hours.map(h => {
 
-            /* CLOSED */
             if (h.closed) {
               return `
-                <tr>
-                  <th class="bg-white px-2 py-2 text-left font-medium w-12 border-r-2 border-gray-400">
-                    ${h.day}
-                  </th>
-                  <td class="px-3 py-2 font-bold text-red-600 text-center border-l-2 border-gray-400">
-                    CLOSED
-                  </td>
-                </tr>
+                <div class="flex justify-between items-center border-b border-white/20 pb-1">
+                  <span class="tracking-widest">${h.day}</span>
+                  <span class="text-red-400 font-bold">CLOSED</span>
+                </div>
               `;
             }
 
-            /* 色判定 */
             const isSunday = h.day === "日";
 
-            let textClass = "text-gray-800";
+            let textClass = "text-white";
 
             if (h.highlight === "blue") {
-              textClass = "text-blue-700 font-bold";
+              textClass = "text-blue-300 font-bold";
             }
 
             if (h.highlight === "red" || isSunday) {
-              textClass = "text-red-700 font-bold";
+              textClass = "text-red-400 font-bold";
             }
 
-            /* NOTE色 */
-            let noteClass = "text-gray-500 text-xs mt-1";
+            let noteClass = "text-gray-400 text-xs mt-1";
 
             if (h.highlight === "red" || isSunday) {
-              noteClass = "text-red-600 font-semibold text-xs mt-1";
+              noteClass = "text-red-300 text-xs mt-1";
             }
 
             return `
-              <tr>
+              <div class="border-b border-white/20 pb-1">
 
-                <!-- 曜日 -->
-                <th class="px-2 py-2 text-left w-12 border-r-2 border-gray-400 ${textClass}">
-                  ${h.day}
-                </th>
+                <div class="flex justify-between items-center">
+                  <span class="tracking-widest ${textClass}">
+                    ${h.day}
+                  </span>
 
-                <!-- 時間 -->
-                <td class="px-3 py-2 text-center border-l-2 border-gray-400">
+                  <span class="${textClass}">
+                    ${h.open} - ${h.close}
+                  </span>
+                </div>
 
-                  <div class="${textClass} font-bold">
-                    ${h.open} — ${h.close}
-                  </div>
+                ${
+                  h.note
+                    ? `
+                      <div class="${noteClass}">
+                        ${
+                          (isMobile && h.day === "日")
+                            ? h.note.replace("場合 ", "場合<br>")
+                            : h.note
+                        }
+                      </div>
+                    `
+                    : ""
+                }
 
-                  ${
-                    h.note
-                      ? `
-                        <div class="${noteClass}">
-                          ${
-                            (isMobile && h.day === "日")
-                              ? h.note.replace("場合 ", "場合<br>")
-                              : h.note
-                          }
-                        </div>
-                      `
-                      : ""
-                  }
-
-                </td>
-
-              </tr>
+              </div>
             `;
           }).join("")}
 
-        </tbody>
-      </table>
+        </div>
+
+        <!-- フッター -->
+        <div class="mt-5 pt-3 border-t border-dashed border-gray-500 text-center text-xs text-gray-400 tracking-widest">
+          BLUE HARBOR COFFEE
+        </div>
+
+      </div>
+
     </div>
   `;
 }
