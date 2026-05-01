@@ -247,7 +247,7 @@ function renderHours(hours) {
                 </div>
                 ${h.note ? `
                   <div style="color: ${textColor}; font-size: 11px; text-align: right; margin-top: 2px; opacity: 0.8; line-height: 1.4;">
-                    ※ ${isMobile ? h.note.replace("場合 ", "場合<br>") : h.note}
+                     ${isMobile ? h.note.replace("場合 ", "場合<br>") : h.note}
                   </div>
                 ` : ''}
               `;
