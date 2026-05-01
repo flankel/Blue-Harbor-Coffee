@@ -298,6 +298,19 @@ function renderFacilities(facilities) {
     </div>
   `;
 }
+/**
+ * 施設情報用（デザインに変更がないため元を維持）
+ */
+function renderFacilities(facilities) {
+  return `
+    <div class="grid grid-cols-2 gap-y-3 text-sm text-left">
+      ${facilities.map(f => `
+        <div class="font-eng font-medium text-gray-600">${f.label}</div>
+        <div>${f.value}</div>
+      `).join("")}
+    </div>
+  `;
+}
 
 /* =========================
    FACILITIES
