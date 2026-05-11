@@ -14,6 +14,28 @@ let cart = {};
 
 
 /* =========================
+   ★追加：ボタンローディング共通処理
+========================= */
+
+function showBtnLoading(btn){
+  if(!btn) return;
+
+  btn.disabled = true;
+  btn.dataset.originalText = btn.innerHTML;
+  btn.innerHTML = "…";
+}
+
+function hideBtnLoading(btn){
+  if(!btn) return;
+
+  btn.disabled = false;
+  if(btn.dataset.originalText){
+    btn.innerHTML = btn.dataset.originalText;
+  }
+}
+
+
+/* =========================
    初期化
 ========================= */
 
@@ -242,6 +264,8 @@ html += `</div></div>`;
 area.innerHTML = html;
 
 }
+
+
 /* =========================
    イベント設定
 ========================= */
@@ -251,27 +275,38 @@ function setupEvents(){
 document.addEventListener("click", e => {
 
 if(e.target.classList.contains("qtyPlus")){
+  showBtnLoading(e.target);
   increaseQty(e.target);
+  setTimeout(()=> hideBtnLoading(e.target),150);
 }
 
 if(e.target.classList.contains("qtyMinus")){
+  showBtnLoading(e.target);
   decreaseQty(e.target);
+  setTimeout(()=> hideBtnLoading(e.target),150);
 }
 
 if(e.target.classList.contains("summaryPlus")){
+  showBtnLoading(e.target);
   summaryIncrease(e.target);
+  setTimeout(()=> hideBtnLoading(e.target),150);
 }
 
 if(e.target.classList.contains("summaryMinus")){
+  showBtnLoading(e.target);
   summaryDecrease(e.target);
+  setTimeout(()=> hideBtnLoading(e.target),150);
 }
 
 if(e.target.classList.contains("summaryDelete")){
+  showBtnLoading(e.target);
   summaryDelete(e.target);
 }
 
 if(e.target.classList.contains("clearCart")){
+  showBtnLoading(e.target);
   clearCartAll();
+  setTimeout(()=> hideBtnLoading(e.target),300);
 }
 
 });
@@ -373,6 +408,7 @@ setTimeout(() => {
   delete cart[key];
   saveCart();
   refreshAll();
+  hideBtnLoading(btn);
 }, 300);
 
 }
@@ -636,4 +672,3 @@ location.href = "customer.html";
 }
 
 window.goCustomer = goCustomer;
-
