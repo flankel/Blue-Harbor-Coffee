@@ -613,42 +613,46 @@ function mapTagClass(tag) {
 
 function goCustomer(btn) {
 
-  // ボタン表示変更
   if (btn) {
     btn.disabled = true;
     btn.innerText = "送信中…";
   }
 
-  const items = collectOrder();
+  // ★描画を強制反映
+  requestAnimationFrame(() => {
 
-  if (items.length === 0) {
-    alert("商品を選択してください");
+    const items = collectOrder();
 
-    if (btn) {
-      btn.disabled = false;
-      btn.innerText = "お客様情報入力へ";
+    if (items.length === 0) {
+      alert("商品を選択してください");
+
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = "お客様情報入力へ";
+      }
+
+      return;
     }
 
-    return;
-  }
+    let total = 0;
 
-  let total = 0;
+    items.forEach(i => {
+      total += i.subtotal;
+    });
 
-  items.forEach(i => {
-    total += i.subtotal;
+    const orderData = {
+      items: items,
+      total: total
+    };
+
+    localStorage.setItem("orderData", JSON.stringify(orderData));
+
+    // ★さらに少し待つと確実に見える
+    setTimeout(() => {
+      location.href = "customer.html";
+    }, 300);
+
   });
-
-  const orderData = {
-    items: items,
-    total: total
-  };
-
-  localStorage.setItem("orderData", JSON.stringify(orderData));
-
-  // ★ここが超重要（描画を一度反映させる）
-  setTimeout(() => {
-    location.href = "customer.html";
-  }, 3000);
 
 }
 
