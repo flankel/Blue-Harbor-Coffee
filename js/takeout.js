@@ -14,28 +14,6 @@ let cart = {};
 
 
 /* =========================
-   ★追加：ボタンローディング共通処理
-========================= */
-
-function showBtnLoading(btn){
-  if(!btn) return;
-
-  btn.disabled = true;
-  btn.dataset.originalText = btn.innerHTML;
-  btn.innerHTML = "送信中…";
-}
-
-function hideBtnLoading(btn){
-  if(!btn) return;
-
-  btn.disabled = false;
-  if(btn.dataset.originalText){
-    btn.innerHTML = btn.dataset.originalText;
-  }
-}
-
-
-/* =========================
    初期化
 ========================= */
 
@@ -54,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
    商品データ読み込み
 ========================= */
 
-async function loadProducts(){
+async function loadProducts() {
 
   const res = await fetch("data/takeout-products.json");
   const data = await res.json();
@@ -71,11 +49,11 @@ async function loadProducts(){
    カート復元
 ========================= */
 
-function loadCart(){
+function loadCart() {
 
   const saved = localStorage.getItem("cart");
 
-  if(saved){
+  if (saved) {
     cart = JSON.parse(saved);
   }
 
@@ -86,18 +64,18 @@ function loadCart(){
    商品表示
 ========================= */
 
-function renderProducts(){
+function renderProducts() {
 
   const area = document.getElementById("productArea");
 
   let html = "";
 
 
-/* Coffee Beans */
+  /* Coffee Beans */
 
-if(products.beans && products.beans.length > 0){
+  if (products.beans && products.beans.length > 0) {
 
-html += `
+    html += `
 <div>
 
 <h2 class="text-3xl font-light tracking-wider mb-10">
@@ -107,12 +85,12 @@ Coffee Beans
 <div class="grid md:grid-cols-2 gap-14">
 `;
 
-products.beans.forEach(bean => {
+    products.beans.forEach(bean => {
 
-const badgeClass = mapTagClass(bean.tag);
-const hasBadge = badgeClass ? "has-badge" : "";
+      const badgeClass = mapTagClass(bean.tag);
+      const hasBadge = badgeClass ? "has-badge" : "";
 
-html += `
+      html += `
 <div class="relative product-card ${hasBadge} ${badgeClass} bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${bean.tag ? `
@@ -143,11 +121,11 @@ ${bean.desc.jp}
 <div class="pt-4">
 `;
 
-Object.keys(bean.sizes).forEach(size => {
+      Object.keys(bean.sizes).forEach(size => {
 
-const price = bean.sizes[size];
+        const price = bean.sizes[size];
 
-html += `
+        html += `
 <div class="flex justify-between items-center py-2 border-b last:border-none">
 
 <div>
@@ -174,20 +152,20 @@ data-id="${bean.id}" data-size="${size}">＋</button>
 </div>
 `;
 
-});
+      });
 
-html += `</div></div></div>`;
-});
+      html += `</div></div></div>`;
+    });
 
-html += `</div></div>`;
-}
+    html += `</div></div>`;
+  }
 
 
-/* Sweets */
+  /* Sweets */
 
-if(products.sweets && products.sweets.length > 0){
+  if (products.sweets && products.sweets.length > 0) {
 
-html += `
+    html += `
 <div>
 
 <h2 class="text-3xl font-light tracking-wider mb-10">
@@ -197,12 +175,12 @@ Sweets
 <div class="grid md:grid-cols-2 gap-14">
 `;
 
-products.sweets.forEach(item => {
+    products.sweets.forEach(item => {
 
-const badgeClass = mapTagClass(item.tag);
-const hasBadge = badgeClass ? "has-badge" : "";
+      const badgeClass = mapTagClass(item.tag);
+      const hasBadge = badgeClass ? "has-badge" : "";
 
-html += `
+      html += `
 <div class="relative product-card ${hasBadge} ${badgeClass} bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
 
 ${item.tag ? `
@@ -256,29 +234,47 @@ data-id="${item.id}">＋</button>
 </div>
 `;
 
-});
+    });
 
-html += `</div></div>`;
+    html += `</div></div>`;
+  }
+
+  area.innerHTML = html;
+
 }
-
-area.innerHTML = html;
-
-}
-
-
 /* =========================
    イベント設定
 ========================= */
 
-function setupEvents(){
+function setupEvents() {
 
-document.addEventListener("click", e => {
+  document.addEventListener("click", e => {
 
-if(e.target.classList.contains("goCustomerBtn")){
-  showBtnLoading(e.target);
-}
+    if (e.target.classList.contains("qtyPlus")) {
+      increaseQty(e.target);
+    }
 
-});
+    if (e.target.classList.contains("qtyMinus")) {
+      decreaseQty(e.target);
+    }
+
+    if (e.target.classList.contains("summaryPlus")) {
+      summaryIncrease(e.target);
+    }
+
+    if (e.target.classList.contains("summaryMinus")) {
+      summaryDecrease(e.target);
+    }
+
+    if (e.target.classList.contains("summaryDelete")) {
+      summaryDelete(e.target);
+    }
+
+    if (e.target.classList.contains("clearCart")) {
+      clearCartAll();
+    }
+
+  });
 
 }
 
@@ -287,22 +283,22 @@ if(e.target.classList.contains("goCustomerBtn")){
    数量増加
 ========================= */
 
-function increaseQty(btn){
+function increaseQty(btn) {
 
-const id = btn.dataset.id;
-const size = btn.dataset.size || "";
-const key = `${id}-${size}`;
+  const id = btn.dataset.id;
+  const size = btn.dataset.size || "";
+  const key = `${id}-${size}`;
 
-if(!cart[key]) cart[key] = 0;
-if(cart[key] >= MAX_PER_ITEM) return;
+  if (!cart[key]) cart[key] = 0;
+  if (cart[key] >= MAX_PER_ITEM) return;
 
-cart[key]++;
+  cart[key]++;
 
-btn.classList.add("scale-pop");
-setTimeout(()=> btn.classList.remove("scale-pop"),150);
+  btn.classList.add("scale-pop");
+  setTimeout(() => btn.classList.remove("scale-pop"), 150);
 
-saveCart();
-refreshAll();
+  saveCart();
+  refreshAll();
 
 }
 
@@ -311,22 +307,22 @@ refreshAll();
    数量減少
 ========================= */
 
-function decreaseQty(btn){
+function decreaseQty(btn) {
 
-const id = btn.dataset.id;
-const size = btn.dataset.size || "";
-const key = `${id}-${size}`;
+  const id = btn.dataset.id;
+  const size = btn.dataset.size || "";
+  const key = `${id}-${size}`;
 
-if(!cart[key]) return;
+  if (!cart[key]) return;
 
-cart[key]--;
+  cart[key]--;
 
-if(cart[key] <= 0){
-  delete cart[key];
-}
+  if (cart[key] <= 0) {
+    delete cart[key];
+  }
 
-saveCart();
-refreshAll();
+  saveCart();
+  refreshAll();
 
 }
 
@@ -335,49 +331,49 @@ refreshAll();
    サマリー操作
 ========================= */
 
-function summaryIncrease(btn){
+function summaryIncrease(btn) {
 
-const key = btn.dataset.key;
+  const key = btn.dataset.key;
 
-if(!cart[key]) cart[key] = 0;
-if(cart[key] >= MAX_PER_ITEM) return;
+  if (!cart[key]) cart[key] = 0;
+  if (cart[key] >= MAX_PER_ITEM) return;
 
-cart[key]++;
+  cart[key]++;
 
-saveCart();
-refreshAll();
-
-}
-
-function summaryDecrease(btn){
-
-const key = btn.dataset.key;
-
-if(!cart[key]) return;
-
-cart[key]--;
-
-if(cart[key] <= 0){
-  delete cart[key];
-}
-
-saveCart();
-refreshAll();
-
-}
-
-function summaryDelete(btn){
-
-const key = btn.dataset.key;
-const row = btn.closest("div");
-
-row.classList.add("fade-out");
-
-setTimeout(() => {
-  delete cart[key];
   saveCart();
   refreshAll();
-}, 300);
+
+}
+
+function summaryDecrease(btn) {
+
+  const key = btn.dataset.key;
+
+  if (!cart[key]) return;
+
+  cart[key]--;
+
+  if (cart[key] <= 0) {
+    delete cart[key];
+  }
+
+  saveCart();
+  refreshAll();
+
+}
+
+function summaryDelete(btn) {
+
+  const key = btn.dataset.key;
+  const row = btn.closest("div");
+
+  row.classList.add("fade-out");
+
+  setTimeout(() => {
+    delete cart[key];
+    saveCart();
+    refreshAll();
+  }, 300);
 
 }
 
@@ -386,14 +382,14 @@ setTimeout(() => {
    全削除
 ========================= */
 
-function clearCartAll(){
+function clearCartAll() {
 
-if(!confirm("カートをすべて削除しますか？")) return;
+  if (!confirm("カートをすべて削除しますか？")) return;
 
-cart = {};
+  cart = {};
 
-saveCart();
-refreshAll();
+  saveCart();
+  refreshAll();
 
 }
 
@@ -402,18 +398,18 @@ refreshAll();
    共通更新
 ========================= */
 
-function refreshAll(){
+function refreshAll() {
 
-document.querySelectorAll('[id^="qty-"]').forEach(el => {
-  el.textContent = 0;
-});
+  document.querySelectorAll('[id^="qty-"]').forEach(el => {
+    el.textContent = 0;
+  });
 
-Object.keys(cart).forEach(key => {
-  const [id, size] = key.split("-");
-  updateQtyDisplay(id, size);
-});
+  Object.keys(cart).forEach(key => {
+    const [id, size] = key.split("-");
+    updateQtyDisplay(id, size);
+  });
 
-updateSummary();
+  updateSummary();
 
 }
 
@@ -422,7 +418,7 @@ updateSummary();
    カート保存
 ========================= */
 
-function saveCart(){
+function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
@@ -431,22 +427,22 @@ function saveCart(){
    数量表示更新
 ========================= */
 
-function updateQtyDisplay(id, size){
+function updateQtyDisplay(id, size) {
 
-const key = `${id}-${size}`;
-const qty = cart[key] || 0;
+  const key = `${id}-${size}`;
+  const qty = cart[key] || 0;
 
-const elementId = size ? `qty-${id}-${size}` : `qty-${id}`;
-const el = document.getElementById(elementId);
+  const elementId = size ? `qty-${id}-${size}` : `qty-${id}`;
+  const el = document.getElementById(elementId);
 
-if(el){
-  el.textContent = qty;
+  if (el) {
+    el.textContent = qty;
 
-  el.classList.add("scale-pop");
-  setTimeout(() => {
-    el.classList.remove("scale-pop");
-  }, 150);
-}
+    el.classList.add("scale-pop");
+    setTimeout(() => {
+      el.classList.remove("scale-pop");
+    }, 150);
+  }
 
 }
 
@@ -455,51 +451,51 @@ if(el){
    注文サマリー更新
 ========================= */
 
-function updateSummary(){
+function updateSummary() {
 
-const summary = document.getElementById("orderSummary");
-const totalEl = document.getElementById("totalPrice");
-const mobileTotal = document.getElementById("mobileTotal");
+  const summary = document.getElementById("orderSummary");
+  const totalEl = document.getElementById("totalPrice");
+  const mobileTotal = document.getElementById("mobileTotal");
 
-let html = "";
-let total = 0;
+  let html = "";
+  let total = 0;
 
-if(Object.keys(cart).length === 0){
-  summary.innerHTML = "<p class='text-gray-400'>カートは空です</p>";
-  totalEl.textContent = "¥0";
-  if(mobileTotal) mobileTotal.textContent = "¥0";
-  return;
-}
+  if (Object.keys(cart).length === 0) {
+    summary.innerHTML = "<p class='text-gray-400'>カートは空です</p>";
+    totalEl.textContent = "¥0";
+    if (mobileTotal) mobileTotal.textContent = "¥0";
+    return;
+  }
 
-Object.keys(cart).forEach(key => {
+  Object.keys(cart).forEach(key => {
 
-const qty = cart[key];
+    const qty = cart[key];
 
-let label = "";
-let price = 0;
+    let label = "";
+    let price = 0;
 
-/* Beans */
-products.beans.forEach(bean => {
-Object.keys(bean.sizes).forEach(size => {
-if(key === `${bean.id}-${size}`){
-label = `${bean.name.jp} ${size}g`;
-price = bean.sizes[size];
-}
-});
-});
+    /* Beans */
+    products.beans.forEach(bean => {
+      Object.keys(bean.sizes).forEach(size => {
+        if (key === `${bean.id}-${size}`) {
+          label = `${bean.name.jp} ${size}g`;
+          price = bean.sizes[size];
+        }
+      });
+    });
 
-/* Sweets */
-products.sweets.forEach(sweet => {
-if(key === `${sweet.id}-`){
-label = sweet.name.jp;
-price = sweet.price;
-}
-});
+    /* Sweets */
+    products.sweets.forEach(sweet => {
+      if (key === `${sweet.id}-`) {
+        label = sweet.name.jp;
+        price = sweet.price;
+      }
+    });
 
-const subtotal = price * qty;
-total += subtotal;
+    const subtotal = price * qty;
+    total += subtotal;
 
-html += `
+    html += `
 <div class="flex justify-between items-center py-2 border-b">
 
 <div>${label}</div>
@@ -523,9 +519,9 @@ html += `
 </div>
 `;
 
-});
+  });
 
-html += `
+  html += `
 <div class="text-right mt-4">
 <button class="clearCart px-4 py-2 text-sm text-red-500 border border-red-300 rounded hover:bg-red-50">
 全てクリア
@@ -533,13 +529,13 @@ html += `
 </div>
 `;
 
-summary.innerHTML = html;
+  summary.innerHTML = html;
 
-totalEl.textContent = "¥" + total.toLocaleString();
+  totalEl.textContent = "¥" + total.toLocaleString();
 
-if(mobileTotal){
-  mobileTotal.textContent = "¥" + total.toLocaleString();
-}
+  if (mobileTotal) {
+    mobileTotal.textContent = "¥" + total.toLocaleString();
+  }
 
 }
 
@@ -548,63 +544,63 @@ if(mobileTotal){
    注文データ作成
 ========================= */
 
-function collectOrder(){
+function collectOrder() {
 
-let items = [];
+  let items = [];
 
-Object.keys(cart).forEach(key => {
+  Object.keys(cart).forEach(key => {
 
-const qty = cart[key];
+    const qty = cart[key];
 
-products.beans.forEach(bean => {
-Object.keys(bean.sizes).forEach(size => {
-if(key === `${bean.id}-${size}`){
-const price = bean.sizes[size];
-items.push({
-type: "bean",
-id: bean.id,
-name: `${bean.name.jp} ${size}g`,
-size: size,
-qty: qty,
-price: price,
-subtotal: price * qty,
-image: bean.image
-});
-}
-});
-});
+    products.beans.forEach(bean => {
+      Object.keys(bean.sizes).forEach(size => {
+        if (key === `${bean.id}-${size}`) {
+          const price = bean.sizes[size];
+          items.push({
+            type: "bean",
+            id: bean.id,
+            name: `${bean.name.jp} ${size}g`,
+            size: size,
+            qty: qty,
+            price: price,
+            subtotal: price * qty,
+            image: bean.image
+          });
+        }
+      });
+    });
 
-products.sweets.forEach(sweet => {
-if(key === `${sweet.id}-`){
-items.push({
-type: "sweet",
-id: sweet.id,
-name: sweet.name.jp,
-size: "",
-qty: qty,
-price: sweet.price,
-subtotal: sweet.price * qty,
-image: sweet.image
-});
-}
-});
+    products.sweets.forEach(sweet => {
+      if (key === `${sweet.id}-`) {
+        items.push({
+          type: "sweet",
+          id: sweet.id,
+          name: sweet.name.jp,
+          size: "",
+          qty: qty,
+          price: sweet.price,
+          subtotal: sweet.price * qty,
+          image: sweet.image
+        });
+      }
+    });
 
-});
+  });
 
-return items;
+  return items;
 
 }
 
 // tag
-function mapTagClass(tag){
+function mapTagClass(tag) {
 
-  if(!tag) return "";
+  if (!tag) return "";
 
   const t = tag.trim();
 
-  if(t === "No.1") return "no1";
-  if(t === "Limited") return "limited";
-  if(t === "NEW") return "new";
+  if (t === "No.1") return "no1";
+  if (t === "Limited") return "limited";
+  if (t === "NEW") return "new";
 
   return "";
 }
@@ -613,33 +609,29 @@ function mapTagClass(tag){
    次ページへ
 ========================= */
 
-function goCustomer(){
+function goCustomer() {
 
-const btn = document.querySelector(".goCustomerBtn");
-if(btn) showBtnLoading(btn);
+  const items = collectOrder();
 
-const items = collectOrder();
+  if (items.length === 0) {
+    alert("商品を選択してください");
+    return;
+  }
 
-if(items.length === 0){
-  alert("商品を選択してください");
-  if(btn) hideBtnLoading(btn);
-  return;
-}
+  let total = 0;
 
-let total = 0;
+  items.forEach(i => {
+    total += i.subtotal;
+  });
 
-items.forEach(i => {
-  total += i.subtotal;
-});
+  const orderData = {
+    items: items,
+    total: total
+  };
 
-const orderData = {
-  items: items,
-  total: total
-};
+  localStorage.setItem("orderData", JSON.stringify(orderData));
 
-localStorage.setItem("orderData", JSON.stringify(orderData));
-
-location.href = "customer.html";
+  location.href = "customer.html";
 
 }
 
