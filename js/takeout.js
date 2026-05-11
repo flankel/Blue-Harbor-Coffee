@@ -648,7 +648,7 @@ function goCustomer(btn) {
   // ★ここが超重要（描画を一度反映させる）
   setTimeout(() => {
     location.href = "customer.html";
-  }, 300);
+  }, 3000);
 
 }
 
