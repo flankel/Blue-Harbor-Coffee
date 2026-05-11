@@ -242,6 +242,8 @@ data-id="${item.id}">＋</button>
   area.innerHTML = html;
 
 }
+
+
 /* =========================
    イベント設定
 ========================= */
@@ -609,12 +611,24 @@ function mapTagClass(tag) {
    次ページへ
 ========================= */
 
-function goCustomer() {
+function goCustomer(btn) {
+
+  // ★ここが追加（HTMLに表示される）
+  if(btn){
+    btn.disabled = true;
+    btn.innerText = "送信中…";
+  }
 
   const items = collectOrder();
 
   if (items.length === 0) {
     alert("商品を選択してください");
+
+    if(btn){
+      btn.disabled = false;
+      btn.innerText = "お客様情報入力へ";
+    }
+
     return;
   }
 
