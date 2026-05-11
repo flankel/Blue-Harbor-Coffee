@@ -411,10 +411,15 @@ function setupAgreementUI(){
 
 
 /* =========================
-   確認ページへ
+   確認ページへ（★修正）
 ========================= */
 
 function goConfirm(){
+
+  const btn = document.getElementById("confirmBtn");
+
+  // ★二重送信防止
+  if(btn && btn.disabled) return;
 
   if(!checkAgreement()) return;
 
@@ -436,12 +441,34 @@ function goConfirm(){
 
   if(!validateInput(customerData)) return;
 
+  // =========================
+  // ★送信中UI
+  // =========================
+  if(btn){
+
+    btn.disabled = true;
+
+    btn.classList.remove("bg-blue-600","hover:bg-blue-700");
+    btn.classList.add("bg-gray-400","cursor-wait");
+
+    btn.innerHTML = `
+      <span class="flex items-center justify-center gap-2">
+        <span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+        送信中...
+      </span>
+    `;
+
+  }
+
   localStorage.setItem(
     "customerData",
     JSON.stringify(customerData)
   );
 
-  location.href = "confirm.html";
+  // ★少しだけ遅延させてUX向上
+  setTimeout(() => {
+    location.href = "confirm.html";
+  }, 500);
 
 }
 
