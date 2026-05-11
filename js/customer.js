@@ -1,6 +1,6 @@
 /* =========================
    Blue Harbor Coffee
-   customer.js（修正版）
+   customer.js（最終調整版）
 ========================= */
 
 
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await loadConfig();
 
-  console.log("CONFIG:", CONFIG); // ★デバッグ
+  console.log("CONFIG:", CONFIG);
 
   setupDate();
 
@@ -44,7 +44,7 @@ async function loadConfig(){
 
     const data = await res.json();
 
-    CONFIG = data.config; // ★ここが最重要
+    CONFIG = data.config;
 
   } catch (err) {
 
@@ -86,7 +86,6 @@ function getCartItems(){
 
   const data = JSON.parse(raw);
 
-  // ★ 配列 or 単体 両対応
   if(Array.isArray(data)){
     return data;
   }
@@ -175,43 +174,43 @@ function setupDate(){
 
   const notice = document.getElementById("formNotice");
 
-if (notice) {
-  notice.innerHTML = `
-    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm
-                p-4 sm:p-5 md:p-7 lg:p-8
-                text-sm sm:text-base lg:text-lg leading-relaxed space-y-4 sm:space-y-5">
+  if (notice) {
+    notice.innerHTML = `
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm
+                  p-4 sm:p-5 md:p-7 lg:p-8
+                  text-sm sm:text-base lg:text-lg leading-relaxed space-y-4 sm:space-y-5">
 
-      <div class="border-b pb-2 sm:pb-3 border-slate-200">
-        <span class="text-slate-800 font-semibold text-base sm:text-lg lg:text-xl">
-          ご予約に関する注意事項
-        </span>
-      </div>
+        <div class="border-b pb-2 sm:pb-3 border-slate-200">
+          <span class="text-slate-800 font-semibold text-base sm:text-lg lg:text-xl">
+            ご予約に関する注意事項
+          </span>
+        </div>
 
-      <div class="relative pl-4 text-slate-700">
-        <span class="absolute left-0 top-[0.55em] text-black text-[10px] sm:text-xs">●</span>
-        <span><span class="text-red-500 font-medium">*</span> は必須項目です</span>
-      </div>
-
-      <div class="relative pl-4 text-red-600 font-semibold">
-        <span class="absolute left-0 top-[0.55em] text-red-600 text-[10px] sm:text-xs">●</span>
-        <span>ご予約は本日から${CONFIG.reserveLimitDays}日後まで可能です</span>
-      </div>
-
-      <ul class="space-y-3 text-slate-600">
-        <li class="relative pl-4">
+        <div class="relative pl-4 text-slate-700">
           <span class="absolute left-0 top-[0.55em] text-black text-[10px] sm:text-xs">●</span>
-          <span>お受け取り時間は1時間単位でご指定いただけます</span>
-        </li>
+          <span><span class="text-red-500 font-medium">*</span> は必須項目です</span>
+        </div>
 
-        <li class="relative pl-4">
-          <span class="absolute left-0 top-[0.55em] text-black text-[10px] sm:text-xs">●</span>
-          <span>当日の受付は閉店時間の1時間前までとなります</span>
-        </li>
-      </ul>
+        <div class="relative pl-4 text-red-600 font-semibold">
+          <span class="absolute left-0 top-[0.55em] text-red-600 text-[10px] sm:text-xs">●</span>
+          <span>ご予約は本日から${CONFIG.reserveLimitDays}日後まで可能です</span>
+        </div>
 
-    </div>
-  `;
-}
+        <ul class="space-y-3 text-slate-600">
+          <li class="relative pl-4">
+            <span class="absolute left-0 top-[0.55em] text-black text-[10px] sm:text-xs">●</span>
+            <span>お受け取り時間は1時間単位でご指定いただけます</span>
+          </li>
+
+          <li class="relative pl-4">
+            <span class="absolute left-0 top-[0.55em] text-black text-[10px] sm:text-xs">●</span>
+            <span>当日の受付は閉店時間の1時間前までとなります</span>
+          </li>
+        </ul>
+
+      </div>
+    `;
+  }
 }
 
 
@@ -224,7 +223,6 @@ function generateTimeSlots(){
   if(!CONFIG) return;
 
   const date = document.getElementById("datePicker").value;
-
   const select = document.getElementById("timePicker");
 
   select.innerHTML = "";
@@ -232,27 +230,18 @@ function generateTimeSlots(){
   if(!date) return;
 
   const selectedDate = new Date(date);
-
   const day = selectedDate.getDay();
 
-
   if(day === CONFIG.closedDay){
-
     select.innerHTML = `<option>定休日</option>`;
-
     return;
-
   }
-
 
   let closeHour = CONFIG.weekdayClose;
 
   if(day === 5 || day === 6){
-
     closeHour = CONFIG.weekendClose;
-
   }
-
 
   const now = new Date();
 
@@ -263,26 +252,18 @@ function generateTimeSlots(){
 
   const isToday = (todayStr === date);
 
-
   if(isToday && now.getHours() >= closeHour - 1){
-
     select.innerHTML = `<option>本日の受付は終了しました</option>`;
-
     return;
-
   }
-
 
   for(let h = CONFIG.openHour; h < closeHour; h++){
 
     if(isToday){
-
       if(h <= now.getHours()) continue;
-
     }
 
     select.innerHTML += `<option>${h}:00-${h+1}:00</option>`;
-
   }
 
 }
@@ -340,6 +321,37 @@ function validateInput(data){
 
 
 /* =========================
+   同意チェック
+========================= */
+
+function checkAgreement(){
+
+  const agree = document.getElementById("agree");
+
+  if(!agree || !agree.checked){
+    alert("個人情報の取り扱いに同意してください");
+    return false;
+  }
+
+  return true;
+
+}
+
+
+/* =========================
+   サニタイズ
+========================= */
+
+function sanitize(text){
+
+  if(!text) return "";
+
+  return text.replace(/[<>]/g,"");
+
+}
+
+
+/* =========================
    同意UI制御（★修正）
 ========================= */
 
@@ -351,22 +363,24 @@ function setupAgreementUI(){
   if(!agree || !btn) return;
 
   btn.disabled = true;
-  btn.classList.add("bg-gray-300","cursor-not-allowed","text-slate-400");
-  btn.classList.remove("bg-blue-600","hover:bg-blue-700","text-white");
+
+  // ★文字は常に白固定
+  btn.classList.add("bg-gray-300","cursor-not-allowed","text-white");
+  btn.classList.remove("bg-blue-600","hover:bg-blue-700");
 
   agree.addEventListener("change", () => {
 
     if(agree.checked){
 
       btn.disabled = false;
-      btn.classList.remove("bg-gray-300","cursor-not-allowed","text-slate-400");
+      btn.classList.remove("bg-gray-300","cursor-not-allowed");
       btn.classList.add("bg-blue-600","hover:bg-blue-700","text-white");
 
     }else{
 
       btn.disabled = true;
-      btn.classList.add("bg-gray-300","cursor-not-allowed","text-slate-400");
-      btn.classList.remove("bg-blue-600","hover:bg-blue-700","text-white");
+      btn.classList.add("bg-gray-300","cursor-not-allowed","text-white");
+      btn.classList.remove("bg-blue-600","hover:bg-blue-700");
 
     }
 
@@ -376,7 +390,7 @@ function setupAgreementUI(){
 
 
 /* =========================
-   確認ページへ（★修正）
+   確認ページへ
 ========================= */
 
 function goConfirm(){
@@ -438,9 +452,7 @@ function goConfirm(){
 ========================= */
 
 function backToMenu(){
-
   location.href = "takeout.html";
-
 }
 
 
