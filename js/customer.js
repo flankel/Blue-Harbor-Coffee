@@ -181,26 +181,22 @@ if (notice) {
                 p-4 sm:p-5 md:p-7 lg:p-8
                 text-sm sm:text-base lg:text-lg leading-relaxed space-y-4 sm:space-y-5">
 
-      <!-- タイトル -->
       <div class="border-b pb-2 sm:pb-3 border-slate-200">
         <span class="text-slate-800 font-semibold text-base sm:text-lg lg:text-xl">
           ご予約に関する注意事項
         </span>
       </div>
 
-      <!-- 必須項目 -->
       <div class="relative pl-4 text-slate-700">
         <span class="absolute left-0 top-[0.55em] text-black text-[10px] sm:text-xs">●</span>
         <span><span class="text-red-500 font-medium">*</span> は必須項目です</span>
       </div>
 
-      <!-- 予約期間（強調） -->
       <div class="relative pl-4 text-red-600 font-semibold">
         <span class="absolute left-0 top-[0.55em] text-red-600 text-[10px] sm:text-xs">●</span>
         <span>ご予約は本日から${CONFIG.reserveLimitDays}日後まで可能です</span>
       </div>
 
-      <!-- 通常情報 -->
       <ul class="space-y-3 text-slate-600">
         <li class="relative pl-4">
           <span class="absolute left-0 top-[0.55em] text-black text-[10px] sm:text-xs">●</span>
@@ -344,38 +340,7 @@ function validateInput(data){
 
 
 /* =========================
-   同意チェック
-========================= */
-
-function checkAgreement(){
-
-  const agree = document.getElementById("agree");
-
-  if(!agree || !agree.checked){
-    alert("個人情報の取り扱いに同意してください");
-    return false;
-  }
-
-  return true;
-
-}
-
-
-/* =========================
-   サニタイズ
-========================= */
-
-function sanitize(text){
-
-  if(!text) return "";
-
-  return text.replace(/[<>]/g,"");
-
-}
-
-
-/* =========================
-   同意UI制御
+   同意UI制御（★修正）
 ========================= */
 
 function setupAgreementUI(){
@@ -386,22 +351,22 @@ function setupAgreementUI(){
   if(!agree || !btn) return;
 
   btn.disabled = true;
-  btn.classList.add("bg-gray-300","cursor-not-allowed");
-  btn.classList.remove("bg-blue-600","hover:bg-blue-700");
+  btn.classList.add("bg-gray-300","cursor-not-allowed","text-slate-400");
+  btn.classList.remove("bg-blue-600","hover:bg-blue-700","text-white");
 
   agree.addEventListener("change", () => {
 
     if(agree.checked){
 
       btn.disabled = false;
-      btn.classList.remove("bg-gray-300","cursor-not-allowed");
-      btn.classList.add("bg-blue-600","hover:bg-blue-700");
+      btn.classList.remove("bg-gray-300","cursor-not-allowed","text-slate-400");
+      btn.classList.add("bg-blue-600","hover:bg-blue-700","text-white");
 
     }else{
 
       btn.disabled = true;
-      btn.classList.add("bg-gray-300","cursor-not-allowed");
-      btn.classList.remove("bg-blue-600","hover:bg-blue-700");
+      btn.classList.add("bg-gray-300","cursor-not-allowed","text-slate-400");
+      btn.classList.remove("bg-blue-600","hover:bg-blue-700","text-white");
 
     }
 
@@ -418,7 +383,6 @@ function goConfirm(){
 
   const btn = document.getElementById("confirmBtn");
 
-  // ★二重送信防止
   if(btn && btn.disabled) return;
 
   if(!checkAgreement()) return;
@@ -441,15 +405,12 @@ function goConfirm(){
 
   if(!validateInput(customerData)) return;
 
-  // =========================
-  // ★送信中UI
-  // =========================
   if(btn){
 
     btn.disabled = true;
 
     btn.classList.remove("bg-blue-600","hover:bg-blue-700");
-    btn.classList.add("bg-gray-400","cursor-wait");
+    btn.classList.add("bg-gray-400","cursor-wait","text-white");
 
     btn.innerHTML = `
       <span class="flex items-center justify-center gap-2">
@@ -465,7 +426,6 @@ function goConfirm(){
     JSON.stringify(customerData)
   );
 
-  // ★少しだけ遅延させてUX向上
   setTimeout(() => {
     location.href = "confirm.html";
   }, 500);
