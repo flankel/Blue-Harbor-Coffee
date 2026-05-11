@@ -22,7 +22,7 @@ function showBtnLoading(btn){
 
   btn.disabled = true;
   btn.dataset.originalText = btn.innerHTML;
-  btn.innerHTML = "…";
+  btn.innerHTML = "送信中…";
 }
 
 function hideBtnLoading(btn){
@@ -274,39 +274,8 @@ function setupEvents(){
 
 document.addEventListener("click", e => {
 
-if(e.target.classList.contains("qtyPlus")){
+if(e.target.classList.contains("goCustomerBtn")){
   showBtnLoading(e.target);
-  increaseQty(e.target);
-  setTimeout(()=> hideBtnLoading(e.target),150);
-}
-
-if(e.target.classList.contains("qtyMinus")){
-  showBtnLoading(e.target);
-  decreaseQty(e.target);
-  setTimeout(()=> hideBtnLoading(e.target),150);
-}
-
-if(e.target.classList.contains("summaryPlus")){
-  showBtnLoading(e.target);
-  summaryIncrease(e.target);
-  setTimeout(()=> hideBtnLoading(e.target),150);
-}
-
-if(e.target.classList.contains("summaryMinus")){
-  showBtnLoading(e.target);
-  summaryDecrease(e.target);
-  setTimeout(()=> hideBtnLoading(e.target),150);
-}
-
-if(e.target.classList.contains("summaryDelete")){
-  showBtnLoading(e.target);
-  summaryDelete(e.target);
-}
-
-if(e.target.classList.contains("clearCart")){
-  showBtnLoading(e.target);
-  clearCartAll();
-  setTimeout(()=> hideBtnLoading(e.target),300);
 }
 
 });
@@ -408,7 +377,6 @@ setTimeout(() => {
   delete cart[key];
   saveCart();
   refreshAll();
-  hideBtnLoading(btn);
 }, 300);
 
 }
@@ -647,10 +615,14 @@ function mapTagClass(tag){
 
 function goCustomer(){
 
+const btn = document.querySelector(".goCustomerBtn");
+if(btn) showBtnLoading(btn);
+
 const items = collectOrder();
 
 if(items.length === 0){
   alert("商品を選択してください");
+  if(btn) hideBtnLoading(btn);
   return;
 }
 
