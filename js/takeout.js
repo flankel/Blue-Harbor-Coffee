@@ -613,8 +613,8 @@ function mapTagClass(tag) {
 
 function goCustomer(btn) {
 
-  // ★ここが追加（HTMLに表示される）
-  if(btn){
+  // ボタン表示変更
+  if (btn) {
     btn.disabled = true;
     btn.innerText = "送信中…";
   }
@@ -624,7 +624,7 @@ function goCustomer(btn) {
   if (items.length === 0) {
     alert("商品を選択してください");
 
-    if(btn){
+    if (btn) {
       btn.disabled = false;
       btn.innerText = "お客様情報入力へ";
     }
@@ -645,7 +645,10 @@ function goCustomer(btn) {
 
   localStorage.setItem("orderData", JSON.stringify(orderData));
 
-  location.href = "customer.html";
+  // ★ここが超重要（描画を一度反映させる）
+  setTimeout(() => {
+    location.href = "customer.html";
+  }, 300);
 
 }
 
